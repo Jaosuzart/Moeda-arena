@@ -89,10 +89,10 @@ const adicionarTokens = async (usuarioId, quantidade) => {
  * @param {Object} dados
  * @returns {Promise<boolean>}
  */
-const atualizarPerfil = async (id, { nome, cpf, localidade, cartao_final }) => {
+const atualizarPerfil = async (id, { nome, cpf, localidade, chave_pix, cartao_final }) => {
   try {
-    const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, cartao_final = ? WHERE id = ?';
-    const [resultado] = await pool.query(sql, [nome, cpf, localidade, cartao_final, id]);
+    const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, chave_pix = ?, cartao_final = ? WHERE id = ?';
+    const [resultado] = await pool.query(sql, [nome, cpf, localidade, chave_pix, cartao_final, id]);
     
     if (resultado.affectedRows > 0) {
       logger.info('Perfil de usuário atualizado com sucesso.', { usuarioId: id });

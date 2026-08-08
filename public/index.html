@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR" dir="ltr">
 <head>
-  <!-- Charset & Viewport -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <!-- SEO — Título e Descrição -->
   <title>Token Arena — Loja de Tokens e Passe de Batalha Premium</title>
   <meta name="description" content="Compre tokens para jogos com segurança via Mercado Pago. Escolha entre o Passe Amador gratuito, Profissional ou Sócio Lenda e desbloqueie personagens épicos, ligas exclusivas e muito mais." />
   <meta name="keywords" content="tokens, jogos, passe de batalha, loja de tokens, mercado pago, gaming, comprar tokens" />
   <meta name="author" content="Token Arena" />
   <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph (Facebook, WhatsApp, Discord) -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Token Arena — Passe de Batalha Premium" />
   <meta property="og:description" content="Escolha seu pacote de tokens e domine a partida. Pagamento seguro via Mercado Pago." />
   <meta property="og:url" content="https://tokenarena.com.br" />
   <meta property="og:site_name" content="Token Arena" />
   <meta property="og:locale" content="pt_BR" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Token Arena — Passe de Batalha Premium" />
   <meta name="twitter:description" content="Compre tokens para jogos com segurança via Mercado Pago." />
-
-  <!-- Tema e Favicon -->
   <meta name="theme-color" content="#0f172a" />
   <meta name="color-scheme" content="dark light" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
-
-  <!-- Preconnect para performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Schema.org JSON-LD (Dados Estruturados) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -63,8 +48,6 @@
 </head>
 
 <body>
-
-  <!-- ======== NAVBAR ======== -->
   <header>
     <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
       <a href="/" class="nav-logo" aria-label="Token Arena — Página inicial">
@@ -73,14 +56,16 @@
       </a>
 
       <div class="nav-user" id="navUser">
-        <!-- Botões de auth (visíveis quando deslogado) -->
         <div class="nav-auth-btns" id="navAuthBtns">
           <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
           <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
         </div>
 
-        <!-- Info do usuário (visível quando logado) -->
         <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
+          <div class="nav-user-welcome" id="navUserWelcome" style="margin-right: 15px; text-align: right; line-height: 1.2;">
+            <span style="font-size: 0.9rem; color: #cbd5e1;">Olá, <strong id="navUserName">Jogador</strong></span><br>
+            <span id="navUserRole" style="font-size: 0.75rem; background: #3b82f6; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Jogador</span>
+          </div>
           <div class="nav-tokens" id="navTokens" aria-label="Saldo de tokens">
             <span class="nav-tokens-icon" aria-hidden="true">🪙</span>
             <span id="navTokenCount" aria-live="polite">0</span>
@@ -93,17 +78,12 @@
     </nav>
   </header>
 
-  <!-- ======== CONTEÚDO PRINCIPAL ======== -->
   <main id="conteudoPrincipal">
-    
-    <!-- Hero Section -->
-    <section class="hero-section" aria-labelledby="heroTitle">
+        <section class="hero-section" aria-labelledby="heroTitle">
       <span class="hero-badge" aria-label="Temporada atual">Temporada 6</span>
       <h1 class="hero-title" id="heroTitle">Passe de Batalha</h1>
       <p class="hero-subtitle">Escolha seu pacote de tokens e domine a partida com personagens épicos e ligas exclusivas.</p>
     </section>
-
-    <!-- Toggle Mensal / Anual -->
     <section class="toggle-section" aria-label="Alternar entre preço mensal e anual">
       <span class="toggle-label active" id="labelMensal">Mensal</span>
       <label class="toggle-switch" for="pricingToggle">
@@ -113,8 +93,6 @@
       <span class="toggle-label" id="labelAnual">Anual</span>
       <span class="toggle-discount" aria-label="Desconto de 17% no plano anual">Economize 17%</span>
     </section>
-
-    <!-- Cards dos Planos -->
     <section class="cards-grid" id="cardsContainer" aria-label="Planos disponíveis">
       <div class="loading-container" id="loadingState" role="status" aria-live="polite">
         <p class="loading-text">Carregando pacotes<span class="loading-dots" aria-hidden="true">...</span></p>
@@ -122,8 +100,6 @@
     </section>
 
   </main>
-
-  <!-- ======== FOOTER ======== -->
   <footer class="footer-loja">
     <p>Token Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer" class="link-limpo">Mercado Pago.</a> </p>
     <p> Desenvolvido por Token Arena, com a ideia principal por João Marcelo.  </p>
@@ -132,12 +108,10 @@
 
   <dialog class="modal-overlay" id="authModal" aria-labelledby="authModalTitle">
     <div class="modal-content">
-
       <div class="auth-tabs" role="tablist" aria-label="Opções de autenticação">
         <button class="auth-tab active" id="tabLogin" type="button" role="tab" aria-selected="true" aria-controls="formLogin">Entrar</button>
         <button class="auth-tab" id="tabRegistro" type="button" role="tab" aria-selected="false" aria-controls="formRegistro">Criar Conta</button>
       </div>
-
       <div class="modal-body auth-form visible" id="formLogin" role="tabpanel" aria-labelledby="tabLogin">
         <h2 class="sr-only" id="authModalTitle">Autenticação</h2>
         <form id="loginForm" autocomplete="on" novalidate>
@@ -152,15 +126,11 @@
           <div id="loginFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
           <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnLogin">Entrar na Arena</button>
         </form>
-
-        <!-- Separador -->
         <div class="auth-separator">
           <span class="auth-separator-line"></span>
           <span class="auth-separator-text">ou</span>
           <span class="auth-separator-line"></span>
         </div>
-
-        <!-- Google Login -->
         <button class="btn-google" id="btnGoogleLogin" type="button" aria-label="Entrar com o Google">
           <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
@@ -170,10 +140,8 @@
           </svg>
           Entrar com o Google
         </button>
-
         <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth" type="button">Cancelar</button>
       </div>
-
       <div class="modal-body auth-form" id="formRegistro" role="tabpanel" aria-labelledby="tabRegistro" hidden>
         <form id="registroForm" autocomplete="on" novalidate>
           <div class="form-group">
@@ -191,15 +159,12 @@
           <div id="registroFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
           <button type="submit" class="btn-gamer btn-gamer-success w-full mt-4" id="btnRegistro">Criar Conta</button>
         </form>
-
-        <!-- Separador -->
         <div class="auth-separator">
           <span class="auth-separator-line"></span>
           <span class="auth-separator-text">ou</span>
           <span class="auth-separator-line"></span>
         </div>
 
-        <!-- Google Register -->
         <button class="btn-google" id="btnGoogleRegistro" type="button" aria-label="Criar conta com o Google">
           <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
@@ -275,6 +240,10 @@
               <label class="form-label" for="perfilLocalidade">Localidade (Cidade/Estado)</label>
               <input class="form-input" type="text" id="perfilLocalidade" placeholder="Ex: São Paulo, SP" />
             </div>
+            <div class="form-group">
+              <label class="form-label" for="perfilPix">Chave PIX (Para receber prêmios)</label>
+              <input class="form-input" type="text" id="perfilPix" placeholder="Seu email, CPF ou telefone PIX" />
+            </div>
           </div>
 
           <div id="areaCartao" class="auth-form">
@@ -298,7 +267,6 @@
       </div>
     </div>
   </dialog>
-
   <script src="main.js" defer></script>
 </body>
 </html>

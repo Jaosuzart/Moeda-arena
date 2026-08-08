@@ -138,7 +138,7 @@ const loginGoogle = async (req, res, next) => {
 };
 const atualizarPerfil = async (req, res, next) => {
   try {
-    const { nome, cpf, localidade, cartao_final } = req.body;
+    const { nome, cpf, localidade, chave_pix, cartao_final } = req.body;
     
     if (!nome) {
       return erro(res, 'O nome não pode ficar vazio.', 400);
@@ -148,6 +148,7 @@ const atualizarPerfil = async (req, res, next) => {
       nome: nome.trim(),
       cpf: cpf ? cpf.trim() : null,
       localidade: localidade ? localidade.trim() : null,
+      chave_pix: chave_pix ? chave_pix.trim() : null,
       cartao_final: cartao_final ? cartao_final.trim() : null
     });
     

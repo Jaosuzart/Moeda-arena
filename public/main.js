@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     perfilNome: document.getElementById('perfilNome'),
     perfilCpf: document.getElementById('perfilCpf'),
     perfilLocalidade: document.getElementById('perfilLocalidade'),
+    perfilPix: document.getElementById('perfilPix'),
     perfilCartao: document.getElementById('perfilCartao'),
     perfilFeedback: document.getElementById('perfilFeedback'),
     btnSalvarPerfil: document.getElementById('btnSalvarPerfil')
@@ -70,13 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     premium: { icon: '⚔️', desc: 'O favorito dos jogadores competitivos.' },
     vip: { icon: '👑', desc: 'Para quem quer dominar sem limites.' }
   };
-
-  // ========================
-  //  Utilitários
-  // ========================
-
   /**
-   * Faz uma requisição fetch com o token JWT no header (se disponível).
    * @param {string} url
    * @param {Object} [opcoes={}]
    * @returns {Promise<Response>}
@@ -113,6 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('visible');
   }
 
+  function setCarregando(btn, isLoading, texto) {
+    btn.disabled = isLoading;
+    btn.textContent = texto;
+  }
+
+
   
   function atualizarNavbar() {
     if (estado.usuario) {
@@ -121,6 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
       DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString('pt-BR');
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
+
+      const is_admin = estado.usuario.email === 'joaomarcelosuzartcastro@gmail.com';
+      const firstName = estado.usuario.nome.split(' ')[0];
+      
+      const elName = document.getElementById('navUserName');
+      const elRole = document.getElementById('navUserRole');
+      
+      if (elName) elName.textContent = firstName;
+      if (elRole) {
+        if (is_admin) {
+          elRole.textContent = 'Administrador';
+          elRole.style.background = '#ef4444'; // vermelho para admin
+        } else {
+          elRole.textContent = 'Jogador';
+          elRole.style.background = '#3b82f6'; // azul para jogador
+        }
+      }
     } else {
       DOM.navAuthBtns.style.display = 'flex';
       DOM.navUserInfo.style.display = 'none';
@@ -137,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.sucesso && data.dados && data.dados.usuario) {
         estado.usuario = data.dados.usuario;
       } else {
-        // Token inválido/expirado
         estado.token = null;
         localStorage.removeItem('token');
       }
@@ -325,12 +342,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const resp = await fetch('/api/auth/perfil', {
         headers: { 'Authorization': `Bearer ${estado.token}` }
       });
-      if (resp.ok) {
-        const dados = await resp.json();
-        DOM.perfilNome.value = dados.nome || '';
-        DOM.perfilCpf.value = dados.cpf || '';
-        DOM.perfilLocalidade.value = dados.localidade || '';
-        DOM.perfilCartao.value = dados.cartao_final || '';
+      const data = await resp.json();
+      if (data.sucesso && data.dados && data.dados.usuario) {
+        const u = data.dados.usuario;
+        DOM.perfilNome.value = u.nome || '';
+        DOM.perfilCpf.value = u.cpf || '';
+        DOM.perfilLocalidade.value = u.localidade || '';
+        DOM.perfilPix.value = u.chave_pix || '';
+        DOM.perfilCartao.value = u.cartao_final || '';
       }
     } catch (e) { console.error('Erro ao buscar perfil', e); }
   });
@@ -375,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
           nome: DOM.perfilNome.value,
           cpf: DOM.perfilCpf.value,
           localidade: DOM.perfilLocalidade.value,
+          chave_pix: DOM.perfilPix.value,
           cartao_final: DOM.perfilCartao.value
         })
       });
@@ -384,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarFeedback(DOM.perfilFeedback, data.mensagem || 'Perfil salvo com sucesso!', true);
         if (estado.usuario) {
           estado.usuario.nome = DOM.perfilNome.value;
-          atualizarInterface();
+          atualizarNavbar();
         }
       } else {
         mostrarFeedback(DOM.perfilFeedback, data.erro || 'Erro ao salvar perfil.', false);
@@ -403,7 +423,6 @@ document.addEventListener('DOMContentLoaded', () => {
     article.className = 'plan-card';
     article.setAttribute('data-tier', plano.id);
 
-    // Popular badge
     if (plano.popular) {
       const badge = document.createElement('span');
       badge.className = 'plan-card-popular-badge';
