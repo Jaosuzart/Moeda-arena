@@ -1,0 +1,13 @@
+/**
+ * @module routes/compraRoutes
+ * @description 
+ */
+const express = require('express');
+const router = express.Router();
+const compraController = require('../controllers/compraController');
+const { autenticar } = require('../middlewares/auth');
+const { validarCompra } = require('../middlewares/validators');
+
+router.post('/comprar', autenticar, validarCompra, compraController.processarCompra);
+
+module.exports = router;
