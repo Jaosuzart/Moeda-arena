@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
   <title>Token Arena — Loja de Tokens e Passe de Batalha Premium</title>
   <meta name="description" content="Compre tokens para jogos com segurança via Mercado Pago. Escolha entre o Passe Amador gratuito, Profissional ou Sócio Lenda e desbloqueie personagens épicos, ligas exclusivas e muito mais." />
   <meta name="keywords" content="tokens, jogos, passe de batalha, loja de tokens, mercado pago, gaming, comprar tokens" />
   <meta name="author" content="Token Arena" />
   <meta name="robots" content="index, follow" />
-
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Token Arena — Passe de Batalha Premium" />
   <meta property="og:description" content="Escolha seu pacote de tokens e domine a partida. Pagamento seguro via Mercado Pago." />
@@ -46,7 +44,6 @@
   }
   </script>
 </head>
-
 <body>
   <header>
     <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
@@ -54,13 +51,11 @@
         <span class="nav-logo-icon" aria-hidden="true">🎮</span>
         <span class="nav-logo-text">Token Arena</span>
       </a>
-
       <div class="nav-user" id="navUser">
         <div class="nav-auth-btns" id="navAuthBtns">
           <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
           <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
         </div>
-
         <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
           <div class="nav-user-welcome" id="navUserWelcome" style="margin-right: 15px; text-align: right; line-height: 1.2;">
             <span style="font-size: 0.9rem; color: #cbd5e1;">Olá, <strong id="navUserName">Jogador</strong></span><br>
@@ -77,7 +72,6 @@
       </div>
     </nav>
   </header>
-
   <main id="conteudoPrincipal">
         <section class="hero-section" aria-labelledby="heroTitle">
       <span class="hero-badge" aria-label="Temporada atual">Temporada 6</span>
@@ -98,14 +92,12 @@
         <p class="loading-text">Carregando pacotes<span class="loading-dots" aria-hidden="true">...</span></p>
       </div>
     </section>
-
   </main>
   <footer class="footer-loja">
     <p>Token Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer" class="link-limpo">Mercado Pago.</a> </p>
     <p> Desenvolvido por Token Arena, com a ideia principal por João Marcelo.  </p>
     <p>Link do meu github: <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer" class="link-limpo"><strong>Jaosuzart</strong>  </a></p> 
   </footer>
-
   <dialog class="modal-overlay" id="authModal" aria-labelledby="authModalTitle">
     <div class="modal-content">
       <div class="auth-tabs" role="tablist" aria-label="Opções de autenticação">
@@ -174,25 +166,19 @@
           </svg>
           Criar conta com o Google
         </button>
-
         <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth2" type="button">Cancelar</button>
       </div>
-
     </div>
   </dialog>
-
   <dialog class="modal-overlay" id="checkoutModal" aria-labelledby="checkoutTitle">
     <div class="modal-content">
-
       <div class="modal-header">
         <h2 class="modal-header-title" id="checkoutTitle">Finalizar Assinatura</h2>
         <button class="modal-close" id="btnFecharCheckout" type="button" aria-label="Fechar modal de checkout">&times;</button>
       </div>
-
       <div class="modal-body">
         <p class="text-muted">Você está adquirindo o pacote:</p>
         <p class="checkout-plano-nome" id="checkoutPlanoNome" aria-live="polite"></p>
-
         <fieldset class="form-group border-none p-0 mt-4" id="areaPagamento">
           <legend class="form-label">Método de Pagamento</legend>
           <select class="form-select" id="metodoPagamento" aria-label="Selecione o método de pagamento" required>
@@ -201,30 +187,24 @@
             <option value="Cartão Virtual">Cartão de Crédito (via Mercado Pago)</option>
           </select>
         </fieldset>
-
         <div id="checkoutFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
       </div>
-
       <div class="modal-footer">
         <button class="btn-gamer btn-gamer-secondary" id="btnCancelarCheckout" type="button">Cancelar</button>
         <button class="btn-gamer btn-gamer-success" id="btnConfirmarCompra" type="button">Confirmar Pagamento</button>
       </div>
-
     </div>
   </dialog>
-
   <dialog class="modal-overlay" id="perfilModal" aria-labelledby="perfilTitle">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-header-title" id="perfilTitle">Meu Perfil</h2>
         <button class="modal-close" id="btnFecharPerfil" type="button" aria-label="Fechar perfil">&times;</button>
       </div>
-      
       <div class="auth-tabs" role="tablist">
         <button class="auth-tab active" id="tabDados" type="button" role="tab">Meus Dados</button>
         <button class="auth-tab" id="tabCartao" type="button" role="tab">Pagamento</button>
       </div>
-
       <div class="modal-body">
         <form id="perfilForm">
           <div id="areaDados" class="auth-form visible">
@@ -245,7 +225,6 @@
               <input class="form-input" type="text" id="perfilPix" placeholder="Seu email, CPF ou telefone PIX" />
             </div>
           </div>
-
           <div id="areaCartao" class="auth-form">
             <div class="form-group">
               <label class="form-label" for="perfilCartao">CARTÃO DE CRÉDITO SALVO</label>
@@ -256,12 +235,9 @@
               <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 5px; display: block;">*Por segurança (PCI DSS), armazenamos apenas os últimos 4 dígitos do seu cartão.</small>
             </div>
           </div>
-
           <div id="perfilFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          
           <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnSalvarPerfil">Salvar Alterações</button>
         </form>
-
         <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 1.5rem 0;" />
         <button class="btn-gamer btn-gamer-ghost w-full" id="btnSairConta" type="button" style="color: #ef4444;">Sair da Conta</button>
       </div>
