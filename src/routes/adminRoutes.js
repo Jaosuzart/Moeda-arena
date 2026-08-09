@@ -3,7 +3,6 @@ const router = express.Router();
 const adminController = require('../controllers/adminController');
 const { autenticar } = require('../middlewares/auth');
 
-// Todas as rotas admin requerem autenticação e privilégios de administrador
 router.use(autenticar, adminController.isAdmin);
 
 router.get('/usuarios', adminController.listarUsuarios);

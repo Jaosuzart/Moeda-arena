@@ -49,8 +49,7 @@ const obterTodosOsPlanos = () => planosGames;
 const obterPlanoPorId = (id) => planosGames.find(p => p.id === id);
 
 /**
- * Busca um plano pelo nome.
- * @param {string} nome - Nome do plano (ex: 'Passe Profissional').
+ * @param {string} nome 
  * @returns {Object|undefined}
  */
 const obterPlanoPorNome = (nome) => planosGames.find(p => p.nome === nome);

@@ -6,12 +6,11 @@ const { pool } = require('./db');
 const logger = require('../config/logger');
 
 /**
- * Cria um novo usuário no banco de dados.
- * @param {string} nome - Nome do usuário.
- * @param {string} email - Email único do usuário.
- * @param {string} senhaHash - Hash bcrypt da senha.
- * @returns {Promise<Object>} O usuário criado (sem senha).
- * @throws {Error} Se o email já existir (código: EMAIL_DUPLICADO).
+ * @param {string} nome 
+ * @param {string} email 
+ * @param {string} senhaHash
+ * @returns {Promise<Object>} 
+ * @throws {Error} 
  */
 const criarUsuario = async (nome, email, senhaHash) => {
   try {
@@ -24,7 +23,7 @@ const criarUsuario = async (nome, email, senhaHash) => {
       id: resultado.insertId,
       nome,
       email,
-      saldo_tokens: 100  // Valor padrão definido no schema SQL
+      saldo_tokens: 100  
     };
   } catch (err) {
     if (err.code === 'ER_DUP_ENTRY') {
@@ -50,7 +49,6 @@ const buscarPorEmail = async (email) => {
 };
 
 /**
- * Busca um usuário pelo ID (sem senha_hash).
  * @param {number} id
  * @returns {Promise<Object|null>}
  */
@@ -61,7 +59,6 @@ const buscarPorId = async (id) => {
 };
 
 /**
- * Busca o Top N jogadores ordenado por troféus, vitórias e XP.
  * @param {number} limite 
  */
 const buscarRanking = async (limite = 10) => {
@@ -69,10 +66,6 @@ const buscarRanking = async (limite = 10) => {
   const [rows] = await pool.query(sql, [limite]);
   return rows;
 };
-
-/**
- * Atualiza as estatísticas do jogo de um usuário.
- */
 const adicionarEstatisticas = async (id, trofeus, vitorias, xp) => {
   const sql = 'UPDATE usuarios SET trofeus = trofeus + ?, vitorias = vitorias + ?, xp = xp + ? WHERE id = ?';
   const [resultado] = await pool.query(sql, [trofeus, vitorias, xp, id]);
@@ -87,10 +80,6 @@ const listarTodos = async () => {
   const [rows] = await pool.query(sql);
   return rows;
 };
-
-/**
- * Atualiza o status (banir/desbanir) de um usuário.
- */
 const atualizarStatus = async (id, status) => {
   const sql = 'UPDATE usuarios SET status = ? WHERE id = ?';
   const [resultado] = await pool.query(sql, [status, id]);
@@ -119,10 +108,8 @@ const adicionarTokens = async (usuarioId, quantidade) => {
     throw err;
   }
 };
-
 /**
- * Atualiza o perfil do usuário (nome, cpf, localidade, cartao).
- * @param {number} id
+ *  * @param {number} id
  * @param {Object} dados
  * @returns {Promise<boolean>}
  */
