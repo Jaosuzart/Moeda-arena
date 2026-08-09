@@ -133,10 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elRole) {
         if (is_admin) {
           elRole.textContent = 'Administrador';
-          elRole.style.background = '#ef4444'; // vermelho para admin
+          elRole.style.background = '#b91c1c'; 
         } else {
           elRole.textContent = 'Jogador';
-          elRole.style.background = '#3b82f6'; // azul para jogador
+          elRole.style.background = '#3b82f6'; 
         }
       }
     } else {
