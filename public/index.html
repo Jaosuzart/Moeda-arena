@@ -54,10 +54,13 @@
       </a>
       <div class="nav-user" id="navUser">
         <div class="nav-auth-btns" id="navAuthBtns">
+          <button class="btn-gamer btn-gamer-ghost" id="btnRanking" type="button">🏆 Ranking</button>
           <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
           <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
         </div>
         <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
+          <button class="btn-gamer btn-gamer-ghost" id="btnRankingLogged" type="button">🏆 Ranking</button>
+          <button class="btn-gamer btn-gamer-ghost" id="btnAdminPanel" type="button" style="display: none; color: #ef4444;">⚙️ Admin</button>
           <div class="nav-user-welcome" id="navUserWelcome" style="margin-right: 15px; text-align: right; line-height: 1.2;">
             <span style="font-size: 0.9rem; color: #cbd5e1;">Olá, <strong id="navUserName">Jogador</strong></span><br>
             <span id="navUserRole" style="font-size: 0.75rem; background: #3b82f6; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Jogador</span>
@@ -244,6 +247,78 @@
       </div>
     </div>
   </dialog>
+  <!-- Ranking Modal -->
+  <dialog class="modal-overlay" id="rankingModal" aria-labelledby="rankingTitle">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2 class="modal-header-title" id="rankingTitle">🏆 Hall da Fama</h2>
+        <button class="modal-close" id="btnFecharRanking" type="button" aria-label="Fechar ranking">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--bg-card); border-radius: 8px; padding: 10px; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">
+                <th style="padding: 10px;">#</th>
+                <th style="padding: 10px;">Jogador</th>
+                <th style="padding: 10px;">Troféus</th>
+                <th style="padding: 10px;">Vitórias</th>
+                <th style="padding: 10px;">XP</th>
+              </tr>
+            </thead>
+            <tbody id="rankingTableBody">
+              <!-- Preenchido via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Admin Panel Modal -->
+  <dialog class="modal-overlay" id="adminModal" aria-labelledby="adminTitle">
+    <div class="modal-content" style="max-width: 800px;">
+      <div class="modal-header">
+        <h2 class="modal-header-title" id="adminTitle" style="color: #ef4444;">⚙️ Painel do Administrador</h2>
+        <button class="modal-close" id="btnFecharAdmin" type="button" aria-label="Fechar painel">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--bg-card); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+          <h3>Adicionar Tokens Rápidos</h3>
+          <form id="adminTokensForm" style="display: flex; gap: 10px; align-items: end; margin-top: 10px;">
+            <div style="flex: 1;">
+              <label class="form-label">ID do Usuário</label>
+              <input type="number" id="adminUserId" class="form-input" required placeholder="Ex: 5" />
+            </div>
+            <div style="flex: 1;">
+              <label class="form-label">Tokens (+)</label>
+              <input type="number" id="adminTokenAmount" class="form-input" required placeholder="Ex: 1000" />
+            </div>
+            <button type="submit" class="btn-gamer btn-gamer-primary">Adicionar</button>
+          </form>
+          <div id="adminFeedback" style="margin-top: 10px; font-size: 0.85rem;"></div>
+        </div>
+
+        <div style="background: var(--bg-card); border-radius: 8px; padding: 10px; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">
+                <th style="padding: 8px;">ID</th>
+                <th style="padding: 8px;">Nome (Email)</th>
+                <th style="padding: 8px;">Tokens</th>
+                <th style="padding: 8px;">Status</th>
+                <th style="padding: 8px;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Preenchido via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script src="main.js" defer></script>
 </body>
 </html>

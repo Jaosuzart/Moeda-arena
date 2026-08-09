@@ -44,7 +44,7 @@ const criarUsuario = async (nome, email, senhaHash) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorEmail = async (email) => {
-  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final FROM usuarios WHERE email = ?';
+  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status FROM usuarios WHERE email = ?';
   const [rows] = await pool.query(sql, [email]);
   return rows[0] || null;
 };
@@ -55,9 +55,46 @@ const buscarPorEmail = async (email) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorId = async (id) => {
-  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final FROM usuarios WHERE id = ?';
+  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status FROM usuarios WHERE id = ?';
   const [rows] = await pool.query(sql, [id]);
   return rows[0] || null;
+};
+
+/**
+ * Busca o Top N jogadores ordenado por troféus, vitórias e XP.
+ * @param {number} limite 
+ */
+const buscarRanking = async (limite = 10) => {
+  const sql = 'SELECT id, nome, trofeus, vitorias, xp FROM usuarios WHERE status != "banido" ORDER BY trofeus DESC, vitorias DESC, xp DESC LIMIT ?';
+  const [rows] = await pool.query(sql, [limite]);
+  return rows;
+};
+
+/**
+ * Atualiza as estatísticas do jogo de um usuário.
+ */
+const adicionarEstatisticas = async (id, trofeus, vitorias, xp) => {
+  const sql = 'UPDATE usuarios SET trofeus = trofeus + ?, vitorias = vitorias + ?, xp = xp + ? WHERE id = ?';
+  const [resultado] = await pool.query(sql, [trofeus, vitorias, xp, id]);
+  return resultado.affectedRows > 0;
+};
+
+/**
+ * Lista todos os usuários (para o Admin).
+ */
+const listarTodos = async () => {
+  const sql = 'SELECT id, nome, email, saldo_tokens, trofeus, vitorias, xp, status FROM usuarios ORDER BY id DESC';
+  const [rows] = await pool.query(sql);
+  return rows;
+};
+
+/**
+ * Atualiza o status (banir/desbanir) de um usuário.
+ */
+const atualizarStatus = async (id, status) => {
+  const sql = 'UPDATE usuarios SET status = ? WHERE id = ?';
+  const [resultado] = await pool.query(sql, [status, id]);
+  return resultado.affectedRows > 0;
 };
 
 /**
@@ -115,4 +152,4 @@ const debitarTokens = async (id, quantidade) => {
   }
 };
 
-module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil };
+module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus };

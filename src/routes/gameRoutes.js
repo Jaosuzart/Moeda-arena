@@ -15,4 +15,13 @@ router.post('/consumir', [
   body('quantidade').isInt({ min: 1 }).withMessage('A quantidade deve ser um número inteiro maior que 0.')
 ], tratarErrosValidacao, gameController.consumirTokens);
 
+router.get('/ranking', gameController.getRanking);
+
+router.post('/stats', [
+  body('email').isEmail().withMessage('Um e-mail válido é obrigatório.'),
+  body('trofeus').optional().isInt(),
+  body('vitorias').optional().isInt(),
+  body('xp').optional().isInt()
+], tratarErrosValidacao, gameController.salvarEstatisticas);
+
 module.exports = router;

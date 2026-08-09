@@ -19,6 +19,7 @@ const planoRoutes = require('./src/routes/planoRoutes');
 const compraRoutes = require('./src/routes/compraRoutes');
 const webhookRoutes = require('./src/routes/webhookRoutes');
 const gameRoutes = require('./src/routes/gameRoutes');
+const adminRoutes = require('./src/routes/adminRoutes');
 
 const app = express();
 
@@ -51,8 +52,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', authRoutes);
 app.use('/api', planoRoutes);
 app.use('/api', compraRoutes);
-app.use('/webhook', webhookRoutes);
-app.use('/api/games', gameRoutes);
+app.use('/api/webhook', webhookRoutes);
+app.use('/api/game', gameRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({

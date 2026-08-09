@@ -56,7 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
     perfilPix: document.getElementById('perfilPix'),
     perfilCartao: document.getElementById('perfilCartao'),
     perfilFeedback: document.getElementById('perfilFeedback'),
-    btnSalvarPerfil: document.getElementById('btnSalvarPerfil')
+    btnSalvarPerfil: document.getElementById('btnSalvarPerfil'),
+
+    // Ranking
+    btnRanking: document.getElementById('btnRanking'),
+    btnRankingLogged: document.getElementById('btnRankingLogged'),
+    rankingModal: document.getElementById('rankingModal'),
+    btnFecharRanking: document.getElementById('btnFecharRanking'),
+    rankingTableBody: document.getElementById('rankingTableBody'),
+
+    // Admin Panel
+    btnAdminPanel: document.getElementById('btnAdminPanel'),
+    adminModal: document.getElementById('adminModal'),
+    btnFecharAdmin: document.getElementById('btnFecharAdmin'),
+    adminTableBody: document.getElementById('adminTableBody'),
+    adminTokensForm: document.getElementById('adminTokensForm'),
+    adminUserId: document.getElementById('adminUserId'),
+    adminTokenAmount: document.getElementById('adminTokenAmount'),
+    adminFeedback: document.getElementById('adminFeedback')
   };
 
   let estado = {
@@ -134,9 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (is_admin) {
           elRole.textContent = 'Administrador';
           elRole.style.background = '#b91c1c'; 
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'inline-block';
         } else {
           elRole.textContent = 'Jogador';
           elRole.style.background = '#3b82f6'; 
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         }
       }
     } else {
@@ -666,6 +685,123 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarFeedback(DOM.checkoutFeedback, 'Erro de conexão com o servidor.', false);
       DOM.btnConfirmarCompra.disabled = false;
       DOM.btnConfirmarCompra.textContent = plano.isGratis ? 'Resgatar Benefícios Grátis' : 'Ir para Pagamento Seguro';
+    }
+  });
+
+  // ================== RANKING ==================
+  async function carregarRanking() {
+    try {
+      const res = await fetch('/api/game/ranking?limite=10');
+      const data = await res.json();
+      if (res.ok && data.dados) {
+        DOM.rankingTableBody.innerHTML = '';
+        data.dados.forEach((jogador, index) => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+          
+          let medal = `${index + 1}º`;
+          if (index === 0) medal = '🥇';
+          if (index === 1) medal = '🥈';
+          if (index === 2) medal = '🥉';
+
+          tr.innerHTML = `
+            <td style="padding: 10px; font-weight: bold;">${medal}</td>
+            <td style="padding: 10px; font-weight: 600; color: #fff;">${jogador.nome.split(' ')[0]}</td>
+            <td style="padding: 10px; color: #fbbf24;">🏆 ${jogador.trofeus || 0}</td>
+            <td style="padding: 10px; color: #34d399;">⚔️ ${jogador.vitorias || 0}</td>
+            <td style="padding: 10px; color: #60a5fa;">⭐ ${jogador.xp || 0}</td>
+          `;
+          DOM.rankingTableBody.appendChild(tr);
+        });
+      }
+    } catch (e) { console.error('Erro ao buscar ranking', e); }
+  }
+
+  const abrirRank = () => {
+    carregarRanking();
+    abrirModal(DOM.rankingModal);
+  };
+  if (DOM.btnRanking) DOM.btnRanking.addEventListener('click', abrirRank);
+  if (DOM.btnRankingLogged) DOM.btnRankingLogged.addEventListener('click', abrirRank);
+  if (DOM.btnFecharRanking) DOM.btnFecharRanking.addEventListener('click', () => fecharModal(DOM.rankingModal));
+  if (DOM.rankingModal) DOM.rankingModal.addEventListener('click', (e) => {
+    if (e.target === DOM.rankingModal) fecharModal(DOM.rankingModal);
+  });
+
+  // ================== ADMIN PANEL ==================
+  async function carregarAdminUsers() {
+    try {
+      const res = await fetchAutenticado('/api/admin/usuarios');
+      const data = await res.json();
+      if (res.ok && data.dados) {
+        DOM.adminTableBody.innerHTML = '';
+        data.dados.forEach(u => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+          const badgeStatus = u.status === 'banido' ? '<span style="color:#ef4444;font-size:0.8rem;">Banido</span>' : '<span style="color:#34d399;font-size:0.8rem;">Ativo</span>';
+          
+          tr.innerHTML = `
+            <td style="padding: 8px;">${u.id}</td>
+            <td style="padding: 8px;">${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small></td>
+            <td style="padding: 8px;">🪙 ${u.saldo_tokens}</td>
+            <td style="padding: 8px;">${badgeStatus}</td>
+            <td style="padding: 8px; display: flex; gap: 5px;">
+              <button class="btn-gamer btn-gamer-ghost toggle-status" data-id="${u.id}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 4px 8px; font-size: 0.75rem;">
+                ${u.status === 'banido' ? 'Desbanir' : 'Banir'}
+              </button>
+            </td>
+          `;
+          DOM.adminTableBody.appendChild(tr);
+        });
+
+        document.querySelectorAll('.toggle-status').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const userId = e.target.getAttribute('data-id');
+            const newStatus = e.target.getAttribute('data-status');
+            await fetchAutenticado('/api/admin/usuarios/status', {
+              method: 'POST',
+              body: JSON.stringify({ usuarioId: userId, status: newStatus })
+            });
+            carregarAdminUsers(); // Atualiza a tabela
+          });
+        });
+      }
+    } catch (e) { console.error('Erro ao buscar usuários', e); }
+  }
+
+  if (DOM.btnAdminPanel) DOM.btnAdminPanel.addEventListener('click', () => {
+    carregarAdminUsers();
+    abrirModal(DOM.adminModal);
+  });
+  if (DOM.btnFecharAdmin) DOM.btnFecharAdmin.addEventListener('click', () => fecharModal(DOM.adminModal));
+  if (DOM.adminModal) DOM.adminModal.addEventListener('click', (e) => {
+    if (e.target === DOM.adminModal) fecharModal(DOM.adminModal);
+  });
+
+  if (DOM.adminTokensForm) DOM.adminTokensForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = DOM.adminTokensForm.querySelector('button');
+    setCarregando(btn, true, 'Adicionando...');
+    try {
+      const res = await fetchAutenticado('/api/admin/usuarios/tokens', {
+        method: 'POST',
+        body: JSON.stringify({
+          usuarioId: DOM.adminUserId.value,
+          quantidade: DOM.adminTokenAmount.value
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        mostrarFeedback(DOM.adminFeedback, data.dados.mensagem, true);
+        DOM.adminTokensForm.reset();
+        carregarAdminUsers();
+      } else {
+        mostrarFeedback(DOM.adminFeedback, data.erro || 'Erro', false);
+      }
+    } catch (err) {
+      mostrarFeedback(DOM.adminFeedback, 'Erro de conexão', false);
+    } finally {
+      setCarregando(btn, false, 'Adicionar');
     }
   });
   async function inicializar() {

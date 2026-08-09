@@ -63,8 +63,44 @@ const consumirTokens = async (req, res, next) => {
   }
 };
 
+const getRanking = async (req, res, next) => {
+  try {
+    const limite = req.query.limite ? parseInt(req.query.limite) : 10;
+    const ranking = await usuarioModel.buscarRanking(limite);
+    return sucesso(res, ranking);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const salvarEstatisticas = async (req, res, next) => {
+  try {
+    const { email, trofeus = 0, vitorias = 0, xp = 0 } = req.body;
+    
+    if (!email) {
+      return erro(res, 'E-mail é obrigatório.', 400, 'PARAMETROS_INVALIDOS');
+    }
+
+    const usuario = await usuarioModel.buscarPorEmail(email);
+    if (!usuario) {
+      return erro(res, 'Jogador não encontrado.', 404, 'JOGADOR_NAO_ENCONTRADO');
+    }
+
+    const sucessoAt = await usuarioModel.adicionarEstatisticas(usuario.id, trofeus, vitorias, xp);
+    if (!sucessoAt) {
+      return erro(res, 'Falha ao atualizar estatísticas.', 500, 'ERRO_INTERNO');
+    }
+
+    return sucesso(res, { mensagem: 'Estatísticas salvas com sucesso!' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   validarApiKey,
   getSaldo,
-  consumirTokens
+  consumirTokens,
+  getRanking,
+  salvarEstatisticas
 };
