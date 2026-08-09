@@ -44,7 +44,7 @@ const criarUsuario = async (nome, email, senhaHash) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorEmail = async (email) => {
-  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, cartao_final FROM usuarios WHERE email = ?';
+  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final FROM usuarios WHERE email = ?';
   const [rows] = await pool.query(sql, [email]);
   return rows[0] || null;
 };
@@ -55,7 +55,7 @@ const buscarPorEmail = async (email) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorId = async (id) => {
-  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, cartao_final FROM usuarios WHERE id = ?';
+  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final FROM usuarios WHERE id = ?';
   const [rows] = await pool.query(sql, [id]);
   return rows[0] || null;
 };
