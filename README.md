@@ -3,7 +3,7 @@
   <em>Projeto web desenvolvido com HTML5, CSS3, Bootstrap, JavaScript e Node.js.</em>
 </p>
 <p align="center">
-  <img width="4080" height="3072" alt="IMG_20260809_112940196_MFNR" src="https://github.com/user-attachments/assets/94edcd13-5050-46d2-a188-2811a86435d4" />
+  <img width="1290" height="588" alt="image" src="https://github.com/user-attachments/assets/920e69b2-5347-4a8b-b1a6-c86ef4332f17" />
 </p>
 <hr>
 ## 📌 Sobre o projeto
