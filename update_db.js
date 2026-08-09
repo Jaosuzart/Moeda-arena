@@ -14,7 +14,6 @@ async function updateDb() {
   try {
     console.log("Conectando ao TiDB para atualizar tabela...");
     
-    // Tentamos adicionar as colunas, ignorando o erro caso elas já existam
     try {
       await pool.query('ALTER TABLE usuarios ADD COLUMN trofeus INT DEFAULT 0');
       console.log('Coluna trofeus adicionada.');
@@ -30,7 +29,6 @@ async function updateDb() {
       console.log('Coluna xp adicionada.');
     } catch (e) { console.log('Coluna xp possivelmente já existe.'); }
 
-    // E também o status do usuário para o painel admin (ex: 'ativo' ou 'banido')
     try {
       await pool.query("ALTER TABLE usuarios ADD COLUMN status VARCHAR(20) DEFAULT 'ativo'");
       console.log('Coluna status adicionada.');
