@@ -504,10 +504,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const iconSpan = document.createElement('span');
       iconSpan.className = 'feature-icon';
-      iconSpan.textContent = '✓';
+      
+      // Se o recurso falar de Tokens, colocamos a moedinha em vez do ✓
+      if (recurso.toLowerCase().includes('token')) {
+        iconSpan.textContent = '🪙';
+        iconSpan.style.color = 'inherit'; // para não ficar verde/amarelo forçado
+      } else {
+        iconSpan.textContent = '✓';
+      }
 
       li.appendChild(iconSpan);
-      li.appendChild(document.createTextNode(recurso));
+      li.appendChild(document.createTextNode(' ' + recurso));
       ul.appendChild(li);
     });
 
