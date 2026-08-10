@@ -59,10 +59,10 @@
         </div>
         <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
           <button class="btn-gamer btn-gamer-ghost" id="btnRankingLogged" type="button">🏆 Ranking</button>
-          <button class="btn-gamer btn-gamer-ghost" id="btnAdminPanel" type="button" style="display: none; color: #ef4444;">⚙️ Admin</button>
-          <div class="nav-user-welcome" id="navUserWelcome" style="margin-right: 15px; text-align: right; line-height: 1.2;">
-            <span style="font-size: 0.9rem; color: #cbd5e1;">Olá, <strong id="navUserName">Jogador</strong></span><br>
-            <span id="navUserRole" style="font-size: 0.75rem; background: #3b82f6; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Jogador</span>
+          <button class="btn-gamer btn-gamer-ghost text-danger hidden-by-default" id="btnAdminPanel" type="button">⚙️ Admin</button>
+          <div class="nav-user-welcome" id="navUserWelcome">
+            <span class="welcome-text">Olá, <strong id="navUserName">Jogador</strong></span><br>
+            <span id="navUserRole" class="badge-role">Jogador</span>
           </div>
           <div class="nav-tokens" id="navTokens" aria-label="Saldo de tokens">
             <span class="nav-tokens-icon" aria-hidden="true">🪙</span>
@@ -76,7 +76,7 @@
     </nav>
   </header>
   <main id="conteudoPrincipal">
-        <section class="hero-section" aria-labelledby="heroTitle">
+    <section class="hero-section" aria-labelledby="heroTitle">
       <span class="hero-badge" aria-label="Temporada atual">Temporada 6</span>
       <h1 class="hero-title" id="heroTitle">Passe de Batalha</h1>
       <p class="hero-subtitle">Escolha seu pacote de tokens e domine a partida com personagens épicos e ligas exclusivas.</p>
@@ -95,49 +95,44 @@
         <p class="loading-text">Carregando pacotes<span class="loading-dots" aria-hidden="true">...</span></p>
       </div>
     </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section" aria-labelledby="faqTitle">
+    <section class="faq-section container-center" aria-labelledby="faqTitle">
       <h2 id="faqTitle" class="faq-title">Dúvidas Frequentes</h2>
-      
+      <div class="faq-grid"></div>
       <article class="faq-item">
         <h3 class="faq-question">Como eu recebo meus tokens?</h3>
         <p class="faq-answer">Após o pagamento ser aprovado pelo Mercado Pago, os tokens são creditados automaticamente na conta vinculada ao seu e-mail.</p>
       </article>
-
       <article class="faq-item">
         <h3 class="faq-question">O pagamento é seguro?</h3>
         <p class="faq-answer">Sim! Nós não armazenamos nenhum dado bancário seu. Tudo é processado pelo ambiente seguro e criptografado do Mercado Pago.</p>
       </article>
-
       <article class="faq-item">
         <h3 class="faq-question">O que acontece se eu me arrepender?</h3>
         <p class="faq-answer">Você tem garantia de devolução do dinheiro em até 7 dias, conforme o Direito de Arrependimento (CDC), desde que os tokens não tenham sido gastos dentro do jogo.</p>
       </article>
-
       <article class="faq-item">
         <h3 class="faq-question">Por que pedem meu CPF no pagamento?</h3>
         <p class="faq-answer">É uma exigência do Banco Central e do Mercado Pago para prevenção a fraudes e emissão de notas fiscais. O fornecimento no seu perfil aqui é opcional.</p>
       </article>
     </section>
   </main>
-  <footer class="footer-loja">
-    <p>Token Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer" class="link-limpo">Mercado Pago.</a> </p>
-    <p> Desenvolvido por Token Arena, com a ideia principal por João Marcelo. CPF: <strong>065.030.745-30</strong> Telefone: <strong>5571982767129</strong></p>
-    <p>Link do meu github: <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer" class="link-limpo"><strong>Jaosuzart</strong>  </a></p> 
-    <p><button id="btnAbrirTermos" class="link-limpo" style="background:none;border:none;cursor:pointer;text-decoration:underline;">Termos e Condições</button></p>
-  </footer>
 
+  <footer class="footer-loja">
+    <p>Token Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer" class="link-limpo link-destaque">Mercado Pago.</a></p>
+    <p>Desenvolvido por Token Arena, com a ideia principal por João Marcelo. CPF: <strong>065.030.745-30</strong> Telefone: <strong>5571982767129</strong></p>
+    <p>Link do meu github: <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer" class="link-limpo link-destaque"><strong>Jaosuzart</strong></a></p> 
+    <p><button id="btnAbrirTermos" class="btn-link">Termos e Condições</button></p>
+  </footer>
   <dialog class="modal-overlay" id="termosModal" aria-labelledby="termosTitle">
     <div class="modal-content modal-lg" role="document">
       <header class="modal-header">
-        <h2 id="termosTitle" class="modal-header-title">"Termos e Condições"</h2>
+        <h2 id="termosTitle" class="modal-header-title">Termos e Condições</h2>
         <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
       </header>
-      <div class="modal-body termos-content" style="min-height: 60vh; overflow-y: auto;">
+      <div class="modal-body termos-content modal-body-scroll">
         <h3>1. Glossário e Definições</h3>
         <p>Para o perfeito entendimento destes termos, adotamos as seguintes definições:</p>
-        <ul style="color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; padding-left: 1.2rem;">
+        <ul>
           <li><strong>"Token Arena":</strong> Nossa plataforma de vendas e distribuição de benefícios virtuais.</li>
           <li><strong>"Tokens" (Moedas da Loja):</strong> Moeda virtual genérica adquirida em nosso site, utilizada exclusivamente para trocar por benefícios ou moedas de outros jogos dentro do nosso ecossistema.</li>
           <li><strong>"Moedas de Terceiros" (ex: Robux, V-Bucks):</strong> Moedas virtuais pertencentes a plataformas de jogos externos. A Token Arena atua como facilitadora para a recarga destas moedas, quando aplicável aos pacotes oferecidos.</li>
@@ -174,7 +169,7 @@
         <p>A Token Arena se compromete a garantir a acessibilidade digital para todos os jogadores, incluindo pessoas com deficiências visuais e motoras. Estamos em melhoria contínua para aplicar os padrões WCAG de usabilidade web, assegurando contraste adequado de cores, navegação por teclado e compatibilidade com leitores de tela.</p>
       </div>
       <footer class="modal-footer">
-        <button type="button" class="btn-gamer" id="btnOkTermos" style="width: 100%;">Ok, Entendido</button>
+        <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnOkTermos">Ok, Entendido</button>
       </footer>
     </div>
   </dialog>
@@ -251,6 +246,7 @@
       </div>
     </div>
   </dialog>
+
   <dialog class="modal-overlay" id="checkoutModal" aria-labelledby="checkoutTitle">
     <div class="modal-content">
       <div class="modal-header">
@@ -276,6 +272,7 @@
       </div>
     </div>
   </dialog>
+
   <dialog class="modal-overlay" id="perfilModal" aria-labelledby="perfilTitle">
     <div class="modal-content">
       <div class="modal-header">
@@ -309,37 +306,38 @@
           <div id="areaCartao" class="auth-form">
             <div class="form-group">
               <label class="form-label" for="perfilCartao">CARTÃO DE CRÉDITO SALVO</label>
-              <div class="card-input-wrapper" style="position: relative;">
-                <span style="position: absolute; left: 16px; top: 12px; color: var(--text-muted); font-family: monospace; pointer-events: none; user-select: none;">**** **** ****</span>
-                <input class="form-input" type="text" id="perfilCartao" placeholder="1234" maxlength="4" style="padding-left: 130px; font-family: monospace;" title="Apenas os últimos 4 dígitos por segurança" />
+              <div class="card-input-wrapper">
+                <span class="card-mask">**** **** ****</span>
+                <input class="form-input form-input-card" type="text" id="perfilCartao" placeholder="1234" maxlength="4" title="Apenas os últimos 4 dígitos por segurança" />
               </div>
-              <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 5px; display: block;">*Por segurança (PCI DSS), armazenamos apenas os últimos 4 dígitos do seu cartão.</small>
+              <small class="text-xs-muted">*Por segurança (PCI DSS), armazenamos apenas os últimos 4 dígitos do seu cartão.</small>
             </div>
           </div>
           <div id="perfilFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
           <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnSalvarPerfil">Salvar Alterações</button>
         </form>
-        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 1.5rem 0;" />
-        <button class="btn-gamer btn-gamer-ghost w-full" id="btnSairConta" type="button" style="color: #ef4444;">Sair da Conta</button>
+        <hr class="separator-line" />
+        <button class="btn-gamer btn-gamer-ghost w-full text-danger" id="btnSairConta" type="button">Sair da Conta</button>
       </div>
     </div>
   </dialog>
+
   <dialog class="modal-overlay" id="rankingModal" aria-labelledby="rankingTitle">
-    <div class="modal-content" style="max-width: 600px;">
+    <div class="modal-content modal-md">
       <div class="modal-header">
         <h2 class="modal-header-title" id="rankingTitle">🏆 Hall da Fama</h2>
         <button class="modal-close" id="btnFecharRanking" type="button" aria-label="Fechar ranking">&times;</button>
       </div>
       <div class="modal-body">
-        <div style="background: var(--bg-card); border-radius: 8px; padding: 10px; overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <div class="table-responsive">
+          <table class="custom-table">
             <thead>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">
-                <th style="padding: 10px;">#</th>
-                <th style="padding: 10px;">Jogador</th>
-                <th style="padding: 10px;">Troféus</th>
-                <th style="padding: 10px;">Vitórias</th>
-                <th style="padding: 10px;">XP</th>
+              <tr>
+                <th>#</th>
+                <th>Jogador</th>
+                <th>Troféus</th>
+                <th>Vitórias</th>
+                <th>XP</th>
               </tr>
             </thead>
             <tbody id="rankingTableBody">
@@ -351,37 +349,37 @@
   </dialog>
 
   <dialog class="modal-overlay" id="adminModal" aria-labelledby="adminTitle">
-    <div class="modal-content" style="max-width: 800px;">
+    <div class="modal-content modal-lg">
       <div class="modal-header">
-        <h2 class="modal-header-title" id="adminTitle" style="color: #ef4444;">⚙️ Painel do Administrador</h2>
+        <h2 class="modal-header-title text-danger" id="adminTitle">⚙️ Painel do Administrador</h2>
         <button class="modal-close" id="btnFecharAdmin" type="button" aria-label="Fechar painel">&times;</button>
       </div>
       <div class="modal-body">
-        <div style="background: var(--bg-card); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-          <h3>Adicionar Tokens Rápidos(Moedas).</h3>
-          <form id="adminTokensForm" style="display: flex; gap: 10px; align-items: end; margin-top: 10px;">
-            <div style="flex: 1;">
+        <div class="admin-panel-card">
+          <h3>Adicionar Tokens Rápidos (Moedas).</h3>
+          <form id="adminTokensForm" class="admin-form-row">
+            <div class="flex-1">
               <label class="form-label">ID do Usuário</label>
               <input type="number" id="adminUserId" class="form-input" required placeholder="Ex: 5" />
             </div>
-            <div style="flex: 1;">
+            <div class="flex-1">
               <label class="form-label">Tokens (+)</label>
               <input type="number" id="adminTokenAmount" class="form-input" required placeholder="Ex: 1000" />
             </div>
             <button type="submit" class="btn-gamer btn-gamer-primary">Adicionar</button>
           </form>
-          <div id="adminFeedback" style="margin-top: 10px; font-size: 0.85rem;"></div>
+          <div id="adminFeedback" class="feedback-sm"></div>
         </div>
 
-        <div style="background: var(--bg-card); border-radius: 8px; padding: 10px; overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+        <div class="table-responsive">
+          <table class="custom-table table-sm">
             <thead>
-              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">
-                <th style="padding: 8px;">ID</th>
-                <th style="padding: 8px;">Nome (Email)</th>
-                <th style="padding: 8px;">Tokens</th>
-                <th style="padding: 8px;">Status</th>
-                <th style="padding: 8px;">Ações</th>
+              <tr>
+                <th>ID</th>
+                <th>Nome (Email)</th>
+                <th>Tokens</th>
+                <th>Status</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody id="adminTableBody">
