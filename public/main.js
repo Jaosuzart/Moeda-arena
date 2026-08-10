@@ -795,12 +795,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
           tr.innerHTML = `
             <td style="padding: 8px;">${u.id}</td>
-            <td style="padding: 8px;">${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small></td>
+            <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${u.email}">
+              ${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small>
+            </td>
             <td style="padding: 8px;">🪙 ${u.saldo_tokens}</td>
             <td style="padding: 8px;">${badgeStatus}</td>
-            <td style="padding: 8px; display: flex; gap: 5px;">
-              <button class="btn-gamer btn-gamer-ghost toggle-status" data-id="${u.id}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 4px 8px; font-size: 0.75rem;">
-                ${u.status === 'banido' ? 'Desbanir' : 'Banir'}
+            <td style="padding: 8px; text-align: right;">
+              <button class="toggle-status" data-id="${u.id}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; color: #fff; background: ${u.status === 'banido' ? '#10b981' : '#ef4444'}; transition: all 0.2s;">
+                ${u.status === 'banido' ? 'DESBANIR' : 'BANIR'}
               </button>
             </td>
           `;
