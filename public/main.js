@@ -232,6 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
+    script.onload = () => {
+      initGoogleAuth();
+    };
     document.head.appendChild(script);
     googleScriptCarregado = true;
   }
@@ -371,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  window.onload = async function () {
+  async function initGoogleAuth() {
     if (window.google) {
       try {
         const resp = await fetch('/api/auth/google/client-id');
