@@ -24,7 +24,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link rel="stylesheet" href="style.css" />
   <script type="application/ld+json">
   {
@@ -96,12 +95,61 @@
         <p class="loading-text">Carregando pacotes<span class="loading-dots" aria-hidden="true">...</span></p>
       </div>
     </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" aria-labelledby="faqTitle">
+      <h2 id="faqTitle" class="faq-title">Dúvidas Frequentes</h2>
+      
+      <article class="faq-item">
+        <h3 class="faq-question">Como eu recebo meus tokens?</h3>
+        <p class="faq-answer">Após o pagamento ser aprovado pelo Mercado Pago, os tokens são creditados automaticamente na conta vinculada ao seu e-mail.</p>
+      </article>
+
+      <article class="faq-item">
+        <h3 class="faq-question">O pagamento é seguro?</h3>
+        <p class="faq-answer">Sim! Nós não armazenamos nenhum dado bancário seu. Tudo é processado pelo ambiente seguro e criptografado do Mercado Pago.</p>
+      </article>
+
+      <article class="faq-item">
+        <h3 class="faq-question">O que acontece se eu me arrepender?</h3>
+        <p class="faq-answer">Você tem garantia de devolução do dinheiro em até 7 dias, conforme o Direito de Arrependimento (CDC), desde que os tokens não tenham sido gastos dentro do jogo.</p>
+      </article>
+
+      <article class="faq-item">
+        <h3 class="faq-question">Por que pedem meu CPF no pagamento?</h3>
+        <p class="faq-answer">É uma exigência do Banco Central e do Mercado Pago para prevenção a fraudes e emissão de notas fiscais. O fornecimento no seu perfil aqui é opcional.</p>
+      </article>
+    </section>
   </main>
   <footer class="footer-loja">
     <p>Token Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer" class="link-limpo">Mercado Pago.</a> </p>
     <p> Desenvolvido por Token Arena, com a ideia principal por João Marcelo. CPF: <strong>065.030.745-30</strong> Telefone: <strong>5571982767129</strong></p>
     <p>Link do meu github: <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer" class="link-limpo"><strong>Jaosuzart</strong>  </a></p> 
+    <p><button id="btnAbrirTermos" class="link-limpo" style="background:none;border:none;cursor:pointer;text-decoration:underline;">Termos e Condições</button></p>
   </footer>
+
+  <dialog class="modal-overlay" id="termosModal" aria-labelledby="termosTitle">
+    <div class="modal-content" role="document">
+      <header class="modal-header">
+        <h2 id="termosTitle" class="modal-header-title">Termos e Condições</h2>
+        <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
+      </header>
+      <div class="modal-body termos-content" style="max-height: 60vh; overflow-y: auto;">
+        <h3>1. Aceitação dos Termos</h3>
+        <p>Ao acessar e realizar compras na Token Arena, você concorda com estes termos. O serviço é destinado à aquisição de bens virtuais (tokens).</p>
+        
+        <h3>2. Pagamentos e Entrega</h3>
+        <p>O processamento é feito via Mercado Pago. A entrega dos tokens é digital e ocorre após a confirmação do pagamento. Em caso de instabilidade sistêmica, o prazo máximo é de 24 horas.</p>
+
+        <h3>3. Política de Reembolso</h3>
+        <p>Você tem o direito de solicitar o reembolso em até 7 (sete) dias após a compra, desde que os tokens adquiridos não tenham sido transferidos para terceiros ou utilizados dentro da plataforma/jogo.</p>
+
+        <h3>4. Segurança e Fraudes</h3>
+        <p>É proibido o uso de cartões de terceiros sem autorização, chargebacks fraudulentos ou uso de exploits. O descumprimento resultará no banimento permanente da conta.</p>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="modal-overlay" id="authModal" aria-labelledby="authModalTitle">
     <div class="modal-content">
       <div class="auth-tabs" role="tablist" aria-label="Opções de autenticação">

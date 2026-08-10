@@ -73,7 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
     adminTokensForm: document.getElementById('adminTokensForm'),
     adminUserId: document.getElementById('adminUserId'),
     adminTokenAmount: document.getElementById('adminTokenAmount'),
-    adminFeedback: document.getElementById('adminFeedback')
+    adminFeedback: document.getElementById('adminFeedback'),
+
+    // Termos
+    btnAbrirTermos: document.getElementById('btnAbrirTermos'),
+    btnFecharTermos: document.getElementById('btnFecharTermos'),
+    termosModal: document.getElementById('termosModal')
   };
 
   let estado = {
@@ -219,12 +224,25 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.tabLogin.addEventListener('click', () => alternarTab('login'));
   DOM.tabRegistro.addEventListener('click', () => alternarTab('registro'));
 
+  let googleScriptCarregado = false;
+  function carregarScriptGoogle() {
+    if (googleScriptCarregado) return;
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    googleScriptCarregado = true;
+  }
+
   DOM.btnAbrirLogin.addEventListener('click', () => {
+    carregarScriptGoogle();
     alternarTab('login');
     abrirModal(DOM.authModal);
   });
 
   DOM.btnAbrirRegistro.addEventListener('click', () => {
+    carregarScriptGoogle();
     alternarTab('registro');
     abrirModal(DOM.authModal);
   });
@@ -234,6 +252,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   DOM.authModal.addEventListener('click', (e) => {
     if (e.target === DOM.authModal) fecharModal(DOM.authModal);
+  });
+
+  // Termos e Condições
+  DOM.btnAbrirTermos.addEventListener('click', (e) => {
+    e.preventDefault();
+    abrirModal(DOM.termosModal);
+  });
+  
+  DOM.btnFecharTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
+  
+  DOM.termosModal.addEventListener('click', (e) => {
+    if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
   });
 
   DOM.loginForm.addEventListener('submit', async (e) => {
@@ -526,6 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btn.addEventListener('click', () => {
       if (!estado.usuario) {
+        carregarScriptGoogle();
         alternarTab('login');
         abrirModal(DOM.authModal);
         return;
