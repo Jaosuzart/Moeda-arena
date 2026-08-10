@@ -151,14 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (estado.usuario.email_verificado === 0) {
           elRole.innerHTML = `⚠️ Email Pendente`;
           elRole.style.background = '#f59e0b';
+          elRole.style.color = '#000'; // Melhora o contraste (texto preto no fundo amarelo)
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         } else if (is_admin) {
           elRole.textContent = 'Administrador';
-          elRole.style.background = '#b91c1c'; 
+          elRole.style.background = '#b91c1c';
+          elRole.style.color = '#fff'; 
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'inline-block';
         } else {
           elRole.textContent = 'Jogador';
-          elRole.style.background = '#3b82f6'; 
+          elRole.style.background = '#3b82f6';
+          elRole.style.color = '#fff'; 
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         }
       }
