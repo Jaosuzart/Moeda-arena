@@ -1059,8 +1059,8 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  .nav-user-welcome {
-    display: none !important;
+  .navbar-loja .nav-user-welcome {
+    display: none;
   }
   
   .btn-gamer-ghost {
