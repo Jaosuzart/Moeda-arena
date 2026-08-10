@@ -711,6 +711,10 @@ body::before {
   position: relative;
 }
 
+.modal-lg {
+  max-width: 700px;
+}
+
 .modal-header {
   padding: 1.5rem 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -1122,9 +1126,8 @@ body::before {
   line-height: 1.5;
 }
 
-/* Termos Content */
 .termos-content {
-  padding-right: 15px; /* Evita que o texto encoste na barra de rolagem */
+  padding-right: 15px; 
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
