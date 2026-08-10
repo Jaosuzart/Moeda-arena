@@ -166,6 +166,7 @@ body::before {
   color: #fff;
   cursor: pointer;
   transition: var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .navbar-loja .nav-avatar:hover {
@@ -1055,4 +1056,15 @@ body::before {
 }
 .modal-body{
   padding: 2rem;
+}
+
+@media (max-width: 600px) {
+  .nav-user-welcome {
+    display: none !important;
+  }
+  
+  .btn-gamer-ghost {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
 }
