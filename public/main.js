@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Termos
     btnAbrirTermos: document.getElementById('btnAbrirTermos'),
     btnFecharTermos: document.getElementById('btnFecharTermos'),
+    btnOkTermos: document.getElementById('btnOkTermos'),
     termosModal: document.getElementById('termosModal')
   };
 
@@ -261,6 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   DOM.btnFecharTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
+  if (DOM.btnOkTermos) {
+    DOM.btnOkTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
+  }
   
   DOM.termosModal.addEventListener('click', (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
