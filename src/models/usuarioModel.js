@@ -5,6 +5,8 @@
 const { pool } = require('./db');
 const logger = require('../config/logger');
 
+const crypto = require('crypto');
+
 /**
  * @param {string} nome 
  * @param {string} email 
@@ -14,8 +16,9 @@ const logger = require('../config/logger');
  */
 const criarUsuario = async (nome, email, senhaHash) => {
   try {
-    const sql = 'INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?)';
-    const [resultado] = await pool.query(sql, [nome, email, senhaHash]);
+    const tokenVerificacao = crypto.randomBytes(32).toString('hex');
+    const sql = 'INSERT INTO usuarios (nome, email, senha_hash, token_verificacao) VALUES (?, ?, ?, ?)';
+    const [resultado] = await pool.query(sql, [nome, email, senhaHash, tokenVerificacao]);
 
     logger.info('Novo usuário criado.', { usuarioId: resultado.insertId, email });
 
@@ -23,7 +26,8 @@ const criarUsuario = async (nome, email, senhaHash) => {
       id: resultado.insertId,
       nome,
       email,
-      saldo_tokens: 100  
+      saldo_tokens: 100,
+      token_verificacao: tokenVerificacao
     };
   } catch (err) {
     if (err.code === 'ER_DUP_ENTRY') {
@@ -43,7 +47,7 @@ const criarUsuario = async (nome, email, senhaHash) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorEmail = async (email) => {
-  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status FROM usuarios WHERE email = ?';
+  const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao FROM usuarios WHERE email = ?';
   const [rows] = await pool.query(sql, [email]);
   return rows[0] || null;
 };
@@ -53,9 +57,21 @@ const buscarPorEmail = async (email) => {
  * @returns {Promise<Object|null>}
  */
 const buscarPorId = async (id) => {
-  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status FROM usuarios WHERE id = ?';
+  const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado FROM usuarios WHERE id = ?';
   const [rows] = await pool.query(sql, [id]);
   return rows[0] || null;
+};
+
+const buscarPorTokenVerificacao = async (token) => {
+  const sql = 'SELECT id FROM usuarios WHERE token_verificacao = ?';
+  const [rows] = await pool.query(sql, [token]);
+  return rows[0] || null;
+};
+
+const confirmarEmail = async (id) => {
+  const sql = 'UPDATE usuarios SET email_verificado = 1, token_verificacao = NULL WHERE id = ?';
+  const [resultado] = await pool.query(sql, [id]);
+  return resultado.affectedRows > 0;
 };
 
 /**
@@ -139,4 +155,4 @@ const debitarTokens = async (id, quantidade) => {
   }
 };
 
-module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus };
+module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus, buscarPorTokenVerificacao, confirmarEmail };

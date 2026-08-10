@@ -148,7 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (elName) elName.textContent = firstName;
       if (elRole) {
-        if (is_admin) {
+        if (estado.usuario.email_verificado === 0) {
+          elRole.innerHTML = `⚠️ Email Pendente`;
+          elRole.style.background = '#f59e0b';
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
+        } else if (is_admin) {
           elRole.textContent = 'Administrador';
           elRole.style.background = '#b91c1c'; 
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'inline-block';
@@ -286,12 +290,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (data.sucesso && data.dados) {
+        mostrarFeedback(DOM.registroFeedback, 'Conta criada! Verifique seu e-mail para confirmar a conta.', true);
         estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
         localStorage.setItem('token', data.dados.token);
         atualizarNavbar();
-        fecharModal(DOM.authModal);
         DOM.registroForm.reset();
+        setTimeout(() => fecharModal(DOM.authModal), 3000);
       } else {
         mostrarFeedback(DOM.registroFeedback, data.erro || 'Erro ao criar conta.', false);
       }

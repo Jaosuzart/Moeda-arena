@@ -19,5 +19,6 @@ router.get('/google/client-id', (req, res) => {
 
 router.get('/perfil', autenticar, authController.perfil);
 router.put('/perfil', autenticar, authController.atualizarPerfil);
+router.get('/verificar-email', authController.verificarEmail);
 
 module.exports = router;

@@ -14,12 +14,19 @@ const logger = require('../config/logger');
 const CLIENT_ID = config.googleClientId;
 const client = new OAuth2Client(CLIENT_ID);
 
+const emailService = require('../services/emailService');
+
 const registrar = async (req, res, next) => {
   try {
     const { nome, email, senha } = req.body;
 
     const senhaHash = await bcrypt.hash(senha, 12);
     const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash);
+
+    // Enviar e-mail de verificação em segundo plano
+    if (usuario.token_verificacao) {
+      emailService.enviarEmailVerificacao(usuario.email, usuario.nome, usuario.token_verificacao);
+    }
 
     const token = jwt.sign(
       { id: usuario.id, email: usuario.email, nome: usuario.nome },
@@ -35,9 +42,36 @@ const registrar = async (req, res, next) => {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        saldo_tokens: usuario.saldo_tokens
+        saldo_tokens: usuario.saldo_tokens,
+        email_verificado: 0
       }
     }, 201);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const verificarEmail = async (req, res, next) => {
+  try {
+    const { token } = req.query;
+    if (!token) {
+      return res.status(400).send('<h2>Token inválido ou ausente.</h2>');
+    }
+
+    const usuario = await usuarioModel.buscarPorTokenVerificacao(token);
+    if (!usuario) {
+      return res.status(404).send('<h2>Link inválido ou já utilizado.</h2>');
+    }
+
+    await usuarioModel.confirmarEmail(usuario.id);
+    
+    return res.send(`
+      <div style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
+        <h1 style="color: #3b82f6;">✅ E-mail Verificado com Sucesso!</h1>
+        <p>Sua conta no Token Arena agora está 100% segura e confirmada.</p>
+        <p><a href="/" style="background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Voltar para o site</a></p>
+      </div>
+    `);
   } catch (err) {
     next(err);
   }
@@ -162,4 +196,4 @@ const atualizarPerfil = async (req, res, next) => {
   }
 };
 
-module.exports = { registrar, login, loginGoogle, perfil, atualizarPerfil };
+module.exports = { registrar, login, loginGoogle, perfil, atualizarPerfil, verificarEmail };
