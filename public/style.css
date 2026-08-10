@@ -60,13 +60,20 @@
   white-space: nowrap;
   border: 0;
 }
+html, body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  background-color: #0f172a;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 25%, #3b7a9b 50%, #7fbcd4 70%, #b0d8e8 85%, #dbedf5 100%);
-  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: var(--text-primary);
-  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
