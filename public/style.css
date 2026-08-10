@@ -937,12 +937,13 @@ body::before {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #334155;
-  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
   font-weight: 500;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem 1rem;
   z-index: 1;
-  gap: 4;
+  gap: 8px;
 }
 .footer-loja p{
   margin: 0;
