@@ -17,11 +17,12 @@ const pool = mysql.createPool({
   },
   waitForConnections: true,
   connectionLimit: config.db.connectionLimit,
-  queueLimit: 0
+  queueLimit: 0,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 10000
 });
 
 /**
- * Testa a conexão com o banco de dados.
  * Deve ser chamado antes de subir o servidor.
  * @returns {Promise<boolean>} true se a conexão for bem-sucedida.
  * @throws {Error} Se a conexão falhar.
