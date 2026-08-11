@@ -23,7 +23,6 @@ const pool = mysql.createPool({
 });
 
 /**
- * Deve ser chamado antes de subir o servidor.
  * @returns {Promise<boolean>} true se a conexão for bem-sucedida.
  * @throws {Error} Se a conexão falhar.
  */
