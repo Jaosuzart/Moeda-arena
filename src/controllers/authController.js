@@ -23,7 +23,6 @@ const registrar = async (req, res, next) => {
     const senhaHash = await bcrypt.hash(senha, 12);
     const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash);
 
-    // Enviar e-mail de verificação em segundo plano
     if (usuario.token_verificacao) {
       emailService.enviarEmailVerificacao(usuario.email, usuario.nome, usuario.token_verificacao);
     }
@@ -68,7 +67,7 @@ const verificarEmail = async (req, res, next) => {
     return res.send(`
       <div style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
         <h1 style="color: #3b82f6;">✅ E-mail Verificado com Sucesso!</h1>
-        <p>Sua conta no Token Arena agora está 100% segura e confirmada.</p>
+        <p>Sua conta no Jogo Arena agora está 100% segura e confirmada.</p>
         <p><a href="/" style="background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Voltar para o site</a></p>
       </div>
     `);
@@ -129,7 +128,6 @@ const loginGoogle = async (req, res, next) => {
       return erro(res, 'Token do Google não fornecido.', 400);
     }
 
-    // Verifica o token com o Google
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: CLIENT_ID,
@@ -144,7 +142,7 @@ const loginGoogle = async (req, res, next) => {
     if (!usuario) {
       const senhaAleatoria = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10);
       const senhaHash = await bcrypt.hash(senhaAleatoria, 12);
-      usuario = await usuarioModel.criarUsuario(nome, email, senhaHash);
+      usuario = await usuarioModel.criarUsuario(nome, email, senhaHash, false);
       logger.info('Novo registro via Google realizado.', { usuarioId: usuario.id, email });
     } else {
       logger.info('Login via Google realizado.', { usuarioId: usuario.id });
@@ -172,8 +170,30 @@ const loginGoogle = async (req, res, next) => {
 };
 const atualizarPerfil = async (req, res, next) => {
   try {
-    const { nome, cpf, localidade, chave_pix, cartao_final } = req.body;
+    const { nome, cpf, localidade, chave_pix, cartao_final, senhaConfirmacao } = req.body;
     
+    const usuarioDb = await usuarioModel.buscarPorId(req.usuario.id);
+    if (!usuarioDb) return erro(res, 'Usuário não encontrado', 404);
+
+    if (!usuarioDb.has_password) {
+      return res.status(403).json({
+        sucesso: false,
+        erro: 'Você fez login pelo Google e não tem uma senha. Por favor, defina uma senha primeiro.',
+        codigo: 'REQUIRE_PASSWORD'
+      });
+    }
+
+    if (!senhaConfirmacao) {
+      return erro(res, 'A senha de confirmação é obrigatória para salvar as alterações.', 403, 'SENHA_OBRIGATORIA');
+    }
+
+    const usuarioCompleto = await usuarioModel.buscarPorEmail(usuarioDb.email);
+    const senhaValida = await bcrypt.compare(senhaConfirmacao, usuarioCompleto.senha_hash);
+    
+    if (!senhaValida) {
+      return erro(res, 'Senha de confirmação incorreta.', 403, 'SENHA_INCORRETA');
+    }
+
     if (!nome) {
       return erro(res, 'O nome não pode ficar vazio.', 400);
     }
@@ -196,4 +216,25 @@ const atualizarPerfil = async (req, res, next) => {
   }
 };
 
-module.exports = { registrar, login, loginGoogle, perfil, atualizarPerfil, verificarEmail };
+const definirSenha = async (req, res, next) => {
+  try {
+    const { novaSenha } = req.body;
+    if (!novaSenha || novaSenha.length < 6) {
+      return erro(res, 'A senha deve ter pelo menos 6 caracteres.', 400);
+    }
+
+    const usuarioDb = await usuarioModel.buscarPorId(req.usuario.id);
+    if (usuarioDb.has_password) {
+      return erro(res, 'Você já possui uma senha definida.', 400);
+    }
+
+    const senhaHash = await bcrypt.hash(novaSenha, 12);
+    await usuarioModel.definirSenha(req.usuario.id, senhaHash);
+
+    return sucesso(res, { mensagem: 'Senha de segurança definida com sucesso! Agora você pode atualizar seu perfil.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { registrar, login, loginGoogle, perfil, atualizarPerfil, verificarEmail, definirSenha };

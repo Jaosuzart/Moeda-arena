@@ -46,8 +46,14 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+const compression = require('compression');
+app.use(compression());
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1y', // 1 ano de cache para arquivos estáticos
+  etag: true
+}));
 
 app.use('/api/auth', authRoutes);
 app.use('/api', planoRoutes);

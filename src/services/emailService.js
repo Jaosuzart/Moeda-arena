@@ -12,15 +12,15 @@ const transporter = nodemailer.createTransport({
 
 const enviarEmailVerificacao = async (paraEmail, nome, token) => {
   try {
-    const link = `https://token-arena.onrender.com/api/auth/verificar-email?token=${token}`;
+    const link = `https://jogo-arena.onrender.com/api/auth/verificar-email?token=${token}`;
     
     const mailOptions = {
-      from: `"Token Arena" <${process.env.EMAIL_USER}>`,
+      from: `"Jogo Arena" <${process.env.EMAIL_USER}>`,
       to: paraEmail,
-      subject: 'Bem-vindo(a) ao Token Arena! Confirme seu E-mail',
+      subject: 'Bem-vindo(a) ao Jogo Arena! Confirme seu E-mail',
       html: `
         <div style="font-family: Arial, sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
-          <h2 style="color: #3b82f6;">🎮 Bem-vindo(a) ao Token Arena, ${nome}!</h2>
+          <h2 style="color: #3b82f6;">🎮 Bem-vindo(a) ao Jogo Arena, ${nome}!</h2>
           <p>Falta só mais um passo para você começar a aproveitar seus Tokens e subidas no Ranking.</p>
           <p>Por favor, confirme seu endereço de e-mail clicando no botão abaixo:</p>
           <a href="${link}" style="display: inline-block; background-color: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 15px;">

@@ -1,4 +1,4 @@
-<h1 align="center">🎮 Token Arena</h1>
+<h1 align="center">🎮 Jogo Arena</h1>
 <p align="center">
   <em>Projeto web desenvolvido com HTML5, CSS3, Bootstrap, JavaScript e Node.js.</em>
 </p>
@@ -7,7 +7,7 @@
 </p>
 <hr>
 ## 📌 Sobre o projeto
-O <strong>Token Arena</strong> é uma aplicação web desenvolvida como projeto de estudo em Desenvolvimento de Sistemas, utilizando tecnologias de Front-end e Back-end.
+O <strong>Jogo Arena</strong> é uma aplicação web desenvolvida como projeto de estudo em Desenvolvimento de Sistemas, utilizando tecnologias de Front-end e Back-end.
 O projeto possui uma interface construída com <strong>HTML, CSS e Bootstrap</strong>, enquanto o <strong>JavaScript</strong> é utilizado para implementar as interações e funcionalidades do jogo.
 No Back-end, a aplicação roda sob o <strong>Node.js</strong>, possuindo uma arquitetura estruturada e organizada em diferentes módulos, como <em>controllers, models, routes, middlewares, helpers e configurações</em>.
 <hr>
@@ -22,7 +22,7 @@ No Back-end, a aplicação roda sob o <strong>Node.js</strong>, possuindo uma ar
 - <strong>JavaScript</strong>
 <hr>
 ## 📂 Estrutura do projeto
-Token-Arena/
+Jogo-Arena/
 │
 ├── node_modules/
 │
@@ -54,7 +54,7 @@ middlewares/ → Interceptadores e validadores de requisições
 models/ → Modelos e regras relacionadas aos dados
 routes/ → Definição das rotas da API/aplicação
 ✨ Funcionalidades
-🎮 Interface do Token Arena: Design focado na experiência de jogo.
+🎮 Interface do Jogo Arena: Design focado na experiência de jogo.
 🕹️ Mecânicas de jogo: Funcionalidades interativas implementadas com JS.
 📱 Design Responsivo: Adaptação para diferentes tamanhos de tela.
 🎨 Estilização moderna: Uso de CSS puro aliado aos componentes do Bootstrap.
@@ -64,10 +64,10 @@ routes/ → Definição das rotas da API/aplicação
 🛠️ Como executar o projeto
 1. Clone o repositório
 Bash
-git clone [https://github.com/Jaosuzart/Token-Arena.git](https://github.com/Jaosuzart/Token-Arena.git)
+git clone [https://github.com/Jaosuzart/Jogo-Arena.git](https://github.com/Jaosuzart/Jogo-Arena.git)
 2. Acesse a pasta do projeto
 Bash
-cd Token-Arena
+cd Jogo-Arena
 3. Instale as dependências
 Bash
 npm install

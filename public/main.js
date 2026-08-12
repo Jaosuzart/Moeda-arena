@@ -79,7 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAbrirTermos: document.getElementById('btnAbrirTermos'),
     btnFecharTermos: document.getElementById('btnFecharTermos'),
     btnOkTermos: document.getElementById('btnOkTermos'),
-    termosModal: document.getElementById('termosModal')
+    termosModal: document.getElementById('termosModal'),
+
+    // Sudo / Security
+    sudoModal: document.getElementById('sudoModal'),
+    btnFecharSudo: document.getElementById('btnFecharSudo'),
+    sudoForm: document.getElementById('sudoForm'),
+    sudoSenha: document.getElementById('sudoSenha'),
+    sudoFeedback: document.getElementById('sudoFeedback'),
+    createPasswordModal: document.getElementById('createPasswordModal'),
+    btnFecharCreatePassword: document.getElementById('btnFecharCreatePassword'),
+    createPasswordForm: document.getElementById('createPasswordForm'),
+    newSecurityPassword: document.getElementById('newSecurityPassword'),
+    createPasswordFeedback: document.getElementById('createPasswordFeedback')
   };
 
   let estado = {
@@ -442,10 +454,22 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.areaDados.classList.remove('visible');
   });
 
-  DOM.perfilForm.addEventListener('submit', async (e) => {
+  DOM.perfilForm.addEventListener('submit', (e) => {
     e.preventDefault();
     esconderFeedback(DOM.perfilFeedback);
-    setCarregando(DOM.btnSalvarPerfil, true, 'Salvando...');
+    DOM.sudoModal.showModal();
+    DOM.sudoSenha.value = '';
+    esconderFeedback(DOM.sudoFeedback);
+  });
+
+  DOM.btnFecharSudo.addEventListener('click', () => DOM.sudoModal.close());
+  DOM.btnFecharCreatePassword.addEventListener('click', () => DOM.createPasswordModal.close());
+
+  DOM.sudoForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    esconderFeedback(DOM.sudoFeedback);
+    const btn = DOM.sudoForm.querySelector('button[type="submit"]');
+    setCarregando(btn, true, 'Confirmando...');
 
     try {
       const resp = await fetch('/api/auth/perfil', {
@@ -459,24 +483,62 @@ document.addEventListener('DOMContentLoaded', () => {
           cpf: DOM.perfilCpf.value,
           localidade: DOM.perfilLocalidade.value,
           chave_pix: DOM.perfilPix.value,
-          cartao_final: DOM.perfilCartao.value
+          cartao_final: DOM.perfilCartao.value,
+          senhaConfirmacao: DOM.sudoSenha.value
         })
       });
 
       const data = await resp.json();
       if (resp.ok) {
-        mostrarFeedback(DOM.perfilFeedback, data.mensagem || 'Perfil salvo com sucesso!', true);
+        DOM.sudoModal.close();
+        mostrarFeedback(DOM.perfilFeedback, data.mensagem || 'Perfil salvo com segurança!', true);
         if (estado.usuario) {
           estado.usuario.nome = DOM.perfilNome.value;
           atualizarNavbar();
         }
       } else {
-        mostrarFeedback(DOM.perfilFeedback, data.erro || 'Erro ao salvar perfil.', false);
+        if (data.codigo === 'REQUIRE_PASSWORD') {
+          DOM.sudoModal.close();
+          DOM.createPasswordModal.showModal();
+          DOM.newSecurityPassword.value = '';
+          esconderFeedback(DOM.createPasswordFeedback);
+        } else {
+          mostrarFeedback(DOM.sudoFeedback, data.erro || 'Erro ao confirmar.', false);
+        }
       }
     } catch (err) {
-      mostrarFeedback(DOM.perfilFeedback, 'Falha na comunicação com o servidor.', false);
+      mostrarFeedback(DOM.sudoFeedback, 'Falha na comunicação.', false);
     } finally {
-      setCarregando(DOM.btnSalvarPerfil, false, 'Salvar Alterações');
+      setCarregando(btn, false, 'Confirmar e Salvar');
+    }
+  });
+
+  DOM.createPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    esconderFeedback(DOM.createPasswordFeedback);
+    const btn = DOM.createPasswordForm.querySelector('button[type="submit"]');
+    setCarregando(btn, true, 'Definindo...');
+
+    try {
+      const resp = await fetch('/api/auth/definir-senha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${estado.token}`
+        },
+        body: JSON.stringify({ novaSenha: DOM.newSecurityPassword.value })
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        DOM.createPasswordModal.close();
+        mostrarFeedback(DOM.perfilFeedback, 'Senha criada! Clique em Salvar novamente.', true);
+      } else {
+        mostrarFeedback(DOM.createPasswordFeedback, data.erro || 'Erro ao definir senha.', false);
+      }
+    } catch(err) {
+      mostrarFeedback(DOM.createPasswordFeedback, 'Falha de comunicação.', false);
+    } finally {
+      setCarregando(btn, false, 'Definir Senha');
     }
   });
 
