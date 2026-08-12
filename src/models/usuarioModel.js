@@ -107,7 +107,7 @@ const definirSenha = async (id, senhaHash) => {
 /**
  * @param {number} usuarioId -
  * @param {number} quantidade -
- * @returns {Promise<boolean>} 
+ * @returns {Promise<boolean>} true se o update afetou uma linha.
  */
 const adicionarTokens = async (usuarioId, quantidade) => {
   try {
@@ -127,7 +127,7 @@ const adicionarTokens = async (usuarioId, quantidade) => {
   }
 };
 /**
- *  * @param {number} id
+ * @param {number} id
  * @param {Object} dados
  * @returns {Promise<boolean>}
  */
