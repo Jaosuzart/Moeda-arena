@@ -321,7 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.btnLogin.textContent = 'Entrar na Arena';
   });
 
-  // Registro
   DOM.registroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.registroFeedback);
@@ -457,13 +456,13 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.perfilForm.addEventListener('submit', (e) => {
     e.preventDefault();
     esconderFeedback(DOM.perfilFeedback);
-    DOM.sudoModal.showModal();
+    abrirModal(DOM.sudoModal);
     DOM.sudoSenha.value = '';
     esconderFeedback(DOM.sudoFeedback);
   });
 
-  DOM.btnFecharSudo.addEventListener('click', () => DOM.sudoModal.close());
-  DOM.btnFecharCreatePassword.addEventListener('click', () => DOM.createPasswordModal.close());
+  DOM.btnFecharSudo.addEventListener('click', () => fecharModal(DOM.sudoModal));
+  DOM.btnFecharCreatePassword.addEventListener('click', () => fecharModal(DOM.createPasswordModal));
 
   DOM.sudoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -490,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await resp.json();
       if (resp.ok) {
-        DOM.sudoModal.close();
+        fecharModal(DOM.sudoModal);
         mostrarFeedback(DOM.perfilFeedback, data.mensagem || 'Perfil salvo com segurança!', true);
         if (estado.usuario) {
           estado.usuario.nome = DOM.perfilNome.value;
@@ -498,8 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         if (data.codigo === 'REQUIRE_PASSWORD') {
-          DOM.sudoModal.close();
-          DOM.createPasswordModal.showModal();
+          fecharModal(DOM.sudoModal);
+          abrirModal(DOM.createPasswordModal);
           DOM.newSecurityPassword.value = '';
           esconderFeedback(DOM.createPasswordFeedback);
         } else {
@@ -530,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await resp.json();
       if (resp.ok) {
-        DOM.createPasswordModal.close();
+        fecharModal(DOM.createPasswordModal);
         mostrarFeedback(DOM.perfilFeedback, 'Senha criada! Clique em Salvar novamente.', true);
       } else {
         mostrarFeedback(DOM.createPasswordFeedback, data.erro || 'Erro ao definir senha.', false);
@@ -604,10 +603,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const iconSpan = document.createElement('span');
       iconSpan.className = 'feature-icon';
       
-      // Se o recurso falar de Tokens, colocamos a moedinha em vez do ✓
       if (recurso.toLowerCase().includes('token')) {
         iconSpan.textContent = '🪙';
-        iconSpan.style.color = 'inherit'; // para não ficar verde/amarelo forçado
+        iconSpan.style.color = 'inherit'; 
       } else {
         iconSpan.textContent = '✓';
       }
@@ -843,7 +841,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === DOM.rankingModal) fecharModal(DOM.rankingModal);
   });
 
-  // ================== ADMIN PANEL ==================
   async function carregarAdminUsers() {
     try {
       const res = await fetchAutenticado('/api/admin/usuarios');
@@ -855,7 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
           const badgeStatus = u.status === 'banido' ? '<span style="color:#ef4444;font-size:0.8rem;">Banido</span>' : '<span style="color:#34d399;font-size:0.8rem;">Ativo</span>';
           
-          tr.innerHTML = `
+          tr.textContent = `
             <td style="padding: 8px;">${u.id}</td>
             <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${u.email}">
               ${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small>
