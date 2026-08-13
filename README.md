@@ -6,22 +6,23 @@
   <img width="1290" height="588" alt="image" src="https://github.com/user-attachments/assets/920e69b2-5347-4a8b-b1a6-c86ef4332f17" />
 </p>
 <hr>
-## 📌 Sobre o projeto
-O <strong>Jogo Arena</strong> é uma aplicação web desenvolvida como projeto de estudo em Desenvolvimento de Sistemas, utilizando tecnologias de Front-end e Back-end.
+ 📌 Sobre o projeto
+O <strong>Jogo Arena</strong> é uma aplicação web desenvolvida como projeto de estudo em Desenvolvimento de Sistemas, utilizando tecnologias de Front-end e Back-end e pode fazer pagamentos via PIX ou cartão de credito <strong> com autenticação da senha</strong>.
+
 O projeto possui uma interface construída com <strong>HTML, CSS e Bootstrap</strong>, enquanto o <strong>JavaScript</strong> é utilizado para implementar as interações e funcionalidades do jogo.
 No Back-end, a aplicação roda sob o <strong>Node.js</strong>, possuindo uma arquitetura estruturada e organizada em diferentes módulos, como <em>controllers, models, routes, middlewares, helpers e configurações</em>.
 <hr>
-## 🚀 Tecnologias utilizadas
-### 🎨 Front-end
+ 🚀 Tecnologias utilizadas
+🎨 Front-end
 - <strong>HTML5</strong>
 - <strong>CSS3</strong>
 - <strong>Bootstrap</strong>
 - <strong>JavaScript</strong>
-### ⚙️ Back-end
+⚙️ Back-end
 - <strong>Node.js</strong>
 - <strong>JavaScript</strong>
 <hr>
-## 📂 Estrutura do projeto
+ 📂 Estrutura do projeto
 Jogo-Arena/
 │
 ├── node_modules/

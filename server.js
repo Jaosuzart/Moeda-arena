@@ -51,7 +51,13 @@ app.use(compression());
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: '1y', // 1 ano de cache para arquivos estáticos
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+    }
+  },
   etag: true
 }));
 
