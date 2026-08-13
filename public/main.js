@@ -515,6 +515,14 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.createPasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.createPasswordFeedback);
+    const senha1 = DOM.newSecurityPassword.value;
+    const senha2 = document.getElementById('confirmSecurityPassword').value;
+
+    if (senha1 !== senha2) {
+      mostrarFeedback(DOM.createPasswordFeedback, 'As senhas não coincidem. Digite novamente.', false);
+      return;
+    }
+
     const btn = DOM.createPasswordForm.querySelector('button[type="submit"]');
     setCarregando(btn, true, 'Definindo...');
 
@@ -525,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${estado.token}`
         },
-        body: JSON.stringify({ novaSenha: DOM.newSecurityPassword.value })
+        body: JSON.stringify({ novaSenha: senha1 })
       });
       const data = await resp.json();
       if (resp.ok) {
