@@ -156,5 +156,4 @@ const debitarTokens = async (id, quantidade) => {
     throw error;
   }
 };
-
-module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus, buscarPorTokenVerificacao, confirmarEmail };
+module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus, buscarPorTokenVerificacao, confirmarEmail, definirSenha };
