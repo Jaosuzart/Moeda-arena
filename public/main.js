@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOkTermos: document.getElementById('btnOkTermos'),
     termosModal: document.getElementById('termosModal'),
 
-    // Sudo / Security
     sudoModal: document.getElementById('sudoModal'),
     btnFecharSudo: document.getElementById('btnFecharSudo'),
     sudoForm: document.getElementById('sudoForm'),
@@ -120,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Mostra feedback visual em um elemento de alerta.
    * @param {HTMLElement} el
    * @param {string} mensagem
    * @param {boolean} isSucesso
@@ -270,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === DOM.authModal) fecharModal(DOM.authModal);
   });
 
-  // Termos e Condições
   DOM.btnAbrirTermos.addEventListener('click', (e) => {
     e.preventDefault();
     abrirModal(DOM.termosModal);
@@ -884,7 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
               method: 'POST',
               body: JSON.stringify({ usuarioId: userId, status: newStatus })
             });
-            carregarAdminUsers(); // Atualiza a tabela
+            carregarAdminUsers(); 
           });
         });
       }
