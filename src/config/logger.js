@@ -1,9 +1,4 @@
-/**
- * @module config/logger
- * @description Logger estruturado com Winston.
- *              - Desenvolvimento: formato colorido e legível no console.
- *              - Produção: formato JSON para ferramentas como Datadog/ELK.
- */
+
 const winston = require('winston');
 const config = require('./env');
 

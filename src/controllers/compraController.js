@@ -1,10 +1,4 @@
-/**
- * @module controllers/compraController
- * @description Controller de compras.
- *              Processa resgates gratuitos e gera preferências de pagamento
- *              no Mercado Pago, incluindo external_reference para identificar
- *              o usuário no webhook. Suporta cupons de desconto para streamers.
- */
+
 const planoModel = require('../models/planoModel');
 const usuarioModel = require('../models/usuarioModel');
 const cupomModel = require('../models/cupomModel');

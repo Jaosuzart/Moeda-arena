@@ -1,7 +1,4 @@
-/**
- * @module middlewares/errorHandler
- * @description 
- */
+
 const logger = require('../config/logger');
 const errorHandler = (err, req, res, _next) => {
   logger.error('Erro não tratado capturado pelo errorHandler:', {

@@ -1,8 +1,4 @@
-/**
- * @module models/planoModel
- * @description 
 
-/** @type {ReadonlyArray<Object>} Lista imutável de planos disponíveis. */
 const planosGames = Object.freeze([
   Object.freeze({
     id: 'gratis',
@@ -36,22 +32,10 @@ const planosGames = Object.freeze([
   })
 ]);
 
-/**
- * @returns {ReadonlyArray<Object>}
- */
 const obterTodosOsPlanos = () => planosGames;
 
-/**
- * Busca um plano pelo ID.
- * @param {string} id - ID do plano (ex: 'premium').
- * @returns {Object|undefined}
- */
 const obterPlanoPorId = (id) => planosGames.find(p => p.id === id);
 
-/**
- * @param {string} nome 
- * @returns {Object|undefined}
- */
 const obterPlanoPorNome = (nome) => planosGames.find(p => p.nome === nome);
 
 module.exports = { obterTodosOsPlanos, obterPlanoPorId, obterPlanoPorNome };

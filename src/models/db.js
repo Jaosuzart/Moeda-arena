@@ -1,7 +1,4 @@
-/**
- * @module models/db
- * @description 
- */
+
 const mysql = require('mysql2/promise');
 const config = require('../config/env');
 const logger = require('../config/logger');
@@ -22,10 +19,6 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 10000
 });
 
-/**
- * @returns {Promise<boolean>} true se a conexão for bem-sucedida.
- * @throws {Error} Se a conexão falhar.
- */
 const testarConexao = async () => {
   try {
     const conexao = await pool.getConnection();

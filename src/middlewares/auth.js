@@ -1,9 +1,4 @@
-/**
- * @module middlewares/auth
- * @description Middleware de autenticação JWT.
- *              Verifica o header Authorization: Bearer <token>
- *              e injeta req.usuario com { id, email, nome }.
- */
+
 const jwt = require('jsonwebtoken');
 const config = require('../config/env');
 const { erro } = require('../helpers/apiResponse');

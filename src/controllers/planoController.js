@@ -1,7 +1,4 @@
-/**
- * @module controllers/planoController
- * @description 
- */
+
 const planoModel = require('../models/planoModel');
 const { sucesso } = require('../helpers/apiResponse');
 const listarPlanos = (req, res) => {

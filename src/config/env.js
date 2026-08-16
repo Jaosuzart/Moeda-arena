@@ -18,15 +18,12 @@ const variaveisObrigatorias = [
 const faltando = variaveisObrigatorias.filter(v => !process.env[v]);
 
 if (faltando.length > 0) {
-  // NOTA: O logger (Winston) depende deste módulo, logo não pode ser importado aqui.
-  // Usamos process.stderr.write para saída estruturada sem depender do logger.
   process.stderr.write(`[FATAL] Variáveis de ambiente obrigatórias não definidas: ${faltando.join(', ')}\n`);
   process.stderr.write('[FATAL] Crie um arquivo .env na raiz do projeto. Use .env.example como referência.\n');
   process.exit(1);
 }
 
 /**
- * Configurações da aplicação — objeto imutável.
  * @readonly
  */
 const config = Object.freeze({

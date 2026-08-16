@@ -1,5 +1,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+  const escapeHTML = (str) => {
+    if (typeof str !== 'string') {
+      if (str === null || str === undefined) return '';
+      return String(str);
+    }
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  };
+
   const DOM = {
     navAuthBtns: document.getElementById('navAuthBtns'),
     navUserInfo: document.getElementById('navUserInfo'),
@@ -153,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elName) elName.textContent = firstName;
       if (elRole) {
         if (estado.usuario.email_verificado === 0) {
-          elRole.innerHTML = `⚠️ Email Pendente`;
+          elRole.textContent = '⚠️ Email Pendente';
           elRole.style.background = '#f59e0b';
           elRole.style.color = '#000'; 
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
@@ -754,7 +770,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (descontoPercent > 0) {
       const precoComDesconto = precoOriginal - (precoOriginal * descontoPercent / 100);
       const precoDescontoFormatado = precoComDesconto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      DOM.checkoutPrecoOriginal.innerHTML = '<s>' + precoFormatado + '</s>';
+      DOM.checkoutPrecoOriginal.textContent = '';
+      const strikeNode = document.createElement('s');
+      strikeNode.textContent = precoFormatado;
+      DOM.checkoutPrecoOriginal.appendChild(strikeNode);
       DOM.checkoutPrecoOriginal.style.display = 'inline';
       DOM.checkoutPrecoFinal.textContent = precoDescontoFormatado;
     } else {
@@ -875,7 +894,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/api/game/ranking?limite=10');
       const data = await res.json();
       if (res.ok && data.dados) {
-        DOM.rankingTableBody.innerHTML = '';
+        DOM.rankingTableBody.textContent = '';
         data.dados.forEach((jogador, index) => {
           const tr = document.createElement('tr');
           tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
@@ -886,11 +905,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (index === 2) medal = '🥉';
 
           tr.innerHTML = `
-            <td style="padding: 10px; font-weight: bold;">${medal}</td>
-            <td style="padding: 10px; font-weight: 600; color: #fff;">${jogador.nome.split(' ')[0]}</td>
-            <td style="padding: 10px; color: #fbbf24;">🏆 ${jogador.trofeus || 0}</td>
-            <td style="padding: 10px; color: #34d399;">⚔️ ${jogador.vitorias || 0}</td>
-            <td style="padding: 10px; color: #60a5fa;">⭐ ${jogador.xp || 0}</td>
+            <td style="padding: 10px; font-weight: bold;">${escapeHTML(medal)}</td>
+            <td style="padding: 10px; font-weight: 600; color: #fff;">${escapeHTML(jogador.nome.split(' ')[0])}</td>
+            <td style="padding: 10px; color: #fbbf24;">🏆 ${escapeHTML(jogador.trofeus || 0)}</td>
+            <td style="padding: 10px; color: #34d399;">⚔️ ${escapeHTML(jogador.vitorias || 0)}</td>
+            <td style="padding: 10px; color: #60a5fa;">⭐ ${escapeHTML(jogador.xp || 0)}</td>
           `;
           DOM.rankingTableBody.appendChild(tr);
         });
@@ -914,21 +933,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetchAutenticado('/api/admin/usuarios');
       const data = await res.json();
       if (res.ok && data.dados) {
-        DOM.adminTableBody.innerHTML = '';
+        DOM.adminTableBody.textContent = '';
         data.dados.forEach(u => {
           const tr = document.createElement('tr');
           tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
           const badgeStatus = u.status === 'banido' ? '<span style="color:#ef4444;font-size:0.8rem;">Banido</span>' : '<span style="color:#34d399;font-size:0.8rem;">Ativo</span>';
           
           tr.innerHTML = `
-            <td style="padding: 8px;">${u.id}</td>
-            <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${u.email}">
-              ${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small>
+            <td style="padding: 8px;">${escapeHTML(u.id)}</td>
+            <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${escapeHTML(u.email)}">
+              ${escapeHTML(u.nome.split(' ')[0])}<br><small style="color:var(--text-muted);">${escapeHTML(u.email)}</small>
             </td>
-            <td style="padding: 8px;">🪙 ${u.saldo_tokens}</td>
+            <td style="padding: 8px;">🪙 ${escapeHTML(u.saldo_tokens)}</td>
             <td style="padding: 8px;">${badgeStatus}</td>
             <td style="padding: 8px; text-align: right;">
-              <button class="toggle-status" data-id="${u.id}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; color: #fff; background: ${u.status === 'banido' ? '#10b981' : '#ef4444'}; transition: all 0.2s;">
+              <button class="toggle-status" data-id="${escapeHTML(u.id)}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; color: #fff; background: ${u.status === 'banido' ? '#10b981' : '#ef4444'}; transition: all 0.2s;">
                 ${u.status === 'banido' ? 'DESBANIR' : 'BANIR'}
               </button>
             </td>

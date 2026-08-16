@@ -1,7 +1,4 @@
-/**
- * @module controllers/gameController
- * @description
- */
+
 const usuarioModel = require('../models/usuarioModel');
 const { sucesso, erro } = require('../helpers/apiResponse');
 const config = require('../config/env');

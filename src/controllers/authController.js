@@ -1,8 +1,4 @@
-/**
- * @module controllers/authController
- * @description Controller de autenticação.
- *              Gerencia registro, login e consulta de perfil do usuário.
- */
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');

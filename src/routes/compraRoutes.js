@@ -1,7 +1,4 @@
-/**
- * @module routes/compraRoutes
- * @description 
- */
+
 const express = require('express');
 const router = express.Router();
 const compraController = require('../controllers/compraController');

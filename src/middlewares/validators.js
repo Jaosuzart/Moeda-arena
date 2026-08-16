@@ -1,10 +1,6 @@
-/**
- * @module middlewares/validators
- * @description 
- */
+
 const { body, validationResult } = require('express-validator');
 const { erro } = require('../helpers/apiResponse');
-
 
 const tratarErrosValidacao = (req, res, next) => {
   const erros = validationResult(req);

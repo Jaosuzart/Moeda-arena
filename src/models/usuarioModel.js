@@ -1,19 +1,9 @@
-/**
- * @module models/usuarioModel
- * @description
- */
+
 const { pool } = require('./db');
 const logger = require('../config/logger');
 
 const crypto = require('crypto');
 
-/**
- * @param {string} nome 
- * @param {string} email 
- * @param {string} senhaHash
- * @returns {Promise<Object>} 
- * @throws {Error} 
- */
 const criarUsuario = async (nome, email, senhaHash, hasPassword = true) => {
   try {
     const tokenVerificacao = crypto.randomBytes(32).toString('hex');
@@ -41,20 +31,12 @@ const criarUsuario = async (nome, email, senhaHash, hasPassword = true) => {
   }
 };
 
-/**
- * @param {string} email
- * @returns {Promise<Object|null>}
- */
 const buscarPorEmail = async (email) => {
   const sql = 'SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password FROM usuarios WHERE email = ?';
   const [rows] = await pool.query(sql, [email]);
   return rows[0] || null;
 };
 
-/**
- * @param {number} id
- * @returns {Promise<Object|null>}
- */
 const buscarPorId = async (id) => {
   const sql = 'SELECT id, nome, email, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password FROM usuarios WHERE id = ?';
   const [rows] = await pool.query(sql, [id]);
@@ -73,9 +55,6 @@ const confirmarEmail = async (id) => {
   return resultado.affectedRows > 0;
 };
 
-/**
- * @param {number} limite 
- */
 const buscarRanking = async (limite = 10) => {
   const sql = "SELECT id, nome, trofeus, vitorias, xp FROM usuarios WHERE status != 'banido' ORDER BY trofeus DESC, vitorias DESC, xp DESC LIMIT ?";
   const [rows] = await pool.query(sql, [limite]);
@@ -104,11 +83,6 @@ const definirSenha = async (id, senhaHash) => {
   return resultado.affectedRows > 0;
 };
 
-/**
- * @param {number} usuarioId -
- * @param {number} quantidade -
- * @returns {Promise<boolean>} true se o update afetou uma linha.
- */
 const adicionarTokens = async (usuarioId, quantidade) => {
   try {
     const sql = 'UPDATE usuarios SET saldo_tokens = saldo_tokens + ? WHERE id = ?';
@@ -126,11 +100,7 @@ const adicionarTokens = async (usuarioId, quantidade) => {
     throw err;
   }
 };
-/**
- * @param {number} id
- * @param {Object} dados
- * @returns {Promise<boolean>}
- */
+
 const atualizarPerfil = async (id, { nome, cpf, localidade, chave_pix, cartao_final }) => {
   try {
     const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, chave_pix = ?, cartao_final = ? WHERE id = ?';

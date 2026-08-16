@@ -1,9 +1,4 @@
-/**
- * @module controllers/webhookController
- * @description Controller de webhook do Mercado Pago.
- *              Recebe notificações de pagamento, consulta a API real do MP
- *              para confirmar o status, e credita tokens com idempotência.
- */
+
 const { MercadoPagoConfig, Payment } = require('mercadopago');
 const config = require('../config/env');
 const logger = require('../config/logger');
@@ -13,24 +8,12 @@ const { pool } = require('../models/db');
 
 const client = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 
-/**
- * @param {string} paymentId - ID do pagamento no Mercado Pago.
- * @returns {Promise<boolean>}
- */
 const jaProcessado = async (paymentId) => {
   const sql = 'SELECT id FROM pagamentos_processados WHERE payment_id = ?';
   const [rows] = await pool.query(sql, [String(paymentId)]);
   return rows.length > 0;
 };
 
-/**
- * @param {string} paymentId
- * @param {number} usuarioId
- * @param {string} planoId
- * @param {number} tokens
- * @param {number} valor
- * @param {string} status
- */
 const registrarPagamento = async (paymentId, usuarioId, planoId, tokens, valor, status) => {
   const sql = `INSERT INTO pagamentos_processados
     (payment_id, usuario_id, plano_id, tokens_creditados, valor_pago, status)

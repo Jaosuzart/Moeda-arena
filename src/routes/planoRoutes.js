@@ -1,7 +1,4 @@
-/**
- * @module routes/planoRoutes
- * @description 
- */
+
 const express = require('express');
 const router = express.Router();
 const planoController = require('../controllers/planoController');
