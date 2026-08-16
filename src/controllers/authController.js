@@ -38,7 +38,8 @@ const registrar = async (req, res, next) => {
         nome: usuario.nome,
         email: usuario.email,
         saldo_tokens: usuario.saldo_tokens,
-        email_verificado: 0
+        email_verificado: 0,
+        isAdmin: usuario.email === config.adminEmail
       }
     }, 201);
   } catch (err) {
@@ -99,7 +100,8 @@ const login = async (req, res, next) => {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        saldo_tokens: usuario.saldo_tokens
+        saldo_tokens: usuario.saldo_tokens,
+        isAdmin: usuario.email === config.adminEmail
       }
     });
   } catch (err) {
@@ -112,7 +114,8 @@ const perfil = async (req, res, next) => {
     if (!usuario) {
       return erro(res, 'Usuário não encontrado.', 404, 'USUARIO_NAO_ENCONTRADO');
     }
-    return sucesso(res, { usuario });
+    const isAdmin = usuario.email === config.adminEmail;
+    return sucesso(res, { usuario: { ...usuario, isAdmin } });
   } catch (err) {
     next(err);
   }
@@ -156,7 +159,8 @@ const loginGoogle = async (req, res, next) => {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        saldo_tokens: usuario.saldo_tokens
+        saldo_tokens: usuario.saldo_tokens,
+        isAdmin: usuario.email === config.adminEmail
       }
     });
   } catch (err) {

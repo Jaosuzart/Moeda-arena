@@ -53,10 +53,10 @@ async function run() {
     const insertUsersSQL = `
       INSERT INTO usuarios (nome, email, senha_hash, saldo_tokens, tipo_plano, cpf, cartao_final, has_password) 
       VALUES 
-      ('João Marcelo (Admin)', 'joaomarcelosuzartcastro@gmail.com', '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 10000, 'vip', '00000000000', '0000', FALSE),
-      ('Jogador Teste', 'jogador@teste.com', '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 500, 'free', '11122233344', '1234', TRUE);
+      ('João Marcelo (Admin)', ?, '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 10000, 'vip', '00000000000', '0000', FALSE),
+      ('Jogador Teste', 'jogador@teste.com', '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 500, 'gratis', '11122233344', '1234', TRUE);
     `;
-    await pool.query(insertUsersSQL);
+    await pool.query(insertUsersSQL, [config.adminEmail]);
     logger.info('Usuários de teste inseridos.');
 
     const createPagamentosSQL = `

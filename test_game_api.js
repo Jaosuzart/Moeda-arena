@@ -3,7 +3,7 @@ const config = require('./src/config/env');
 const logger = require('./src/config/logger');
 
 const SECRET = config.apiGameSecret;
-const EMAIL = 'joaomarcelosuzartcastro@gmail.com'; 
+const EMAIL = config.adminEmail; 
 
 const reqGet = http.request(`http://localhost:${config.port}/api/games/saldo/${EMAIL}?api_key=${SECRET}`, { method: 'GET' }, (res) => {
   let data = '';

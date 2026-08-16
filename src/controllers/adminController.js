@@ -1,8 +1,9 @@
 const usuarioModel = require('../models/usuarioModel');
 const { sucesso, erro } = require('../helpers/apiResponse');
+const config = require('../config/env');
 
 const isAdmin = (req, res, next) => {
-  if (!req.usuario || req.usuario.email !== 'joaomarcelosuzartcastro@gmail.com') {
+  if (!req.usuario || req.usuario.email !== config.adminEmail) {
     return erro(res, 'Acesso negado. Apenas administradores podem acessar esta rota.', 403, 'FORBIDDEN');
   }
   next();

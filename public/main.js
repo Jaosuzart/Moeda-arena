@@ -1,21 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-  const escapeHTML = (str) => {
-    if (typeof str !== 'string') {
-      if (str === null || str === undefined) return '';
-      return String(str);
-    }
-    return str.replace(/[&<>'"]/g, 
-      tag => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-      }[tag] || tag)
-    );
-  };
-
   const DOM = {
     navAuthBtns: document.getElementById('navAuthBtns'),
     navUserInfo: document.getElementById('navUserInfo'),
@@ -161,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
 
-      const is_admin = estado.usuario.email === 'joaomarcelosuzartcastro@gmail.com';
+      const is_admin = !!estado.usuario.isAdmin;
       const firstName = estado.usuario.nome.split(' ')[0];
       
       const elName = document.getElementById('navUserName');
@@ -905,13 +889,38 @@ document.addEventListener('DOMContentLoaded', () => {
           if (index === 1) medal = '🥈';
           if (index === 2) medal = '🥉';
 
-          tr.innerHTML = `
-            <td style="padding: 10px; font-weight: bold;">${escapeHTML(medal)}</td>
-            <td style="padding: 10px; font-weight: 600; color: #fff;">${escapeHTML(jogador.nome.split(' ')[0])}</td>
-            <td style="padding: 10px; color: #fbbf24;">🏆 ${escapeHTML(jogador.trofeus || 0)}</td>
-            <td style="padding: 10px; color: #34d399;">⚔️ ${escapeHTML(jogador.vitorias || 0)}</td>
-            <td style="padding: 10px; color: #60a5fa;">⭐ ${escapeHTML(jogador.xp || 0)}</td>
-          `;
+          const tdMedal = document.createElement('td');
+          tdMedal.style.padding = '10px';
+          tdMedal.style.fontWeight = 'bold';
+          tdMedal.textContent = medal;
+
+          const tdNome = document.createElement('td');
+          tdNome.style.padding = '10px';
+          tdNome.style.fontWeight = '600';
+          tdNome.style.color = '#fff';
+          tdNome.textContent = jogador.nome.split(' ')[0];
+
+          const tdTrofeus = document.createElement('td');
+          tdTrofeus.style.padding = '10px';
+          tdTrofeus.style.color = '#fbbf24';
+          tdTrofeus.textContent = `🏆 ${jogador.trofeus || 0}`;
+
+          const tdVitorias = document.createElement('td');
+          tdVitorias.style.padding = '10px';
+          tdVitorias.style.color = '#34d399';
+          tdVitorias.textContent = `⚔️ ${jogador.vitorias || 0}`;
+
+          const tdXp = document.createElement('td');
+          tdXp.style.padding = '10px';
+          tdXp.style.color = '#60a5fa';
+          tdXp.textContent = `⭐ ${jogador.xp || 0}`;
+
+          tr.appendChild(tdMedal);
+          tr.appendChild(tdNome);
+          tr.appendChild(tdTrofeus);
+          tr.appendChild(tdVitorias);
+          tr.appendChild(tdXp);
+
           DOM.rankingTableBody.appendChild(tr);
         });
       }
@@ -938,21 +947,77 @@ document.addEventListener('DOMContentLoaded', () => {
         data.dados.forEach(u => {
           const tr = document.createElement('tr');
           tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-          const badgeStatus = u.status === 'banido' ? '<span style="color:#ef4444;font-size:0.8rem;">Banido</span>' : '<span style="color:#34d399;font-size:0.8rem;">Ativo</span>';
+
+          const tdId = document.createElement('td');
+          tdId.style.padding = '8px';
+          tdId.textContent = u.id;
+
+          const tdNome = document.createElement('td');
+          tdNome.style.padding = '8px';
+          tdNome.style.maxWidth = '180px';
+          tdNome.style.overflow = 'hidden';
+          tdNome.style.textOverflow = 'ellipsis';
+          tdNome.title = u.email;
+          tdNome.textContent = u.nome.split(' ')[0];
           
-          tr.innerHTML = `
-            <td style="padding: 8px;">${escapeHTML(u.id)}</td>
-            <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${escapeHTML(u.email)}">
-              ${escapeHTML(u.nome.split(' ')[0])}<br><small style="color:var(--text-muted);">${escapeHTML(u.email)}</small>
-            </td>
-            <td style="padding: 8px;">🪙 ${escapeHTML(u.saldo_tokens)}</td>
-            <td style="padding: 8px;">${badgeStatus}</td>
-            <td style="padding: 8px; text-align: right;">
-              <button class="toggle-status" data-id="${escapeHTML(u.id)}" data-status="${u.status === 'banido' ? 'ativo' : 'banido'}" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; color: #fff; background: ${u.status === 'banido' ? '#10b981' : '#ef4444'}; transition: all 0.2s;">
-                ${u.status === 'banido' ? 'DESBANIR' : 'BANIR'}
-              </button>
-            </td>
-          `;
+          const br = document.createElement('br');
+          tdNome.appendChild(br);
+          
+          const smallEmail = document.createElement('small');
+          smallEmail.style.color = 'var(--text-muted)';
+          smallEmail.textContent = u.email;
+          tdNome.appendChild(smallEmail);
+
+          const tdSaldo = document.createElement('td');
+          tdSaldo.style.padding = '8px';
+          tdSaldo.textContent = `🪙 ${u.saldo_tokens}`;
+
+          const tdStatus = document.createElement('td');
+          tdStatus.style.padding = '8px';
+          
+          const spanStatus = document.createElement('span');
+          spanStatus.style.fontSize = '0.8rem';
+          if (u.status === 'banido') {
+            spanStatus.style.color = '#ef4444';
+            spanStatus.textContent = 'Banido';
+          } else {
+            spanStatus.style.color = '#34d399';
+            spanStatus.textContent = 'Ativo';
+          }
+          tdStatus.appendChild(spanStatus);
+
+          const tdAcao = document.createElement('td');
+          tdAcao.style.padding = '8px';
+          tdAcao.style.textAlign = 'right';
+
+          const btnStatus = document.createElement('button');
+          btnStatus.className = 'toggle-status';
+          btnStatus.setAttribute('data-id', u.id);
+          btnStatus.setAttribute('data-status', u.status === 'banido' ? 'ativo' : 'banido');
+          btnStatus.style.padding = '6px 12px';
+          btnStatus.style.fontSize = '0.75rem';
+          btnStatus.style.borderRadius = '6px';
+          btnStatus.style.border = 'none';
+          btnStatus.style.fontWeight = 'bold';
+          btnStatus.style.cursor = 'pointer';
+          btnStatus.style.color = '#fff';
+          btnStatus.style.transition = 'all 0.2s';
+          
+          if (u.status === 'banido') {
+            btnStatus.style.background = '#10b981';
+            btnStatus.textContent = 'DESBANIR';
+          } else {
+            btnStatus.style.background = '#ef4444';
+            btnStatus.textContent = 'BANIR';
+          }
+          tdAcao.appendChild(btnStatus);
+
+          tr.appendChild(tdId);
+          tr.appendChild(tdNome);
+          tr.appendChild(tdSaldo);
+          tr.appendChild(tdStatus);
+          tr.appendChild(tdAcao);
+
           DOM.adminTableBody.appendChild(tr);
         });
 

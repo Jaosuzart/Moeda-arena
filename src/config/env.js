@@ -41,7 +41,8 @@ const config = Object.freeze({
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3001',
   jwtSecret: process.env.JWT_SECRET,
   apiGameSecret: process.env.API_GAME_SECRET,
-  googleClientId: process.env.CLIENT_ID_GOOGLE || ''
+  googleClientId: process.env.CLIENT_ID_GOOGLE || '',
+  adminEmail: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@tokenarena.com'
 });
 
 module.exports = config;
