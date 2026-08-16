@@ -8,6 +8,7 @@ const { MercadoPagoConfig, Payment } = require('mercadopago');
 const config = require('../config/env');
 const logger = require('../config/logger');
 const usuarioModel = require('../models/usuarioModel');
+const cupomModel = require('../models/cupomModel');
 const { pool } = require('../models/db');
 
 const client = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
@@ -90,7 +91,7 @@ const processarNotificacao = async (req, res) => {
       return;
     }
 
-    const { usuarioId, planoId, tokens } = referencia;
+    const { usuarioId, planoId, tokens, cupom } = referencia;
 
     const creditado = await usuarioModel.adicionarTokens(usuarioId, tokens);
 
@@ -100,11 +101,28 @@ const processarNotificacao = async (req, res) => {
         pagamento.transaction_amount || 0, 'approved'
       );
 
+      if (cupom) {
+        try {
+          await cupomModel.incrementarUso(cupom);
+          logger.info('Uso de cupom de streamer registrado.', {
+            cupom,
+            paymentId: idPagamento,
+            usuarioId
+          });
+        } catch (cupomErr) {
+          logger.error('Erro ao registrar uso do cupom (não crítico).', {
+            cupom,
+            erro: cupomErr.message
+          });
+        }
+      }
+
       logger.info('Pagamento processado com sucesso! Tokens creditados.', {
         paymentId: idPagamento,
         usuarioId,
         planoId,
         tokens,
+        cupom: cupom || 'nenhum',
         valor: pagamento.transaction_amount
       });
     } else {

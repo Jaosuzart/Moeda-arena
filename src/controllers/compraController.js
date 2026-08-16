@@ -3,18 +3,51 @@
  * @description Controller de compras.
  *              Processa resgates gratuitos e gera preferências de pagamento
  *              no Mercado Pago, incluindo external_reference para identificar
- *              o usuário no webhook.
+ *              o usuário no webhook. Suporta cupons de desconto para streamers.
  */
 const planoModel = require('../models/planoModel');
 const usuarioModel = require('../models/usuarioModel');
+const cupomModel = require('../models/cupomModel');
 const { MercadoPagoConfig, Preference } = require('mercadopago');
 const config = require('../config/env');
 const logger = require('../config/logger');
 const { sucesso, erro } = require('../helpers/apiResponse');
 
 const client = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
+
+const validarCupom = async (req, res, next) => {
+  const { codigo } = req.body;
+
+  if (!codigo || typeof codigo !== 'string' || codigo.trim().length === 0) {
+    return erro(res, 'Informe um código de cupom válido.', 400, 'CUPOM_INVALIDO');
+  }
+
+  try {
+    const cupom = await cupomModel.buscarPorCodigo(codigo);
+
+    if (!cupom) {
+      return erro(res, 'Cupom não encontrado ou expirado.', 404, 'CUPOM_NAO_ENCONTRADO');
+    }
+
+    logger.info('Cupom validado com sucesso.', {
+      codigo: cupom.codigo,
+      desconto: cupom.desconto_percentual
+    });
+
+    return sucesso(res, {
+      codigo: cupom.codigo,
+      desconto_percentual: cupom.desconto_percentual,
+      mensagem: `Cupom "${cupom.codigo}" aplicado! Você ganhou ${cupom.desconto_percentual}% de desconto.`
+    });
+
+  } catch (err) {
+    logger.error('Erro ao validar cupom:', { erro: err.message, codigo });
+    next(err);
+  }
+};
+
 const processarCompra = async (req, res, next) => {
-  const { planoId, metodoPagamento, isGratis } = req.body;
+  const { planoId, metodoPagamento, isGratis, cupom } = req.body;
   const usuarioId = req.usuario.id;
 
   try {
@@ -42,6 +75,26 @@ const processarCompra = async (req, res, next) => {
       return erro(res, 'Método de pagamento é obrigatório para planos pagos.', 400, 'PAGAMENTO_OBRIGATORIO');
     }
 
+    let precoFinal = planoEscolhido.precoMensal;
+    let cupomAplicado = null;
+
+    if (cupom && typeof cupom === 'string' && cupom.trim().length > 0) {
+      const cupomDb = await cupomModel.buscarPorCodigo(cupom);
+      if (cupomDb) {
+        const desconto = (precoFinal * cupomDb.desconto_percentual) / 100;
+        precoFinal = parseFloat((precoFinal - desconto).toFixed(2));
+        cupomAplicado = cupomDb.codigo;
+
+        logger.info('Cupom de desconto aplicado na compra.', {
+          cupom: cupomAplicado,
+          descontoPercent: cupomDb.desconto_percentual,
+          precoOriginal: planoEscolhido.precoMensal,
+          precoFinal,
+          usuarioId
+        });
+      }
+    }
+
     const preference = new Preference(client);
     const response = await preference.create({
       body: {
@@ -49,13 +102,14 @@ const processarCompra = async (req, res, next) => {
           id: planoEscolhido.id,
           title: planoEscolhido.nome,
           quantity: 1,
-          unit_price: planoEscolhido.precoMensal,
+          unit_price: precoFinal,
           currency_id: 'BRL'
         }],
         external_reference: JSON.stringify({
           usuarioId: usuarioId,
           planoId: planoEscolhido.id,
-          tokens: planoEscolhido.tokens
+          tokens: planoEscolhido.tokens,
+          cupom: cupomAplicado
         }),
         back_urls: {
           success: config.corsOrigin,
@@ -70,7 +124,8 @@ const processarCompra = async (req, res, next) => {
       preferenceId: response.id,
       usuarioId,
       planoId: planoEscolhido.id,
-      valor: planoEscolhido.precoMensal
+      valor: precoFinal,
+      cupom: cupomAplicado
     });
 
     return sucesso(res, {
@@ -88,4 +143,4 @@ const processarCompra = async (req, res, next) => {
   }
 };
 
-module.exports = { processarCompra };
+module.exports = { processarCompra, validarCupom };

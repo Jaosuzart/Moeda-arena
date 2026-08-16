@@ -1,18 +1,18 @@
 const http = require('http');
+const config = require('./src/config/env');
+const logger = require('./src/config/logger');
 
-const SECRET = 'minha_senha_secreta_jogos_123';
+const SECRET = config.apiGameSecret;
 const EMAIL = 'joaomarcelosuzartcastro@gmail.com'; 
 
-const reqGet = http.request(`http://localhost:3001/api/games/saldo/${EMAIL}?api_key=${SECRET}`, { method: 'GET' }, (res) => {
+const reqGet = http.request(`http://localhost:${config.port}/api/games/saldo/${EMAIL}?api_key=${SECRET}`, { method: 'GET' }, (res) => {
   let data = '';
   res.on('data', chunk => data += chunk);
   res.on('end', () => {
-    console.log('\n--- GET SALDO ---');
-    console.log(`Status: ${res.statusCode}`);
-    console.log(data);
+    logger.info('--- GET SALDO ---', { status: res.statusCode, resposta: data });
 
     const postData = JSON.stringify({ email: EMAIL, quantidade: 1 });
-    const reqPost = http.request('http://localhost:3001/api/games/consumir', {
+    const reqPost = http.request(`http://localhost:${config.port}/api/games/consumir`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,9 +23,7 @@ const reqGet = http.request(`http://localhost:3001/api/games/saldo/${EMAIL}?api_
       let dataPost = '';
       resPost.on('data', chunk => dataPost += chunk);
       resPost.on('end', () => {
-        console.log('\n--- POST CONSUMIR ---');
-        console.log(`Status: ${resPost.statusCode}`);
-        console.log(dataPost);
+        logger.info('--- POST CONSUMIR ---', { status: resPost.statusCode, resposta: dataPost });
       });
     });
     
@@ -33,6 +31,10 @@ const reqGet = http.request(`http://localhost:3001/api/games/saldo/${EMAIL}?api_
     reqPost.end();
 
   });
+});
+
+reqGet.on('error', (err) => {
+  logger.error('Erro na requisição GET:', { erro: err.message });
 });
 
 reqGet.end();

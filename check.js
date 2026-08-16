@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const config = require('./src/config/env');
+const logger = require('./src/config/logger');
 
 async function test() {
   const pool = mysql.createPool({
@@ -11,8 +12,14 @@ async function test() {
     ssl: { rejectUnauthorized: false }
   });
 
-  const [rows] = await pool.query('SELECT * FROM usuarios WHERE id = 1');
-  console.log(rows[0]);
-  process.exit(0);
+  try {
+    const [rows] = await pool.query('DESCRIBE usuarios');
+    logger.info('Colunas da tabela usuarios:', { colunas: rows });
+  } catch (err) {
+    logger.error('Erro ao consultar schema:', { erro: err.message });
+  } finally {
+    await pool.end();
+    process.exit(0);
+  }
 }
 test();

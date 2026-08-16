@@ -1,7 +1,4 @@
-/**
- * @file 
- * @description 
- */
+
 document.addEventListener('DOMContentLoaded', () => {
   const DOM = {
     navAuthBtns: document.getElementById('navAuthBtns'),
@@ -10,13 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     navAvatar: document.getElementById('navAvatar'),
     btnAbrirLogin: document.getElementById('btnAbrirLogin'),
     btnAbrirRegistro: document.getElementById('btnAbrirRegistro'),
-
     cardsContainer: document.getElementById('cardsContainer'),
     loadingState: document.getElementById('loadingState'),
     pricingToggle: document.getElementById('pricingToggle'),
     labelMensal: document.getElementById('labelMensal'),
     labelAnual: document.getElementById('labelAnual'),
-
     authModal: document.getElementById('authModal'),
     tabLogin: document.getElementById('tabLogin'),
     tabRegistro: document.getElementById('tabRegistro'),
@@ -32,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFecharAuth2: document.getElementById('btnFecharAuth2'),
     btnGoogleLogin: document.getElementById('btnGoogleLogin'),
     btnGoogleRegistro: document.getElementById('btnGoogleRegistro'),
-
     checkoutModal: document.getElementById('checkoutModal'),
     checkoutPlanoNome: document.getElementById('checkoutPlanoNome'),
     areaPagamento: document.getElementById('areaPagamento'),
@@ -41,6 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     btnConfirmarCompra: document.getElementById('btnConfirmarCompra'),
     btnFecharCheckout: document.getElementById('btnFecharCheckout'),
     btnCancelarCheckout: document.getElementById('btnCancelarCheckout'),
+    inputCupom: document.getElementById('inputCupom'),
+    btnAplicarCupom: document.getElementById('btnAplicarCupom'),
+    cupomFeedback: document.getElementById('cupomFeedback'),
+    areaCupom: document.getElementById('areaCupom'),
+    checkoutPrecoOriginal: document.getElementById('checkoutPrecoOriginal'),
+    checkoutPrecoFinal: document.getElementById('checkoutPrecoFinal'),
+    checkoutPrecoArea: document.getElementById('checkoutPrecoArea'),
 
     perfilModal: document.getElementById('perfilModal'),
     btnFecharPerfil: document.getElementById('btnFecharPerfil'),
@@ -58,15 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
     perfilFeedback: document.getElementById('perfilFeedback'),
     btnSalvarPerfil: document.getElementById('btnSalvarPerfil'),
 
-    // Ranking
     btnRanking: document.getElementById('btnRanking'),
     btnRankingLogged: document.getElementById('btnRankingLogged'),
     rankingModal: document.getElementById('rankingModal'),
     btnFecharRanking: document.getElementById('btnFecharRanking'),
     rankingTableBody: document.getElementById('rankingTableBody'),
 
-    // Admin Panel
-    btnAdminPanel: document.getElementById('btnAdminPanel'),
     adminModal: document.getElementById('adminModal'),
     btnFecharAdmin: document.getElementById('btnFecharAdmin'),
     adminTableBody: document.getElementById('adminTableBody'),
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     adminTokenAmount: document.getElementById('adminTokenAmount'),
     adminFeedback: document.getElementById('adminFeedback'),
 
-    // Termos
     btnAbrirTermos: document.getElementById('btnAbrirTermos'),
     btnFecharTermos: document.getElementById('btnFecharTermos'),
     btnOkTermos: document.getElementById('btnOkTermos'),
@@ -97,7 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     planos: [],
     usuario: null,
     token: localStorage.getItem('token') || null,
-    planoSelecionado: null
+    planoSelecionado: null,
+    cupomAplicado: null,
+    descontoPercentual: 0
   };
 
   const TIER_CONFIG = {
@@ -105,11 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     premium: { icon: '⚔️', desc: 'O favorito dos jogadores competitivos.' },
     vip: { icon: '👑', desc: 'Para quem quer dominar sem limites.' }
   };
-  /**
-   * @param {string} url
-   * @param {Object} [opcoes={}]
-   * @returns {Promise<Response>}
-   */
+  
   async function fetchAutenticado(url, opcoes = {}) {
     const headers = { 'Content-Type': 'application/json', ...opcoes.headers };
     if (estado.token) {
@@ -118,11 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return fetch(url, { ...opcoes, headers });
   }
 
-  /**
-   * @param {HTMLElement} el
-   * @param {string} mensagem
-   * @param {boolean} isSucesso
-   */
   function mostrarFeedback(el, mensagem, isSucesso) {
     el.textContent = mensagem;
     el.className = `alert-feedback visible ${isSucesso ? 'success' : 'error'}`;
@@ -146,8 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.textContent = texto;
   }
 
-
-  
   function atualizarNavbar() {
     if (estado.usuario) {
       DOM.navAuthBtns.style.display = 'none';
@@ -167,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (estado.usuario.email_verificado === 0) {
           elRole.innerHTML = `⚠️ Email Pendente`;
           elRole.style.background = '#f59e0b';
-          elRole.style.color = '#000'; // Melhora o contraste (texto preto no fundo amarelo)
+          elRole.style.color = '#000'; 
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         } else if (is_admin) {
           elRole.textContent = 'Administrador';
@@ -214,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('token');
     atualizarNavbar();
   }
-
 
   function alternarTab(tab) {
     if (tab === 'login') {
@@ -401,10 +388,10 @@ document.addEventListener('DOMContentLoaded', () => {
           if (DOM.btnGoogleRegistro) DOM.btnGoogleRegistro.addEventListener('click', handleGoogleClick);
         }
       } catch (err) {
-        console.warn('Google Auth não disponível.');
+        
       }
     }
-  };
+  }
   
   DOM.navAvatar.addEventListener('click', async () => {
     abrirModal(DOM.perfilModal);
@@ -423,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.perfilPix.value = u.chave_pix || '';
         DOM.perfilCartao.value = u.cartao_final || '';
       }
-    } catch (e) { console.error('Erro ao buscar perfil', e); }
+    } catch (e) {  }
   });
 
   DOM.btnFecharPerfil.addEventListener('click', () => {
@@ -715,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       renderPlanos(DOM.pricingToggle.checked);
     } catch (err) {
-      console.error('Erro ao buscar pacotes:', err);
+      
       mostrarErroPlanos();
     }
   }
@@ -727,22 +714,98 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   function abrirCheckout(plano) {
     estado.planoSelecionado = plano;
+    estado.cupomAplicado = null;
+    estado.descontoPercentual = 0;
     DOM.checkoutPlanoNome.textContent = plano.nome;
     esconderFeedback(DOM.checkoutFeedback);
     DOM.metodoPagamento.value = '';
     DOM.btnConfirmarCompra.disabled = false;
 
+    if (DOM.inputCupom) DOM.inputCupom.value = '';
+    if (DOM.cupomFeedback) esconderFeedback(DOM.cupomFeedback);
+    if (DOM.btnAplicarCupom) DOM.btnAplicarCupom.disabled = false;
+
     if (plano.isGratis) {
       DOM.areaPagamento.style.display = 'none';
+      if (DOM.areaCupom) DOM.areaCupom.style.display = 'none';
+      if (DOM.checkoutPrecoArea) DOM.checkoutPrecoArea.style.display = 'none';
       DOM.btnConfirmarCompra.textContent = 'Resgatar Benefícios Grátis';
       DOM.btnConfirmarCompra.className = 'btn-gamer btn-gamer-success';
     } else {
       DOM.areaPagamento.style.display = 'block';
+      if (DOM.areaCupom) DOM.areaCupom.style.display = 'block';
+      atualizarPrecoCheckout(plano.precoMensal, 0);
       DOM.btnConfirmarCompra.textContent = 'Ir para Pagamento Seguro';
       DOM.btnConfirmarCompra.className = 'btn-gamer btn-gamer-primary';
     }
 
     abrirModal(DOM.checkoutModal);
+  }
+
+  function atualizarPrecoCheckout(precoOriginal, descontoPercent) {
+    if (!DOM.checkoutPrecoArea) return;
+    DOM.checkoutPrecoArea.style.display = 'flex';
+    DOM.checkoutPrecoArea.style.justifyContent = 'center';
+    DOM.checkoutPrecoArea.style.alignItems = 'center';
+    DOM.checkoutPrecoArea.style.gap = '10px';
+
+    const precoFormatado = precoOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    if (descontoPercent > 0) {
+      const precoComDesconto = precoOriginal - (precoOriginal * descontoPercent / 100);
+      const precoDescontoFormatado = precoComDesconto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      DOM.checkoutPrecoOriginal.innerHTML = '<s>' + precoFormatado + '</s>';
+      DOM.checkoutPrecoOriginal.style.display = 'inline';
+      DOM.checkoutPrecoFinal.textContent = precoDescontoFormatado;
+    } else {
+      DOM.checkoutPrecoOriginal.style.display = 'none';
+      DOM.checkoutPrecoFinal.textContent = precoFormatado;
+    }
+  }
+
+  if (DOM.btnAplicarCupom) {
+    DOM.btnAplicarCupom.addEventListener('click', async () => {
+      const codigo = (DOM.inputCupom.value || '').trim().toUpperCase();
+      if (!codigo) {
+        mostrarFeedback(DOM.cupomFeedback, 'Digite um código de cupom.', false);
+        return;
+      }
+
+      DOM.btnAplicarCupom.disabled = true;
+      DOM.btnAplicarCupom.textContent = 'Validando...';
+      esconderFeedback(DOM.cupomFeedback);
+
+      try {
+        const res = await fetchAutenticado('/api/compra/validar-cupom', {
+          method: 'POST',
+          body: JSON.stringify({ codigo })
+        });
+        const data = await res.json();
+
+        if (data.sucesso && data.dados) {
+          estado.cupomAplicado = data.dados.codigo;
+          estado.descontoPercentual = data.dados.desconto_percentual;
+          mostrarFeedback(DOM.cupomFeedback, data.dados.mensagem, true);
+          DOM.inputCupom.disabled = true;
+          DOM.btnAplicarCupom.textContent = '✓ Aplicado';
+          DOM.btnAplicarCupom.style.background = 'var(--accent-success, #4caf50)';
+
+          if (estado.planoSelecionado) {
+            atualizarPrecoCheckout(estado.planoSelecionado.precoMensal, estado.descontoPercentual);
+          }
+        } else {
+          estado.cupomAplicado = null;
+          estado.descontoPercentual = 0;
+          mostrarFeedback(DOM.cupomFeedback, data.erro || 'Cupom inválido.', false);
+          DOM.btnAplicarCupom.disabled = false;
+          DOM.btnAplicarCupom.textContent = 'Aplicar';
+        }
+      } catch (err) {
+        mostrarFeedback(DOM.cupomFeedback, 'Erro ao validar cupom.', false);
+        DOM.btnAplicarCupom.disabled = false;
+        DOM.btnAplicarCupom.textContent = 'Aplicar';
+      }
+    });
   }
 
   DOM.btnFecharCheckout.addEventListener('click', () => fecharModal(DOM.checkoutModal));
@@ -773,7 +836,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           planoId: plano.id,
           metodoPagamento: metodoPagamento,
-          isGratis: plano.isGratis
+          isGratis: plano.isGratis,
+          cupom: estado.cupomAplicado || undefined
         })
       });
 
@@ -806,7 +870,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ================== RANKING ==================
   async function carregarRanking() {
     try {
       const res = await fetch('/api/game/ranking?limite=10');
@@ -832,7 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
           DOM.rankingTableBody.appendChild(tr);
         });
       }
-    } catch (e) { console.error('Erro ao buscar ranking', e); }
+    } catch (e) {  }
   }
 
   const abrirRank = () => {
@@ -857,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
           const badgeStatus = u.status === 'banido' ? '<span style="color:#ef4444;font-size:0.8rem;">Banido</span>' : '<span style="color:#34d399;font-size:0.8rem;">Ativo</span>';
           
-          tr.textContent = `
+          tr.innerHTML = `
             <td style="padding: 8px;">${u.id}</td>
             <td style="padding: 8px; max-width: 180px; overflow: hidden; text-overflow: ellipsis;" title="${u.email}">
               ${u.nome.split(' ')[0]}<br><small style="color:var(--text-muted);">${u.email}</small>
@@ -885,7 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
       }
-    } catch (e) { console.error('Erro ao buscar usuários', e); }
+    } catch (e) {  }
   }
 
   if (DOM.btnAdminPanel) DOM.btnAdminPanel.addEventListener('click', () => {

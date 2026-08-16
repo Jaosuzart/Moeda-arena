@@ -1,6 +1,8 @@
 const { MercadoPagoConfig, Preference } = require('mercadopago');
+const config = require('./src/config/env');
+const logger = require('./src/config/logger');
 
-const client = new MercadoPagoConfig({ accessToken: 'TEST-5516404168104326-080714-b490a46b2472983a08f665e71680d7e8-635609201' });
+const client = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 
 const preference = new Preference(client);
 
@@ -26,7 +28,7 @@ preference.create({
     auto_return: 'approved'
   }
 }).then(res => {
-  console.log("SUCESSO:", res.id);
+  logger.info('Preferência criada com sucesso.', { preferenceId: res.id });
 }).catch(err => {
-  console.error("ERRO COMPLETO:", JSON.stringify(err, null, 2));
+  logger.error('Erro ao criar preferência no Mercado Pago:', { erro: JSON.stringify(err, null, 2) });
 });

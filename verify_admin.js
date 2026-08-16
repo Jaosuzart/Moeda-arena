@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const config = require('./src/config/env');
+const logger = require('./src/config/logger');
 
 async function verifyUser() {
   const pool = mysql.createPool({
@@ -14,9 +15,9 @@ async function verifyUser() {
   try {
     const sql = 'UPDATE usuarios SET email_verificado = 1 WHERE id = 1';
     await pool.query(sql);
-    console.error("Admin verificado com sucesso.");
-  } catch (error) {
-    console.error("Erro:", error);
+    logger.info('Admin verificado com sucesso.');
+  } catch (err) {
+    logger.error('Erro ao verificar admin:', { erro: err.message });
   } finally {
     await pool.end();
   }

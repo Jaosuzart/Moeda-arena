@@ -77,7 +77,7 @@ const confirmarEmail = async (id) => {
  * @param {number} limite 
  */
 const buscarRanking = async (limite = 10) => {
-  const sql = 'SELECT id, nome, trofeus, vitorias, xp FROM usuarios WHERE status != "banido" ORDER BY trofeus DESC, vitorias DESC, xp DESC LIMIT ?';
+  const sql = "SELECT id, nome, trofeus, vitorias, xp FROM usuarios WHERE status != 'banido' ORDER BY trofeus DESC, vitorias DESC, xp DESC LIMIT ?";
   const [rows] = await pool.query(sql, [limite]);
   return rows;
 };
