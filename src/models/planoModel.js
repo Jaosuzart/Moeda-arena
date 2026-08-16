@@ -11,6 +11,16 @@ const planosGames = Object.freeze([
     isGratis: true
   }),
   Object.freeze({
+    id: 'iniciante',
+    nome: 'Passe Iniciante',
+    precoMensal: 4.99,
+    precoAnual: 49.90,
+    tokens: 1000,
+    recursos: ['1.000 Tokens/mês', 'Acesso Básico Estendido', '1 Skin de Arma Comum'],
+    popular: false,
+    isGratis: false
+  }),
+  Object.freeze({
     id: 'premium',
     nome: 'Passe Profissional',
     precoMensal: 49.90,

@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TIER_CONFIG = {
     gratis: { icon: '🛡️', desc: 'Comece sua jornada com o pacote inicial.' },
+    iniciante: { icon: '🪙', desc: 'Ideal para quem quer começar com pouca moeda.' },
     premium: { icon: '⚔️', desc: 'O favorito dos jogadores competitivos.' },
     vip: { icon: '👑', desc: 'Para quem quer dominar sem limites.' }
   };
