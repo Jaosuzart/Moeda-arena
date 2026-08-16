@@ -23,8 +23,8 @@ const planosGames = Object.freeze([
   Object.freeze({
     id: 'premium',
     nome: 'Passe Profissional',
-    precoMensal: 49.90,
-    precoAnual: 499.90,
+    precoMensal: 19.90,
+    precoAnual: 199.00,
     tokens: 5000,
     recursos: ['5.000 Tokens/mês', 'Conjuntos de Personagens Épicos', 'Acesso a Ligas Exclusivas'],
     popular: true,
@@ -33,8 +33,8 @@ const planosGames = Object.freeze([
   Object.freeze({
     id: 'vip',
     nome: 'Sócio Lenda',
-    precoMensal: 99.90,
-    precoAnual: 999.90,
+    precoMensal: 39.90,
+    precoAnual: 399.00,
     tokens: 15000,
     recursos: ['Tokens Ilimitados', 'Todos os Personagens Desbloqueados', 'Sem Anúncios'],
     popular: false,
