@@ -395,6 +395,7 @@ body::before {
   padding: 0 1.5rem 4rem;
   position: relative;
   z-index: 1;
+  min-height: 520px;
 }
 
 .plan-card {
@@ -1177,6 +1178,7 @@ body::before {
   width: 90%;
   margin: 0 auto;
   padding: 0 0 3rem;
+  min-height: 480px;
 }
 
 .plan-card {
