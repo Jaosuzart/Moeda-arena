@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     statsTotalUsuarios: document.getElementById('statsTotalUsuarios'),
     statsTotalTokens: document.getElementById('statsTotalTokens'),
     recentSalesList: document.getElementById('recentSalesList'),
-    linkTelegram: document.getElementById('linkTelegram'),
     linkWhatsapp: document.getElementById('linkWhatsapp')
   };
 
@@ -417,7 +416,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const resp = await fetch('/api/auth/config');
       const data = await resp.json();
 
-      if (data.telegramUrl && DOM.linkTelegram) DOM.linkTelegram.href = data.telegramUrl;
       if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
 
       if (data.clientId && window.google) {

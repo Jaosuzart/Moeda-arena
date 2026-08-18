@@ -7,26 +7,26 @@
   --bg-glass: rgba(255, 255, 255, 0.05);
   --bg-input: rgba(255, 255, 255, 0.08);
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-primary: #ffffff;
+  --text-secondary: #f8fafc;
+  --text-muted: #cbd5e1;
   --text-accent: #e2e8f0;
   --text-dark: #1e293b;
 
   --accent-free: #34d399;
   --accent-free-soft: rgba(52, 211, 153, 0.12);
-  --accent-free-glow: rgba(52, 211, 153, 0.2);
+  --accent-free-glow: rgba(52, 211, 153, 0.05);
 
   --accent-premium: #fbbf24;
   --accent-premium-soft: rgba(251, 191, 36, 0.12);
-  --accent-premium-glow: rgba(251, 191, 36, 0.25);
+  --accent-premium-glow: rgba(251, 191, 36, 0.08);
 
   --accent-vip: #d8b4fe;
   --accent-vip-soft: rgba(216, 180, 254, 0.15);
-  --accent-vip-glow: rgba(216, 180, 254, 0.25);
+  --accent-vip-glow: rgba(216, 180, 254, 0.08);
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.15);
+  --border-hover: rgba(255, 255, 255, 0.25);
 
   --radius-xl: 24px;
   --radius-lg: 16px;
@@ -67,7 +67,7 @@ body {
   min-height: -webkit-fill-available;
   margin: 0;
   padding: 0;
-  background-color: #09090b;
+  background-color: #0f172a;
 }
 
 body {
@@ -85,9 +85,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -452,7 +450,7 @@ body::before {
 
 .plan-card[data-tier="gratis"]:hover {
   border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(52, 211, 153, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 .plan-card[data-tier="gratis"] .plan-card-icon {
@@ -503,7 +501,7 @@ body::before {
 .plan-card[data-tier="premium"]:hover {
   border-color: rgba(251, 191, 36, 0.6);
   background: rgba(30, 41, 59, 0.8);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(251, 191, 36, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 .plan-card[data-tier="premium"] .plan-card-icon {
@@ -539,7 +537,7 @@ body::before {
 
 .plan-card[data-tier="vip"]:hover {
   border-color: rgba(216, 180, 254, 0.5);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(216, 180, 254, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 .plan-card[data-tier="vip"] .plan-card-icon {
@@ -1328,7 +1326,7 @@ body::before {
 }
 
 .faq-item {
-  background: rgba(30, 41, 59, 0.6);
+  background: rgba(30, 41, 59, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
