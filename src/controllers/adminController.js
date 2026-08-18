@@ -21,7 +21,7 @@ const listarUsuarios = async (req, res, next) => {
 const adicionarTokensManualmente = async (req, res, next) => {
   try {
     const { usuarioId, quantidade } = req.body;
-    
+
     if (!usuarioId || !quantidade || isNaN(quantidade)) {
       return erro(res, 'ID do usuário e quantidade são obrigatórios.', 400);
     }
@@ -43,7 +43,7 @@ const alterarStatusUsuario = async (req, res, next) => {
     if (!usuarioId || !['ativo', 'banido'].includes(status)) {
       return erro(res, 'Status inválido. Use "ativo" ou "banido".', 400);
     }
-    
+
     const sucessoDb = await usuarioModel.atualizarStatus(usuarioId, status);
     if (!sucessoDb) {
       return erro(res, 'Usuário não encontrado.', 404);

@@ -26,7 +26,7 @@ const reqGet = http.request(`http://localhost:${config.port}/api/games/saldo/${E
         logger.info('--- POST CONSUMIR ---', { status: resPost.statusCode, resposta: dataPost });
       });
     });
-    
+
     reqPost.write(postData);
     reqPost.end();
 

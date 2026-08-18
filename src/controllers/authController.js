@@ -60,7 +60,7 @@ const verificarEmail = async (req, res, next) => {
     }
 
     await usuarioModel.confirmarEmail(usuario.id);
-    
+
     return res.send(`
       <div style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
         <h1 style="color: #3b82f6;">✅ E-mail Verificado com Sucesso!</h1>
@@ -132,7 +132,7 @@ const loginGoogle = async (req, res, next) => {
       audience: CLIENT_ID,
     });
     const payload = ticket.getPayload();
-    
+
     const email = payload.email;
     const nome = payload.name || 'Usuário Google';
 
@@ -171,7 +171,7 @@ const loginGoogle = async (req, res, next) => {
 const atualizarPerfil = async (req, res, next) => {
   try {
     const { nome, cpf, localidade, chave_pix, cartao_final, senhaConfirmacao } = req.body;
-    
+
     const usuarioDb = await usuarioModel.buscarPorId(req.usuario.id);
     if (!usuarioDb) return erro(res, 'Usuário não encontrado', 404);
 
@@ -189,7 +189,7 @@ const atualizarPerfil = async (req, res, next) => {
 
     const usuarioCompleto = await usuarioModel.buscarPorEmail(usuarioDb.email);
     const senhaValida = await bcrypt.compare(senhaConfirmacao, usuarioCompleto.senha_hash);
-    
+
     if (!senhaValida) {
       return erro(res, 'Senha de confirmação incorreta.', 403, 'SENHA_INCORRETA');
     }
@@ -197,7 +197,7 @@ const atualizarPerfil = async (req, res, next) => {
     if (!nome) {
       return erro(res, 'O nome não pode ficar vazio.', 400);
     }
-    
+
     const sucessoAtualizacao = await usuarioModel.atualizarPerfil(req.usuario.id, {
       nome: nome.trim(),
       cpf: cpf ? cpf.trim() : null,
@@ -205,11 +205,11 @@ const atualizarPerfil = async (req, res, next) => {
       chave_pix: chave_pix ? chave_pix.trim() : null,
       cartao_final: cartao_final ? cartao_final.trim() : null
     });
-    
+
     if (!sucessoAtualizacao) {
       return erro(res, 'Erro ao salvar o perfil.', 500);
     }
-    
+
     return sucesso(res, { mensagem: 'Perfil salvo com sucesso!' });
   } catch (err) {
     next(err);
@@ -237,4 +237,74 @@ const definirSenha = async (req, res, next) => {
   }
 };
 
-module.exports = { registrar, login, loginGoogle, perfil, atualizarPerfil, verificarEmail, definirSenha };
+const solicitarRecuperarSenha = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return erro(res, 'O e-mail é obrigatório.', 400);
+    }
+
+    const usuario = await usuarioModel.buscarPorEmail(email);
+    if (!usuario) {
+      return sucesso(res, { mensagem: 'Se o e-mail estiver cadastrado, um link de redefinição de senha será enviado em instantes.' });
+    }
+
+    const crypto = require('crypto');
+    const token = crypto.randomBytes(32).toString('hex');
+    const expira = new Date(Date.now() + 3600000); 
+
+    await usuarioModel.salvarTokenResetSenha(usuario.id, token, expira);
+    await emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, token);
+
+    logger.info('Solicitação de recuperação de senha gerada.', { usuarioId: usuario.id });
+
+    return sucesso(res, { mensagem: 'Se o e-mail estiver cadastrado, um link de redefinição de senha será enviado em instantes.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const redefinirSenhaConfirmar = async (req, res, next) => {
+  try {
+    const { token, novaSenha } = req.body;
+    if (!token || !novaSenha) {
+      return erro(res, 'Token e nova senha são obrigatórios.', 400);
+    }
+
+    if (novaSenha.length < 6) {
+      return erro(res, 'A nova senha deve ter pelo menos 6 caracteres.', 400);
+    }
+
+    const usuario = await usuarioModel.buscarPorTokenResetSenha(token);
+    if (!usuario) {
+      return erro(res, 'Link de redefinição inválido ou já utilizado.', 400, 'TOKEN_INVALIDO');
+    }
+
+    const agora = new Date();
+    const dataExpira = new Date(usuario.reset_senha_expira);
+    if (agora > dataExpira) {
+      return erro(res, 'O link de redefinição expirou. Solicite um novo link.', 400, 'TOKEN_EXPIRADO');
+    }
+
+    const novaSenhaHash = await bcrypt.hash(novaSenha, 12);
+    await usuarioModel.atualizarSenhaPorReset(usuario.id, novaSenhaHash);
+
+    logger.info('Senha redefinida com sucesso via token.', { usuarioId: usuario.id });
+
+    return sucesso(res, { mensagem: 'Senha redefinida com sucesso! Você já pode fazer login com sua nova senha.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { 
+  registrar, 
+  login, 
+  loginGoogle, 
+  perfil, 
+  atualizarPerfil, 
+  verificarEmail, 
+  definirSenha,
+  solicitarRecuperarSenha,
+  redefinirSenhaConfirmar
+};

@@ -87,7 +87,29 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFecharCreatePassword: document.getElementById('btnFecharCreatePassword'),
     createPasswordForm: document.getElementById('createPasswordForm'),
     newSecurityPassword: document.getElementById('newSecurityPassword'),
-    createPasswordFeedback: document.getElementById('createPasswordFeedback')
+    createPasswordFeedback: document.getElementById('createPasswordFeedback'),
+
+    btnEsqueciSenha: document.getElementById('btnEsqueciSenha'),
+    forgotPasswordModal: document.getElementById('forgotPasswordModal'),
+    forgotForm: document.getElementById('forgotForm'),
+    forgotEmail: document.getElementById('forgotEmail'),
+    forgotFeedback: document.getElementById('forgotFeedback'),
+    btnEnviarForgot: document.getElementById('btnEnviarForgot'),
+    btnFecharForgot: document.getElementById('btnFecharForgot'),
+    btnVoltarLogin: document.getElementById('btnVoltarLogin'),
+
+    resetPasswordModal: document.getElementById('resetPasswordModal'),
+    resetForm: document.getElementById('resetForm'),
+    resetNovaSenha: document.getElementById('resetNovaSenha'),
+    resetConfirmarSenha: document.getElementById('resetConfirmarSenha'),
+    resetFeedback: document.getElementById('resetFeedback'),
+    btnConfirmarReset: document.getElementById('btnConfirmarReset'),
+    btnFecharReset: document.getElementById('btnFecharReset'),
+
+    statsTotalUsuarios: document.getElementById('statsTotalUsuarios'),
+    statsTotalTokens: document.getElementById('statsTotalTokens'),
+    recentSalesList: document.getElementById('recentSalesList'),
+    linkWhatsapp: document.getElementById('linkWhatsapp')
   };
 
   let estado = {
@@ -96,7 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     token: localStorage.getItem('token') || null,
     planoSelecionado: null,
     cupomAplicado: null,
-    descontoPercentual: 0
+    descontoPercentual: 0,
+    googleLoginPendente: false,
+    resetToken: null
   };
 
   const TIER_CONFIG = {
@@ -105,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     premium: { icon: '⚔️', desc: 'O favorito dos jogadores competitivos.' },
     vip: { icon: '👑', desc: 'Para quem quer dominar sem limites.' }
   };
-  
+
   async function fetchAutenticado(url, opcoes = {}) {
     const headers = { 'Content-Type': 'application/json', ...opcoes.headers };
     if (estado.token) {
@@ -147,26 +171,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const is_admin = !!estado.usuario.isAdmin;
       const firstName = estado.usuario.nome.split(' ')[0];
-      
+
       const elName = document.getElementById('navUserName');
       const elRole = document.getElementById('navUserRole');
-      
+
       if (elName) elName.textContent = firstName;
       if (elRole) {
+        elRole.className = 'nav-role-badge';
         if (estado.usuario.email_verificado === 0) {
           elRole.textContent = '⚠️ Email Pendente';
-          elRole.style.background = '#f59e0b';
-          elRole.style.color = '#000'; 
+          elRole.classList.add('pendente');
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         } else if (is_admin) {
           elRole.textContent = 'Administrador';
-          elRole.style.background = '#b91c1c';
-          elRole.style.color = '#fff'; 
+          elRole.classList.add('admin');
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'inline-block';
         } else {
           elRole.textContent = 'Jogador';
-          elRole.style.background = '#3b82f6';
-          elRole.style.color = '#fff'; 
+          elRole.classList.add('jogador');
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         }
       }
@@ -249,6 +271,25 @@ document.addEventListener('DOMContentLoaded', () => {
     abrirModal(DOM.authModal);
   });
 
+  const handleGoogleClick = () => {
+    if (window.google && window.google.accounts) {
+      google.accounts.id.prompt();
+    } else {
+      estado.googleLoginPendente = true;
+      if (DOM.btnGoogleLogin) {
+        DOM.btnGoogleLogin.disabled = true;
+        DOM.btnGoogleLogin.innerHTML = 'Carregando Google...';
+      }
+      if (DOM.btnGoogleRegistro) {
+        DOM.btnGoogleRegistro.disabled = true;
+        DOM.btnGoogleRegistro.innerHTML = 'Carregando Google...';
+      }
+      carregarScriptGoogle();
+    }
+  };
+  if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener('click', handleGoogleClick);
+  if (DOM.btnGoogleRegistro) DOM.btnGoogleRegistro.addEventListener('click', handleGoogleClick);
+
   DOM.btnFecharAuth.addEventListener('click', () => fecharModal(DOM.authModal));
   DOM.btnFecharAuth2.addEventListener('click', () => fecharModal(DOM.authModal));
 
@@ -260,12 +301,12 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     abrirModal(DOM.termosModal);
   });
-  
+
   DOM.btnFecharTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
   if (DOM.btnOkTermos) {
     DOM.btnOkTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
   }
-  
+
   DOM.termosModal.addEventListener('click', (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
   });
@@ -371,33 +412,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function initGoogleAuth() {
-    if (window.google) {
-      try {
-        const resp = await fetch('/api/auth/google/client-id');
-        const data = await resp.json();
+    try {
+      const resp = await fetch('/api/auth/config');
+      const data = await resp.json();
 
-        if (data.clientId) {
-          google.accounts.id.initialize({
-            client_id: data.clientId,
-            callback: handleGoogleCallback,
-            use_fedcm_for_prompt: false
-          });
+      if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
 
-          const handleGoogleClick = () => google.accounts.id.prompt();
+      if (data.clientId && window.google) {
+        google.accounts.id.initialize({
+          client_id: data.clientId,
+          callback: handleGoogleCallback,
+          use_fedcm_for_prompt: false
+        });
 
-          if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener('click', handleGoogleClick);
-          if (DOM.btnGoogleRegistro) DOM.btnGoogleRegistro.addEventListener('click', handleGoogleClick);
+        if (DOM.btnGoogleLogin) {
+          DOM.btnGoogleLogin.disabled = false;
+          DOM.btnGoogleLogin.innerHTML = `
+              <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+              </svg> Entrar com o Google`;
         }
-      } catch (err) {
-        
+        if (DOM.btnGoogleRegistro) {
+          DOM.btnGoogleRegistro.disabled = false;
+          DOM.btnGoogleRegistro.innerHTML = `
+              <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+              </svg> Criar conta com o Google`;
+        }
+        if (estado.googleLoginPendente) {
+          estado.googleLoginPendente = false;
+          google.accounts.id.prompt();
+        }
       }
+    } catch (err) {
+
     }
   }
-  
+
   DOM.navAvatar.addEventListener('click', async () => {
     abrirModal(DOM.perfilModal);
     DOM.perfilNome.value = estado.usuario?.nome || '';
-    
+
     try {
       const resp = await fetch('/api/auth/perfil', {
         headers: { 'Authorization': `Bearer ${estado.token}` }
@@ -411,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.perfilPix.value = u.chave_pix || '';
         DOM.perfilCartao.value = u.cartao_final || '';
       }
-    } catch (e) {  }
+    } catch (e) { }
   });
 
   DOM.btnFecharPerfil.addEventListener('click', () => {
@@ -527,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         mostrarFeedback(DOM.createPasswordFeedback, data.erro || 'Erro ao definir senha.', false);
       }
-    } catch(err) {
+    } catch (err) {
       mostrarFeedback(DOM.createPasswordFeedback, 'Falha de comunicação.', false);
     } finally {
       setCarregando(btn, false, 'Definir Senha');
@@ -595,10 +656,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const iconSpan = document.createElement('span');
       iconSpan.className = 'feature-icon';
-      
+
       if (recurso.toLowerCase().includes('token')) {
         iconSpan.textContent = '🪙';
-        iconSpan.style.color = 'inherit'; 
+        iconSpan.style.color = 'inherit';
       } else {
         iconSpan.textContent = '✓';
       }
@@ -680,16 +741,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorState = DOM.cardsContainer.querySelector('.error-container');
     if (errorState) errorState.remove();
 
-    if (!DOM.loadingState) {
-      const loading = document.createElement('div');
-      loading.className = 'loading-container';
-      loading.id = 'loadingState';
-      const p = document.createElement('p');
-      p.className = 'loading-text';
-      p.textContent = 'Carregando pacotes...';
-      loading.appendChild(p);
-      DOM.cardsContainer.appendChild(loading);
-    }
+    const loadingEl = document.getElementById('loadingState');
+    if (loadingEl) loadingEl.remove();
 
     try {
       const res = await fetch('/api/planos');
@@ -698,13 +751,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       estado.planos = data.dados || data;
 
-      const loadingEl = document.getElementById('loadingState');
-      if (loadingEl) loadingEl.remove();
-
-      renderPlanos(DOM.pricingToggle.checked);
+      if (DOM.pricingToggle.checked) {
+        renderPlanos(true);
+      }
     } catch (err) {
-      
-      mostrarErroPlanos();
+      if (DOM.cardsContainer.querySelectorAll('.plan-card').length === 0) {
+        mostrarErroPlanos();
+      }
     }
   }
 
@@ -712,6 +765,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (estado.planos.length > 0) {
       renderPlanos(DOM.pricingToggle.checked);
     }
+  });
+
+  DOM.cardsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.plan-card-btn');
+    if (!btn) return;
+
+    const card = btn.closest('.plan-card');
+    if (!card) return;
+
+    const planId = card.getAttribute('data-tier');
+
+    let plano = estado.planos.find(p => p.id === planId);
+
+    if (!plano) {
+      const name = card.querySelector('.plan-card-name').textContent;
+      plano = {
+        id: planId,
+        nome: name,
+        precoMensal: planId === 'gratis' ? 0 : (planId === 'iniciante' ? 4.99 : (planId === 'premium' ? 19.90 : 39.90)),
+        isGratis: planId === 'gratis',
+        tokens: planId === 'gratis' ? 100 : (planId === 'iniciante' ? 1000 : (planId === 'premium' ? 5000 : 15000))
+      };
+    }
+
+    if (!estado.usuario) {
+      carregarScriptGoogle();
+      alternarTab('login');
+      abrirModal(DOM.authModal);
+      return;
+    }
+    abrirCheckout(plano);
   });
   function abrirCheckout(plano) {
     estado.planoSelecionado = plano;
@@ -882,37 +966,31 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.rankingTableBody.textContent = '';
         data.dados.forEach((jogador, index) => {
           const tr = document.createElement('tr');
-          tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-          
+          tr.className = 'admin-table-row';
+
           let medal = `${index + 1}º`;
           if (index === 0) medal = '🥇';
           if (index === 1) medal = '🥈';
           if (index === 2) medal = '🥉';
 
           const tdMedal = document.createElement('td');
-          tdMedal.style.padding = '10px';
-          tdMedal.style.fontWeight = 'bold';
+          tdMedal.className = 'rank-table-cell rank-cell-medal';
           tdMedal.textContent = medal;
 
           const tdNome = document.createElement('td');
-          tdNome.style.padding = '10px';
-          tdNome.style.fontWeight = '600';
-          tdNome.style.color = '#fff';
+          tdNome.className = 'rank-table-cell rank-cell-name';
           tdNome.textContent = jogador.nome.split(' ')[0];
 
           const tdTrofeus = document.createElement('td');
-          tdTrofeus.style.padding = '10px';
-          tdTrofeus.style.color = '#fbbf24';
+          tdTrofeus.className = 'rank-table-cell rank-cell-trofeus';
           tdTrofeus.textContent = `🏆 ${jogador.trofeus || 0}`;
 
           const tdVitorias = document.createElement('td');
-          tdVitorias.style.padding = '10px';
-          tdVitorias.style.color = '#34d399';
+          tdVitorias.className = 'rank-table-cell rank-cell-vitorias';
           tdVitorias.textContent = `⚔️ ${jogador.vitorias || 0}`;
 
           const tdXp = document.createElement('td');
-          tdXp.style.padding = '10px';
-          tdXp.style.color = '#60a5fa';
+          tdXp.className = 'rank-table-cell rank-cell-xp';
           tdXp.textContent = `⭐ ${jogador.xp || 0}`;
 
           tr.appendChild(tdMedal);
@@ -924,7 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
           DOM.rankingTableBody.appendChild(tr);
         });
       }
-    } catch (e) {  }
+    } catch (e) { }
   }
 
   const abrirRank = () => {
@@ -946,68 +1024,56 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.adminTableBody.textContent = '';
         data.dados.forEach(u => {
           const tr = document.createElement('tr');
-          tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+          tr.className = 'admin-table-row';
 
           const tdId = document.createElement('td');
-          tdId.style.padding = '8px';
+          tdId.className = 'admin-table-cell';
           tdId.textContent = u.id;
 
           const tdNome = document.createElement('td');
-          tdNome.style.padding = '8px';
-          tdNome.style.maxWidth = '180px';
-          tdNome.style.overflow = 'hidden';
-          tdNome.style.textOverflow = 'ellipsis';
+          tdNome.className = 'admin-table-cell admin-table-cell-name';
           tdNome.title = u.email;
           tdNome.textContent = u.nome.split(' ')[0];
-          
+
           const br = document.createElement('br');
           tdNome.appendChild(br);
-          
+
           const smallEmail = document.createElement('small');
           smallEmail.style.color = 'var(--text-muted)';
           smallEmail.textContent = u.email;
           tdNome.appendChild(smallEmail);
 
           const tdSaldo = document.createElement('td');
-          tdSaldo.style.padding = '8px';
+          tdSaldo.className = 'admin-table-cell';
           tdSaldo.textContent = `🪙 ${u.saldo_tokens}`;
 
           const tdStatus = document.createElement('td');
-          tdStatus.style.padding = '8px';
-          
+          tdStatus.className = 'admin-table-cell';
+
           const spanStatus = document.createElement('span');
-          spanStatus.style.fontSize = '0.8rem';
+          spanStatus.className = 'badge-status';
           if (u.status === 'banido') {
-            spanStatus.style.color = '#ef4444';
+            spanStatus.classList.add('banido');
             spanStatus.textContent = 'Banido';
           } else {
-            spanStatus.style.color = '#34d399';
+            spanStatus.classList.add('ativo');
             spanStatus.textContent = 'Ativo';
           }
           tdStatus.appendChild(spanStatus);
 
           const tdAcao = document.createElement('td');
-          tdAcao.style.padding = '8px';
-          tdAcao.style.textAlign = 'right';
+          tdAcao.className = 'admin-table-cell admin-table-cell-action';
 
           const btnStatus = document.createElement('button');
-          btnStatus.className = 'toggle-status';
+          btnStatus.className = 'toggle-status btn-action-status';
           btnStatus.setAttribute('data-id', u.id);
           btnStatus.setAttribute('data-status', u.status === 'banido' ? 'ativo' : 'banido');
-          btnStatus.style.padding = '6px 12px';
-          btnStatus.style.fontSize = '0.75rem';
-          btnStatus.style.borderRadius = '6px';
-          btnStatus.style.border = 'none';
-          btnStatus.style.fontWeight = 'bold';
-          btnStatus.style.cursor = 'pointer';
-          btnStatus.style.color = '#fff';
-          btnStatus.style.transition = 'all 0.2s';
-          
+
           if (u.status === 'banido') {
-            btnStatus.style.background = '#10b981';
+            btnStatus.classList.add('desbanir');
             btnStatus.textContent = 'DESBANIR';
           } else {
-            btnStatus.style.background = '#ef4444';
+            btnStatus.classList.add('banir');
             btnStatus.textContent = 'BANIR';
           }
           tdAcao.appendChild(btnStatus);
@@ -1029,11 +1095,11 @@ document.addEventListener('DOMContentLoaded', () => {
               method: 'POST',
               body: JSON.stringify({ usuarioId: userId, status: newStatus })
             });
-            carregarAdminUsers(); 
+            carregarAdminUsers();
           });
         });
       }
-    } catch (e) {  }
+    } catch (e) { }
   }
 
   if (DOM.btnAdminPanel) DOM.btnAdminPanel.addEventListener('click', () => {
@@ -1071,10 +1137,160 @@ document.addEventListener('DOMContentLoaded', () => {
       setCarregando(btn, false, 'Adicionar');
     }
   });
+
+  if (DOM.btnEsqueciSenha) {
+    DOM.btnEsqueciSenha.addEventListener('click', (e) => {
+      e.preventDefault();
+      fecharModal(DOM.authModal);
+      abrirModal(DOM.forgotPasswordModal);
+      DOM.forgotEmail.value = '';
+      esconderFeedback(DOM.forgotFeedback);
+    });
+  }
+
+  if (DOM.btnVoltarLogin) {
+    DOM.btnVoltarLogin.addEventListener('click', () => {
+      fecharModal(DOM.forgotPasswordModal);
+      abrirModal(DOM.authModal);
+      alternarTab('login');
+    });
+  }
+
+  if (DOM.btnFecharForgot) {
+    DOM.btnFecharForgot.addEventListener('click', () => fecharModal(DOM.forgotPasswordModal));
+  }
+
+  if (DOM.btnFecharReset) {
+    DOM.btnFecharReset.addEventListener('click', () => fecharModal(DOM.resetPasswordModal));
+  }
+
+  if (DOM.forgotForm) {
+    DOM.forgotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      esconderFeedback(DOM.forgotFeedback);
+      const btn = DOM.btnEnviarForgot;
+      setCarregando(btn, true, 'Enviando...');
+
+      try {
+        const res = await fetch('/api/auth/recuperar-senha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: DOM.forgotEmail.value })
+        });
+        const data = await res.json();
+        if (data.sucesso) {
+          mostrarFeedback(DOM.forgotFeedback, data.dados.mensagem, true);
+          DOM.forgotForm.reset();
+        } else {
+          mostrarFeedback(DOM.forgotFeedback, data.erro || 'Erro ao processar solicitação.', false);
+        }
+      } catch (err) {
+        mostrarFeedback(DOM.forgotFeedback, 'Erro de conexão com o servidor.', false);
+      } finally {
+        setCarregando(btn, false, 'Enviar Link');
+      }
+    });
+  }
+
+  if (DOM.resetForm) {
+    DOM.resetForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      esconderFeedback(DOM.resetFeedback);
+
+      const novaSenha = DOM.resetNovaSenha.value;
+      const confirmarSenha = DOM.resetConfirmarSenha.value;
+
+      if (novaSenha !== confirmarSenha) {
+        mostrarFeedback(DOM.resetFeedback, 'As senhas não coincidem.', false);
+        return;
+      }
+
+      if (novaSenha.length < 6) {
+        mostrarFeedback(DOM.resetFeedback, 'A senha deve ter pelo menos 6 caracteres.', false);
+        return;
+      }
+
+      const btn = DOM.btnConfirmarReset;
+      setCarregando(btn, true, 'Salvando...');
+
+      try {
+        const res = await fetch('/api/auth/redefinir-senha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: estado.resetToken, novaSenha })
+        });
+        const data = await res.json();
+        if (data.sucesso) {
+          mostrarFeedback(DOM.resetFeedback, data.dados.mensagem, true);
+          DOM.resetForm.reset();
+          setTimeout(() => {
+            fecharModal(DOM.resetPasswordModal);
+            abrirModal(DOM.authModal);
+            alternarTab('login');
+          }, 3000);
+        } else {
+          mostrarFeedback(DOM.resetFeedback, data.erro || 'Erro ao redefinir senha.', false);
+        }
+      } catch (err) {
+        mostrarFeedback(DOM.resetFeedback, 'Erro de conexão com o servidor.', false);
+      } finally {
+        setCarregando(btn, false, 'Salvar Nova Senha');
+      }
+    });
+  }
+
+  async function carregarEstatisticas() {
+    try {
+      const res = await fetch('/api/estatisticas');
+      const data = await res.json();
+      if (data.sucesso && data.dados) {
+        const stats = data.dados;
+        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = stats.totalUsuarios.toLocaleString('pt-BR');
+        if (DOM.statsTotalTokens) DOM.statsTotalTokens.textContent = stats.totalTokens.toLocaleString('pt-BR');
+
+        if (DOM.recentSalesList) {
+          DOM.recentSalesList.innerHTML = '';
+          if (stats.ultimasVendas.length === 0) {
+            DOM.recentSalesList.innerHTML = '<li style="justify-content: center; color: var(--text-secondary, #aaa);">Nenhuma atividade registrada ainda.</li>';
+            return;
+          }
+          stats.ultimasVendas.forEach(venda => {
+            const li = document.createElement('li');
+            const dataVenda = new Date(venda.data).toLocaleDateString('pt-BR', {
+              day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+            });
+            const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + '***' : venda.nome + '***';
+
+            li.innerHTML = `
+              <span>Jogador <strong>${nomeFormatado}</strong> adquiriu o <span class="sale-plan">${venda.plano_id.toUpperCase()}</span> (+${venda.tokens.toLocaleString('pt-BR')} Tokens)</span>
+              <span class="sale-time">${dataVenda}</span>
+            `;
+            DOM.recentSalesList.appendChild(li);
+          });
+        }
+      }
+    } catch (e) {
+      if (DOM.recentSalesList) {
+        DOM.recentSalesList.innerHTML = '<li style="justify-content: center; color: #ef4444;">Erro ao carregar atividades recentes.</li>';
+      }
+    }
+  }
+
   async function inicializar() {
     atualizarNavbar();
     await restaurarSessao();
     await carregarPlanos();
+    await carregarEstatisticas();
+    await initGoogleAuth();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const rToken = urlParams.get('resetToken');
+    if (rToken) {
+      estado.resetToken = rToken;
+      abrirModal(DOM.resetPasswordModal);
+      const novaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.replaceState({ path: novaUrl }, '', novaUrl);
+    }
   }
 
   inicializar();

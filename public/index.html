@@ -28,16 +28,12 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    as="style" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"
-    media="print" onload="this.media='all'" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </noscript>
-  <link rel="preload" href="style.css?v=2" as="style" />
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.min.css?v=2" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -115,10 +111,116 @@
       <span class="toggle-discount" aria-label="Desconto de 17% no plano anual">Economize 17%</span>
     </section>
     <section class="cards-grid" id="cardsContainer" aria-label="Planos disponíveis">
-      <div class="loading-container" id="loadingState" role="status" aria-live="polite">
-        <p class="loading-text">Carregando pacotes<span class="loading-dots" aria-hidden="true">...</span></p>
+      <article class="plan-card" data-tier="gratis">
+        <div class="plan-card-icon">🛡️</div>
+        <h2 class="plan-card-name">Passe Amador</h2>
+        <p class="plan-card-desc">Comece sua jornada com o pacote inicial.</p>
+        <div class="plan-card-price-wrapper">
+          <span class="plan-card-price">Grátis</span>
+        </div>
+        <ul class="plan-card-features">
+          <li><span class="feature-icon">🪙</span> 100 Tokens Iniciais</li>
+          <li><span class="feature-icon">✓</span> Acesso Básico</li>
+          <li><span class="feature-icon">✓</span> 1 Uniforme Padrão</li>
+        </ul>
+        <button class="plan-card-btn" type="button">Resgatar Grátis</button>
+        <div class="plan-security-badge">
+          <span>⚡ Acesso Imediato à Conta</span>
+        </div>
+      </article>
+
+      <article class="plan-card" data-tier="iniciante">
+        <div class="plan-card-icon">🪙</div>
+        <h2 class="plan-card-name">Passe Iniciante</h2>
+        <p class="plan-card-desc">Ideal para quem quer começar com pouca moeda.</p>
+        <div class="plan-card-price-wrapper">
+          <span class="plan-card-price">R$ 4,99</span>
+          <span class="plan-card-price-period">/mês</span>
+        </div>
+        <ul class="plan-card-features">
+          <li><span class="feature-icon">🪙</span> 1.000 Tokens/mês</li>
+          <li><span class="feature-icon">✓</span> Acesso Básico Estendido</li>
+          <li><span class="feature-icon">✓</span> 1 Skin de Arma Comum</li>
+        </ul>
+        <button class="plan-card-btn" type="button">Assinar Pacote</button>
+        <div class="plan-security-badge">
+          <span>🔒 Pagamento 100% Seguro</span>
+        </div>
+      </article>
+
+      <article class="plan-card" data-tier="premium">
+        <span class="plan-card-popular-badge">★ Mais Popular</span>
+        <div class="plan-card-icon">⚔️</div>
+        <h2 class="plan-card-name">Passe Profissional</h2>
+        <p class="plan-card-desc">O favorito dos jogadores competitivos.</p>
+        <div class="plan-card-price-wrapper">
+          <span class="plan-card-price">R$ 19,90</span>
+          <span class="plan-card-price-period">/mês</span>
+        </div>
+        <ul class="plan-card-features">
+          <li><span class="feature-icon">🪙</span> 5.000 Tokens/mês</li>
+          <li><span class="feature-icon">✓</span> Conjuntos de Personagens Épicos</li>
+          <li><span class="feature-icon">✓</span> Acesso a Ligas Exclusivas</li>
+        </ul>
+        <button class="plan-card-btn" type="button">Assinar Pacote</button>
+        <div class="plan-security-badge">
+          <span>🔒 Pagamento 100% Seguro</span>
+        </div>
+      </article>
+
+      <!-- Sócio Lenda -->
+      <article class="plan-card" data-tier="vip">
+        <div class="plan-card-icon">👑</div>
+        <h2 class="plan-card-name">Sócio Lenda</h2>
+        <p class="plan-card-desc">Para quem quer dominar sem limites.</p>
+        <div class="plan-card-price-wrapper">
+          <span class="plan-card-price">R$ 39,90</span>
+          <span class="plan-card-price-period">/mês</span>
+        </div>
+        <ul class="plan-card-features">
+          <li><span class="feature-icon">🪙</span> Tokens Ilimitados</li>
+          <li><span class="feature-icon">✓</span> Todos os Personagens Desbloqueados</li>
+          <li><span class="feature-icon">✓</span> Sem Anúncios</li>
+        </ul>
+        <button class="plan-card-btn" type="button">Assinar Pacote</button>
+        <div class="plan-security-badge">
+          <span>🔒 Pagamento 100% Seguro</span>
+        </div>
+      </article>
+    </section>
+
+
+    <section class="stats-section container-center" id="statsSection" aria-labelledby="statsTitle">
+      <h2 class="stats-section-title" id="statsTitle">Métricas da Arena</h2>
+      <p class="stats-section-subtitle">Dados em tempo real do nosso servidor e transações processadas de forma
+        transparente.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-value" id="statsTotalUsuarios">0</div>
+          <div class="stat-label">Jogadores Ativos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🪙</div>
+          <div class="stat-value cyan" id="statsTotalTokens">0</div>
+          <div class="stat-label">Tokens Entregues</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-value green">Instantâneo</div>
+          <div class="stat-label">Tempo de Entrega</div>
+        </div>
+      </div>
+
+      <div class="recent-sales-card">
+        <h3 class="recent-sales-title">📢 Atividade Recente da Arena</h3>
+        <ul class="recent-sales-list" id="recentSalesList">
+          <li class="loading-sales">Carregando atividades recentes...</li>
+        </ul>
       </div>
     </section>
+
     <section class="faq-section container-center" aria-labelledby="faqTitle">
       <h2 id="faqTitle" class="faq-title">Dúvidas Frequentes</h2>
       <div class="faq-grid"></div>
@@ -146,10 +248,33 @@
   </main>
 
   <footer class="footer-loja">
+    <div class="footer-support">
+      <span class="footer-support-title">🛡️ Suporte Oficial & Comunidade</span>
+      <div class="support-buttons">
+        <a href="#" id="linkWhatsapp" target="_blank" rel="noopener noreferrer" class="btn-support btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: block;">
+            <path
+              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.197 1.45 4.817 1.451 5.485 0 9.948-4.468 9.951-9.96.002-2.66-1.033-5.161-2.909-7.039C16.621 1.728 14.12 1.69 12.01 1.69c-5.49 0-9.953 4.469-9.956 9.962-.001 1.761.472 3.477 1.373 4.98L2.43 21.655l5.217-1.369zM17.66 14.79c-.31-.155-1.833-.904-2.115-1.006-.282-.102-.487-.152-.69.155-.205.308-.795.998-.973 1.204-.18.206-.358.23-.668.077-.31-.154-1.306-.481-2.487-1.536-.92-.821-1.54-1.836-1.72-2.145-.18-.308-.02-.475.134-.629.14-.139.31-.358.463-.538.154-.18.205-.308.308-.513.102-.206.05-.385-.025-.538-.077-.154-.69-1.666-.944-2.28-.248-.598-.5-.517-.69-.527-.18-.01-.385-.011-.59-.011-.205 0-.538.077-.82.385-.282.308-1.077 1.052-1.077 2.568 0 1.517 1.102 2.977 1.256 3.18.154.205 2.17 3.31 5.257 4.638.734.316 1.307.505 1.753.647.738.234 1.41.201 1.94.122.59-.088 1.833-.749 2.09-1.472.256-.723.256-1.343.18-1.472-.077-.128-.282-.205-.59-.36z" />
+          </svg> WhatsApp Suporte
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-badges">
+      <div class="badge-security">
+        <span>🔒</span>
+        <span>SSL Secure Connection</span>
+      </div>
+      <div class="badge-security">
+        <span>🛡️</span>
+        <span>Processado por Mercado Pago</span>
+      </div>
+    </div>
+
     <p>Moeda Arena &copy; <time datetime="2026">2026</time> — Todos os pagamentos processados com segurança pelo <a
         href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer"
         class="link-limpo link-destaque">Mercado Pago.</a></p>
-    <p>Desenvolvido por Moeda Arena, com a ideia principal por João Marcelo. </p>
+    <p>Desenvolvido por Moeda Arena, com a ideia principal por João Marcelo Suzart Lima Castro. CNPJ: 68.655.211/0001-04.</p>
     <p>Link do meu github: <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer"
         class="link-limpo link-destaque"><strong>Jaosuzart</strong></a></p>
     <p><button id="btnAbrirTermos" class="btn-link">Termos e Condições</button></p>
@@ -161,93 +286,47 @@
         <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
       </header>
       <div class="modal-body termos-content modal-body-scroll">
-        <h3>1. Definições Importantes e Glossário</h3>
+        <h3>1. Aceitação dos Termos e Capacidade Legal</h3>
+        <p>Ao acessar, navegar ou utilizar os serviços da Moeda Arena (ou "Token Arena"), bem como ao realizar a compra de qualquer produto digital em nossa plataforma, você declara ter lido, compreendido e concordado expressamente com todos os termos e condições aqui descritos. Caso você seja menor de 18 (dezoito) anos, o uso da plataforma e a realização de compras devem ser realizados exclusivamente com a autorização prévia e o acompanhamento de um dos pais ou responsável legal.</p>
+
+        <h3>2. Definições Importantes e Glossário</h3>
         <p>Para o perfeito entendimento destes termos, adotamos as seguintes definições:</p>
         <ul>
-          <li><strong>"Token Arena" (ou "Moeda Arena"):</strong> Nossa plataforma de intermediação, vendas e
-            distribuição de benefícios digitais e moedas virtuais.</li>
-          <li><strong>"Tokens":</strong> Moedas virtuais exclusivas da Token Arena. Os Tokens adquiridos ou resgatados
-            em nossa plataforma podem ser utilizados pelo usuário para desbloquear benefícios dentro do nosso próprio
-            ecossistema (como cosméticos e passes) ou serem convertidos e trocados por moedas virtuais de jogos externos
-            (como Robux, V-Bucks, etc.), de acordo com a disponibilidade de pacotes no site.</li>
-          <li><strong>"Moedas de Terceiros" (ex: Robux, V-Bucks, etc.):</strong> Moedas virtuais oficiais pertencentes a
-            plataformas e jogos externos. A Token Arena atua como intermediadora facilitadora para a aquisição ou
-            recarga destas moedas. A entrega, ativação e validade de Moedas de Terceiros dependem integralmente das
-            APIs, integrações e políticas de uso das respectivas plataformas parceiras (ex: Roblox Corporation, Epic
-            Games).</li>
-          <li><strong>"Passes" (Assinaturas Amador, Profissional e Lenda):</strong> Assinaturas periódicas (mensais ou
-            anuais) que concedem benefícios contínuos dentro do ecossistema, incluindo créditos recorrentes de Tokens,
-            skins ou cosméticos exclusivos, e acesso a ligas ou rankings especiais. Os Passes constituem uma licença
-            temporária de uso de benefícios digitais e não representam a aquisição de um software ou jogo proprietário
-            autônomo.</li>
+          <li><strong>"Token Arena" (ou "Moeda Arena"):</strong> Plataforma digital proprietária, operada com a finalidade de intermediação, venda e distribuição de benefícios digitais, assinaturas e moedas virtuais.</li>
+          <li><strong>"Tokens":</strong> Moedas virtuais exclusivas da nossa plataforma. Os Tokens funcionam como créditos limitados ao nosso ecossistema para desbloquear benefícios ou para conversão em moedas de terceiros, não possuindo valor monetário fora da plataforma e não sendo passíveis de conversão em moeda fiduciária (dinheiro real).</li>
+          <li><strong>"Moedas de Terceiros" (ex: Robux, V-Bucks, etc.):</strong> Moedas virtuais oficiais pertencentes a plataformas e jogos externos. A Token Arena atua apenas como intermediadora facilitadora para a recarga destas moedas. A ativação e validade dependem integralmente das políticas de uso das respectivas empresas detentoras (ex: Roblox Corporation, Epic Games).</li>
+          <li><strong>"Passes":</strong> Assinaturas periódicas de caráter renovável que concedem benefícios contínuos dentro do ecossistema, licenciando o uso de recursos digitais temporariamente.</li>
         </ul>
 
-        <h3>2. Termos de Uso e Conduta na Plataforma</h3>
-        <p>Os tokens e passes adquiridos conferem benefícios exclusivamente virtuais e estéticos. É estritamente
-          proibido o uso de softwares de terceiros (hacks, bots, scripts ou exploits) para fraudar a economia da Token
-          Arena, obter tokens de forma ilícita ou manipular o resgate de benefícios. O descumprimento destas regras
-          resultará no banimento imediato e permanente da conta do usuário, sem direito a reembolso e com a retenção de
-          todo o saldo virtual ativo.</p>
+        <h3>3. Termos de Uso e Conduta na Plataforma</h3>
+        <p>O usuário concorda em utilizar a plataforma de maneira ética e em conformidade com as leis brasileiras vigentes. É estritamente proibido o uso de softwares de terceiros (hacks, bots, scripts, exploits ou modificadores de rede) para fraudar a economia da Token Arena, obter tokens de forma ilícita, ou manipular falhas sistêmicas. A detecção de tais atividades configurará quebra de contrato, resultando no banimento imediato e permanente da conta do infrator, perda total do saldo virtual, e possibilidade de encaminhamento dos dados às autoridades competentes para apuração de crimes cibernéticos.</p>
 
-        <h3>3. Assinatura dos Passes (Amador, Profissional, Lenda)</h3>
-        <p>A assinatura de qualquer um dos Passes (Amador, Profissional ou Lenda) é de caráter recorrente e renovada
-          automaticamente no final de cada período contratado (mensal ou anual). O cancelamento da renovação automática
-          pode ser solicitado pelo usuário a qualquer momento antes do próximo ciclo de cobrança. O cancelamento impede
-          cobranças futuras, mas não gera reembolso pró-rata ou estorno dos dias restantes do ciclo atual de
-          faturamento.</p>
+        <h3>4. Assinaturas, Passes e Pagamentos</h3>
+        <p>A assinatura de qualquer Passe (Amador, Profissional ou Lenda) caracteriza um compromisso de cobrança recorrente. A renovação ocorre automaticamente no final do ciclo de faturamento contratado (mensal ou anual). O cancelamento pode ser efetuado a qualquer momento via painel de controle, cessando futuras cobranças. Não haverá, no entanto, reembolso proporcional referente aos dias não utilizados de um ciclo já faturado.</p>
 
-        <h3>4. Pagamentos e Intermediação</h3>
-        <p>Todo o processamento financeiro é protegido e intermediado com segurança pelo Mercado Pago. Chargebacks
-          (contestações indevidas junto à operadora do cartão de crédito) sem contato prévio com nossos canais de
-          suporte são considerados indício de fraude e resultarão no bloqueio preventivo e definitivo do cadastro do
-          usuário (CPF/IP) na Token Arena, além da adoção das medidas judiciais cabíveis.</p>
+        <h3>5. Intermediação e Segurança Financeira</h3>
+        <p>Para a segurança de todas as transações, o processamento financeiro é integralmente realizado pelo Mercado Pago. A Token Arena não armazena dados de cartões de crédito ou senhas bancárias em seus servidores. A realização de chargebacks (contestações indevidas na operadora do cartão) sem contato prévio com nossa central de atendimento constitui grave infração a estes termos, acarretando no bloqueio definitivo do CPF, e-mail e endereço IP do usuário em nosso sistema, bem como medidas cíveis e penais se configurada fraude comprovada.</p>
 
-        <h3>5. Política de Entrega Digital (Recebimento)</h3>
-        <p>Por se tratar de produtos e serviços 100% digitais, a entrega de Tokens e a ativação dos Passes ocorre de
-          forma automática e imediata após a confirmação e compensação do pagamento pelo Mercado Pago. Pagamentos via
-          Pix e Cartão de Crédito costumam ser instantâneos, mas podem levar até 24 horas em caso de análise de
-          segurança. Em caso de instabilidade nas plataformas parceiras (como os servidores do Roblox ou Epic Games), a
-          entrega de Moedas de Terceiros poderá sofrer atrasos pontuais, comprometendo-se a Token Arena a concluir a
-          entrega assim que os serviços externos forem reestabelecidos.</p>
+        <h3>6. Política de Entrega Digital (Recebimento)</h3>
+        <p>Por tratar-se de licenciamento de bens puramente digitais, a entrega de Tokens e a ativação de Passes é processada de maneira eletrônica e remota. Em pagamentos via Pix ou Cartão de Crédito, a liberação costuma ser imediata após a compensação pelo Mercado Pago. Contudo, prazos de até 24 horas úteis podem ser aplicados excepcionalmente em casos de auditoria de segurança antifraude. Eventuais instabilidades nos servidores de jogos de terceiros poderão causar atrasos pontuais no resgate de Moedas de Terceiros; a Token Arena compromete-se a concluir a transação ou estornar o valor assim que a estabilidade externa for restabelecida.</p>
 
-        <h3>6. Política de Devolução e Reembolso</h3>
-        <p>Em conformidade com o artigo 49 do Código de Defesa do Consumidor (CDC), o usuário possui o direito de
-          arrependimento e reembolso em até 7 (sete) dias corridos a partir da data de compra. No entanto, por se tratar
-          de consumo de conteúdo digital imediato, <strong>este direito ao reembolso expira no momento em que os Tokens,
-            Passes ou Moedas de Terceiros forem total ou parcialmente resgatados, consumidos, convertidos ou
-            utilizados</strong>. Solicitações de reembolso para pacotes intocados devem ser feitas exclusivamente pelos
-          canais de suporte oficiais.</p>
+        <h3>7. Política de Devolução e Arrependimento (CDC)</h3>
+        <p>Em estrita obediência ao artigo 49 do Código de Defesa do Consumidor (CDC), asseguramos o direito de arrependimento em até 7 (sete) dias corridos após a compra. Contudo, devido à natureza intangível e de consumo imediato dos bens digitais comercializados, <strong>o usuário reconhece e concorda que este direito expira irrevogavelmente no exato momento em que os Tokens, Passes ou Moedas de Terceiros forem parcial ou totalmente resgatados, utilizados, ativados ou transferidos</strong> para a conta de jogo, descaracterizando assim o não-uso do produto. Para compras de pacotes absolutamente intocados e dentro do prazo de 7 dias, o reembolso integral deverá ser solicitado exclusivamente pelos canais de suporte oficiais.</p>
 
-        <h3>7. Segurança Online e Conta do Usuário</h3>
-        <p>A segurança dos dados de acesso à conta é de responsabilidade exclusiva do usuário. Recomendamos o uso de
-          senhas fortes e a ativação de autenticação de dois fatores sempre que possível. A Token Arena nunca solicitará
-          suas credenciais de acesso fora da tela de login oficial. Não nos responsabilizamos por perdas de contas ou
-          saldo de tokens decorrentes de fraudes externas, golpes de *phishing* ou compartilhamento de acessos pelo
-          usuário.</p>
+        <h3>8. Proteção de Dados, Senhas e Privacidade (LGPD)</h3>
+        <p>Nossa plataforma processa dados pessoais em rigorosa conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018). Coletamos informações mínimas e necessárias (nome, e-mail e CPF) apenas para fins de faturamento, combate ativo à fraude e cumprimento de obrigações tributárias vigentes. Nós não comercializamos seus dados com corretores ou agências de publicidade externas. A manutenção do sigilo absoluto da senha de acesso é dever e responsabilidade exclusiva do usuário. A Token Arena não será responsabilizada por invasões de contas, furtos de Tokens ou interceptação de dados causadas por senhas fracas, compartilhamento voluntário de credenciais ou infecção por malwares no dispositivo pessoal do usuário.</p>
 
-        <h3>8. Notificação de Direitos Autorais (DMCA)</h3>
-        <p>A Token Arena respeita integralmente os direitos de propriedade intelectual. Caso acredite que algum conteúdo
-          em nossa plataforma infrinja seus direitos autorais, envie uma notificação contendo: (a) identificação
-          detalhada do material protegido; (b) link da página onde ocorre a infração; e (c) comprovação da titularidade
-          dos direitos. A análise e remoção de materiais validados ocorrerá em até 72 horas úteis.</p>
+        <h3>9. Política de Cookies</h3>
+        <p>A plataforma faz uso de cookies de sessão (estritamente necessários e invioláveis para manter o usuário logado de forma segura e processar o carrinho de pagamentos sem quebra de estado) e cookies analíticos pseudonimizados para aprimorar a arquitetura e usabilidade do portal. O uso contínuo da plataforma implica na ciência e aceitação do uso destas tecnologias de rastreamento estrito.</p>
 
-        <h3>9. Limitação de Responsabilidade</h3>
-        <p>A Token Arena não se responsabiliza por falhas de conexão de internet do usuário, indisponibilidades
-          temporárias de serviços de terceiros (como Mercado Pago ou servidores de jogos externos), nem por atualizações
-          e alterações unilaterais nas políticas de jogos de terceiros que modifiquem o funcionamento das moedas
-          externas adquiridas.</p>
+        <h3>10. Propriedade Intelectual e Notificações (DMCA)</h3>
+        <p>Todo o código-fonte, layout, texto, design de marca e arquitetura de sistema pertencem exclusivamente à Token Arena. Direitos autorais de imagens, banners e marcas de jogos externos pertencem inquestionavelmente aos seus respectivos criadores e empresas matrizes. Caso um detentor de direitos acredite que nossa plataforma infringiu ou fez mau uso de sua propriedade intelectual, a notificação com os devidos laudos e comprovações de titularidade deve ser enviada aos canais de suporte oficiais para análise imediata e remoção sumária do conteúdo infrator no prazo estabelecido pela lei.</p>
 
-        <h3>10. Política de Cookies</h3>
-        <p>Utilizamos cookies essenciais para garantir o funcionamento seguro da loja (ex: manter sua sessão ativa
-          durante as compras) e evitar ataques CSRF (Cross-Site Request Forgery). Também utilizamos cookies analíticos
-          anônimos para entender como nossa comunidade interage com o site. Ao continuar navegando, você concorda com o
-          uso destas tecnologias conforme a LGPD.</p>
-
-        <h3>11. Declaração de Acessibilidade</h3>
-        <p>A Token Arena se compromete a garantir a acessibilidade digital para todos os jogadores, incluindo pessoas
-          com deficiências visuais e motoras. Estamos em melhoria contínua para aplicar os padrões WCAG de usabilidade
-          web, assegurando contraste adequado de cores, navegação por teclado e compatibilidade com leitores de tela.
-        </p>
+        <h3>11. Limitação de Responsabilidade e Indenizações</h3>
+        <p>O usuário reconhece e atesta que os serviços são fornecidos "no estado em que se encontram", sem garantias implícitas ou explícitas de funcionamento ininterrupto livre de bugs. A Token Arena declina formalmente qualquer responsabilidade solidária por eventuais lucros cessantes, frustração de expectativas, perdas financeiras colaterais ou banimentos disciplinares em jogos de terceiros decorrentes do uso indevido das moedas adquiridas na plataforma. Em hipótese jurídica alguma, a responsabilidade civil ou financeira da Token Arena por quaisquer danos diretos excederá o valor originalmente pago pelo usuário no serviço que gerou a contestação judicial ou administrativa.</p>
+        
+        <h3>12. Atualizações e Modificações destes Termos</h3>
+        <p>A Token Arena detém e reserva-se o direito unilateral de alterar, modificar, suprimir ou atualizar partes destes Termos e Condições, bem como a Política de Privacidade, a qualquer tempo. Tais mudanças visam, na maioria das vezes, a adequação e conformidade com novas leis governamentais ou a regulação de novas features e serviços implementados no portal. Alterações sistêmicas significativas e que modifiquem obrigações essenciais serão devidamente notificadas aos usuários ativos via correio eletrônico ou através de um banner de aviso inconfundível na página inicial do site.</p>
       </div>
       <footer class="modal-footer">
         <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnOkTermos">Ok, Entendido</button>
@@ -271,12 +350,17 @@
             <input class="form-input" type="email" id="loginEmail" name="email" placeholder="seu@email.com" required
               autocomplete="email" aria-required="true" />
           </div>
-          <div class="form-group">
+          <div class="form-group" style="position: relative;">
             <label class="form-label" for="loginSenha">Senha</label>
             <input class="form-input" type="password" id="loginSenha" name="senha" placeholder="Sua senha" required
               autocomplete="current-password" aria-required="true" />
+            <a href="#" id="btnEsqueciSenha"
+              style="float: right; margin-top: 6px; font-size: 0.8rem; text-decoration: none; color: var(--text-secondary, #aaa); transition: color 0.2s;"
+              onmouseover="this.style.color='var(--accent-primary, #00e5ff)'"
+              onmouseout="this.style.color='var(--text-secondary, #aaa)'">Esqueci minha senha</a>
           </div>
-          <div id="loginFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+          <div id="loginFeedback" class="alert-feedback" role="alert" aria-live="assertive" style="margin-top: 24px;">
+          </div>
           <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnLogin">Entrar na Arena</button>
         </form>
         <div class="auth-separator">
@@ -388,7 +472,24 @@
             <option value="Cartão Virtual">Cartão de Crédito (via Mercado Pago)</option>
           </select>
         </fieldset>
-        <div id="checkoutFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+
+        <div class="checkout-trust-badges">
+          <div class="trust-badge">
+            <span class="badge-icon">🔒</span>
+            <span class="badge-text">Checkout Seguro</span>
+          </div>
+          <div class="trust-badge">
+            <span class="badge-icon">⚡</span>
+            <span class="badge-text">Entrega Imediata</span>
+          </div>
+          <div class="trust-badge">
+            <span class="badge-icon">🛡️</span>
+            <span class="badge-text">Garantia 7 Dias</span>
+          </div>
+        </div>
+
+        <div id="checkoutFeedback" class="alert-feedback" role="alert" aria-live="assertive" style="margin-top: 10px;">
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn-gamer btn-gamer-secondary" id="btnCancelarCheckout" type="button">Cancelar</button>
@@ -567,7 +668,59 @@
     </div>
   </dialog>
 
-  <script src="main.js?v=4" defer></script>
+  <dialog class="modal-overlay" id="forgotPasswordModal" aria-labelledby="forgotTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-header-title" id="forgotTitle">Recuperar Senha</h2>
+        <button class="modal-close" id="btnFecharForgot" type="button" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="margin-bottom: 1rem;">Digite o e-mail cadastrado na sua conta. Enviaremos um link
+          de redefinição para você.</p>
+        <form id="forgotForm">
+          <div class="form-group">
+            <label for="forgotEmail" class="form-label">Seu E-mail</label>
+            <input type="email" id="forgotEmail" class="form-input" required placeholder="seu@email.com" />
+          </div>
+          <div id="forgotFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnEnviarForgot">Enviar
+            Link</button>
+        </form>
+        <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnVoltarLogin" type="button">Voltar para o
+          Login</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal-overlay" id="resetPasswordModal" aria-labelledby="resetTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-header-title" id="resetTitle">Redefinir Senha</h2>
+        <button class="modal-close" id="btnFecharReset" type="button" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="margin-bottom: 1rem;">Escolha sua nova senha de segurança (mínimo 6 caracteres).
+        </p>
+        <form id="resetForm">
+          <div class="form-group">
+            <label for="resetNovaSenha" class="form-label">Nova Senha</label>
+            <input type="password" id="resetNovaSenha" class="form-input" required minlength="6"
+              placeholder="Mínimo 6 caracteres..." />
+          </div>
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="resetConfirmarSenha" class="form-label">Confirmar Nova Senha</label>
+            <input type="password" id="resetConfirmarSenha" class="form-input" required minlength="6"
+              placeholder="Repita a senha..." />
+          </div>
+          <div id="resetFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnConfirmarReset">Salvar Nova
+            Senha</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="main.min.js?v=4" defer></script>
 </body>
 
 </html>

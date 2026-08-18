@@ -105,7 +105,7 @@ const atualizarPerfil = async (id, { nome, cpf, localidade, chave_pix, cartao_fi
   try {
     const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, chave_pix = ?, cartao_final = ? WHERE id = ?';
     const [resultado] = await pool.query(sql, [nome, cpf, localidade, chave_pix, cartao_final, id]);
-    
+
     if (resultado.affectedRows > 0) {
       logger.info('Perfil de usuário atualizado com sucesso.', { usuarioId: id });
       return true;
@@ -126,4 +126,74 @@ const debitarTokens = async (id, quantidade) => {
     throw error;
   }
 };
-module.exports = { criarUsuario, buscarPorEmail, buscarPorId, adicionarTokens, debitarTokens, atualizarPerfil, buscarRanking, adicionarEstatisticas, listarTodos, atualizarStatus, buscarPorTokenVerificacao, confirmarEmail, definirSenha };
+
+const salvarTokenResetSenha = async (usuarioId, token, expira) => {
+  const sql = 'UPDATE usuarios SET reset_senha_token = ?, reset_senha_expira = ? WHERE id = ?';
+  const [resultado] = await pool.query(sql, [token, expira, usuarioId]);
+  return resultado.affectedRows > 0;
+};
+
+const buscarPorTokenResetSenha = async (token) => {
+  const sql = 'SELECT id, nome, email, reset_senha_expira FROM usuarios WHERE reset_senha_token = ?';
+  const [rows] = await pool.query(sql, [token]);
+  return rows[0] || null;
+};
+
+const atualizarSenhaPorReset = async (usuarioId, novaSenhaHash) => {
+  const sql = 'UPDATE usuarios SET senha_hash = ?, reset_senha_token = NULL, reset_senha_expira = NULL, has_password = TRUE WHERE id = ?';
+  const [resultado] = await pool.query(sql, [novaSenhaHash, usuarioId]);
+  return resultado.affectedRows > 0;
+};
+
+const obterEstatisticaPlataforma = async () => {
+  try {
+    const sqlUsuarios = "SELECT COUNT(*) as total_usuarios FROM usuarios WHERE status != 'banido'";
+    const sqlTokens = "SELECT COALESCE(SUM(tokens_creditados), 0) as total_tokens FROM pagamentos_processados WHERE status = 'approved'";
+    const sqlUltimosPagamentos = `
+      SELECT u.nome, p.plano_id, p.tokens_creditados, p.data_processamento 
+      FROM pagamentos_processados p 
+      JOIN usuarios u ON p.usuario_id = u.id 
+      WHERE p.status = 'approved'
+      ORDER BY p.data_processamento DESC 
+      LIMIT 5
+    `;
+
+    const [rowsUsuarios] = await pool.query(sqlUsuarios);
+    const [rowsTokens] = await pool.query(sqlTokens);
+    const [rowsUltimos] = await pool.query(sqlUltimosPagamentos);
+
+    return {
+      totalUsuarios: rowsUsuarios[0]?.total_usuarios || 0,
+      totalTokens: rowsTokens[0]?.total_tokens || 0,
+      ultimasVendas: rowsUltimos.map(row => ({
+        nome: row.nome,
+        plano_id: row.plano_id,
+        tokens: row.tokens_creditados,
+        data: row.data_processamento
+      }))
+    };
+  } catch (err) {
+    logger.error('Erro ao obter estatísticas da plataforma:', err);
+    throw err;
+  }
+};
+
+module.exports = { 
+  criarUsuario, 
+  buscarPorEmail, 
+  buscarPorId, 
+  adicionarTokens, 
+  debitarTokens, 
+  atualizarPerfil, 
+  buscarRanking, 
+  adicionarEstatisticas, 
+  listarTodos, 
+  atualizarStatus, 
+  buscarPorTokenVerificacao, 
+  confirmarEmail, 
+  definirSenha,
+  salvarTokenResetSenha,
+  buscarPorTokenResetSenha,
+  atualizarSenhaPorReset,
+  obterEstatisticaPlataforma
+};

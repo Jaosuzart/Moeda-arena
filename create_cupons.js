@@ -14,7 +14,7 @@ async function run() {
 
   try {
     logger.info('Conectando ao banco...');
-    
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS cupons (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,12 +25,12 @@ async function run() {
         usos INT DEFAULT 0
       );
     `);
-    
+
     await pool.query(`
       INSERT IGNORE INTO cupons (codigo, desconto_percentual, comissao_percentual) 
       VALUES ('STREAMER10', 10, 10);
     `);
-    
+
     logger.info('Tabela cupons criada e cupom inserido!');
   } catch (err) {
     logger.error('Erro ao criar cupons:', { erro: err.message });

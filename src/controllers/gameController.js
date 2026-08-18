@@ -73,7 +73,7 @@ const getRanking = async (req, res, next) => {
 const salvarEstatisticas = async (req, res, next) => {
   try {
     const { email, trofeus = 0, vitorias = 0, xp = 0 } = req.body;
-    
+
     if (!email) {
       return erro(res, 'E-mail é obrigatório.', 400, 'PARAMETROS_INVALIDOS');
     }

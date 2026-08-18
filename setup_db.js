@@ -14,9 +14,9 @@ async function run() {
 
   try {
     logger.info('Conectando ao banco de dados...');
-    
+
     await pool.query('SET FOREIGN_KEY_CHECKS = 0');
-    
+
     await pool.query('DROP TABLE IF EXISTS usuarios');
     logger.info('Tabela antiga removida.');
 

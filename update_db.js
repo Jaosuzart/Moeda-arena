@@ -14,7 +14,7 @@ async function updateDb() {
 
   try {
     logger.info("Conectando ao TiDB para atualizar tabela...");
-    
+
     try {
       await pool.query('ALTER TABLE usuarios ADD COLUMN trofeus INT DEFAULT 0');
       logger.info('Coluna trofeus adicionada.');

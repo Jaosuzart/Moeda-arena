@@ -1,9 +1,5 @@
-/**
- * @module server
- * @description Ponto de entrada da aplicação.
- *              Configura middleware de segurança, rotas, error handler,
- *              testa conexão com o banco e implementa graceful shutdown.
- */
+
+
 const config = require('./src/config/env');
 const express = require('express');
 const path = require('path');
@@ -78,8 +74,44 @@ app.get('/api/health', (req, res) => {
 
 app.use(errorHandler);
 
+const { runMinify } = require('./minify');
+
 const iniciar = async () => {
   try {
+
+    try {
+      const resMin = runMinify();
+      logger.info('Assets estáticos minificados com sucesso.', {
+        css: `${resMin.cssOriginal}B -> ${resMin.cssMinified}B`,
+        js: `${resMin.jsOriginal}B -> ${resMin.jsMinified}B`
+      });
+    } catch (e) {
+      logger.error('Erro ao minificar assets estáticos no startup:', { erro: e.message });
+    }
+
+    if (config.nodeEnv === 'development') {
+      const fs = require('fs');
+      const path = require('path');
+      let watchTimeout;
+
+      fs.watch(path.join(__dirname, 'public'), (eventType, filename) => {
+        if (filename === 'main.js' || filename === 'style.css') {
+          clearTimeout(watchTimeout);
+          watchTimeout = setTimeout(() => {
+            try {
+              const resMin = runMinify();
+              logger.info(`Arquivo ${filename} modificado. Assets re-minificados.`, {
+                css: `${resMin.cssOriginal}B -> ${resMin.cssMinified}B`,
+                js: `${resMin.jsOriginal}B -> ${resMin.jsMinified}B`
+              });
+            } catch (err) {
+              logger.error('Erro ao re-minificar assets dinamicamente:', { erro: err.message });
+            }
+          }, 100);
+        }
+      });
+    }
+
     await testarConexao();
 
     const server = app.listen(config.port, () => {

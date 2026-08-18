@@ -10,13 +10,20 @@ router.post('/registrar', validarRegistro, authController.registrar);
 router.post('/login', validarLogin, authController.login);
 router.post('/google', authController.loginGoogle);
 
-router.get('/google/client-id', (req, res) => {
-  res.json({ clientId: config.googleClientId });
+router.get('/config', (req, res) => {
+  res.json({ 
+    clientId: config.googleClientId,
+    telegramUrl: config.telegramUrl,
+    whatsappUrl: config.whatsappUrl
+  });
 });
 
 router.get('/perfil', autenticar, authController.perfil);
 router.put('/perfil', autenticar, authController.atualizarPerfil);
 router.post('/definir-senha', autenticar, authController.definirSenha);
 router.get('/verificar-email', authController.verificarEmail);
+
+router.post('/recuperar-senha', authController.solicitarRecuperarSenha);
+router.post('/redefinir-senha', authController.redefinirSenhaConfirmar);
 
 module.exports = router;

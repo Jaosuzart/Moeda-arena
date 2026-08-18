@@ -14,7 +14,7 @@ async function updateDb2() {
 
   try {
     logger.info("Conectando ao TiDB para atualizar tabela...");
-    
+
     try {
       await pool.query('ALTER TABLE usuarios ADD COLUMN email_verificado BOOLEAN DEFAULT FALSE');
       logger.info('Coluna email_verificado adicionada.');
