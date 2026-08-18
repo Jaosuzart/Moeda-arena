@@ -1374,7 +1374,7 @@ body::before {
 }
 
 .stats-section {
-  width: min(100%, 1200px) !important;
+  width: min(100%, 1200px);
   margin: 60px auto 20px auto;
   padding: 0 1.5rem;
   position: relative;
@@ -1419,7 +1419,7 @@ body::before {
 
 .stat-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent-primary, #00e5ff) !important;
+  border-color: var(--accent-primary, #00e5ff);
   box-shadow: 0 10px 25px rgba(0, 229, 255, 0.1);
 }
 
