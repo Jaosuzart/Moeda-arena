@@ -67,7 +67,7 @@ body {
   min-height: -webkit-fill-available;
   margin: 0;
   padding: 0;
-  background-color: #0f172a;
+  background-color: #09090b;
 }
 
 body {
@@ -85,7 +85,9 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, transparent 100%);
+  background:
+    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1524,9 +1526,8 @@ body::before {
 .footer-loja {
   padding: 40px 20px;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
 }
 
 .footer-support {
