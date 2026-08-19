@@ -178,9 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elName) elName.textContent = firstName;
       if (elRole) {
         elRole.className = 'nav-role-badge';
+        elRole.style.cursor = 'default';
+        elRole.onclick = null;
+        elRole.title = '';
+
         if (estado.usuario.email_verificado === 0) {
           elRole.textContent = '⚠️ Email Pendente';
           elRole.classList.add('pendente');
+          elRole.style.cursor = 'pointer';
+          elRole.title = 'Seu email não está verificado. Clique para saber mais.';
+          elRole.onclick = () => alert('⚠️ SEU EMAIL ESTÁ PENDENTE!\n\nVerifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.');
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
         } else if (is_admin) {
           elRole.textContent = 'Administrador';
