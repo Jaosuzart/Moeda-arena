@@ -112,3 +112,4 @@ node setup_db.js
 npm run dev
 ```
 Acesse a aplicação no navegador em: `http://localhost:3001`
+d
