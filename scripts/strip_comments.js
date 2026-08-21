@@ -36,5 +36,5 @@ files.forEach((file) => {
     content = content.replace(/<!--[\s\S]*?-->/g, "");
   }
   fs.writeFileSync(file, content, "utf8");
-  console.log(`Comments stripped from: ${file}`);
+  console.error(`Comments stripped from: ${file}`);
 });
