@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", carregarUsuarios);
+
+async function carregarUsuarios() {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Acesso negado. Faça login primeiro.");
@@ -8,72 +10,89 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const res = await fetch("/api/admin/usuarios", {
-      headers: { Authorization: "Bearer " + token },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (!res.ok) {
+    if (res.status === 403 || res.status === 401) {
       alert("Você não tem permissão para acessar esta página.");
       window.location.href = "/";
       return;
     }
 
     const data = await res.json();
-    if (data.sucesso) {
-      renderizarUsuarios(data.dados);
-    }
-  } catch (err) {
-    console.error(err);
+    if (data.sucesso) renderizarUsuarios(data.dados);
+  } catch {
+    alert("Erro ao carregar dados. Tente novamente.");
   }
-});
+}
+
+function criarCelula(texto) {
+  const td = document.createElement("td");
+  td.textContent = texto ?? "";
+  return td;
+}
 
 function renderizarUsuarios(usuarios) {
   const tbody = document.querySelector("#tabelaUsuarios tbody");
-  tbody.innerHTML = "";
+  tbody.replaceChildren();
 
-  if (usuarios.length === 0) {
-    tbody.innerHTML =
-      '<tr><td colspan="7">Nenhum usuário encontrado.</td></tr>';
+  if (!usuarios.length) {
+    const tr = tbody.insertRow();
+    const td = tr.insertCell();
+    td.colSpan = 7;
+    td.textContent = "Nenhum usuário encontrado.";
     return;
   }
 
-  usuarios.forEach((u) => {
+  for (const u of usuarios) {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${u.id}</td>
-      <td>${u.nome}</td>
-      <td>${u.email}</td>
-      <td>${u.tokens}</td>
-      <td>${u.plano_ativo ? u.plano_ativo : "Nenhum"}</td>
-      <td>${u.ganhos_afiliado || 0}</td>
-      <td>
-        <button class="action-btn" onclick="darTokens(${u.id})">Dar Tokens</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+    tr.append(
+      criarCelula(u.id),
+      criarCelula(u.nome),
+      criarCelula(u.email),
+      criarCelula(u.saldo_tokens),
+      criarCelula(u.status),
+      criarCelula(u.ganhos_afiliado ?? 0),
+    );
+
+    const tdAcoes = document.createElement("td");
+    const btn = document.createElement("button");
+    btn.className = "btn btn-warning btn-sm fw-bold";
+    btn.textContent = "+ Dar Tokens";
+    btn.addEventListener("click", () => darTokens(u.id));
+    
+    tdAcoes.className = "text-end";
+    tdAcoes.append(btn);
+    tr.append(tdAcoes);
+
+    tbody.append(tr);
+  }
 }
 
-async function darTokens(userId) {
-  const qtd = prompt(
-    "Quantos tokens deseja adicionar para o usuário ID " + userId + "?",
-  );
-  if (!qtd || isNaN(qtd)) return;
+async function darTokens(usuarioId) {
+  const input = prompt(`Quantos tokens deseja adicionar ao usuário ID ${usuarioId}?`);
+  const quantidade = parseInt(input, 10);
+  if (!input || isNaN(quantidade) || quantidade <= 0) return;
 
   const token = localStorage.getItem("token");
-  const res = await fetch("/api/admin/usuarios/tokens", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ usuarioId: userId, quantidade: parseInt(qtd) }),
-  });
+  try {
+    const res = await fetch("/api/admin/usuarios/tokens", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ usuarioId, quantidade }),
+    });
 
-  const data = await res.json();
-  if (data.sucesso) {
-    alert("Tokens adicionados com sucesso!");
-    window.location.reload();
-  } else {
-    alert("Erro: " + data.erro);
+    const data = await res.json();
+    if (data.sucesso) {
+      alert("Tokens adicionados com sucesso!");
+      carregarUsuarios();
+    } else {
+      alert(`Erro: ${data.erro}`);
+    }
+  } catch {
+    alert("Erro de conexão ao adicionar tokens.");
   }
 }
