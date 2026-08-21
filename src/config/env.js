@@ -1,5 +1,8 @@
-
-
+/**
+ * @module config/env
+ * @description Carrega e valida as variáveis de ambiente.
+ *              Se alguma variável obrigatória estiver faltando, o servidor não sobe (fail-fast).
+ */
 require('dotenv').config();
 
 const variaveisObrigatorias = [
@@ -20,6 +23,10 @@ if (faltando.length > 0) {
   process.exit(1);
 }
 
+/**
+ * Configurações da aplicação — objeto imutável.
+ * @readonly
+ */
 const config = Object.freeze({
   port: parseInt(process.env.PORT, 10) || 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -33,13 +40,9 @@ const config = Object.freeze({
     connectionLimit: parseInt(process.env.DB_CONN_LIMIT, 10) || 10
   }),
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3001',
-  appUrl: process.env.APP_URL || process.env.CORS_ORIGIN || 'http://localhost:3001',
   jwtSecret: process.env.JWT_SECRET,
   apiGameSecret: process.env.API_GAME_SECRET,
-  googleClientId: process.env.CLIENT_ID_GOOGLE || '',
-  adminEmail: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@tokenarena.com',
-  telegramUrl: process.env.TELEGRAM_URL || '#',
-  whatsappUrl: process.env.WHATSAPP_URL || '#'
+  googleClientId: process.env.CLIENT_ID_GOOGLE || ''
 });
 
 module.exports = config;
