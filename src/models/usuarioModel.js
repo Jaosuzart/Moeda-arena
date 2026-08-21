@@ -4,11 +4,11 @@ const logger = require('../config/logger');
 
 const crypto = require('crypto');
 
-const criarUsuario = async (nome, email, senhaHash, hasPassword = true) => {
+const criarUsuario = async (nome, email, senhaHash, telefone = null, hasPassword = true) => {
   try {
     const tokenVerificacao = crypto.randomBytes(32).toString('hex');
-    const sql = 'INSERT INTO usuarios (nome, email, senha_hash, token_verificacao, has_password) VALUES (?, ?, ?, ?, ?)';
-    const [resultado] = await pool.query(sql, [nome, email, senhaHash, tokenVerificacao, hasPassword]);
+    const sql = 'INSERT INTO usuarios (nome, email, senha_hash, telefone, token_verificacao, has_password) VALUES (?, ?, ?, ?, ?, ?)';
+    const [resultado] = await pool.query(sql, [nome, email, senhaHash, telefone, tokenVerificacao, hasPassword]);
 
     logger.info('Novo usuário criado.', { usuarioId: resultado.insertId, email });
 
@@ -101,10 +101,10 @@ const adicionarTokens = async (usuarioId, quantidade) => {
   }
 };
 
-const atualizarPerfil = async (id, { nome, cpf, localidade, chave_pix, cartao_final }) => {
+const atualizarPerfil = async (id, { nome, cpf, localidade, telefone, chave_pix, cartao_final }) => {
   try {
-    const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, chave_pix = ?, cartao_final = ? WHERE id = ?';
-    const [resultado] = await pool.query(sql, [nome, cpf, localidade, chave_pix, cartao_final, id]);
+    const sql = 'UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, telefone = ?, chave_pix = ?, cartao_final = ? WHERE id = ?';
+    const [resultado] = await pool.query(sql, [nome, cpf, localidade, telefone, chave_pix, cartao_final, id]);
 
     if (resultado.affectedRows > 0) {
       logger.info('Perfil de usuário atualizado com sucesso.', { usuarioId: id });

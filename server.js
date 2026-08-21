@@ -75,6 +75,7 @@ app.get('/api/health', (req, res) => {
 app.use(errorHandler);
 
 const { runMinify } = require('./minify');
+const whatsappService = require('./src/services/whatsappService');
 
 const iniciar = async () => {
   try {
@@ -113,6 +114,10 @@ const iniciar = async () => {
     }
 
     await testarConexao();
+
+    if (config.nodeEnv !== 'test') {
+      whatsappService.initWhatsApp();
+    }
 
     const server = app.listen(config.port, () => {
       logger.info(`Servidor rodando em http://localhost:${config.port}`, {

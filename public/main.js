@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formRegistro: document.getElementById('formRegistro'),
     loginForm: document.getElementById('loginForm'),
     registroForm: document.getElementById('registroForm'),
+    registroTelefone: document.getElementById('registroTelefone'),
     loginFeedback: document.getElementById('loginFeedback'),
     registroFeedback: document.getElementById('registroFeedback'),
     btnLogin: document.getElementById('btnLogin'),
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     perfilNome: document.getElementById('perfilNome'),
     perfilCpf: document.getElementById('perfilCpf'),
     perfilLocalidade: document.getElementById('perfilLocalidade'),
+    perfilTelefone: document.getElementById('perfilTelefone'),
     perfilPix: document.getElementById('perfilPix'),
     perfilCartao: document.getElementById('perfilCartao'),
     perfilFeedback: document.getElementById('perfilFeedback'),
@@ -476,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.perfilNome.value = u.nome || '';
         DOM.perfilCpf.value = u.cpf || '';
         DOM.perfilLocalidade.value = u.localidade || '';
+        if (DOM.perfilTelefone) DOM.perfilTelefone.value = u.telefone || '';
         DOM.perfilPix.value = u.chave_pix || '';
         DOM.perfilCartao.value = u.cartao_final || '';
       }

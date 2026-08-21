@@ -30,4 +30,6 @@ jspm_packages/
 
 # OS metadata
 .DS_Store
-Thumbs.db
+Thumbs.db  
+.whatsapp_auth/  
+scratch/ 

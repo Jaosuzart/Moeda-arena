@@ -3,6 +3,7 @@ const { MercadoPagoConfig, Payment } = require('mercadopago');
 const config = require('../config/env');
 const logger = require('../config/logger');
 const usuarioModel = require('../models/usuarioModel');
+const whatsappService = require('../services/whatsappService');
 const cupomModel = require('../models/cupomModel');
 const { pool } = require('../models/db');
 

@@ -14,10 +14,10 @@ const emailService = require('../services/emailService');
 
 const registrar = async (req, res, next) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, telefone } = req.body;
 
     const senhaHash = await bcrypt.hash(senha, 12);
-    const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash);
+    const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash, telefone);
 
     if (usuario.token_verificacao) {
       emailService.enviarEmailVerificacao(usuario.email, usuario.nome, usuario.token_verificacao);
@@ -141,7 +141,7 @@ const loginGoogle = async (req, res, next) => {
     if (!usuario) {
       const senhaAleatoria = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10);
       const senhaHash = await bcrypt.hash(senhaAleatoria, 12);
-      usuario = await usuarioModel.criarUsuario(nome, email, senhaHash, false);
+      usuario = await usuarioModel.criarUsuario(nome, email, senhaHash, null, false);
       logger.info('Novo registro via Google realizado.', { usuarioId: usuario.id, email });
     } else {
       logger.info('Login via Google realizado.', { usuarioId: usuario.id });
