@@ -202,6 +202,32 @@ const atualizarSenhaPorReset = async (usuarioId, novaSenhaHash) => {
   return resultado.affectedRows > 0;
 };
 
+const obterEstatisticaPlataforma = async () => {
+  try {
+    const sqlTotais =
+      "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_tokens), 0) AS totalTokens FROM usuarios";
+    const [totaisRows] = await pool.query(sqlTotais);
+
+    const sqlUltimas = `
+      SELECT p.data_processamento AS data, u.nome, p.plano_id, p.tokens_creditados AS tokens
+      FROM pagamentos_processados p
+      JOIN usuarios u ON p.usuario_id = u.id
+      ORDER BY p.id DESC
+      LIMIT 10
+    `;
+    const [ultimasRows] = await pool.query(sqlUltimas);
+
+    return {
+      totalUsuarios: totaisRows[0].totalUsuarios,
+      totalTokens: Number(totaisRows[0].totalTokens),
+      ultimasVendas: ultimasRows,
+    };
+  } catch (err) {
+    logger.error("Erro ao obter estatísticas da plataforma.", { erro: err.message });
+    throw err;
+  }
+};
+
 module.exports = {
   criarUsuario,
   buscarPorEmail,
@@ -215,10 +241,10 @@ module.exports = {
   listarTodos,
   atualizarStatus,
   buscarPorTokenVerificacao,
-  buscarPorCodigoConvite,
   confirmarEmail,
   definirSenha,
   salvarTokenResetSenha,
   buscarPorTokenResetSenha,
   atualizarSenhaPorReset,
+  obterEstatisticaPlataforma,
 };
