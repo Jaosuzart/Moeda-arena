@@ -152,8 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estado.usuario) {
       DOM.navAuthBtns.style.display = "none";
       DOM.navUserInfo.style.display = "flex";
-      DOM.navTokenCount.textContent =
-        estado.usuario.saldo_tokens.toLocaleString("pt-BR");
+      DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString("pt-BR");
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
       const is_admin = !!estado.usuario.isAdmin;
@@ -170,8 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
           elRole.textContent = "⚠️ Email Pendente";
           elRole.classList.add("pendente");
           elRole.style.cursor = "pointer";
-          elRole.title =
-            "Seu email não está verificado. Clique para saber mais.";
+          elRole.title = "Seu email não está verificado. Clique para saber mais.";
           elRole.onclick = () =>
             alert(
               "⚠️ SEU EMAIL ESTÁ PENDENTE!nnVerifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.",
@@ -180,8 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (is_admin) {
           elRole.textContent = "Administrador";
           elRole.classList.add("admin");
-          if (DOM.btnAdminPanel)
-            DOM.btnAdminPanel.style.display = "inline-block";
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "inline-block";
         } else {
           elRole.textContent = "Jogador";
           elRole.classList.add("jogador");
@@ -263,23 +260,19 @@ document.addEventListener("DOMContentLoaded", () => {
       estado.googleLoginPendente = true;
       if (DOM.btnGoogleLogin) {
         DOM.btnGoogleLogin.disabled = true;
-        DOM.btnGoogleLogin.innerHTML = "Carregando Google...";
+        DOM.btnGoogleLogin.textContent = "Carregando Google...";
       }
       if (DOM.btnGoogleRegistro) {
         DOM.btnGoogleRegistro.disabled = true;
-        DOM.btnGoogleRegistro.innerHTML = "Carregando Google...";
+        DOM.btnGoogleRegistro.textContent = "Carregando Google...";
       }
       carregarScriptGoogle();
     }
   };
-  if (DOM.btnGoogleLogin)
-    DOM.btnGoogleLogin.addEventListener("click", handleGoogleClick);
-  if (DOM.btnGoogleRegistro)
-    DOM.btnGoogleRegistro.addEventListener("click", handleGoogleClick);
+  if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener("click", handleGoogleClick);
+  if (DOM.btnGoogleRegistro) DOM.btnGoogleRegistro.addEventListener("click", handleGoogleClick);
   DOM.btnFecharAuth.addEventListener("click", () => fecharModal(DOM.authModal));
-  DOM.btnFecharAuth2.addEventListener("click", () =>
-    fecharModal(DOM.authModal),
-  );
+  DOM.btnFecharAuth2.addEventListener("click", () => fecharModal(DOM.authModal));
   DOM.authModal.addEventListener("click", (e) => {
     if (e.target === DOM.authModal) fecharModal(DOM.authModal);
   });
@@ -287,13 +280,9 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     abrirModal(DOM.termosModal);
   });
-  DOM.btnFecharTermos.addEventListener("click", () =>
-    fecharModal(DOM.termosModal),
-  );
+  DOM.btnFecharTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
   if (DOM.btnOkTermos) {
-    DOM.btnOkTermos.addEventListener("click", () =>
-      fecharModal(DOM.termosModal),
-    );
+    DOM.btnOkTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
   }
   DOM.termosModal.addEventListener("click", (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
@@ -321,18 +310,10 @@ document.addEventListener("DOMContentLoaded", () => {
         fecharModal(DOM.authModal);
         DOM.loginForm.reset();
       } else {
-        mostrarFeedback(
-          DOM.loginFeedback,
-          data.erro || "Erro ao fazer login.",
-          false,
-        );
+        mostrarFeedback(DOM.loginFeedback, data.erro || "Erro ao fazer login.", false);
       }
     } catch (err) {
-      mostrarFeedback(
-        DOM.loginFeedback,
-        "Erro de conexão com o servidor.",
-        false,
-      );
+      mostrarFeedback(DOM.loginFeedback, "Erro de conexão com o servidor.", false);
     }
     DOM.btnLogin.disabled = false;
     DOM.btnLogin.textContent = "Entrar na Arena";
@@ -354,11 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const data = await res.json();
       if (data.sucesso && data.dados) {
-        mostrarFeedback(
-          DOM.registroFeedback,
-          "Conta criada! Verifique seu e-mail para confirmar a conta.",
-          true,
-        );
+        mostrarFeedback(DOM.registroFeedback, "Conta criada! Verifique seu e-mail para confirmar a conta.", true);
         estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
         localStorage.setItem("token", data.dados.token);
@@ -366,18 +343,10 @@ document.addEventListener("DOMContentLoaded", () => {
         DOM.registroForm.reset();
         setTimeout(() => fecharModal(DOM.authModal), 3000);
       } else {
-        mostrarFeedback(
-          DOM.registroFeedback,
-          data.erro || "Erro ao criar conta.",
-          false,
-        );
+        mostrarFeedback(DOM.registroFeedback, data.erro || "Erro ao criar conta.", false);
       }
     } catch (err) {
-      mostrarFeedback(
-        DOM.registroFeedback,
-        "Erro de conexão com o servidor.",
-        false,
-      );
+      mostrarFeedback(DOM.registroFeedback, "Erro de conexão com o servidor.", false);
     }
     DOM.btnRegistro.disabled = false;
     DOM.btnRegistro.textContent = "Criar Conta";
@@ -397,19 +366,11 @@ document.addEventListener("DOMContentLoaded", () => {
         atualizarNavbar();
         fecharModal(DOM.authModal);
       } else {
-        const feedbackEl = DOM.tabLogin.classList.contains("active")
-          ? DOM.loginFeedback
-          : DOM.registroFeedback;
-        mostrarFeedback(
-          feedbackEl,
-          data.erro || "Erro no login com Google.",
-          false,
-        );
+        const feedbackEl = DOM.tabLogin.classList.contains("active") ? DOM.loginFeedback : DOM.registroFeedback;
+        mostrarFeedback(feedbackEl, data.erro || "Erro no login com Google.", false);
       }
     } catch (err) {
-      const feedbackEl = DOM.tabLogin.classList.contains("active")
-        ? DOM.loginFeedback
-        : DOM.registroFeedback;
+      const feedbackEl = DOM.tabLogin.classList.contains("active") ? DOM.loginFeedback : DOM.registroFeedback;
       mostrarFeedback(feedbackEl, "Erro de conexão com o servidor.", false);
     }
   }
@@ -417,8 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const resp = await fetch("/api/auth/config");
       const data = await resp.json();
-      if (data.whatsappUrl && DOM.linkWhatsapp)
-        DOM.linkWhatsapp.href = data.whatsappUrl;
+      if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
       if (data.clientId && window.google) {
         google.accounts.id.initialize({
           client_id: data.clientId,
@@ -427,23 +387,81 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         if (DOM.btnGoogleLogin) {
           DOM.btnGoogleLogin.disabled = false;
-          DOM.btnGoogleLogin.innerHTML = `
-              <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-              </svg> Entrar com o Google`;
+
+          DOM.btnGoogleLogin.replaceChildren();
+          const svgNS = "http://www.w3.org/2000/svg";
+          const svg = document.createElementNS(svgNS, "svg");
+          svg.setAttribute("class", "btn-google-icon");
+          svg.setAttribute("viewBox", "0 0 24 24");
+          svg.setAttribute("width", "20");
+          svg.setAttribute("height", "20");
+          const paths = [
+            {
+              d: "M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z",
+              fill: "#4285F4",
+            },
+            {
+              d: "M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z",
+              fill: "#34A853",
+            },
+            {
+              d: "M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z",
+              fill: "#FBBC05",
+            },
+            {
+              d: "M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z",
+              fill: "#EA4335",
+            },
+          ];
+          paths.forEach((p) => {
+            const path = document.createElementNS(svgNS, "path");
+            path.setAttribute("d", p.d);
+            path.setAttribute("fill", p.fill);
+            svg.appendChild(path);
+          });
+          const span = document.createElement("span");
+          span.textContent = " Entrar com Google";
+          DOM.btnGoogleLogin.appendChild(svg);
+          DOM.btnGoogleLogin.appendChild(span);
         }
         if (DOM.btnGoogleRegistro) {
           DOM.btnGoogleRegistro.disabled = false;
-          DOM.btnGoogleRegistro.innerHTML = `
-              <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-              </svg> Criar conta com o Google`;
+
+          DOM.btnGoogleRegistro.replaceChildren();
+          const svgNS = "http://www.w3.org/2000/svg";
+          const svg = document.createElementNS(svgNS, "svg");
+          svg.setAttribute("class", "btn-google-icon");
+          svg.setAttribute("viewBox", "0 0 24 24");
+          svg.setAttribute("width", "20");
+          svg.setAttribute("height", "20");
+          const paths = [
+            {
+              d: "M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z",
+              fill: "#4285F4",
+            },
+            {
+              d: "M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z",
+              fill: "#34A853",
+            },
+            {
+              d: "M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z",
+              fill: "#FBBC05",
+            },
+            {
+              d: "M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z",
+              fill: "#EA4335",
+            },
+          ];
+          paths.forEach((p) => {
+            const path = document.createElementNS(svgNS, "path");
+            path.setAttribute("d", p.d);
+            path.setAttribute("fill", p.fill);
+            svg.appendChild(path);
+          });
+          const span = document.createElement("span");
+          span.textContent = " Registrar com Google";
+          DOM.btnGoogleRegistro.appendChild(svg);
+          DOM.btnGoogleRegistro.appendChild(span);
         }
         if (estado.googleLoginPendente) {
           estado.googleLoginPendente = false;
@@ -469,13 +487,44 @@ document.addEventListener("DOMContentLoaded", () => {
         DOM.perfilPix.value = u.chave_pix || "";
         const areaAfiliado = document.getElementById("areaAfiliadoStats");
         if (areaAfiliado) {
-          const link =
-            window.location.origin + "?convite=" + (u.codigo_convite || "");
-          areaAfiliado.innerHTML = `<div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.2); border-radius:8px;">
-            <p><strong>🎁 Seu Link de Indicação:</strong></p>
-            <input class="form-input" type="text" value="${link}" readonly style="cursor:pointer;" onclick="this.select(); document.execCommand('copy'); alert('Link copiado!')" />
-            <p style="margin-top:10px; color:var(--cor-destaque);">Tokens ganhos com amigos: <strong>${u.ganhos_afiliado || 0}</strong></p>
-          </div>`;
+          const link = window.location.origin + "?convite=" + (u.codigo_convite || "");
+          areaAfiliado.replaceChildren();
+          const container = document.createElement("div");
+          container.style.marginTop = "20px";
+          container.style.padding = "15px";
+          container.style.background = "rgba(0,0,0,0.2)";
+          container.style.borderRadius = "8px";
+
+          const pTitle = document.createElement("p");
+          const strongTitle = document.createElement("strong");
+          strongTitle.textContent = "🎁 Seu Link de Indicação:";
+          pTitle.appendChild(strongTitle);
+          container.appendChild(pTitle);
+
+          const inputLink = document.createElement("input");
+          inputLink.className = "form-input";
+          inputLink.type = "text";
+          inputLink.value = link;
+          inputLink.readOnly = true;
+          inputLink.style.cursor = "pointer";
+          inputLink.onclick = () => {
+            inputLink.select();
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(link).then(() => alert("Link copiado!"));
+            }
+          };
+          container.appendChild(inputLink);
+
+          const pStats = document.createElement("p");
+          pStats.style.marginTop = "10px";
+          pStats.style.color = "var(--cor-destaque)";
+          pStats.textContent = "Tokens ganhos com amigos: ";
+          const strongStats = document.createElement("strong");
+          strongStats.textContent = u.ganhos_afiliado || 0;
+          pStats.appendChild(strongStats);
+          container.appendChild(pStats);
+
+          areaAfiliado.appendChild(container);
         }
         DOM.perfilCartao.value = u.cartao_final || "";
       }
@@ -509,9 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
     esconderFeedback(DOM.sudoFeedback);
   });
   DOM.btnFecharSudo.addEventListener("click", () => fecharModal(DOM.sudoModal));
-  DOM.btnFecharCreatePassword.addEventListener("click", () =>
-    fecharModal(DOM.createPasswordModal),
-  );
+  DOM.btnFecharCreatePassword.addEventListener("click", () => fecharModal(DOM.createPasswordModal));
   DOM.sudoForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.sudoFeedback);
@@ -536,11 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await resp.json();
       if (resp.ok) {
         fecharModal(DOM.sudoModal);
-        mostrarFeedback(
-          DOM.perfilFeedback,
-          data.mensagem || "Perfil salvo com segurança!",
-          true,
-        );
+        mostrarFeedback(DOM.perfilFeedback, data.mensagem || "Perfil salvo com segurança!", true);
         if (estado.usuario) {
           estado.usuario.nome = DOM.perfilNome.value;
           atualizarNavbar();
@@ -552,11 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
           DOM.newSecurityPassword.value = "";
           esconderFeedback(DOM.createPasswordFeedback);
         } else {
-          mostrarFeedback(
-            DOM.sudoFeedback,
-            data.erro || "Erro ao confirmar.",
-            false,
-          );
+          mostrarFeedback(DOM.sudoFeedback, data.erro || "Erro ao confirmar.", false);
         }
       }
     } catch (err) {
@@ -571,11 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const senha1 = DOM.newSecurityPassword.value;
     const senha2 = document.getElementById("confirmSecurityPassword").value;
     if (senha1 !== senha2) {
-      mostrarFeedback(
-        DOM.createPasswordFeedback,
-        "As senhas não coincidem. Digite novamente.",
-        false,
-      );
+      mostrarFeedback(DOM.createPasswordFeedback, "As senhas não coincidem. Digite novamente.", false);
       return;
     }
     const btn = DOM.createPasswordForm.querySelector('button[type="submit"]');
@@ -592,24 +627,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await resp.json();
       if (resp.ok) {
         fecharModal(DOM.createPasswordModal);
-        mostrarFeedback(
-          DOM.perfilFeedback,
-          "Senha criada! Clique em Salvar novamente.",
-          true,
-        );
+        mostrarFeedback(DOM.perfilFeedback, "Senha criada! Clique em Salvar novamente.", true);
       } else {
-        mostrarFeedback(
-          DOM.createPasswordFeedback,
-          data.erro || "Erro ao definir senha.",
-          false,
-        );
+        mostrarFeedback(DOM.createPasswordFeedback, data.erro || "Erro ao definir senha.", false);
       }
     } catch (err) {
-      mostrarFeedback(
-        DOM.createPasswordFeedback,
-        "Falha de comunicação.",
-        false,
-      );
+      mostrarFeedback(DOM.createPasswordFeedback, "Falha de comunicação.", false);
     } finally {
       setCarregando(btn, false, "Definir Senha");
     }
@@ -758,23 +781,9 @@ document.addEventListener("DOMContentLoaded", () => {
       plano = {
         id: planId,
         nome: name,
-        precoMensal:
-          planId === "gratis"
-            ? 0
-            : planId === "iniciante"
-              ? 4.99
-              : planId === "premium"
-                ? 19.9
-                : 39.9,
+        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 4.99 : planId === "premium" ? 19.9 : 39.9,
         isGratis: planId === "gratis",
-        tokens:
-          planId === "gratis"
-            ? 100
-            : planId === "iniciante"
-              ? 1000
-              : planId === "premium"
-                ? 5000
-                : 15000,
+        tokens: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
       };
     }
     if (!estado.usuario) {
@@ -822,8 +831,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currency: "BRL",
     });
     if (descontoPercent > 0) {
-      const precoComDesconto =
-        precoOriginal - (precoOriginal * descontoPercent) / 100;
+      const precoComDesconto = precoOriginal - (precoOriginal * descontoPercent) / 100;
       const precoDescontoFormatado = precoComDesconto.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
@@ -861,22 +869,14 @@ document.addEventListener("DOMContentLoaded", () => {
           mostrarFeedback(DOM.cupomFeedback, data.dados.mensagem, true);
           DOM.inputCupom.disabled = true;
           DOM.btnAplicarCupom.textContent = "✓ Aplicado";
-          DOM.btnAplicarCupom.style.background =
-            "var(--accent-success, #4caf50)";
+          DOM.btnAplicarCupom.style.background = "var(--accent-success, #4caf50)";
           if (estado.planoSelecionado) {
-            atualizarPrecoCheckout(
-              estado.planoSelecionado.precoMensal,
-              estado.descontoPercentual,
-            );
+            atualizarPrecoCheckout(estado.planoSelecionado.precoMensal, estado.descontoPercentual);
           }
         } else {
           estado.cupomAplicado = null;
           estado.descontoPercentual = 0;
-          mostrarFeedback(
-            DOM.cupomFeedback,
-            data.erro || "Cupom inválido.",
-            false,
-          );
+          mostrarFeedback(DOM.cupomFeedback, data.erro || "Cupom inválido.", false);
           DOM.btnAplicarCupom.disabled = false;
           DOM.btnAplicarCupom.textContent = "Aplicar";
         }
@@ -887,12 +887,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  DOM.btnFecharCheckout.addEventListener("click", () =>
-    fecharModal(DOM.checkoutModal),
-  );
-  DOM.btnCancelarCheckout.addEventListener("click", () =>
-    fecharModal(DOM.checkoutModal),
-  );
+  DOM.btnFecharCheckout.addEventListener("click", () => fecharModal(DOM.checkoutModal));
+  DOM.btnCancelarCheckout.addEventListener("click", () => fecharModal(DOM.checkoutModal));
   DOM.checkoutModal.addEventListener("click", (e) => {
     if (e.target === DOM.checkoutModal) fecharModal(DOM.checkoutModal);
   });
@@ -901,11 +897,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!plano) return;
     const metodoPagamento = DOM.metodoPagamento.value;
     if (!plano.isGratis && !metodoPagamento) {
-      mostrarFeedback(
-        DOM.checkoutFeedback,
-        "Por favor, selecione Pix ou Cartão de Crédito.",
-        false,
-      );
+      mostrarFeedback(DOM.checkoutFeedback, "Por favor, selecione Pix ou Cartão de Crédito.", false);
       return;
     }
     DOM.btnConfirmarCompra.disabled = true;
@@ -928,34 +920,21 @@ document.addEventListener("DOMContentLoaded", () => {
           DOM.btnConfirmarCompra.textContent = "Concluído ✓";
           if (estado.usuario) {
             estado.usuario.saldo_tokens += plano.tokens || 100;
-            DOM.navTokenCount.textContent =
-              estado.usuario.saldo_tokens.toLocaleString("pt-BR");
+            DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString("pt-BR");
           }
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
           window.location.href = data.dados.urlCheckout;
         }
       } else {
-        mostrarFeedback(
-          DOM.checkoutFeedback,
-          data.erro || "Erro ao processar compra.",
-          false,
-        );
+        mostrarFeedback(DOM.checkoutFeedback, data.erro || "Erro ao processar compra.", false);
         DOM.btnConfirmarCompra.disabled = false;
-        DOM.btnConfirmarCompra.textContent = plano.isGratis
-          ? "Resgatar Benefícios Grátis"
-          : "Ir para Pagamento Seguro";
+        DOM.btnConfirmarCompra.textContent = plano.isGratis ? "Resgatar Benefícios Grátis" : "Ir para Pagamento Seguro";
       }
     } catch (err) {
-      mostrarFeedback(
-        DOM.checkoutFeedback,
-        "Erro de conexão com o servidor.",
-        false,
-      );
+      mostrarFeedback(DOM.checkoutFeedback, "Erro de conexão com o servidor.", false);
       DOM.btnConfirmarCompra.disabled = false;
-      DOM.btnConfirmarCompra.textContent = plano.isGratis
-        ? "Resgatar Benefícios Grátis"
-        : "Ir para Pagamento Seguro";
+      DOM.btnConfirmarCompra.textContent = plano.isGratis ? "Resgatar Benefícios Grátis" : "Ir para Pagamento Seguro";
     }
   });
   async function carregarRanking() {
@@ -1001,12 +980,8 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirModal(DOM.rankingModal);
   };
   if (DOM.btnRanking) DOM.btnRanking.addEventListener("click", abrirRank);
-  if (DOM.btnRankingLogged)
-    DOM.btnRankingLogged.addEventListener("click", abrirRank);
-  if (DOM.btnFecharRanking)
-    DOM.btnFecharRanking.addEventListener("click", () =>
-      fecharModal(DOM.rankingModal),
-    );
+  if (DOM.btnRankingLogged) DOM.btnRankingLogged.addEventListener("click", abrirRank);
+  if (DOM.btnFecharRanking) DOM.btnFecharRanking.addEventListener("click", () => fecharModal(DOM.rankingModal));
   if (DOM.rankingModal)
     DOM.rankingModal.addEventListener("click", (e) => {
       if (e.target === DOM.rankingModal) fecharModal(DOM.rankingModal);
@@ -1053,10 +1028,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const btnStatus = document.createElement("button");
           btnStatus.className = "toggle-status btn-action-status";
           btnStatus.setAttribute("data-id", u.id);
-          btnStatus.setAttribute(
-            "data-status",
-            u.status === "banido" ? "ativo" : "banido",
-          );
+          btnStatus.setAttribute("data-status", u.status === "banido" ? "ativo" : "banido");
           if (u.status === "banido") {
             btnStatus.classList.add("desbanir");
             btnStatus.textContent = "DESBANIR";
@@ -1091,10 +1063,7 @@ document.addEventListener("DOMContentLoaded", () => {
       carregarAdminUsers();
       abrirModal(DOM.adminModal);
     });
-  if (DOM.btnFecharAdmin)
-    DOM.btnFecharAdmin.addEventListener("click", () =>
-      fecharModal(DOM.adminModal),
-    );
+  if (DOM.btnFecharAdmin) DOM.btnFecharAdmin.addEventListener("click", () => fecharModal(DOM.adminModal));
   if (DOM.adminModal)
     DOM.adminModal.addEventListener("click", (e) => {
       if (e.target === DOM.adminModal) fecharModal(DOM.adminModal);
@@ -1143,14 +1112,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   if (DOM.btnFecharForgot) {
-    DOM.btnFecharForgot.addEventListener("click", () =>
-      fecharModal(DOM.forgotPasswordModal),
-    );
+    DOM.btnFecharForgot.addEventListener("click", () => fecharModal(DOM.forgotPasswordModal));
   }
   if (DOM.btnFecharReset) {
-    DOM.btnFecharReset.addEventListener("click", () =>
-      fecharModal(DOM.resetPasswordModal),
-    );
+    DOM.btnFecharReset.addEventListener("click", () => fecharModal(DOM.resetPasswordModal));
   }
   if (DOM.forgotForm) {
     DOM.forgotForm.addEventListener("submit", async (e) => {
@@ -1169,18 +1134,10 @@ document.addEventListener("DOMContentLoaded", () => {
           mostrarFeedback(DOM.forgotFeedback, data.dados.mensagem, true);
           DOM.forgotForm.reset();
         } else {
-          mostrarFeedback(
-            DOM.forgotFeedback,
-            data.erro || "Erro ao processar solicitação.",
-            false,
-          );
+          mostrarFeedback(DOM.forgotFeedback, data.erro || "Erro ao processar solicitação.", false);
         }
       } catch (err) {
-        mostrarFeedback(
-          DOM.forgotFeedback,
-          "Erro de conexão com o servidor.",
-          false,
-        );
+        mostrarFeedback(DOM.forgotFeedback, "Erro de conexão com o servidor.", false);
       } finally {
         setCarregando(btn, false, "Enviar Link");
       }
@@ -1197,11 +1154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       if (novaSenha.length < 6) {
-        mostrarFeedback(
-          DOM.resetFeedback,
-          "A senha deve ter pelo menos 6 caracteres.",
-          false,
-        );
+        mostrarFeedback(DOM.resetFeedback, "A senha deve ter pelo menos 6 caracteres.", false);
         return;
       }
       const btn = DOM.btnConfirmarReset;
@@ -1222,18 +1175,10 @@ document.addEventListener("DOMContentLoaded", () => {
             alternarTab("login");
           }, 3000);
         } else {
-          mostrarFeedback(
-            DOM.resetFeedback,
-            data.erro || "Erro ao redefinir senha.",
-            false,
-          );
+          mostrarFeedback(DOM.resetFeedback, data.erro || "Erro ao redefinir senha.", false);
         }
       } catch (err) {
-        mostrarFeedback(
-          DOM.resetFeedback,
-          "Erro de conexão com o servidor.",
-          false,
-        );
+        mostrarFeedback(DOM.resetFeedback, "Erro de conexão com o servidor.", false);
       } finally {
         setCarregando(btn, false, "Salvar Nova Senha");
       }
@@ -1245,17 +1190,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         const stats = data.dados;
-        if (DOM.statsTotalUsuarios)
-          DOM.statsTotalUsuarios.textContent =
-            stats.totalUsuarios.toLocaleString("pt-BR");
-        if (DOM.statsTotalTokens)
-          DOM.statsTotalTokens.textContent =
-            stats.totalTokens.toLocaleString("pt-BR");
+        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = stats.totalUsuarios.toLocaleString("pt-BR");
+        if (DOM.statsTotalTokens) DOM.statsTotalTokens.textContent = stats.totalTokens.toLocaleString("pt-BR");
         if (DOM.recentSalesList) {
-          DOM.recentSalesList.innerHTML = "";
+          DOM.recentSalesList.textContent = "";
           if (stats.ultimasVendas.length === 0) {
-            DOM.recentSalesList.innerHTML =
-              '<li style="justify-content: center; color: var(--text-secondary, #aaa);">Nenhuma atividade registrada ainda.</li>';
+            DOM.recentSalesList.textContent = "Nenhuma atividade registrada ainda.";
             return;
           }
           stats.ultimasVendas.forEach((venda) => {
@@ -1266,11 +1206,8 @@ document.addEventListener("DOMContentLoaded", () => {
               hour: "2-digit",
               minute: "2-digit",
             });
-            const nomeFormatado =
-              venda.nome.length > 4
-                ? venda.nome.substring(0, 4) + "***"
-                : venda.nome + "***";
-            li.innerHTML = `
+            const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + "***" : venda.nome + "***";
+            li.textContent = `
               <span>Jogador <strong>${nomeFormatado}</strong> adquiriu o <span class="sale-plan">${venda.plano_id.toUpperCase()}</span> (+${venda.tokens.toLocaleString("pt-BR")} Tokens)</span>
               <span class="sale-time">${dataVenda}</span>
             `;
@@ -1280,8 +1217,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (e) {
       if (DOM.recentSalesList) {
-        DOM.recentSalesList.innerHTML =
-          '<li style="justify-content: center; color: #ef4444;">Erro ao carregar atividades recentes.</li>';
+        const liErro = document.createElement("li");
+        liErro.style.justifyContent = "center";
+        liErro.style.color = "#ef4444";
+        liErro.textContent = "Erro ao carregar atividades recentes.";
+        DOM.recentSalesList.replaceChildren(liErro);
       }
     }
   }
@@ -1296,11 +1236,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (rToken) {
       estado.resetToken = rToken;
       abrirModal(DOM.resetPasswordModal);
-      const novaUrl =
-        window.location.protocol +
-        "//" +
-        window.location.host +
-        window.location.pathname;
+      const novaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
       window.history.replaceState({ path: novaUrl }, "", novaUrl);
     }
   }
