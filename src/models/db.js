@@ -1,8 +1,6 @@
-
-const mysql = require('mysql2/promise');
-const config = require('../config/env');
-const logger = require('../config/logger');
-
+const mysql = require("mysql2/promise");
+const config = require("../config/env");
+const logger = require("../config/logger");
 const pool = mysql.createPool({
   host: config.db.host,
   port: config.db.port,
@@ -10,31 +8,30 @@ const pool = mysql.createPool({
   password: config.db.password,
   database: config.db.database,
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   },
   waitForConnections: true,
   connectionLimit: config.db.connectionLimit,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 10000
+  keepAliveInitialDelay: 10000,
 });
-
 const testarConexao = async () => {
   try {
     const conexao = await pool.getConnection();
-    await conexao.query('SELECT 1');
+    await conexao.query("SELECT 1");
     conexao.release();
-    logger.info('Conexão com o banco de dados estabelecida.', {
+    logger.info("Conexão com o banco de dados estabelecida.", {
       host: config.db.host,
-      database: config.db.database
+      database: config.db.database,
     });
     return true;
   } catch (err) {
-    logger.error('Falha ao conectar com o banco de dados.', {
+    logger.error("Falha ao conectar com o banco de dados.", {
       host: config.db.host,
       database: config.db.database,
       erro: err.message,
-      codigo: err.code
+      codigo: err.code,
     });
     throw err;
   }
@@ -42,10 +39,9 @@ const testarConexao = async () => {
 const encerrarPool = async () => {
   try {
     await pool.end();
-    logger.info('Pool de conexões com o banco encerrado.');
+    logger.info("Pool de conexões com o banco encerrado.");
   } catch (err) {
-    logger.error('Erro ao encerrar pool de conexões:', { erro: err.message });
+    logger.error("Erro ao encerrar pool de conexões:", { erro: err.message });
   }
 };
-
 module.exports = { pool, testarConexao, encerrarPool };

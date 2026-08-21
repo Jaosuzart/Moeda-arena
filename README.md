@@ -17,7 +17,9 @@ O <strong>Jogo Arena</strong> é uma aplicação web completa desenvolvida com a
 A aplicação utiliza o SDK oficial do Mercado Pago (`mercadopago`) no Node.js. O fluxo financeiro e de entrega digital é composto por duas etapas principais:
 
 ### 1. Geração de Preferência de Pagamento (`compraController.js`)
+
 Quando o usuário clica em assinar um pacote de benefícios ou comprar tokens, o sistema envia uma requisição autenticada para a rota `/api/comprar`.
+
 - **Validação de Cupons**: Se o usuário aplicar um cupom de streamer (`STREAMER10`), o sistema valida a validade do cupom no banco de dados e calcula o valor final com desconto.
 - **Criação da Preferência**: O servidor inicia o cliente do Mercado Pago com o token de acesso (`MP_ACCESS_TOKEN`) e cria uma preferência de pagamento contendo:
   - O item comprado (ID, título, quantidade e preço final com desconto).
@@ -26,7 +28,9 @@ Quando o usuário clica em assinar um pacote de benefícios ou comprar tokens, o
 - **Redirecionamento**: O Mercado Pago retorna um ID de preferência e um link de checkout seguro (`init_point`). O frontend recebe esse link e redireciona o usuário para realizar o pagamento.
 
 ### 2. Processamento de Notificação e Webhook (`webhookController.js`)
+
 Uma vez efetuado o pagamento (seja via Pix ou Cartão de Crédito), o Mercado Pago dispara uma notificação assíncrona HTTP POST para a rota pública `/api/webhook`.
+
 - **Idempotência (Prevenção de Gastos Duplicados)**: Para cada webhook recebido, o sistema consulta a tabela `pagamentos_processados` para validar se o `payment_id` já foi tratado. Se já estiver registrado, o processamento é imediatamente interrompido para evitar créditos de tokens duplicados.
 - **Consulta à API do Mercado Pago**: O servidor consome a API do Mercado Pago (`paymentApi.get`) utilizando o ID do pagamento recebido na notificação para obter os detalhes oficiais e seguros da transação direta.
 - **Aprovação e Crédito**: Caso o status do pagamento retornado seja `approved` (aprovado):
@@ -40,11 +44,13 @@ Uma vez efetuado o pagamento (seja via Pix ou Cartão de Crédito), o Mercado Pa
 🚀 Tecnologias utilizadas
 
 🎨 Front-end
+
 - **HTML5** e **CSS3** (CSS customizado moderno)
 - **Bootstrap 5** (Layout e componentes de interface)
 - **JavaScript ES6** (Interações dinâmicas e consumo da API interna)
 
 ⚙️ Back-end
+
 - **Node.js** com framework **Express**
 - **Mercado Pago SDK** (Integração de pagamentos)
 - **MySQL / MariaDB** (Armazenamento persistente no Aiven Cloud)
@@ -80,7 +86,9 @@ Jogo-Arena/
 🛠️ Como executar o projeto
 
 ### 1. Configurar Variáveis de Ambiente
+
 Crie um arquivo `.env` na raiz do projeto contendo as credenciais de desenvolvimento e produção:
+
 ```env
 PORT=3001
 NODE_ENV=development
@@ -100,7 +108,9 @@ JWT_SECRET=chave_secreta_jwt
 ```
 
 ### 2. Instalar e rodar
+
 No terminal, acesse a pasta raiz e execute os comandos:
+
 ```bash
 # 1. Instalar as dependências
 npm install
@@ -111,5 +121,6 @@ node setup_db.js
 # 3. Iniciar o servidor em ambiente de desenvolvimento
 npm run dev
 ```
+
 Acesse a aplicação no navegador em: `http://localhost:3001`
 d

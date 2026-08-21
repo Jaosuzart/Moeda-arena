@@ -1,7 +1,6 @@
-const mysql = require('mysql2/promise');
-const config = require('./src/config/env');
-const logger = require('./src/config/logger');
-
+const mysql = require("mysql2/promise");
+const config = require("./src/config/env");
+const logger = require("./src/config/logger");
 async function run() {
   const pool = mysql.createPool({
     host: config.db.host,
@@ -9,17 +8,13 @@ async function run() {
     password: config.db.password,
     database: config.db.database,
     port: config.db.port,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
   });
-
   try {
-    logger.info('Conectando ao banco de dados...');
-
-    await pool.query('SET FOREIGN_KEY_CHECKS = 0');
-
-    await pool.query('DROP TABLE IF EXISTS usuarios');
-    logger.info('Tabela antiga removida.');
-
+    logger.info("Conectando ao banco de dados...");
+    await pool.query("SET FOREIGN_KEY_CHECKS = 0");
+    await pool.query("DROP TABLE IF EXISTS usuarios");
+    logger.info("Tabela antiga removida.");
     const createUsuariosSQL = `
       CREATE TABLE usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,8 +43,7 @@ async function run() {
       ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
     `;
     await pool.query(createUsuariosSQL);
-    logger.info('Tabela usuarios criada com sucesso.');
-
+    logger.info("Tabela usuarios criada com sucesso.");
     const insertUsersSQL = `
       INSERT INTO usuarios (nome, email, senha_hash, saldo_tokens, tipo_plano, cpf, cartao_final, has_password) 
       VALUES 
@@ -57,8 +51,7 @@ async function run() {
       ('Jogador Teste', 'jogador@teste.com', '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 500, 'gratis', '11122233344', '1234', TRUE);
     `;
     await pool.query(insertUsersSQL, [config.adminEmail]);
-    logger.info('Usuários de teste inseridos.');
-
+    logger.info("Usuários de teste inseridos.");
     const createPagamentosSQL = `
       CREATE TABLE IF NOT EXISTS pagamentos_processados (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,16 +65,16 @@ async function run() {
       ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
     `;
     await pool.query(createPagamentosSQL);
-    logger.info('Tabela pagamentos_processados verificada/criada.');
-
-    await pool.query('SET FOREIGN_KEY_CHECKS = 1');
-    logger.info('Tudo configurado com sucesso!');
-
+    logger.info("Tabela pagamentos_processados verificada/criada.");
+    await pool.query("SET FOREIGN_KEY_CHECKS = 1");
+    logger.info("Tudo configurado com sucesso!");
   } catch (err) {
-    logger.error('Erro ao configurar banco de dados:', { erro: err.message, stack: err.stack });
+    logger.error("Erro ao configurar banco de dados:", {
+      erro: err.message,
+      stack: err.stack,
+    });
   } finally {
     await pool.end();
   }
 }
-
 run();

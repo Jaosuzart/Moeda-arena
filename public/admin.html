@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Moeda Arena</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .admin-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+      .admin-card {
+        background: var(--cor-fundo-cartao);
+        border: 1px solid var(--cor-borda);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--cor-borda);
+        color: var(--cor-texto);
+      }
+      th {
+        color: var(--cor-destaque);
+      }
+      .action-btn {
+        background: var(--cor-destaque);
+        color: var(--cor-fundo);
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .action-btn:hover {
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="logo">MOEDA ARENA <span>ADMIN</span></a>
+        <div class="nav-links">
+          <a href="/" class="btn-secundario">Voltar para Loja</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="admin-container">
+      <div class="admin-card">
+        <h2>Usuários Cadastrados</h2>
+        <div style="overflow-x: auto">
+          <table id="tabelaUsuarios">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Tokens</th>
+                <th>Plano</th>
+                <th>Afiliados (Ganho)</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="7">Carregando usuários...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

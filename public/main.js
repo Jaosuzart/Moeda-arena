@@ -1,264 +1,243 @@
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const DOM = {
-    navAuthBtns: document.getElementById('navAuthBtns'),
-    navUserInfo: document.getElementById('navUserInfo'),
-    navTokenCount: document.getElementById('navTokenCount'),
-    navAvatar: document.getElementById('navAvatar'),
-    btnAbrirLogin: document.getElementById('btnAbrirLogin'),
-    btnAbrirRegistro: document.getElementById('btnAbrirRegistro'),
-    cardsContainer: document.getElementById('cardsContainer'),
-    loadingState: document.getElementById('loadingState'),
-    pricingToggle: document.getElementById('pricingToggle'),
-    labelMensal: document.getElementById('labelMensal'),
-    labelAnual: document.getElementById('labelAnual'),
-    authModal: document.getElementById('authModal'),
-    tabLogin: document.getElementById('tabLogin'),
-    tabRegistro: document.getElementById('tabRegistro'),
-    formLogin: document.getElementById('formLogin'),
-    formRegistro: document.getElementById('formRegistro'),
-    loginForm: document.getElementById('loginForm'),
-    registroForm: document.getElementById('registroForm'),
-    registroTelefone: document.getElementById('registroTelefone'),
-    loginFeedback: document.getElementById('loginFeedback'),
-    registroFeedback: document.getElementById('registroFeedback'),
-    btnLogin: document.getElementById('btnLogin'),
-    btnRegistro: document.getElementById('btnRegistro'),
-    btnFecharAuth: document.getElementById('btnFecharAuth'),
-    btnFecharAuth2: document.getElementById('btnFecharAuth2'),
-    btnGoogleLogin: document.getElementById('btnGoogleLogin'),
-    btnGoogleRegistro: document.getElementById('btnGoogleRegistro'),
-    checkoutModal: document.getElementById('checkoutModal'),
-    checkoutPlanoNome: document.getElementById('checkoutPlanoNome'),
-    areaPagamento: document.getElementById('areaPagamento'),
-    metodoPagamento: document.getElementById('metodoPagamento'),
-    checkoutFeedback: document.getElementById('checkoutFeedback'),
-    btnConfirmarCompra: document.getElementById('btnConfirmarCompra'),
-    btnFecharCheckout: document.getElementById('btnFecharCheckout'),
-    btnCancelarCheckout: document.getElementById('btnCancelarCheckout'),
-    inputCupom: document.getElementById('inputCupom'),
-    btnAplicarCupom: document.getElementById('btnAplicarCupom'),
-    cupomFeedback: document.getElementById('cupomFeedback'),
-    areaCupom: document.getElementById('areaCupom'),
-    checkoutPrecoOriginal: document.getElementById('checkoutPrecoOriginal'),
-    checkoutPrecoFinal: document.getElementById('checkoutPrecoFinal'),
-    checkoutPrecoArea: document.getElementById('checkoutPrecoArea'),
-
-    perfilModal: document.getElementById('perfilModal'),
-    btnFecharPerfil: document.getElementById('btnFecharPerfil'),
-    btnSairConta: document.getElementById('btnSairConta'),
-    tabDados: document.getElementById('tabDados'),
-    tabCartao: document.getElementById('tabCartao'),
-    areaDados: document.getElementById('areaDados'),
-    areaCartao: document.getElementById('areaCartao'),
-    perfilForm: document.getElementById('perfilForm'),
-    perfilNome: document.getElementById('perfilNome'),
-    perfilCpf: document.getElementById('perfilCpf'),
-    perfilLocalidade: document.getElementById('perfilLocalidade'),
-    perfilTelefone: document.getElementById('perfilTelefone'),
-    perfilPix: document.getElementById('perfilPix'),
-    perfilCartao: document.getElementById('perfilCartao'),
-    perfilFeedback: document.getElementById('perfilFeedback'),
-    btnSalvarPerfil: document.getElementById('btnSalvarPerfil'),
-
-    btnRanking: document.getElementById('btnRanking'),
-    btnRankingLogged: document.getElementById('btnRankingLogged'),
-    rankingModal: document.getElementById('rankingModal'),
-    btnFecharRanking: document.getElementById('btnFecharRanking'),
-    rankingTableBody: document.getElementById('rankingTableBody'),
-
-    adminModal: document.getElementById('adminModal'),
-    btnFecharAdmin: document.getElementById('btnFecharAdmin'),
-    adminTableBody: document.getElementById('adminTableBody'),
-    adminTokensForm: document.getElementById('adminTokensForm'),
-    adminUserId: document.getElementById('adminUserId'),
-    adminTokenAmount: document.getElementById('adminTokenAmount'),
-    adminFeedback: document.getElementById('adminFeedback'),
-
-    btnAbrirTermos: document.getElementById('btnAbrirTermos'),
-    btnFecharTermos: document.getElementById('btnFecharTermos'),
-    btnOkTermos: document.getElementById('btnOkTermos'),
-    termosModal: document.getElementById('termosModal'),
-
-    sudoModal: document.getElementById('sudoModal'),
-    btnFecharSudo: document.getElementById('btnFecharSudo'),
-    sudoForm: document.getElementById('sudoForm'),
-    sudoSenha: document.getElementById('sudoSenha'),
-    sudoFeedback: document.getElementById('sudoFeedback'),
-    createPasswordModal: document.getElementById('createPasswordModal'),
-    btnFecharCreatePassword: document.getElementById('btnFecharCreatePassword'),
-    createPasswordForm: document.getElementById('createPasswordForm'),
-    newSecurityPassword: document.getElementById('newSecurityPassword'),
-    createPasswordFeedback: document.getElementById('createPasswordFeedback'),
-
-    btnEsqueciSenha: document.getElementById('btnEsqueciSenha'),
-    forgotPasswordModal: document.getElementById('forgotPasswordModal'),
-    forgotForm: document.getElementById('forgotForm'),
-    forgotEmail: document.getElementById('forgotEmail'),
-    forgotFeedback: document.getElementById('forgotFeedback'),
-    btnEnviarForgot: document.getElementById('btnEnviarForgot'),
-    btnFecharForgot: document.getElementById('btnFecharForgot'),
-    btnVoltarLogin: document.getElementById('btnVoltarLogin'),
-
-    resetPasswordModal: document.getElementById('resetPasswordModal'),
-    resetForm: document.getElementById('resetForm'),
-    resetNovaSenha: document.getElementById('resetNovaSenha'),
-    resetConfirmarSenha: document.getElementById('resetConfirmarSenha'),
-    resetFeedback: document.getElementById('resetFeedback'),
-    btnConfirmarReset: document.getElementById('btnConfirmarReset'),
-    btnFecharReset: document.getElementById('btnFecharReset'),
-
-    statsTotalUsuarios: document.getElementById('statsTotalUsuarios'),
-    statsTotalTokens: document.getElementById('statsTotalTokens'),
-    recentSalesList: document.getElementById('recentSalesList'),
-    linkWhatsapp: document.getElementById('linkWhatsapp')
+    navAuthBtns: document.getElementById("navAuthBtns"),
+    navUserInfo: document.getElementById("navUserInfo"),
+    navTokenCount: document.getElementById("navTokenCount"),
+    navAvatar: document.getElementById("navAvatar"),
+    btnAbrirLogin: document.getElementById("btnAbrirLogin"),
+    btnAbrirRegistro: document.getElementById("btnAbrirRegistro"),
+    cardsContainer: document.getElementById("cardsContainer"),
+    loadingState: document.getElementById("loadingState"),
+    pricingToggle: document.getElementById("pricingToggle"),
+    labelMensal: document.getElementById("labelMensal"),
+    labelAnual: document.getElementById("labelAnual"),
+    authModal: document.getElementById("authModal"),
+    tabLogin: document.getElementById("tabLogin"),
+    tabRegistro: document.getElementById("tabRegistro"),
+    formLogin: document.getElementById("formLogin"),
+    formRegistro: document.getElementById("formRegistro"),
+    loginForm: document.getElementById("loginForm"),
+    registroForm: document.getElementById("registroForm"),
+    registroTelefone: document.getElementById("registroTelefone"),
+    loginFeedback: document.getElementById("loginFeedback"),
+    registroFeedback: document.getElementById("registroFeedback"),
+    btnLogin: document.getElementById("btnLogin"),
+    btnRegistro: document.getElementById("btnRegistro"),
+    btnFecharAuth: document.getElementById("btnFecharAuth"),
+    btnFecharAuth2: document.getElementById("btnFecharAuth2"),
+    btnGoogleLogin: document.getElementById("btnGoogleLogin"),
+    btnGoogleRegistro: document.getElementById("btnGoogleRegistro"),
+    checkoutModal: document.getElementById("checkoutModal"),
+    checkoutPlanoNome: document.getElementById("checkoutPlanoNome"),
+    areaPagamento: document.getElementById("areaPagamento"),
+    metodoPagamento: document.getElementById("metodoPagamento"),
+    checkoutFeedback: document.getElementById("checkoutFeedback"),
+    btnConfirmarCompra: document.getElementById("btnConfirmarCompra"),
+    btnFecharCheckout: document.getElementById("btnFecharCheckout"),
+    btnCancelarCheckout: document.getElementById("btnCancelarCheckout"),
+    inputCupom: document.getElementById("inputCupom"),
+    btnAplicarCupom: document.getElementById("btnAplicarCupom"),
+    cupomFeedback: document.getElementById("cupomFeedback"),
+    areaCupom: document.getElementById("areaCupom"),
+    checkoutPrecoOriginal: document.getElementById("checkoutPrecoOriginal"),
+    checkoutPrecoFinal: document.getElementById("checkoutPrecoFinal"),
+    checkoutPrecoArea: document.getElementById("checkoutPrecoArea"),
+    perfilModal: document.getElementById("perfilModal"),
+    btnFecharPerfil: document.getElementById("btnFecharPerfil"),
+    btnSairConta: document.getElementById("btnSairConta"),
+    tabDados: document.getElementById("tabDados"),
+    tabCartao: document.getElementById("tabCartao"),
+    areaDados: document.getElementById("areaDados"),
+    areaCartao: document.getElementById("areaCartao"),
+    perfilForm: document.getElementById("perfilForm"),
+    perfilNome: document.getElementById("perfilNome"),
+    perfilCpf: document.getElementById("perfilCpf"),
+    perfilLocalidade: document.getElementById("perfilLocalidade"),
+    perfilTelefone: document.getElementById("perfilTelefone"),
+    perfilPix: document.getElementById("perfilPix"),
+    perfilCartao: document.getElementById("perfilCartao"),
+    perfilFeedback: document.getElementById("perfilFeedback"),
+    btnSalvarPerfil: document.getElementById("btnSalvarPerfil"),
+    btnRanking: document.getElementById("btnRanking"),
+    btnRankingLogged: document.getElementById("btnRankingLogged"),
+    rankingModal: document.getElementById("rankingModal"),
+    btnFecharRanking: document.getElementById("btnFecharRanking"),
+    rankingTableBody: document.getElementById("rankingTableBody"),
+    adminModal: document.getElementById("adminModal"),
+    btnFecharAdmin: document.getElementById("btnFecharAdmin"),
+    adminTableBody: document.getElementById("adminTableBody"),
+    adminTokensForm: document.getElementById("adminTokensForm"),
+    adminUserId: document.getElementById("adminUserId"),
+    adminTokenAmount: document.getElementById("adminTokenAmount"),
+    adminFeedback: document.getElementById("adminFeedback"),
+    btnAbrirTermos: document.getElementById("btnAbrirTermos"),
+    btnFecharTermos: document.getElementById("btnFecharTermos"),
+    btnOkTermos: document.getElementById("btnOkTermos"),
+    termosModal: document.getElementById("termosModal"),
+    sudoModal: document.getElementById("sudoModal"),
+    btnFecharSudo: document.getElementById("btnFecharSudo"),
+    sudoForm: document.getElementById("sudoForm"),
+    sudoSenha: document.getElementById("sudoSenha"),
+    sudoFeedback: document.getElementById("sudoFeedback"),
+    createPasswordModal: document.getElementById("createPasswordModal"),
+    btnFecharCreatePassword: document.getElementById("btnFecharCreatePassword"),
+    createPasswordForm: document.getElementById("createPasswordForm"),
+    newSecurityPassword: document.getElementById("newSecurityPassword"),
+    createPasswordFeedback: document.getElementById("createPasswordFeedback"),
+    btnEsqueciSenha: document.getElementById("btnEsqueciSenha"),
+    forgotPasswordModal: document.getElementById("forgotPasswordModal"),
+    forgotForm: document.getElementById("forgotForm"),
+    forgotEmail: document.getElementById("forgotEmail"),
+    forgotFeedback: document.getElementById("forgotFeedback"),
+    btnEnviarForgot: document.getElementById("btnEnviarForgot"),
+    btnFecharForgot: document.getElementById("btnFecharForgot"),
+    btnVoltarLogin: document.getElementById("btnVoltarLogin"),
+    resetPasswordModal: document.getElementById("resetPasswordModal"),
+    resetForm: document.getElementById("resetForm"),
+    resetNovaSenha: document.getElementById("resetNovaSenha"),
+    resetConfirmarSenha: document.getElementById("resetConfirmarSenha"),
+    resetFeedback: document.getElementById("resetFeedback"),
+    btnConfirmarReset: document.getElementById("btnConfirmarReset"),
+    btnFecharReset: document.getElementById("btnFecharReset"),
+    statsTotalUsuarios: document.getElementById("statsTotalUsuarios"),
+    statsTotalTokens: document.getElementById("statsTotalTokens"),
+    recentSalesList: document.getElementById("recentSalesList"),
+    linkWhatsapp: document.getElementById("linkWhatsapp"),
   };
-
   let estado = {
     planos: [],
     usuario: null,
-    token: localStorage.getItem('token') || null,
+    token: localStorage.getItem("token") || null,
     planoSelecionado: null,
     cupomAplicado: null,
     descontoPercentual: 0,
     googleLoginPendente: false,
-    resetToken: null
+    resetToken: null,
   };
-
   const TIER_CONFIG = {
-    gratis: { icon: '🛡️', desc: 'Comece sua jornada com o pacote inicial.' },
-    iniciante: { icon: '🪙', desc: 'Ideal para quem quer começar com pouca moeda.' },
-    premium: { icon: '⚔️', desc: 'O favorito dos jogadores competitivos.' },
-    vip: { icon: '👑', desc: 'Para quem quer dominar sem limites.' }
+    gratis: { icon: "🛡️", desc: "Comece sua jornada com o pacote inicial." },
+    iniciante: {
+      icon: "🪙",
+      desc: "Ideal para quem quer começar com pouca moeda.",
+    },
+    premium: { icon: "⚔️", desc: "O favorito dos jogadores competitivos." },
+    vip: { icon: "👑", desc: "Para quem quer dominar sem limites." },
   };
-
   async function fetchAutenticado(url, opcoes = {}) {
-    const headers = { 'Content-Type': 'application/json', ...opcoes.headers };
+    const headers = { "Content-Type": "application/json", ...opcoes.headers };
     if (estado.token) {
-      headers['Authorization'] = `Bearer ${estado.token}`;
+      headers["Authorization"] = `Bearer ${estado.token}`;
     }
     return fetch(url, { ...opcoes, headers });
   }
-
   function mostrarFeedback(el, mensagem, isSucesso) {
     el.textContent = mensagem;
-    el.className = `alert-feedback visible ${isSucesso ? 'success' : 'error'}`;
+    el.className = `alert-feedback visible ${isSucesso ? "success" : "error"}`;
   }
-
   function esconderFeedback(el) {
-    el.className = 'alert-feedback';
-    el.textContent = '';
+    el.className = "alert-feedback";
+    el.textContent = "";
   }
-
   function abrirModal(modal) {
-    modal.classList.add('visible');
+    modal.classList.add("visible");
   }
-
   function fecharModal(modal) {
-    modal.classList.remove('visible');
+    modal.classList.remove("visible");
   }
-
   function setCarregando(btn, isLoading, texto) {
     btn.disabled = isLoading;
     btn.textContent = texto;
   }
-
   function atualizarNavbar() {
     if (estado.usuario) {
-      DOM.navAuthBtns.style.display = 'none';
-      DOM.navUserInfo.style.display = 'flex';
-      DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString('pt-BR');
+      DOM.navAuthBtns.style.display = "none";
+      DOM.navUserInfo.style.display = "flex";
+      DOM.navTokenCount.textContent =
+        estado.usuario.saldo_tokens.toLocaleString("pt-BR");
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
-
       const is_admin = !!estado.usuario.isAdmin;
-      const firstName = estado.usuario.nome.split(' ')[0];
-
-      const elName = document.getElementById('navUserName');
-      const elRole = document.getElementById('navUserRole');
-
+      const firstName = estado.usuario.nome.split(" ")[0];
+      const elName = document.getElementById("navUserName");
+      const elRole = document.getElementById("navUserRole");
       if (elName) elName.textContent = firstName;
       if (elRole) {
-        elRole.className = 'nav-role-badge';
-        elRole.style.cursor = 'default';
+        elRole.className = "nav-role-badge";
+        elRole.style.cursor = "default";
         elRole.onclick = null;
-        elRole.title = '';
-
+        elRole.title = "";
         if (estado.usuario.email_verificado === 0) {
-          elRole.textContent = '⚠️ Email Pendente';
-          elRole.classList.add('pendente');
-          elRole.style.cursor = 'pointer';
-          elRole.title = 'Seu email não está verificado. Clique para saber mais.';
-          elRole.onclick = () => alert('⚠️ SEU EMAIL ESTÁ PENDENTE!\n\nVerifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.');
-          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
+          elRole.textContent = "⚠️ Email Pendente";
+          elRole.classList.add("pendente");
+          elRole.style.cursor = "pointer";
+          elRole.title =
+            "Seu email não está verificado. Clique para saber mais.";
+          elRole.onclick = () =>
+            alert(
+              "⚠️ SEU EMAIL ESTÁ PENDENTE!nnVerifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.",
+            );
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "none";
         } else if (is_admin) {
-          elRole.textContent = 'Administrador';
-          elRole.classList.add('admin');
-          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'inline-block';
+          elRole.textContent = "Administrador";
+          elRole.classList.add("admin");
+          if (DOM.btnAdminPanel)
+            DOM.btnAdminPanel.style.display = "inline-block";
         } else {
-          elRole.textContent = 'Jogador';
-          elRole.classList.add('jogador');
-          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = 'none';
+          elRole.textContent = "Jogador";
+          elRole.classList.add("jogador");
+          if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "none";
         }
       }
     } else {
-      DOM.navAuthBtns.style.display = 'flex';
-      DOM.navUserInfo.style.display = 'none';
+      DOM.navAuthBtns.style.display = "flex";
+      DOM.navUserInfo.style.display = "none";
     }
   }
-
   async function restaurarSessao() {
     if (!estado.token) return;
-
     try {
-      const res = await fetchAutenticado('/api/auth/perfil');
+      const res = await fetchAutenticado("/api/auth/perfil");
       const data = await res.json();
-
       if (data.sucesso && data.dados && data.dados.usuario) {
         estado.usuario = data.dados.usuario;
       } else {
         estado.token = null;
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       }
     } catch (err) {
       estado.token = null;
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     }
-
     atualizarNavbar();
   }
-
   function logout() {
     estado.token = null;
     estado.usuario = null;
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     atualizarNavbar();
   }
-
   function alternarTab(tab) {
-    if (tab === 'login') {
-      DOM.tabLogin.classList.add('active');
-      DOM.tabRegistro.classList.remove('active');
-      DOM.formLogin.classList.add('visible');
-      DOM.formRegistro.classList.remove('visible');
+    if (tab === "login") {
+      DOM.tabLogin.classList.add("active");
+      DOM.tabRegistro.classList.remove("active");
+      DOM.formLogin.classList.add("visible");
+      DOM.formRegistro.classList.remove("visible");
     } else {
-      DOM.tabLogin.classList.remove('active');
-      DOM.tabRegistro.classList.add('active');
-      DOM.formLogin.classList.remove('visible');
-      DOM.formRegistro.classList.add('visible');
+      DOM.tabLogin.classList.remove("active");
+      DOM.tabRegistro.classList.add("active");
+      DOM.formLogin.classList.remove("visible");
+      DOM.formRegistro.classList.add("visible");
     }
     esconderFeedback(DOM.loginFeedback);
     esconderFeedback(DOM.registroFeedback);
   }
-
-  DOM.tabLogin.addEventListener('click', () => alternarTab('login'));
-  DOM.tabRegistro.addEventListener('click', () => alternarTab('registro'));
-
+  DOM.tabLogin.addEventListener("click", () => alternarTab("login"));
+  DOM.tabRegistro.addEventListener("click", () => alternarTab("registro"));
   let googleScriptCarregado = false;
   function carregarScriptGoogle() {
     if (googleScriptCarregado) return;
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
     script.defer = true;
     script.onload = () => {
@@ -267,19 +246,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(script);
     googleScriptCarregado = true;
   }
-
-  DOM.btnAbrirLogin.addEventListener('click', () => {
+  DOM.btnAbrirLogin.addEventListener("click", () => {
     carregarScriptGoogle();
-    alternarTab('login');
+    alternarTab("login");
     abrirModal(DOM.authModal);
   });
-
-  DOM.btnAbrirRegistro.addEventListener('click', () => {
+  DOM.btnAbrirRegistro.addEventListener("click", () => {
     carregarScriptGoogle();
-    alternarTab('registro');
+    alternarTab("registro");
     abrirModal(DOM.authModal);
   });
-
   const handleGoogleClick = () => {
     if (window.google && window.google.accounts) {
       google.accounts.id.prompt();
@@ -287,153 +263,168 @@ document.addEventListener('DOMContentLoaded', () => {
       estado.googleLoginPendente = true;
       if (DOM.btnGoogleLogin) {
         DOM.btnGoogleLogin.disabled = true;
-        DOM.btnGoogleLogin.innerHTML = 'Carregando Google...';
+        DOM.btnGoogleLogin.innerHTML = "Carregando Google...";
       }
       if (DOM.btnGoogleRegistro) {
         DOM.btnGoogleRegistro.disabled = true;
-        DOM.btnGoogleRegistro.innerHTML = 'Carregando Google...';
+        DOM.btnGoogleRegistro.innerHTML = "Carregando Google...";
       }
       carregarScriptGoogle();
     }
   };
-  if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener('click', handleGoogleClick);
-  if (DOM.btnGoogleRegistro) DOM.btnGoogleRegistro.addEventListener('click', handleGoogleClick);
-
-  DOM.btnFecharAuth.addEventListener('click', () => fecharModal(DOM.authModal));
-  DOM.btnFecharAuth2.addEventListener('click', () => fecharModal(DOM.authModal));
-
-  DOM.authModal.addEventListener('click', (e) => {
+  if (DOM.btnGoogleLogin)
+    DOM.btnGoogleLogin.addEventListener("click", handleGoogleClick);
+  if (DOM.btnGoogleRegistro)
+    DOM.btnGoogleRegistro.addEventListener("click", handleGoogleClick);
+  DOM.btnFecharAuth.addEventListener("click", () => fecharModal(DOM.authModal));
+  DOM.btnFecharAuth2.addEventListener("click", () =>
+    fecharModal(DOM.authModal),
+  );
+  DOM.authModal.addEventListener("click", (e) => {
     if (e.target === DOM.authModal) fecharModal(DOM.authModal);
   });
-
-  DOM.btnAbrirTermos.addEventListener('click', (e) => {
+  DOM.btnAbrirTermos.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal(DOM.termosModal);
   });
-
-  DOM.btnFecharTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
+  DOM.btnFecharTermos.addEventListener("click", () =>
+    fecharModal(DOM.termosModal),
+  );
   if (DOM.btnOkTermos) {
-    DOM.btnOkTermos.addEventListener('click', () => fecharModal(DOM.termosModal));
+    DOM.btnOkTermos.addEventListener("click", () =>
+      fecharModal(DOM.termosModal),
+    );
   }
-
-  DOM.termosModal.addEventListener('click', (e) => {
+  DOM.termosModal.addEventListener("click", (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
   });
-
-  DOM.loginForm.addEventListener('submit', async (e) => {
+  DOM.loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.loginFeedback);
     DOM.btnLogin.disabled = true;
-    DOM.btnLogin.textContent = 'Entrando...';
-
+    DOM.btnLogin.textContent = "Entrando...";
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: document.getElementById('loginEmail').value,
-          senha: document.getElementById('loginSenha').value
-        })
+          email: document.getElementById("loginEmail").value,
+          senha: document.getElementById("loginSenha").value,
+        }),
       });
-
       const data = await res.json();
-
       if (data.sucesso && data.dados) {
         estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem('token', data.dados.token);
+        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         fecharModal(DOM.authModal);
         DOM.loginForm.reset();
       } else {
-        mostrarFeedback(DOM.loginFeedback, data.erro || 'Erro ao fazer login.', false);
+        mostrarFeedback(
+          DOM.loginFeedback,
+          data.erro || "Erro ao fazer login.",
+          false,
+        );
       }
     } catch (err) {
-      mostrarFeedback(DOM.loginFeedback, 'Erro de conexão com o servidor.', false);
+      mostrarFeedback(
+        DOM.loginFeedback,
+        "Erro de conexão com o servidor.",
+        false,
+      );
     }
-
     DOM.btnLogin.disabled = false;
-    DOM.btnLogin.textContent = 'Entrar na Arena';
+    DOM.btnLogin.textContent = "Entrar na Arena";
   });
-
-  DOM.registroForm.addEventListener('submit', async (e) => {
+  DOM.registroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.registroFeedback);
     DOM.btnRegistro.disabled = true;
-    DOM.btnRegistro.textContent = 'Criando...';
-
+    DOM.btnRegistro.textContent = "Criando...";
     try {
-      const res = await fetch('/api/auth/registrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/registrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nome: document.getElementById('registroNome').value,
-          email: document.getElementById('registroEmail').value,
-          senha: document.getElementById('registroSenha').value
-        })
+          nome: document.getElementById("registroNome").value,
+          email: document.getElementById("registroEmail").value,
+          senha: document.getElementById("registroSenha").value,
+        }),
       });
-
       const data = await res.json();
-
       if (data.sucesso && data.dados) {
-        mostrarFeedback(DOM.registroFeedback, 'Conta criada! Verifique seu e-mail para confirmar a conta.', true);
+        mostrarFeedback(
+          DOM.registroFeedback,
+          "Conta criada! Verifique seu e-mail para confirmar a conta.",
+          true,
+        );
         estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem('token', data.dados.token);
+        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         DOM.registroForm.reset();
         setTimeout(() => fecharModal(DOM.authModal), 3000);
       } else {
-        mostrarFeedback(DOM.registroFeedback, data.erro || 'Erro ao criar conta.', false);
+        mostrarFeedback(
+          DOM.registroFeedback,
+          data.erro || "Erro ao criar conta.",
+          false,
+        );
       }
     } catch (err) {
-      mostrarFeedback(DOM.registroFeedback, 'Erro de conexão com o servidor.', false);
+      mostrarFeedback(
+        DOM.registroFeedback,
+        "Erro de conexão com o servidor.",
+        false,
+      );
     }
-
     DOM.btnRegistro.disabled = false;
-    DOM.btnRegistro.textContent = 'Criar Conta';
+    DOM.btnRegistro.textContent = "Criar Conta";
   });
-
   async function handleGoogleCallback(response) {
     try {
-      const res = await fetch('/api/auth/google', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: response.credential })
+      const res = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: response.credential }),
       });
-
       const data = await res.json();
-
       if (data.sucesso && data.dados) {
         estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem('token', data.dados.token);
+        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         fecharModal(DOM.authModal);
       } else {
-        const feedbackEl = DOM.tabLogin.classList.contains('active') ? DOM.loginFeedback : DOM.registroFeedback;
-        mostrarFeedback(feedbackEl, data.erro || 'Erro no login com Google.', false);
+        const feedbackEl = DOM.tabLogin.classList.contains("active")
+          ? DOM.loginFeedback
+          : DOM.registroFeedback;
+        mostrarFeedback(
+          feedbackEl,
+          data.erro || "Erro no login com Google.",
+          false,
+        );
       }
     } catch (err) {
-      const feedbackEl = DOM.tabLogin.classList.contains('active') ? DOM.loginFeedback : DOM.registroFeedback;
-      mostrarFeedback(feedbackEl, 'Erro de conexão com o servidor.', false);
+      const feedbackEl = DOM.tabLogin.classList.contains("active")
+        ? DOM.loginFeedback
+        : DOM.registroFeedback;
+      mostrarFeedback(feedbackEl, "Erro de conexão com o servidor.", false);
     }
   }
-
   async function initGoogleAuth() {
     try {
-      const resp = await fetch('/api/auth/config');
+      const resp = await fetch("/api/auth/config");
       const data = await resp.json();
-
-      if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
-
+      if (data.whatsappUrl && DOM.linkWhatsapp)
+        DOM.linkWhatsapp.href = data.whatsappUrl;
       if (data.clientId && window.google) {
         google.accounts.id.initialize({
           client_id: data.clientId,
           callback: handleGoogleCallback,
-          use_fedcm_for_prompt: false
+          use_fedcm_for_prompt: false,
         });
-
         if (DOM.btnGoogleLogin) {
           DOM.btnGoogleLogin.disabled = false;
           DOM.btnGoogleLogin.innerHTML = `
@@ -459,79 +450,79 @@ document.addEventListener('DOMContentLoaded', () => {
           google.accounts.id.prompt();
         }
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
-
-  DOM.navAvatar.addEventListener('click', async () => {
+  DOM.navAvatar.addEventListener("click", async () => {
     abrirModal(DOM.perfilModal);
-    DOM.perfilNome.value = estado.usuario?.nome || '';
-
+    DOM.perfilNome.value = estado.usuario?.nome || "";
     try {
-      const resp = await fetch('/api/auth/perfil', {
-        headers: { 'Authorization': `Bearer ${estado.token}` }
+      const resp = await fetch("/api/auth/perfil", {
+        headers: { Authorization: `Bearer ${estado.token}` },
       });
       const data = await resp.json();
       if (data.sucesso && data.dados && data.dados.usuario) {
         const u = data.dados.usuario;
-        DOM.perfilNome.value = u.nome || '';
-        DOM.perfilCpf.value = u.cpf || '';
-        DOM.perfilLocalidade.value = u.localidade || '';
-        if (DOM.perfilTelefone) DOM.perfilTelefone.value = u.telefone || '';
-        DOM.perfilPix.value = u.chave_pix || '';
-        DOM.perfilCartao.value = u.cartao_final || '';
+        DOM.perfilNome.value = u.nome || "";
+        DOM.perfilCpf.value = u.cpf || "";
+        DOM.perfilLocalidade.value = u.localidade || "";
+        if (DOM.perfilTelefone) DOM.perfilTelefone.value = u.telefone || "";
+        DOM.perfilPix.value = u.chave_pix || "";
+        const areaAfiliado = document.getElementById("areaAfiliadoStats");
+        if (areaAfiliado) {
+          const link =
+            window.location.origin + "?convite=" + (u.codigo_convite || "");
+          areaAfiliado.innerHTML = `<div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.2); border-radius:8px;">
+            <p><strong>🎁 Seu Link de Indicação:</strong></p>
+            <input class="form-input" type="text" value="${link}" readonly style="cursor:pointer;" onclick="this.select(); document.execCommand('copy'); alert('Link copiado!')" />
+            <p style="margin-top:10px; color:var(--cor-destaque);">Tokens ganhos com amigos: <strong>${u.ganhos_afiliado || 0}</strong></p>
+          </div>`;
+        }
+        DOM.perfilCartao.value = u.cartao_final || "";
       }
-    } catch (e) { }
+    } catch (e) {}
   });
-
-  DOM.btnFecharPerfil.addEventListener('click', () => {
+  DOM.btnFecharPerfil.addEventListener("click", () => {
     fecharModal(DOM.perfilModal);
     esconderFeedback(DOM.perfilFeedback);
   });
-
-  DOM.btnSairConta.addEventListener('click', () => {
+  DOM.btnSairConta.addEventListener("click", () => {
     fecharModal(DOM.perfilModal);
     logout();
   });
-
-  DOM.tabDados.addEventListener('click', () => {
-    DOM.tabDados.classList.add('active');
-    DOM.tabCartao.classList.remove('active');
-    DOM.areaDados.classList.add('visible');
-    DOM.areaCartao.classList.remove('visible');
+  DOM.tabDados.addEventListener("click", () => {
+    DOM.tabDados.classList.add("active");
+    DOM.tabCartao.classList.remove("active");
+    DOM.areaDados.classList.add("visible");
+    DOM.areaCartao.classList.remove("visible");
   });
-
-  DOM.tabCartao.addEventListener('click', () => {
-    DOM.tabCartao.classList.add('active');
-    DOM.tabDados.classList.remove('active');
-    DOM.areaCartao.classList.add('visible');
-    DOM.areaDados.classList.remove('visible');
+  DOM.tabCartao.addEventListener("click", () => {
+    DOM.tabCartao.classList.add("active");
+    DOM.tabDados.classList.remove("active");
+    DOM.areaCartao.classList.add("visible");
+    DOM.areaDados.classList.remove("visible");
   });
-
-  DOM.perfilForm.addEventListener('submit', (e) => {
+  DOM.perfilForm.addEventListener("submit", (e) => {
     e.preventDefault();
     esconderFeedback(DOM.perfilFeedback);
     abrirModal(DOM.sudoModal);
-    DOM.sudoSenha.value = '';
+    DOM.sudoSenha.value = "";
     esconderFeedback(DOM.sudoFeedback);
   });
-
-  DOM.btnFecharSudo.addEventListener('click', () => fecharModal(DOM.sudoModal));
-  DOM.btnFecharCreatePassword.addEventListener('click', () => fecharModal(DOM.createPasswordModal));
-
-  DOM.sudoForm.addEventListener('submit', async (e) => {
+  DOM.btnFecharSudo.addEventListener("click", () => fecharModal(DOM.sudoModal));
+  DOM.btnFecharCreatePassword.addEventListener("click", () =>
+    fecharModal(DOM.createPasswordModal),
+  );
+  DOM.sudoForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.sudoFeedback);
     const btn = DOM.sudoForm.querySelector('button[type="submit"]');
-    setCarregando(btn, true, 'Confirmando...');
-
+    setCarregando(btn, true, "Confirmando...");
     try {
-      const resp = await fetch('/api/auth/perfil', {
-        method: 'PUT',
+      const resp = await fetch("/api/auth/perfil", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${estado.token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${estado.token}`,
         },
         body: JSON.stringify({
           nome: DOM.perfilNome.value,
@@ -539,269 +530,256 @@ document.addEventListener('DOMContentLoaded', () => {
           localidade: DOM.perfilLocalidade.value,
           chave_pix: DOM.perfilPix.value,
           cartao_final: DOM.perfilCartao.value,
-          senhaConfirmacao: DOM.sudoSenha.value
-        })
+          senhaConfirmacao: DOM.sudoSenha.value,
+        }),
       });
-
       const data = await resp.json();
       if (resp.ok) {
         fecharModal(DOM.sudoModal);
-        mostrarFeedback(DOM.perfilFeedback, data.mensagem || 'Perfil salvo com segurança!', true);
+        mostrarFeedback(
+          DOM.perfilFeedback,
+          data.mensagem || "Perfil salvo com segurança!",
+          true,
+        );
         if (estado.usuario) {
           estado.usuario.nome = DOM.perfilNome.value;
           atualizarNavbar();
         }
       } else {
-        if (data.codigo === 'REQUIRE_PASSWORD') {
+        if (data.codigo === "REQUIRE_PASSWORD") {
           fecharModal(DOM.sudoModal);
           abrirModal(DOM.createPasswordModal);
-          DOM.newSecurityPassword.value = '';
+          DOM.newSecurityPassword.value = "";
           esconderFeedback(DOM.createPasswordFeedback);
         } else {
-          mostrarFeedback(DOM.sudoFeedback, data.erro || 'Erro ao confirmar.', false);
+          mostrarFeedback(
+            DOM.sudoFeedback,
+            data.erro || "Erro ao confirmar.",
+            false,
+          );
         }
       }
     } catch (err) {
-      mostrarFeedback(DOM.sudoFeedback, 'Falha na comunicação.', false);
+      mostrarFeedback(DOM.sudoFeedback, "Falha na comunicação.", false);
     } finally {
-      setCarregando(btn, false, 'Confirmar e Salvar');
+      setCarregando(btn, false, "Confirmar e Salvar");
     }
   });
-
-  DOM.createPasswordForm.addEventListener('submit', async (e) => {
+  DOM.createPasswordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.createPasswordFeedback);
     const senha1 = DOM.newSecurityPassword.value;
-    const senha2 = document.getElementById('confirmSecurityPassword').value;
-
+    const senha2 = document.getElementById("confirmSecurityPassword").value;
     if (senha1 !== senha2) {
-      mostrarFeedback(DOM.createPasswordFeedback, 'As senhas não coincidem. Digite novamente.', false);
+      mostrarFeedback(
+        DOM.createPasswordFeedback,
+        "As senhas não coincidem. Digite novamente.",
+        false,
+      );
       return;
     }
-
     const btn = DOM.createPasswordForm.querySelector('button[type="submit"]');
-    setCarregando(btn, true, 'Definindo...');
-
+    setCarregando(btn, true, "Definindo...");
     try {
-      const resp = await fetch('/api/auth/definir-senha', {
-        method: 'POST',
+      const resp = await fetch("/api/auth/definir-senha", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${estado.token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${estado.token}`,
         },
-        body: JSON.stringify({ novaSenha: senha1 })
+        body: JSON.stringify({ novaSenha: senha1 }),
       });
       const data = await resp.json();
       if (resp.ok) {
         fecharModal(DOM.createPasswordModal);
-        mostrarFeedback(DOM.perfilFeedback, 'Senha criada! Clique em Salvar novamente.', true);
+        mostrarFeedback(
+          DOM.perfilFeedback,
+          "Senha criada! Clique em Salvar novamente.",
+          true,
+        );
       } else {
-        mostrarFeedback(DOM.createPasswordFeedback, data.erro || 'Erro ao definir senha.', false);
+        mostrarFeedback(
+          DOM.createPasswordFeedback,
+          data.erro || "Erro ao definir senha.",
+          false,
+        );
       }
     } catch (err) {
-      mostrarFeedback(DOM.createPasswordFeedback, 'Falha de comunicação.', false);
+      mostrarFeedback(
+        DOM.createPasswordFeedback,
+        "Falha de comunicação.",
+        false,
+      );
     } finally {
-      setCarregando(btn, false, 'Definir Senha');
+      setCarregando(btn, false, "Definir Senha");
     }
   });
-
   function criarCardPlano(plano, isAnual) {
-    const tierConfig = TIER_CONFIG[plano.id] || { icon: '📦', desc: '' };
-
-    const article = document.createElement('article');
-    article.className = 'plan-card';
-    article.setAttribute('data-tier', plano.id);
-
+    const tierConfig = TIER_CONFIG[plano.id] || { icon: "📦", desc: "" };
+    const article = document.createElement("article");
+    article.className = "plan-card";
+    article.setAttribute("data-tier", plano.id);
     if (plano.popular) {
-      const badge = document.createElement('span');
-      badge.className = 'plan-card-popular-badge';
-      badge.textContent = '★ Mais Popular';
+      const badge = document.createElement("span");
+      badge.className = "plan-card-popular-badge";
+      badge.textContent = "★ Mais Popular";
       article.appendChild(badge);
     }
-
-    const iconDiv = document.createElement('div');
-    iconDiv.className = 'plan-card-icon';
+    const iconDiv = document.createElement("div");
+    iconDiv.className = "plan-card-icon";
     iconDiv.textContent = tierConfig.icon;
     article.appendChild(iconDiv);
-
-    const nameEl = document.createElement('h2');
-    nameEl.className = 'plan-card-name';
+    const nameEl = document.createElement("h2");
+    nameEl.className = "plan-card-name";
     nameEl.textContent = plano.nome;
     article.appendChild(nameEl);
-
-    const descEl = document.createElement('p');
-    descEl.className = 'plan-card-desc';
+    const descEl = document.createElement("p");
+    descEl.className = "plan-card-desc";
     descEl.textContent = tierConfig.desc;
     article.appendChild(descEl);
-
-    const priceWrapper = document.createElement('div');
-    priceWrapper.className = 'plan-card-price-wrapper';
-
-    const priceEl = document.createElement('span');
-    priceEl.className = 'plan-card-price';
-
+    const priceWrapper = document.createElement("div");
+    priceWrapper.className = "plan-card-price-wrapper";
+    const priceEl = document.createElement("span");
+    priceEl.className = "plan-card-price";
     if (plano.isGratis) {
-      priceEl.textContent = 'Grátis';
+      priceEl.textContent = "Grátis";
     } else {
       const valor = isAnual ? plano.precoAnual : plano.precoMensal;
       priceEl.textContent = `R$ ${valor.toFixed(2)}`;
     }
-
     priceWrapper.appendChild(priceEl);
-
     if (!plano.isGratis) {
-      const periodEl = document.createElement('span');
-      periodEl.className = 'plan-card-price-period';
-      periodEl.textContent = isAnual ? '/ano' : '/mês';
+      const periodEl = document.createElement("span");
+      periodEl.className = "plan-card-price-period";
+      periodEl.textContent = isAnual ? "/ano" : "/mês";
       priceWrapper.appendChild(periodEl);
     }
-
     article.appendChild(priceWrapper);
-
-    const ul = document.createElement('ul');
-    ul.className = 'plan-card-features';
-
-    plano.recursos.forEach(recurso => {
-      const li = document.createElement('li');
-
-      const iconSpan = document.createElement('span');
-      iconSpan.className = 'feature-icon';
-
-      if (recurso.toLowerCase().includes('token')) {
-        iconSpan.textContent = '🪙';
-        iconSpan.style.color = 'inherit';
+    const ul = document.createElement("ul");
+    ul.className = "plan-card-features";
+    plano.recursos.forEach((recurso) => {
+      const li = document.createElement("li");
+      const iconSpan = document.createElement("span");
+      iconSpan.className = "feature-icon";
+      if (recurso.toLowerCase().includes("token")) {
+        iconSpan.textContent = "🪙";
+        iconSpan.style.color = "inherit";
       } else {
-        iconSpan.textContent = '✓';
+        iconSpan.textContent = "✓";
       }
-
       li.appendChild(iconSpan);
-      li.appendChild(document.createTextNode(' ' + recurso));
+      li.appendChild(document.createTextNode(" " + recurso));
       ul.appendChild(li);
     });
-
     article.appendChild(ul);
-
-    const btn = document.createElement('button');
-    btn.className = 'plan-card-btn';
-    btn.textContent = plano.isGratis ? 'Resgatar Grátis' : 'Assinar Pacote';
-
-    btn.addEventListener('click', () => {
+    const btn = document.createElement("button");
+    btn.className = "plan-card-btn";
+    btn.textContent = plano.isGratis ? "Resgatar Grátis" : "Assinar Pacote";
+    btn.addEventListener("click", () => {
       if (!estado.usuario) {
         carregarScriptGoogle();
-        alternarTab('login');
+        alternarTab("login");
         abrirModal(DOM.authModal);
         return;
       }
       abrirCheckout(plano);
     });
-
     article.appendChild(btn);
-
     return article;
   }
-
   function renderPlanos(isAnual) {
-    const cardsExistentes = DOM.cardsContainer.querySelectorAll('.plan-card');
-    cardsExistentes.forEach(card => card.remove());
-
-    const errorState = DOM.cardsContainer.querySelector('.error-container');
+    const cardsExistentes = DOM.cardsContainer.querySelectorAll(".plan-card");
+    cardsExistentes.forEach((card) => card.remove());
+    const errorState = DOM.cardsContainer.querySelector(".error-container");
     if (errorState) errorState.remove();
-
-    estado.planos.forEach(plano => {
+    estado.planos.forEach((plano) => {
       const card = criarCardPlano(plano, isAnual);
       DOM.cardsContainer.appendChild(card);
     });
-
-    DOM.labelMensal.classList.toggle('active', !isAnual);
-    DOM.labelAnual.classList.toggle('active', isAnual);
+    DOM.labelMensal.classList.toggle("active", !isAnual);
+    DOM.labelAnual.classList.toggle("active", isAnual);
   }
-
   function mostrarErroPlanos() {
     if (DOM.loadingState) DOM.loadingState.remove();
-
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-container';
-
-    const icon = document.createElement('div');
-    icon.className = 'error-icon';
-    icon.textContent = '⚠️';
-
-    const title = document.createElement('h3');
-    title.className = 'error-title';
-    title.textContent = 'Não foi possível carregar os pacotes';
-
-    const msg = document.createElement('p');
-    msg.className = 'error-message';
-    msg.textContent = 'Verifique sua conexão e tente novamente.';
-
-    const btn = document.createElement('button');
-    btn.className = 'btn-gamer btn-gamer-primary';
-    btn.textContent = 'Tentar Novamente';
-    btn.addEventListener('click', carregarPlanos);
-
+    const errorDiv = document.createElement("div");
+    errorDiv.className = "error-container";
+    const icon = document.createElement("div");
+    icon.className = "error-icon";
+    icon.textContent = "⚠️";
+    const title = document.createElement("h3");
+    title.className = "error-title";
+    title.textContent = "Não foi possível carregar os pacotes";
+    const msg = document.createElement("p");
+    msg.className = "error-message";
+    msg.textContent = "Verifique sua conexão e tente novamente.";
+    const btn = document.createElement("button");
+    btn.className = "btn-gamer btn-gamer-primary";
+    btn.textContent = "Tentar Novamente";
+    btn.addEventListener("click", carregarPlanos);
     errorDiv.appendChild(icon);
     errorDiv.appendChild(title);
     errorDiv.appendChild(msg);
     errorDiv.appendChild(btn);
-
     DOM.cardsContainer.appendChild(errorDiv);
   }
-
   async function carregarPlanos() {
-    const errorState = DOM.cardsContainer.querySelector('.error-container');
+    const errorState = DOM.cardsContainer.querySelector(".error-container");
     if (errorState) errorState.remove();
-
-    const loadingEl = document.getElementById('loadingState');
+    const loadingEl = document.getElementById("loadingState");
     if (loadingEl) loadingEl.remove();
-
     try {
-      const res = await fetch('/api/planos');
-      if (!res.ok) throw new Error('Falha na rede');
-
+      const res = await fetch("/api/planos");
+      if (!res.ok) throw new Error("Falha na rede");
       const data = await res.json();
       estado.planos = data.dados || data;
-
       if (DOM.pricingToggle.checked) {
         renderPlanos(true);
       }
     } catch (err) {
-      if (DOM.cardsContainer.querySelectorAll('.plan-card').length === 0) {
+      if (DOM.cardsContainer.querySelectorAll(".plan-card").length === 0) {
         mostrarErroPlanos();
       }
     }
   }
-
-  DOM.pricingToggle.addEventListener('change', () => {
+  DOM.pricingToggle.addEventListener("change", () => {
     if (estado.planos.length > 0) {
       renderPlanos(DOM.pricingToggle.checked);
     }
   });
-
-  DOM.cardsContainer.addEventListener('click', (e) => {
-    const btn = e.target.closest('.plan-card-btn');
+  DOM.cardsContainer.addEventListener("click", (e) => {
+    const btn = e.target.closest(".plan-card-btn");
     if (!btn) return;
-
-    const card = btn.closest('.plan-card');
+    const card = btn.closest(".plan-card");
     if (!card) return;
-
-    const planId = card.getAttribute('data-tier');
-
-    let plano = estado.planos.find(p => p.id === planId);
-
+    const planId = card.getAttribute("data-tier");
+    let plano = estado.planos.find((p) => p.id === planId);
     if (!plano) {
-      const name = card.querySelector('.plan-card-name').textContent;
+      const name = card.querySelector(".plan-card-name").textContent;
       plano = {
         id: planId,
         nome: name,
-        precoMensal: planId === 'gratis' ? 0 : (planId === 'iniciante' ? 4.99 : (planId === 'premium' ? 19.90 : 39.90)),
-        isGratis: planId === 'gratis',
-        tokens: planId === 'gratis' ? 100 : (planId === 'iniciante' ? 1000 : (planId === 'premium' ? 5000 : 15000))
+        precoMensal:
+          planId === "gratis"
+            ? 0
+            : planId === "iniciante"
+              ? 4.99
+              : planId === "premium"
+                ? 19.9
+                : 39.9,
+        isGratis: planId === "gratis",
+        tokens:
+          planId === "gratis"
+            ? 100
+            : planId === "iniciante"
+              ? 1000
+              : planId === "premium"
+                ? 5000
+                : 15000,
       };
     }
-
     if (!estado.usuario) {
       carregarScriptGoogle();
-      alternarTab('login');
+      alternarTab("login");
       abrirModal(DOM.authModal);
       return;
     }
@@ -813,421 +791,426 @@ document.addEventListener('DOMContentLoaded', () => {
     estado.descontoPercentual = 0;
     DOM.checkoutPlanoNome.textContent = plano.nome;
     esconderFeedback(DOM.checkoutFeedback);
-    DOM.metodoPagamento.value = '';
+    DOM.metodoPagamento.value = "";
     DOM.btnConfirmarCompra.disabled = false;
-
-    if (DOM.inputCupom) DOM.inputCupom.value = '';
+    if (DOM.inputCupom) DOM.inputCupom.value = "";
     if (DOM.cupomFeedback) esconderFeedback(DOM.cupomFeedback);
     if (DOM.btnAplicarCupom) DOM.btnAplicarCupom.disabled = false;
-
     if (plano.isGratis) {
-      DOM.areaPagamento.style.display = 'none';
-      if (DOM.areaCupom) DOM.areaCupom.style.display = 'none';
-      if (DOM.checkoutPrecoArea) DOM.checkoutPrecoArea.style.display = 'none';
-      DOM.btnConfirmarCompra.textContent = 'Resgatar Benefícios Grátis';
-      DOM.btnConfirmarCompra.className = 'btn-gamer btn-gamer-success';
+      DOM.areaPagamento.style.display = "none";
+      if (DOM.areaCupom) DOM.areaCupom.style.display = "none";
+      if (DOM.checkoutPrecoArea) DOM.checkoutPrecoArea.style.display = "none";
+      DOM.btnConfirmarCompra.textContent = "Resgatar Benefícios Grátis";
+      DOM.btnConfirmarCompra.className = "btn-gamer btn-gamer-success";
     } else {
-      DOM.areaPagamento.style.display = 'block';
-      if (DOM.areaCupom) DOM.areaCupom.style.display = 'block';
+      DOM.areaPagamento.style.display = "block";
+      if (DOM.areaCupom) DOM.areaCupom.style.display = "block";
       atualizarPrecoCheckout(plano.precoMensal, 0);
-      DOM.btnConfirmarCompra.textContent = 'Ir para Pagamento Seguro';
-      DOM.btnConfirmarCompra.className = 'btn-gamer btn-gamer-primary';
+      DOM.btnConfirmarCompra.textContent = "Ir para Pagamento Seguro";
+      DOM.btnConfirmarCompra.className = "btn-gamer btn-gamer-primary";
     }
-
     abrirModal(DOM.checkoutModal);
   }
-
   function atualizarPrecoCheckout(precoOriginal, descontoPercent) {
     if (!DOM.checkoutPrecoArea) return;
-    DOM.checkoutPrecoArea.style.display = 'flex';
-    DOM.checkoutPrecoArea.style.justifyContent = 'center';
-    DOM.checkoutPrecoArea.style.alignItems = 'center';
-    DOM.checkoutPrecoArea.style.gap = '10px';
-
-    const precoFormatado = precoOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
+    DOM.checkoutPrecoArea.style.display = "flex";
+    DOM.checkoutPrecoArea.style.justifyContent = "center";
+    DOM.checkoutPrecoArea.style.alignItems = "center";
+    DOM.checkoutPrecoArea.style.gap = "10px";
+    const precoFormatado = precoOriginal.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
     if (descontoPercent > 0) {
-      const precoComDesconto = precoOriginal - (precoOriginal * descontoPercent / 100);
-      const precoDescontoFormatado = precoComDesconto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      DOM.checkoutPrecoOriginal.textContent = '';
-      const strikeNode = document.createElement('s');
+      const precoComDesconto =
+        precoOriginal - (precoOriginal * descontoPercent) / 100;
+      const precoDescontoFormatado = precoComDesconto.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+      DOM.checkoutPrecoOriginal.textContent = "";
+      const strikeNode = document.createElement("s");
       strikeNode.textContent = precoFormatado;
       DOM.checkoutPrecoOriginal.appendChild(strikeNode);
-      DOM.checkoutPrecoOriginal.style.display = 'inline';
+      DOM.checkoutPrecoOriginal.style.display = "inline";
       DOM.checkoutPrecoFinal.textContent = precoDescontoFormatado;
     } else {
-      DOM.checkoutPrecoOriginal.style.display = 'none';
+      DOM.checkoutPrecoOriginal.style.display = "none";
       DOM.checkoutPrecoFinal.textContent = precoFormatado;
     }
   }
-
   if (DOM.btnAplicarCupom) {
-    DOM.btnAplicarCupom.addEventListener('click', async () => {
-      const codigo = (DOM.inputCupom.value || '').trim().toUpperCase();
+    DOM.btnAplicarCupom.addEventListener("click", async () => {
+      const codigo = (DOM.inputCupom.value || "").trim().toUpperCase();
       if (!codigo) {
-        mostrarFeedback(DOM.cupomFeedback, 'Digite um código de cupom.', false);
+        mostrarFeedback(DOM.cupomFeedback, "Digite um código de cupom.", false);
         return;
       }
-
       DOM.btnAplicarCupom.disabled = true;
-      DOM.btnAplicarCupom.textContent = 'Validando...';
+      DOM.btnAplicarCupom.textContent = "Validando...";
       esconderFeedback(DOM.cupomFeedback);
-
       try {
-        const res = await fetchAutenticado('/api/compra/validar-cupom', {
-          method: 'POST',
-          body: JSON.stringify({ codigo })
+        const res = await fetchAutenticado("/api/compra/validar-cupom", {
+          method: "POST",
+          body: JSON.stringify({ codigo }),
         });
         const data = await res.json();
-
         if (data.sucesso && data.dados) {
           estado.cupomAplicado = data.dados.codigo;
           estado.descontoPercentual = data.dados.desconto_percentual;
           mostrarFeedback(DOM.cupomFeedback, data.dados.mensagem, true);
           DOM.inputCupom.disabled = true;
-          DOM.btnAplicarCupom.textContent = '✓ Aplicado';
-          DOM.btnAplicarCupom.style.background = 'var(--accent-success, #4caf50)';
-
+          DOM.btnAplicarCupom.textContent = "✓ Aplicado";
+          DOM.btnAplicarCupom.style.background =
+            "var(--accent-success, #4caf50)";
           if (estado.planoSelecionado) {
-            atualizarPrecoCheckout(estado.planoSelecionado.precoMensal, estado.descontoPercentual);
+            atualizarPrecoCheckout(
+              estado.planoSelecionado.precoMensal,
+              estado.descontoPercentual,
+            );
           }
         } else {
           estado.cupomAplicado = null;
           estado.descontoPercentual = 0;
-          mostrarFeedback(DOM.cupomFeedback, data.erro || 'Cupom inválido.', false);
+          mostrarFeedback(
+            DOM.cupomFeedback,
+            data.erro || "Cupom inválido.",
+            false,
+          );
           DOM.btnAplicarCupom.disabled = false;
-          DOM.btnAplicarCupom.textContent = 'Aplicar';
+          DOM.btnAplicarCupom.textContent = "Aplicar";
         }
       } catch (err) {
-        mostrarFeedback(DOM.cupomFeedback, 'Erro ao validar cupom.', false);
+        mostrarFeedback(DOM.cupomFeedback, "Erro ao validar cupom.", false);
         DOM.btnAplicarCupom.disabled = false;
-        DOM.btnAplicarCupom.textContent = 'Aplicar';
+        DOM.btnAplicarCupom.textContent = "Aplicar";
       }
     });
   }
-
-  DOM.btnFecharCheckout.addEventListener('click', () => fecharModal(DOM.checkoutModal));
-  DOM.btnCancelarCheckout.addEventListener('click', () => fecharModal(DOM.checkoutModal));
-
-  DOM.checkoutModal.addEventListener('click', (e) => {
+  DOM.btnFecharCheckout.addEventListener("click", () =>
+    fecharModal(DOM.checkoutModal),
+  );
+  DOM.btnCancelarCheckout.addEventListener("click", () =>
+    fecharModal(DOM.checkoutModal),
+  );
+  DOM.checkoutModal.addEventListener("click", (e) => {
     if (e.target === DOM.checkoutModal) fecharModal(DOM.checkoutModal);
   });
-
-  DOM.btnConfirmarCompra.addEventListener('click', async () => {
+  DOM.btnConfirmarCompra.addEventListener("click", async () => {
     const plano = estado.planoSelecionado;
     if (!plano) return;
-
     const metodoPagamento = DOM.metodoPagamento.value;
-
     if (!plano.isGratis && !metodoPagamento) {
-      mostrarFeedback(DOM.checkoutFeedback, 'Por favor, selecione Pix ou Cartão de Crédito.', false);
+      mostrarFeedback(
+        DOM.checkoutFeedback,
+        "Por favor, selecione Pix ou Cartão de Crédito.",
+        false,
+      );
       return;
     }
-
     DOM.btnConfirmarCompra.disabled = true;
-    DOM.btnConfirmarCompra.textContent = 'Processando...';
+    DOM.btnConfirmarCompra.textContent = "Processando...";
     esconderFeedback(DOM.checkoutFeedback);
-
     try {
-      const res = await fetchAutenticado('/api/comprar', {
-        method: 'POST',
+      const res = await fetchAutenticado("/api/comprar", {
+        method: "POST",
         body: JSON.stringify({
           planoId: plano.id,
           metodoPagamento: metodoPagamento,
           isGratis: plano.isGratis,
-          cupom: estado.cupomAplicado || undefined
-        })
+          cupom: estado.cupomAplicado || undefined,
+        }),
       });
-
       const data = await res.json();
-
       if (data.sucesso && data.dados) {
         mostrarFeedback(DOM.checkoutFeedback, data.dados.mensagem, true);
-
         if (plano.isGratis) {
-          DOM.btnConfirmarCompra.textContent = 'Concluído ✓';
-
+          DOM.btnConfirmarCompra.textContent = "Concluído ✓";
           if (estado.usuario) {
             estado.usuario.saldo_tokens += plano.tokens || 100;
-            DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString('pt-BR');
+            DOM.navTokenCount.textContent =
+              estado.usuario.saldo_tokens.toLocaleString("pt-BR");
           }
-
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
           window.location.href = data.dados.urlCheckout;
         }
       } else {
-        mostrarFeedback(DOM.checkoutFeedback, data.erro || 'Erro ao processar compra.', false);
+        mostrarFeedback(
+          DOM.checkoutFeedback,
+          data.erro || "Erro ao processar compra.",
+          false,
+        );
         DOM.btnConfirmarCompra.disabled = false;
-        DOM.btnConfirmarCompra.textContent = plano.isGratis ? 'Resgatar Benefícios Grátis' : 'Ir para Pagamento Seguro';
+        DOM.btnConfirmarCompra.textContent = plano.isGratis
+          ? "Resgatar Benefícios Grátis"
+          : "Ir para Pagamento Seguro";
       }
     } catch (err) {
-      mostrarFeedback(DOM.checkoutFeedback, 'Erro de conexão com o servidor.', false);
+      mostrarFeedback(
+        DOM.checkoutFeedback,
+        "Erro de conexão com o servidor.",
+        false,
+      );
       DOM.btnConfirmarCompra.disabled = false;
-      DOM.btnConfirmarCompra.textContent = plano.isGratis ? 'Resgatar Benefícios Grátis' : 'Ir para Pagamento Seguro';
+      DOM.btnConfirmarCompra.textContent = plano.isGratis
+        ? "Resgatar Benefícios Grátis"
+        : "Ir para Pagamento Seguro";
     }
   });
-
   async function carregarRanking() {
     try {
-      const res = await fetch('/api/game/ranking?limite=10');
+      const res = await fetch("/api/game/ranking?limite=10");
       const data = await res.json();
       if (res.ok && data.dados) {
-        DOM.rankingTableBody.textContent = '';
+        DOM.rankingTableBody.textContent = "";
         data.dados.forEach((jogador, index) => {
-          const tr = document.createElement('tr');
-          tr.className = 'admin-table-row';
-
+          const tr = document.createElement("tr");
+          tr.className = "admin-table-row";
           let medal = `${index + 1}º`;
-          if (index === 0) medal = '🥇';
-          if (index === 1) medal = '🥈';
-          if (index === 2) medal = '🥉';
-
-          const tdMedal = document.createElement('td');
-          tdMedal.className = 'rank-table-cell rank-cell-medal';
+          if (index === 0) medal = "🥇";
+          if (index === 1) medal = "🥈";
+          if (index === 2) medal = "🥉";
+          const tdMedal = document.createElement("td");
+          tdMedal.className = "rank-table-cell rank-cell-medal";
           tdMedal.textContent = medal;
-
-          const tdNome = document.createElement('td');
-          tdNome.className = 'rank-table-cell rank-cell-name';
-          tdNome.textContent = jogador.nome.split(' ')[0];
-
-          const tdTrofeus = document.createElement('td');
-          tdTrofeus.className = 'rank-table-cell rank-cell-trofeus';
+          const tdNome = document.createElement("td");
+          tdNome.className = "rank-table-cell rank-cell-name";
+          tdNome.textContent = jogador.nome.split(" ")[0];
+          const tdTrofeus = document.createElement("td");
+          tdTrofeus.className = "rank-table-cell rank-cell-trofeus";
           tdTrofeus.textContent = `🏆 ${jogador.trofeus || 0}`;
-
-          const tdVitorias = document.createElement('td');
-          tdVitorias.className = 'rank-table-cell rank-cell-vitorias';
+          const tdVitorias = document.createElement("td");
+          tdVitorias.className = "rank-table-cell rank-cell-vitorias";
           tdVitorias.textContent = `⚔️ ${jogador.vitorias || 0}`;
-
-          const tdXp = document.createElement('td');
-          tdXp.className = 'rank-table-cell rank-cell-xp';
+          const tdXp = document.createElement("td");
+          tdXp.className = "rank-table-cell rank-cell-xp";
           tdXp.textContent = `⭐ ${jogador.xp || 0}`;
-
           tr.appendChild(tdMedal);
           tr.appendChild(tdNome);
           tr.appendChild(tdTrofeus);
           tr.appendChild(tdVitorias);
           tr.appendChild(tdXp);
-
           DOM.rankingTableBody.appendChild(tr);
         });
       }
-    } catch (e) { }
+    } catch (e) {}
   }
-
   const abrirRank = () => {
     carregarRanking();
     abrirModal(DOM.rankingModal);
   };
-  if (DOM.btnRanking) DOM.btnRanking.addEventListener('click', abrirRank);
-  if (DOM.btnRankingLogged) DOM.btnRankingLogged.addEventListener('click', abrirRank);
-  if (DOM.btnFecharRanking) DOM.btnFecharRanking.addEventListener('click', () => fecharModal(DOM.rankingModal));
-  if (DOM.rankingModal) DOM.rankingModal.addEventListener('click', (e) => {
-    if (e.target === DOM.rankingModal) fecharModal(DOM.rankingModal);
-  });
-
+  if (DOM.btnRanking) DOM.btnRanking.addEventListener("click", abrirRank);
+  if (DOM.btnRankingLogged)
+    DOM.btnRankingLogged.addEventListener("click", abrirRank);
+  if (DOM.btnFecharRanking)
+    DOM.btnFecharRanking.addEventListener("click", () =>
+      fecharModal(DOM.rankingModal),
+    );
+  if (DOM.rankingModal)
+    DOM.rankingModal.addEventListener("click", (e) => {
+      if (e.target === DOM.rankingModal) fecharModal(DOM.rankingModal);
+    });
   async function carregarAdminUsers() {
     try {
-      const res = await fetchAutenticado('/api/admin/usuarios');
+      const res = await fetchAutenticado("/api/admin/usuarios");
       const data = await res.json();
       if (res.ok && data.dados) {
-        DOM.adminTableBody.textContent = '';
-        data.dados.forEach(u => {
-          const tr = document.createElement('tr');
-          tr.className = 'admin-table-row';
-
-          const tdId = document.createElement('td');
-          tdId.className = 'admin-table-cell';
+        DOM.adminTableBody.textContent = "";
+        data.dados.forEach((u) => {
+          const tr = document.createElement("tr");
+          tr.className = "admin-table-row";
+          const tdId = document.createElement("td");
+          tdId.className = "admin-table-cell";
           tdId.textContent = u.id;
-
-          const tdNome = document.createElement('td');
-          tdNome.className = 'admin-table-cell admin-table-cell-name';
+          const tdNome = document.createElement("td");
+          tdNome.className = "admin-table-cell admin-table-cell-name";
           tdNome.title = u.email;
-          tdNome.textContent = u.nome.split(' ')[0];
-
-          const br = document.createElement('br');
+          tdNome.textContent = u.nome.split(" ")[0];
+          const br = document.createElement("br");
           tdNome.appendChild(br);
-
-          const smallEmail = document.createElement('small');
-          smallEmail.style.color = 'var(--text-muted)';
+          const smallEmail = document.createElement("small");
+          smallEmail.style.color = "var(--text-muted)";
           smallEmail.textContent = u.email;
           tdNome.appendChild(smallEmail);
-
-          const tdSaldo = document.createElement('td');
-          tdSaldo.className = 'admin-table-cell';
+          const tdSaldo = document.createElement("td");
+          tdSaldo.className = "admin-table-cell";
           tdSaldo.textContent = `🪙 ${u.saldo_tokens}`;
-
-          const tdStatus = document.createElement('td');
-          tdStatus.className = 'admin-table-cell';
-
-          const spanStatus = document.createElement('span');
-          spanStatus.className = 'badge-status';
-          if (u.status === 'banido') {
-            spanStatus.classList.add('banido');
-            spanStatus.textContent = 'Banido';
+          const tdStatus = document.createElement("td");
+          tdStatus.className = "admin-table-cell";
+          const spanStatus = document.createElement("span");
+          spanStatus.className = "badge-status";
+          if (u.status === "banido") {
+            spanStatus.classList.add("banido");
+            spanStatus.textContent = "Banido";
           } else {
-            spanStatus.classList.add('ativo');
-            spanStatus.textContent = 'Ativo';
+            spanStatus.classList.add("ativo");
+            spanStatus.textContent = "Ativo";
           }
           tdStatus.appendChild(spanStatus);
-
-          const tdAcao = document.createElement('td');
-          tdAcao.className = 'admin-table-cell admin-table-cell-action';
-
-          const btnStatus = document.createElement('button');
-          btnStatus.className = 'toggle-status btn-action-status';
-          btnStatus.setAttribute('data-id', u.id);
-          btnStatus.setAttribute('data-status', u.status === 'banido' ? 'ativo' : 'banido');
-
-          if (u.status === 'banido') {
-            btnStatus.classList.add('desbanir');
-            btnStatus.textContent = 'DESBANIR';
+          const tdAcao = document.createElement("td");
+          tdAcao.className = "admin-table-cell admin-table-cell-action";
+          const btnStatus = document.createElement("button");
+          btnStatus.className = "toggle-status btn-action-status";
+          btnStatus.setAttribute("data-id", u.id);
+          btnStatus.setAttribute(
+            "data-status",
+            u.status === "banido" ? "ativo" : "banido",
+          );
+          if (u.status === "banido") {
+            btnStatus.classList.add("desbanir");
+            btnStatus.textContent = "DESBANIR";
           } else {
-            btnStatus.classList.add('banir');
-            btnStatus.textContent = 'BANIR';
+            btnStatus.classList.add("banir");
+            btnStatus.textContent = "BANIR";
           }
           tdAcao.appendChild(btnStatus);
-
           tr.appendChild(tdId);
           tr.appendChild(tdNome);
           tr.appendChild(tdSaldo);
           tr.appendChild(tdStatus);
           tr.appendChild(tdAcao);
-
           DOM.adminTableBody.appendChild(tr);
         });
-
-        document.querySelectorAll('.toggle-status').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
-            const userId = e.target.getAttribute('data-id');
-            const newStatus = e.target.getAttribute('data-status');
-            await fetchAutenticado('/api/admin/usuarios/status', {
-              method: 'POST',
-              body: JSON.stringify({ usuarioId: userId, status: newStatus })
+        document.querySelectorAll(".toggle-status").forEach((btn) => {
+          btn.addEventListener("click", async (e) => {
+            const userId = e.target.getAttribute("data-id");
+            const newStatus = e.target.getAttribute("data-status");
+            await fetchAutenticado("/api/admin/usuarios/status", {
+              method: "POST",
+              body: JSON.stringify({ usuarioId: userId, status: newStatus }),
             });
             carregarAdminUsers();
           });
         });
       }
-    } catch (e) { }
+    } catch (e) {}
   }
-
-  if (DOM.btnAdminPanel) DOM.btnAdminPanel.addEventListener('click', () => {
-    carregarAdminUsers();
-    abrirModal(DOM.adminModal);
-  });
-  if (DOM.btnFecharAdmin) DOM.btnFecharAdmin.addEventListener('click', () => fecharModal(DOM.adminModal));
-  if (DOM.adminModal) DOM.adminModal.addEventListener('click', (e) => {
-    if (e.target === DOM.adminModal) fecharModal(DOM.adminModal);
-  });
-
-  if (DOM.adminTokensForm) DOM.adminTokensForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = DOM.adminTokensForm.querySelector('button');
-    setCarregando(btn, true, 'Adicionando...');
-    try {
-      const res = await fetchAutenticado('/api/admin/usuarios/tokens', {
-        method: 'POST',
-        body: JSON.stringify({
-          usuarioId: DOM.adminUserId.value,
-          quantidade: DOM.adminTokenAmount.value
-        })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        mostrarFeedback(DOM.adminFeedback, data.dados.mensagem, true);
-        DOM.adminTokensForm.reset();
-        carregarAdminUsers();
-      } else {
-        mostrarFeedback(DOM.adminFeedback, data.erro || 'Erro', false);
+  if (DOM.btnAdminPanel)
+    DOM.btnAdminPanel.addEventListener("click", () => {
+      carregarAdminUsers();
+      abrirModal(DOM.adminModal);
+    });
+  if (DOM.btnFecharAdmin)
+    DOM.btnFecharAdmin.addEventListener("click", () =>
+      fecharModal(DOM.adminModal),
+    );
+  if (DOM.adminModal)
+    DOM.adminModal.addEventListener("click", (e) => {
+      if (e.target === DOM.adminModal) fecharModal(DOM.adminModal);
+    });
+  if (DOM.adminTokensForm)
+    DOM.adminTokensForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = DOM.adminTokensForm.querySelector("button");
+      setCarregando(btn, true, "Adicionando...");
+      try {
+        const res = await fetchAutenticado("/api/admin/usuarios/tokens", {
+          method: "POST",
+          body: JSON.stringify({
+            usuarioId: DOM.adminUserId.value,
+            quantidade: DOM.adminTokenAmount.value,
+          }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          mostrarFeedback(DOM.adminFeedback, data.dados.mensagem, true);
+          DOM.adminTokensForm.reset();
+          carregarAdminUsers();
+        } else {
+          mostrarFeedback(DOM.adminFeedback, data.erro || "Erro", false);
+        }
+      } catch (err) {
+        mostrarFeedback(DOM.adminFeedback, "Erro de conexão", false);
+      } finally {
+        setCarregando(btn, false, "Adicionar");
       }
-    } catch (err) {
-      mostrarFeedback(DOM.adminFeedback, 'Erro de conexão', false);
-    } finally {
-      setCarregando(btn, false, 'Adicionar');
-    }
-  });
-
+    });
   if (DOM.btnEsqueciSenha) {
-    DOM.btnEsqueciSenha.addEventListener('click', (e) => {
+    DOM.btnEsqueciSenha.addEventListener("click", (e) => {
       e.preventDefault();
       fecharModal(DOM.authModal);
       abrirModal(DOM.forgotPasswordModal);
-      DOM.forgotEmail.value = '';
+      DOM.forgotEmail.value = "";
       esconderFeedback(DOM.forgotFeedback);
     });
   }
-
   if (DOM.btnVoltarLogin) {
-    DOM.btnVoltarLogin.addEventListener('click', () => {
+    DOM.btnVoltarLogin.addEventListener("click", () => {
       fecharModal(DOM.forgotPasswordModal);
       abrirModal(DOM.authModal);
-      alternarTab('login');
+      alternarTab("login");
     });
   }
-
   if (DOM.btnFecharForgot) {
-    DOM.btnFecharForgot.addEventListener('click', () => fecharModal(DOM.forgotPasswordModal));
+    DOM.btnFecharForgot.addEventListener("click", () =>
+      fecharModal(DOM.forgotPasswordModal),
+    );
   }
-
   if (DOM.btnFecharReset) {
-    DOM.btnFecharReset.addEventListener('click', () => fecharModal(DOM.resetPasswordModal));
+    DOM.btnFecharReset.addEventListener("click", () =>
+      fecharModal(DOM.resetPasswordModal),
+    );
   }
-
   if (DOM.forgotForm) {
-    DOM.forgotForm.addEventListener('submit', async (e) => {
+    DOM.forgotForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       esconderFeedback(DOM.forgotFeedback);
       const btn = DOM.btnEnviarForgot;
-      setCarregando(btn, true, 'Enviando...');
-
+      setCarregando(btn, true, "Enviando...");
       try {
-        const res = await fetch('/api/auth/recuperar-senha', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: DOM.forgotEmail.value })
+        const res = await fetch("/api/auth/recuperar-senha", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: DOM.forgotEmail.value }),
         });
         const data = await res.json();
         if (data.sucesso) {
           mostrarFeedback(DOM.forgotFeedback, data.dados.mensagem, true);
           DOM.forgotForm.reset();
         } else {
-          mostrarFeedback(DOM.forgotFeedback, data.erro || 'Erro ao processar solicitação.', false);
+          mostrarFeedback(
+            DOM.forgotFeedback,
+            data.erro || "Erro ao processar solicitação.",
+            false,
+          );
         }
       } catch (err) {
-        mostrarFeedback(DOM.forgotFeedback, 'Erro de conexão com o servidor.', false);
+        mostrarFeedback(
+          DOM.forgotFeedback,
+          "Erro de conexão com o servidor.",
+          false,
+        );
       } finally {
-        setCarregando(btn, false, 'Enviar Link');
+        setCarregando(btn, false, "Enviar Link");
       }
     });
   }
-
   if (DOM.resetForm) {
-    DOM.resetForm.addEventListener('submit', async (e) => {
+    DOM.resetForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       esconderFeedback(DOM.resetFeedback);
-
       const novaSenha = DOM.resetNovaSenha.value;
       const confirmarSenha = DOM.resetConfirmarSenha.value;
-
       if (novaSenha !== confirmarSenha) {
-        mostrarFeedback(DOM.resetFeedback, 'As senhas não coincidem.', false);
+        mostrarFeedback(DOM.resetFeedback, "As senhas não coincidem.", false);
         return;
       }
-
       if (novaSenha.length < 6) {
-        mostrarFeedback(DOM.resetFeedback, 'A senha deve ter pelo menos 6 caracteres.', false);
+        mostrarFeedback(
+          DOM.resetFeedback,
+          "A senha deve ter pelo menos 6 caracteres.",
+          false,
+        );
         return;
       }
-
       const btn = DOM.btnConfirmarReset;
-      setCarregando(btn, true, 'Salvando...');
-
+      setCarregando(btn, true, "Salvando...");
       try {
-        const res = await fetch('/api/auth/redefinir-senha', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: estado.resetToken, novaSenha })
+        const res = await fetch("/api/auth/redefinir-senha", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: estado.resetToken, novaSenha }),
         });
         const data = await res.json();
         if (data.sucesso) {
@@ -1236,43 +1219,59 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             fecharModal(DOM.resetPasswordModal);
             abrirModal(DOM.authModal);
-            alternarTab('login');
+            alternarTab("login");
           }, 3000);
         } else {
-          mostrarFeedback(DOM.resetFeedback, data.erro || 'Erro ao redefinir senha.', false);
+          mostrarFeedback(
+            DOM.resetFeedback,
+            data.erro || "Erro ao redefinir senha.",
+            false,
+          );
         }
       } catch (err) {
-        mostrarFeedback(DOM.resetFeedback, 'Erro de conexão com o servidor.', false);
+        mostrarFeedback(
+          DOM.resetFeedback,
+          "Erro de conexão com o servidor.",
+          false,
+        );
       } finally {
-        setCarregando(btn, false, 'Salvar Nova Senha');
+        setCarregando(btn, false, "Salvar Nova Senha");
       }
     });
   }
-
   async function carregarEstatisticas() {
     try {
-      const res = await fetch('/api/estatisticas');
+      const res = await fetch("/api/estatisticas");
       const data = await res.json();
       if (data.sucesso && data.dados) {
         const stats = data.dados;
-        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = stats.totalUsuarios.toLocaleString('pt-BR');
-        if (DOM.statsTotalTokens) DOM.statsTotalTokens.textContent = stats.totalTokens.toLocaleString('pt-BR');
-
+        if (DOM.statsTotalUsuarios)
+          DOM.statsTotalUsuarios.textContent =
+            stats.totalUsuarios.toLocaleString("pt-BR");
+        if (DOM.statsTotalTokens)
+          DOM.statsTotalTokens.textContent =
+            stats.totalTokens.toLocaleString("pt-BR");
         if (DOM.recentSalesList) {
-          DOM.recentSalesList.innerHTML = '';
+          DOM.recentSalesList.innerHTML = "";
           if (stats.ultimasVendas.length === 0) {
-            DOM.recentSalesList.innerHTML = '<li style="justify-content: center; color: var(--text-secondary, #aaa);">Nenhuma atividade registrada ainda.</li>';
+            DOM.recentSalesList.innerHTML =
+              '<li style="justify-content: center; color: var(--text-secondary, #aaa);">Nenhuma atividade registrada ainda.</li>';
             return;
           }
-          stats.ultimasVendas.forEach(venda => {
-            const li = document.createElement('li');
-            const dataVenda = new Date(venda.data).toLocaleDateString('pt-BR', {
-              day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+          stats.ultimasVendas.forEach((venda) => {
+            const li = document.createElement("li");
+            const dataVenda = new Date(venda.data).toLocaleDateString("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
             });
-            const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + '***' : venda.nome + '***';
-
+            const nomeFormatado =
+              venda.nome.length > 4
+                ? venda.nome.substring(0, 4) + "***"
+                : venda.nome + "***";
             li.innerHTML = `
-              <span>Jogador <strong>${nomeFormatado}</strong> adquiriu o <span class="sale-plan">${venda.plano_id.toUpperCase()}</span> (+${venda.tokens.toLocaleString('pt-BR')} Tokens)</span>
+              <span>Jogador <strong>${nomeFormatado}</strong> adquiriu o <span class="sale-plan">${venda.plano_id.toUpperCase()}</span> (+${venda.tokens.toLocaleString("pt-BR")} Tokens)</span>
               <span class="sale-time">${dataVenda}</span>
             `;
             DOM.recentSalesList.appendChild(li);
@@ -1281,28 +1280,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (e) {
       if (DOM.recentSalesList) {
-        DOM.recentSalesList.innerHTML = '<li style="justify-content: center; color: #ef4444;">Erro ao carregar atividades recentes.</li>';
+        DOM.recentSalesList.innerHTML =
+          '<li style="justify-content: center; color: #ef4444;">Erro ao carregar atividades recentes.</li>';
       }
     }
   }
-
   async function inicializar() {
     atualizarNavbar();
     await restaurarSessao();
     await carregarPlanos();
     await carregarEstatisticas();
     await initGoogleAuth();
-
     const urlParams = new URLSearchParams(window.location.search);
-    const rToken = urlParams.get('resetToken');
+    const rToken = urlParams.get("resetToken");
     if (rToken) {
       estado.resetToken = rToken;
       abrirModal(DOM.resetPasswordModal);
-      const novaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      window.history.replaceState({ path: novaUrl }, '', novaUrl);
+      const novaUrl =
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname;
+      window.history.replaceState({ path: novaUrl }, "", novaUrl);
     }
   }
-
   inicializar();
-
 });

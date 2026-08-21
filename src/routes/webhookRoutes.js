@@ -1,8 +1,5 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const webhookController = require('../controllers/webhookController');
-
-router.post('/mercadopago', webhookController.processarNotificacao);
-
+const webhookController = require("../controllers/webhookController");
+router.post("/mercadopago", webhookController.processarNotificacao);
 module.exports = router;
