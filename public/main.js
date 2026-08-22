@@ -1195,10 +1195,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (DOM.recentSalesList) {
           DOM.recentSalesList.textContent = "";
           if (stats.ultimasVendas.length === 0) {
-            DOM.recentSalesList.textContent = "Nenhuma atividade registrada ainda.";
+            const liVazio = document.createElement("li");
+            liVazio.textContent = "Nenhuma atividade registrada ainda.";
+            DOM.recentSalesList.appendChild(liVazio);
             return;
           }
-          stats.ultimasVendas.forEach((venda) => {
+          stats.ultimasVendas.slice(0, 5).forEach((venda) => {
             const li = document.createElement("li");
             const dataVenda = new Date(venda.data).toLocaleDateString("pt-BR", {
               day: "2-digit",
@@ -1207,10 +1209,30 @@ document.addEventListener("DOMContentLoaded", () => {
               minute: "2-digit",
             });
             const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + "***" : venda.nome + "***";
-            li.textContent = `
-              <span>Jogador <strong>${nomeFormatado}</strong> adquiriu o <span class="sale-plan">${venda.plano_id.toUpperCase()}</span> (+${venda.tokens.toLocaleString("pt-BR")} Tokens)</span>
-              <span class="sale-time">${dataVenda}</span>
-            `;
+            
+            const spanMain = document.createElement("span");
+            spanMain.appendChild(document.createTextNode("Jogador "));
+            
+            const strongNome = document.createElement("strong");
+            strongNome.textContent = nomeFormatado;
+            spanMain.appendChild(strongNome);
+            
+            spanMain.appendChild(document.createTextNode(" adquiriu o "));
+            
+            const spanPlan = document.createElement("span");
+            spanPlan.className = "sale-plan";
+            spanPlan.textContent = venda.plano_id.toUpperCase();
+            spanMain.appendChild(spanPlan);
+            
+            spanMain.appendChild(document.createTextNode(` (+${venda.tokens.toLocaleString("pt-BR")} Tokens)`));
+            
+            const spanTime = document.createElement("span");
+            spanTime.className = "sale-time";
+            spanTime.textContent = dataVenda;
+            
+            li.appendChild(spanMain);
+            li.appendChild(spanTime);
+            
             DOM.recentSalesList.appendChild(li);
           });
         }
@@ -1227,10 +1249,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   async function inicializar() {
     atualizarNavbar();
-    await restaurarSessao();
-    await carregarPlanos();
-    await carregarEstatisticas();
-    await initGoogleAuth();
+    try {
+      await Promise.all([
+        restaurarSessao(),
+        carregarPlanos(),
+        carregarEstatisticas(),
+        initGoogleAuth()
+      ]);
+    } catch (e) {
+      console.error(e);
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const rToken = urlParams.get("resetToken");
     if (rToken) {

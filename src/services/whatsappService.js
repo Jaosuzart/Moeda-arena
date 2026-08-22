@@ -9,7 +9,16 @@ const initWhatsApp = () => {
       authStrategy: new LocalAuth({ dataPath: ".whatsapp_auth" }),
       puppeteer: {
         headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-accelerated-2d-canvas",
+          "--no-first-run",
+          "--no-zygote",
+          "--single-process",
+          "--disable-gpu"
+        ],
       },
     });
     client.on("qr", (qr) => {
@@ -57,7 +66,6 @@ const enviarMensagem = async (telefone, mensagem) => {
   }
   try {
     let numeroLimpo = telefone.replace(/\D/g, "");
-    // Adiciona o código do Brasil se não tiver
     if (numeroLimpo.length >= 10 && !numeroLimpo.startsWith("55")) {
       numeroLimpo = "55" + numeroLimpo;
     }

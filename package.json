@@ -1,7 +1,7 @@
 {
-  "name": "loja-tokens-mvc",
+  "name": "moeda-arena",
   "version": "2.0.0",
-  "description": "Loja de tokens com Mercado Pago, MVC, autenticação JWT e banco de dados",
+  "description": "Moeda Arena - Sistema com Mercado Pago, MVC, autenticação JWT e banco de dados",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

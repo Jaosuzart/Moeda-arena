@@ -34,5 +34,7 @@ const config = Object.freeze({
   jwtSecret: process.env.JWT_SECRET,
   apiGameSecret: process.env.API_GAME_SECRET,
   googleClientId: process.env.CLIENT_ID_GOOGLE || "",
+  telegramUrl: process.env.TELEGRAM_URL || "",
+  whatsappUrl: process.env.WHATSAPP_URL || "",
 });
 module.exports = config;
