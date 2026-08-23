@@ -9,7 +9,7 @@
 
   --text-primary: #FFF8E7;
   --text-secondary: #F5E6C8;
-  --text-muted: #A89060;
+  --text-muted: #fda900;
   --text-accent: #FFD580;
   --text-dark: #0D0A00;
 
@@ -237,13 +237,13 @@ body::before {
 }
 
 .btn-gamer-primary {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: linear-gradient(135deg, var(--premium-base), var(--premium-dark));
   color: var(--text-dark);
 }
 
 .btn-gamer-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--accent-premium-glow);
+  box-shadow: 0 8px 24px rgba(255, 184, 0, 0.4);
 }
 
 .btn-gamer-secondary {
@@ -752,14 +752,14 @@ body::before {
 }
 
 .modal-content {
-  background: rgba(30, 41, 59, 0.95);
+  background: rgba(13, 10, 0, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 184, 0, 0.15);
   border-radius: var(--radius-xl);
   width: 100%;
   max-width: 440px;
-  box-shadow: var(--shadow-modal);
+  box-shadow: var(--shadow-modal), 0 0 40px rgba(255, 184, 0, 0.05);
   overflow: hidden;
   position: relative;
 }
@@ -910,8 +910,8 @@ body::before {
 .form-input {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 184, 0, 0.03);
+  border: 1px solid rgba(255, 184, 0, 0.15);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: "Inter", sans-serif;
@@ -922,8 +922,8 @@ body::before {
 
 .form-input:focus {
   border-color: var(--accent-premium);
-  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
-  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
+  background: rgba(255, 184, 0, 0.06);
 }
 
 .form-input::placeholder {
@@ -933,8 +933,8 @@ body::before {
 .form-select {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 184, 0, 0.03);
+  border: 1px solid rgba(255, 184, 0, 0.15);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: "Inter", sans-serif;
@@ -943,7 +943,7 @@ body::before {
   outline: none;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23A89060' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
 }
