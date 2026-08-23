@@ -1,6 +1,7 @@
 const { pool } = require("./db");
 const logger = require("../config/logger");
 const crypto = require("crypto");
+const { encrypt, decrypt } = require("../helpers/crypto");
 
 const criarUsuario = async (
   nome,
@@ -23,7 +24,7 @@ const criarUsuario = async (
       nome,
       email,
       senhaHash,
-      telefone,
+      encrypt(telefone),
       tokenVerificacao,
       hasPassword,
       codigoConvite,
@@ -51,18 +52,30 @@ const criarUsuario = async (
   }
 };
 
+// Descriptografa os campos sensiveis de uma row de usuario.
+const decryptSensitiveFields = (row) => {
+  if (!row) return row;
+  return {
+    ...row,
+    cpf: decrypt(row.cpf),
+    telefone: decrypt(row.telefone),
+    chave_pix: decrypt(row.chave_pix),
+    cartao_final: decrypt(row.cartao_final),
+  };
+};
+
 const buscarPorEmail = async (email) => {
   const sql =
     "SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password FROM usuarios WHERE email = ?";
   const [rows] = await pool.query(sql, [email]);
-  return rows[0] || null;
+  return decryptSensitiveFields(rows[0]) || null;
 };
 
 const buscarPorId = async (id) => {
   const sql =
     "SELECT id, nome, email, saldo_tokens, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, ganhos_afiliado FROM usuarios WHERE id = ?";
   const [rows] = await pool.query(sql, [id]);
-  return rows[0] || null;
+  return decryptSensitiveFields(rows[0]) || null;
 };
 
 const buscarPorTokenVerificacao = async (token) => {
@@ -163,11 +176,11 @@ const atualizarPerfil = async (
       "UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, telefone = ?, chave_pix = ?, cartao_final = ? WHERE id = ?";
     const [resultado] = await pool.query(sql, [
       nome,
-      cpf,
+      encrypt(cpf),
       localidade,
-      telefone,
-      chave_pix,
-      cartao_final,
+      encrypt(telefone),
+      encrypt(chave_pix),
+      encrypt(cartao_final),
       id,
     ]);
     if (resultado.affectedRows > 0) {

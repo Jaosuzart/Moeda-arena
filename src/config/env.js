@@ -7,6 +7,7 @@ const variaveisObrigatorias = [
   "DB_NAME",
   "JWT_SECRET",
   "API_GAME_SECRET",
+  "ENCRYPTION_KEY",
 ];
 const faltando = variaveisObrigatorias.filter((v) => !process.env[v]);
 if (faltando.length > 0) {

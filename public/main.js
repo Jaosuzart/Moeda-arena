@@ -130,6 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return fetch(url, { ...opcoes, headers });
   }
+  // Formata valor numerico para o padrao monetario brasileiro (R$ 1.234,56)
+  const _brlFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const formatBRL = (value) => _brlFormatter.format(value);
+
   function mostrarFeedback(el, mensagem, isSucesso) {
     el.textContent = mensagem;
     el.className = `alert-feedback visible ${isSucesso ? "success" : "error"}`;
@@ -668,7 +677,7 @@ document.addEventListener("DOMContentLoaded", () => {
       priceEl.textContent = "Grátis";
     } else {
       const valor = isAnual ? plano.precoAnual : plano.precoMensal;
-      priceEl.textContent = `R$ ${valor.toFixed(2)}`;
+      priceEl.textContent = formatBRL(valor);
     }
     priceWrapper.appendChild(priceEl);
     if (!plano.isGratis) {
