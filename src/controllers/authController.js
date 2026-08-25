@@ -25,6 +25,15 @@ const formatarUsuarioPublico = (usuario) => ({
   isAdmin: usuario.email === config.adminEmail,
 });
 
+const setTokenCookie = (res, token) => {
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
+  });
+};
+
 const registrar = async (req, res, next) => {
   try {
     const { nome, email, senha, telefone, convite } = req.body;
@@ -53,9 +62,10 @@ const registrar = async (req, res, next) => {
     }
 
     const token = gerarJwt(usuario);
+    setTokenCookie(res, token);
     logger.info("Novo registro realizado.", { usuarioId: usuario.id, email });
 
-    return sucesso(res, { token, usuario: formatarUsuarioPublico(usuario) }, 201);
+    return sucesso(res, { usuario: formatarUsuarioPublico(usuario) }, 201);
   } catch (err) {
     next(err);
   }
@@ -70,8 +80,10 @@ const login = async (req, res, next) => {
       return erro(res, "Email ou senha incorretos.", 401, "CREDENCIAIS_INVALIDAS");
     }
 
+    const token = gerarJwt(usuario);
+    setTokenCookie(res, token);
     logger.info("Login realizado.", { usuarioId: usuario.id });
-    return sucesso(res, { token: gerarJwt(usuario), usuario: formatarUsuarioPublico(usuario) });
+    return sucesso(res, { usuario: formatarUsuarioPublico(usuario) });
   } catch (err) {
     next(err);
   }
@@ -98,7 +110,9 @@ const loginGoogle = async (req, res, next) => {
       logger.info("Login via Google.", { usuarioId: usuario.id });
     }
 
-    return sucesso(res, { token: gerarJwt(usuario), usuario: formatarUsuarioPublico(usuario) });
+    const jwtToken = gerarJwt(usuario);
+    setTokenCookie(res, jwtToken);
+    return sucesso(res, { usuario: formatarUsuarioPublico(usuario) });
   } catch (err) {
     logger.error("Erro no login via Google.", { erro: err.message });
     return erro(res, "Falha ao autenticar com o Google.", 401);
@@ -112,6 +126,30 @@ const perfil = async (req, res, next) => {
     return sucesso(res, { usuario: { ...usuario, isAdmin: usuario.email === config.adminEmail } });
   } catch (err) {
     next(err);
+  }
+};
+
+const status = async (req, res) => {
+  let token = null;
+  if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  } else if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
+    return res.json({ sucesso: true, autenticado: false });
+  }
+
+  try {
+    const payload = jwt.verify(token, config.jwtSecret);
+    const usuario = await usuarioModel.buscarPorId(payload.id);
+    if (!usuario) {
+      return res.json({ sucesso: true, autenticado: false });
+    }
+    return sucesso(res, { autenticado: true, usuario: { ...usuario, isAdmin: usuario.email === config.adminEmail } });
+  } catch (err) {
+    return res.json({ sucesso: true, autenticado: false });
   }
 };
 
@@ -239,14 +277,21 @@ const redefinirSenhaConfirmar = async (req, res, next) => {
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("token");
+  return sucesso(res, { mensagem: "Logout realizado com sucesso." });
+};
+
 module.exports = {
   registrar,
   login,
   loginGoogle,
   perfil,
   atualizarPerfil,
-  verificarEmail,
   definirSenha,
+  verificarEmail,
   solicitarRecuperarSenha,
   redefinirSenhaConfirmar,
+  logout,
+  status,
 };

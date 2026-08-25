@@ -3,8 +3,41 @@ const qrcode = require("qrcode-terminal");
 const logger = require("../config/logger");
 let client;
 let isReady = false;
+const fs = require("fs");
+const path = require("path");
+
+const limparLocksPuppeteer = () => {
+  const sessionDir = path.join(
+    process.cwd(),
+    ".whatsapp_auth",
+    "session",
+  );
+  if (!fs.existsSync(sessionDir)) return;
+  try {
+    const entries = fs.readdirSync(sessionDir, { recursive: true });
+    for (const entry of entries) {
+      if (
+        typeof entry === "string" &&
+        entry.endsWith("SingletonLock")
+      ) {
+        const lockPath = path.join(sessionDir, entry);
+        fs.rmSync(lockPath, { force: true });
+        logger.info("Lock travado do Puppeteer removido.", {
+          arquivo: entry,
+        });
+      }
+    }
+  } catch (err) {
+    logger.warn("Aviso ao limpar locks do Puppeteer:", {
+      erro: err.message,
+    });
+  }
+};
+
 const initWhatsApp = () => {
   try {
+    limparLocksPuppeteer();
+
     client = new Client({
       authStrategy: new LocalAuth({ dataPath: ".whatsapp_auth" }),
       puppeteer: {
@@ -44,7 +77,29 @@ const initWhatsApp = () => {
       logger.warn("WhatsApp desconectado", { reason });
     });
     client.initialize().catch((err) => {
-      logger.error("Erro ao inicializar WhatsApp:", err);
+      if (err.message && err.message.includes("already running")) {
+        logger.warn("Browser do WhatsApp ainda estava travado. Forçando encerramento de processos Chrome órfãos...");
+        
+        const { exec } = require("child_process");
+        const comando = process.platform === "win32" 
+          ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate` 
+          : `pkill -f "chrome.*--headless"`;
+
+        exec(comando, (error) => {
+          logger.info("Processos órfãos eliminados. Limpando sessão...");
+          const sessionDir = path.join(process.cwd(), ".whatsapp_auth", "session");
+          try {
+            fs.rmSync(sessionDir, { recursive: true, force: true });
+          } catch (rmErr) {
+            logger.warn("Aviso ao limpar pasta da sessão (EPERM), tentaremos novamente...");
+          }
+          setTimeout(() => initWhatsApp(), 3000);
+        });
+      } else {
+        logger.error("Erro ao inicializar WhatsApp:", {
+          stack: err.stack,
+        });
+      }
     });
   } catch (error) {
     logger.error("Falha crítica ao iniciar serviço de WhatsApp", {
@@ -83,7 +138,34 @@ const enviarMensagem = async (telefone, mensagem) => {
     return false;
   }
 };
+
+const stopWhatsApp = async () => {
+  if (client) {
+    logger.info("Encerrando cliente do WhatsApp (limpeza de processo)...");
+    try {
+      // O client.destroy() pode travar se o browser já estiver travado. 
+      // Executamos com timeout.
+      await Promise.race([
+        client.destroy(),
+        new Promise(resolve => setTimeout(resolve, 3000))
+      ]);
+    } catch (e) {
+      logger.warn("Erro ao encerrar WhatsApp via destroy:", { erro: e.message });
+    }
+    
+    // Aniquilador final para garantir que nenhum Chrome zombie fique vivo
+    const { exec } = require("child_process");
+    const comando = process.platform === "win32" 
+      ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate` 
+      : `pkill -f "chrome.*--headless"`;
+    
+    exec(comando, () => {
+      logger.info("Verificação final de processos órfãos concluída.");
+    });
+  }
+};
 module.exports = {
   initWhatsApp,
   enviarMensagem,
+  stopWhatsApp,
 };

@@ -1,6 +1,6 @@
 const mysql = require("mysql2/promise");
-const config = require("./src/config/env");
-const logger = require("./src/config/logger");
+const config = require("../src/config/env");
+const logger = require("../src/config/logger");
 async function run() {
   const pool = mysql.createPool({
     host: config.db.host,

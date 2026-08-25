@@ -37,14 +37,14 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet" />
   </noscript>
+  <link rel="preload" as="style" href="/style.min.css?v=5" />
   <link rel="stylesheet" href="/style.min.css?v=5" />
 </head>
 <body>
   <header>
     <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
       <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
-        <img src="/logo.webp" alt="Moeda Arena" class="nav-logo-icon" width="40" height="60" fetchpriority="high"
-          style="height:44px;width:auto;border-radius:4px;filter:invert(1) contrast(1.2);mix-blend-mode:screen" />
+        <img src="/assets/images/logo-new.webp" alt="Moeda Arena" class="nav-logo-icon" width="44" height="44" fetchpriority="high" decoding="async" style="height:44px;width:44px;border-radius:50%;mix-blend-mode:screen;object-fit:cover;object-position:center 15%" />
         <span class="nav-logo-text">Moeda Arena</span>
       </a>
       <div class="nav-user" id="navUser">
@@ -85,6 +85,37 @@
         Escolha seu pacote de tokens e domine a partida com personagens épicos e ligas exclusivas.
       </p>
     </section>
+    <section class="game-universe container-center" aria-labelledby="universeTitle" style="padding-top: 0; padding-bottom: 2rem;">
+      <h2 class="stats-section-title" id="universeTitle">O Universo da Arena</h2>
+      <p class="stats-section-subtitle">
+        Descubra o que seus Tokens podem desbloquear dentro do nosso ecossistema competitivo.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-premium);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Personagens Épicos</div>
+          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Desbloqueie skins e heróis exclusivos que só podem ser adquiridos com Tokens.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-vip, #a855f7);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Ligas Ranqueadas</div>
+          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Use seus Tokens para entrar em ligas fechadas e competir por prêmios.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-free, #00E676);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Caixas de Loot</div>
+          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Abra caixas misteriosas contendo multiplicadores de XP e itens ultra raros.</div>
+        </div>
+      </div>
+    </section>
+
     <section class="toggle-section" aria-label="Alternar entre preço mensal e anual">
       <span class="toggle-label active" id="labelMensal">Mensal</span>
       <label class="toggle-switch" for="pricingToggle">
@@ -96,7 +127,9 @@
     </section>
     <section class="cards-grid" id="cardsContainer" aria-label="Planos disponíveis">
       <article class="plan-card" data-tier="gratis">
-        <div class="plan-card-icon">🛡️</div>
+        <div class="plan-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
         <h2 class="plan-card-name">Passe Amador</h2>
         <p class="plan-card-desc">Comece sua jornada com o pacote inicial.</p>
         <div class="plan-card-price-wrapper">
@@ -104,15 +137,15 @@
         </div>
         <ul class="plan-card-features">
           <li>
-            <span class="feature-icon">🪙</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg></span>
             100 Tokens Iniciais
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Acesso Básico
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             1 Uniforme Padrão
           </li>
         </ul>
@@ -123,7 +156,9 @@
       </article>
 
       <article class="plan-card" data-tier="iniciante">
-        <div class="plan-card-icon">🪙</div>
+        <div class="plan-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M16.8 11.5c.3-1.6-.2-3.1-1.3-4.2-1.3-1.3-3.4-1.6-5-.6L10 7.3"></path><path d="M16.8 11.5c-1.3.3-2.6 0-3.6-.8l-1.3 1.3"></path><path d="M11.9 12l-1.2 1.3c-1 1-2.7 1-3.7 0-1-1-1-2.7 0-3.7l1.3-1.2"></path><path d="M13.2 12c1 1 1 2.7 0 3.7-1 1-2.7 1-3.7 0L8.2 14.5"></path><path d="M7.2 12.5c-.3 1.6.2 3.1 1.3 4.2 1.3 1.3 3.4 1.6 5 .6l.5-.6"></path><path d="M7.2 12.5c1.3-.3 2.6 0 3.6.8l1.3-1.3"></path></svg>
+        </div>
         <h2 class="plan-card-name">Passe Iniciante</h2>
         <p class="plan-card-desc">Ideal para quem quer começar com pouca moeda.</p>
         <div class="plan-card-price-wrapper">
@@ -132,15 +167,15 @@
         </div>
         <ul class="plan-card-features">
           <li>
-            <span class="feature-icon">🪙</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg></span>
             1.000 Tokens/mês
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Acesso Básico Estendido
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             1 Skin de Arma Comum
           </li>
         </ul>
@@ -152,7 +187,9 @@
 
       <article class="plan-card" data-tier="premium">
         <span class="plan-card-popular-badge">★ Mais Popular</span>
-        <div class="plan-card-icon">⚔️</div>
+        <div class="plan-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline><line x1="13" y1="19" x2="19" y2="13"></line><line x1="16" y1="16" x2="20" y2="20"></line><line x1="19" y1="21" x2="21" y2="19"></line><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"></polyline><line x1="5" y1="14" x2="9" y2="18"></line><line x1="7" y1="17" x2="4" y2="20"></line><line x1="3" y1="19" x2="5" y2="21"></line></svg>
+        </div>
         <h2 class="plan-card-name">Passe Profissional</h2>
         <p class="plan-card-desc">O favorito dos jogadores competitivos.</p>
         <div class="plan-card-price-wrapper">
@@ -161,15 +198,15 @@
         </div>
         <ul class="plan-card-features">
           <li>
-            <span class="feature-icon">🪙</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg></span>
             5.000 Tokens/mês
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Conjuntos de Personagens Épicos
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Acesso a Ligas Exclusivas
           </li>
         </ul>
@@ -180,7 +217,9 @@
       </article>
 
       <article class="plan-card" data-tier="vip">
-        <div class="plan-card-icon">👑</div>
+        <div class="plan-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="2 16 12 2 22 16 17 21 7 21 2 16"></polygon><path d="M12 2l3 7.5"></path><path d="M12 2L9 9.5"></path></svg>
+        </div>
         <h2 class="plan-card-name">Sócio Lenda</h2>
         <p class="plan-card-desc">Para quem quer dominar sem limites.</p>
         <div class="plan-card-price-wrapper">
@@ -189,15 +228,15 @@
         </div>
         <ul class="plan-card-features">
           <li>
-            <span class="feature-icon">🪙</span>
-            Tokens Ilimitados
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg></span>
+            15.000 Tokens/mês
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Todos os Personagens Desbloqueados
           </li>
           <li>
-            <span class="feature-icon">✓</span>
+            <span class="feature-icon" style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
             Sem Anúncios
           </li>
         </ul>
@@ -208,7 +247,7 @@
       </article>
     </section>
 
-    <section class="stats-section container-center" id="statsSection" aria-labelledby="statsTitle">
+    <section class="stats-section container-center" id="statsSection" aria-labelledby="statsTitle" style="display: none;">
       <h2 class="stats-section-title" id="statsTitle">Métricas da Arena</h2>
       <p class="stats-section-subtitle">
         Dados em tempo real do nosso servidor e transações processadas de forma transparente.
@@ -286,9 +325,9 @@
           </svg>
           WhatsApp Suporte
         </a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=arenatoken3@gmail.com" target="_blank"
-          rel="noopener noreferrer" class="btn-support" style="background: #1d4ed8">
-          📧 arenatoken3@gmail.com
+        <a href="https://webmail.umbler.com/" target="_blank" class="btn-support" style="background: var(--bg-card); border: 1px solid rgba(255, 184, 0, 0.3); color: var(--text-accent);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          suporte@moedaarena.com.br
         </a>
       </div>
     </div>
@@ -314,14 +353,8 @@
       </a>
     </p>
     <p>
-      Desenvolvido por Moeda Arena, com a ideia principal por João Marcelo Suzart Lima Castro. CNPJ:
-      68.655.211/0001-04.
-    </p>
-    <p>
-      Link do meu github:
-      <a href="https://github.com/Jaosuzart" target="_blank" rel="noopener noreferrer" class="link-limpo link-destaque">
-        <strong>Jaosuzart</strong>
-      </a>
+      Moeda Arena &copy; 2026 &bull; CNPJ: 68.655.211/0001-04<br>
+      Idealizado por João Marcelo Suzart Lima Castro
     </p>
     <p>
       <button id="btnAbrirTermos" class="btn-link">Termos e Condições</button>
@@ -334,144 +367,60 @@
         <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
       </header>
       <div class="modal-body termos-content modal-body-scroll">
-        <h3>1. Aceitação dos Termos e Capacidade Legal</h3>
+        <h3>1. Nossas Regras do Jogo (Aceitação)</h3>
         <p>
-          Ao acessar, navegar ou utilizar os serviços da Moeda Arena (ou "Token Arena"), bem como ao realizar a compra
-          de qualquer produto digital em nossa plataforma, você declara ter lido, compreendido e concordado
-          expressamente com todos os termos e condições aqui descritos. Caso você seja menor de 18 (dezoito) anos, o
-          uso da plataforma e a realização de compras devem ser realizados exclusivamente com a autorização prévia e o
-          acompanhamento de um dos pais ou responsável legal.
+          Oi! Ao usar a Moeda Arena (ou "Token Arena") e comprar com a gente, você concorda com as regrinhas abaixo. É super importante! Se você tem menos de 18 anos, pede pro seu pai, mãe ou responsável dar uma olhada e autorizar suas compras, fechado?
         </p>
 
-        <h3>2. Definições Importantes e Glossário</h3>
-        <p>Para o perfeito entendimento destes termos, adotamos as seguintes definições:</p>
+        <h3>2. O que é o que? (Glossário)</h3>
         <ul>
           <li>
-            <strong>"Token Arena" (ou "Moeda Arena"):</strong>
-            Plataforma digital proprietária, operada com a finalidade de intermediação, venda e distribuição de
-            benefícios digitais, assinaturas e moedas virtuais.
+            <strong>Moeda Arena:</strong> É a gente! Nossa plataforma onde você consegue assinaturas e moedas para seus jogos favoritos.
           </li>
           <li>
-            <strong>"Tokens":</strong>
-            Moedas virtuais exclusivas da nossa plataforma. Os Tokens funcionam como créditos limitados ao nosso
-            ecossistema para desbloquear benefícios ou para conversão em moedas de terceiros, não possuindo valor
-            monetário fora da plataforma e não sendo passíveis de conversão em moeda fiduciária (dinheiro real).
+            <strong>Tokens:</strong> É a nossa própria moeda virtual. Você ganha ou compra Tokens aqui e pode trocar por prêmios e benefícios incríveis dentro do site. Eles não têm valor em dinheiro real fora daqui, ok?
           </li>
           <li>
-            <strong>"Moedas de Terceiros" (ex: Robux, V-Bucks, etc.):</strong>
-            Moedas virtuais oficiais pertencentes a plataformas e jogos externos. A Token Arena atua apenas como
-            intermediadora facilitadora para a recarga destas moedas. A ativação e validade dependem integralmente das
-            políticas de uso das respectivas empresas detentoras (ex: Roblox Corporation, Epic Games).
+            <strong>Moedas de Terceiros (ex: Robux, V-Bucks):</strong> São as moedas oficiais dos seus jogos. Nós só facilitamos a recarga pra você. Quem dita as regras de como elas funcionam lá dentro do jogo são os próprios criadores (como Epic Games e Roblox).
           </li>
           <li>
-            <strong>"Passes":</strong>
-            Assinaturas periódicas de caráter renovável que concedem benefícios contínuos dentro do ecossistema,
-            licenciando o uso de recursos digitais temporariamente.
+            <strong>Passes VIP:</strong> São nossas assinaturas que te dão vantagens exclusivas e contínuas enquanto estiverem ativas.
           </li>
         </ul>
 
-        <h3>3. Termos de Uso e Conduta na Plataforma</h3>
+        <h3>3. Jogo Limpo (Conduta)</h3>
         <p>
-          O usuário concorda em utilizar a plataforma de maneira ética e em conformidade com as leis brasileiras
-          vigentes. É estritamente proibido o uso de softwares de terceiros (hacks, bots, scripts, exploits ou
-          modificadores de rede) para fraudar a economia da Token Arena, obter tokens de forma ilícita, ou manipular
-          falhas sistêmicas. A detecção de tais atividades configurará quebra de contrato, resultando no banimento
-          imediato e permanente da conta do infrator, perda total do saldo virtual, e possibilidade de encaminhamento
-          dos dados às autoridades competentes para apuração de crimes cibernéticos.
+          Aqui a gente joga limpo. Usar qualquer tipo de hack, bot, script, ou tentar bugar o site para ganhar Tokens de forma injusta é proibido. Se o nosso sistema pegar (e ele pega), a conta é banida permanentemente, você perde os Tokens e as medidas cabíveis serão tomadas. Jogue justo!
         </p>
 
-        <h3>4. Assinaturas, Passes e Pagamentos</h3>
+        <h3>4. Sobre as Assinaturas e Passes</h3>
         <p>
-          A assinatura de qualquer Passe (Amador, Profissional ou Lenda) caracteriza um compromisso de cobrança
-          recorrente. A renovação ocorre automaticamente no final do ciclo de faturamento contratado (mensal ou
-          anual). O cancelamento pode ser efetuado a qualquer momento via painel de controle, cessando futuras
-          cobranças. Não haverá, no entanto, reembolso proporcional referente aos dias não utilizados de um ciclo já
-          faturado.
+          Quando você assina um dos nossos Passes (Amador, Profissional ou Lenda), a renovação é automática. Você não precisa se preocupar. Mas se quiser parar, é só cancelar no seu painel a qualquer momento. Só lembre que a gente não faz reembolso parcial dos dias que você não usar naquele mês, beleza?
         </p>
 
-        <h3>5. Intermediação e Segurança Financeira</h3>
+        <h3>5. Pagamentos e Segurança</h3>
         <p>
-          Para a segurança de todas as transações, o processamento financeiro é integralmente realizado pelo Mercado
-          Pago. A Token Arena não armazena dados de cartões de crédito ou senhas bancárias em seus servidores. A
-          realização de chargebacks (contestações indevidas na operadora do cartão) sem contato prévio com nossa
-          central de atendimento constitui grave infração a estes termos, acarretando no bloqueio definitivo do CPF,
-          e-mail e endereço IP do usuário em nosso sistema, bem como medidas cíveis e penais se configurada fraude
-          comprovada.
+          Quem cuida do seu dinheiro é o Mercado Pago. É super seguro e nós não guardamos nenhum dado do seu cartão de crédito. Uma dica importante: se der algum problema na compra, <strong>fale com nosso suporte primeiro!</strong> Fazer "chargeback" (cancelar a compra direto no cartão) sem falar com a gente resulta no bloqueio automático e definitivo da sua conta.
         </p>
 
-        <h3>6. Política de Entrega Digital (Recebimento)</h3>
+        <h3>6. Entrega dos Produtos Digitais</h3>
         <p>
-          Por tratar-se de licenciamento de bens puramente digitais, a entrega de Tokens e a ativação de Passes é
-          processada de maneira eletrônica e remota. Em pagamentos via Pix ou Cartão de Crédito, a liberação costuma
-          ser imediata após a compensação pelo Mercado Pago. Contudo, prazos de até 24 horas úteis podem ser aplicados
-          excepcionalmente em casos de auditoria de segurança antifraude. Eventuais instabilidades nos servidores de
-          jogos de terceiros poderão causar atrasos pontuais no resgate de Moedas de Terceiros; a Token Arena
-          compromete-se a concluir a transação ou estornar o valor assim que a estabilidade externa for restabelecida.
+          Como nossos produtos são digitais, a entrega é quase mágica: pagou com Pix ou Cartão, aprovou, chegou! Em raros casos de instabilidade nos servidores dos jogos ou análise de segurança, pode demorar um pouquinho mais (até 24h úteis). Se o jogo parceiro cair, a gente garante que você recebe assim que eles voltarem.
         </p>
 
-        <h3>7. Política de Devolução e Arrependimento (CDC)</h3>
+        <h3>7. Reembolso e Arrependimento</h3>
         <p>
-          Em estrita obediência ao artigo 49 do Código de Defesa do Consumidor (CDC), asseguramos o direito de
-          arrependimento em até 7 (sete) dias corridos após a compra. Contudo, devido à natureza intangível e de
-          consumo imediato dos bens digitais comercializados,
-          <strong>
-            o usuário reconhece e concorda que este direito expira irrevogavelmente no exato momento em que os Tokens,
-            Passes ou Moedas de Terceiros forem parcial ou totalmente resgatados, utilizados, ativados ou transferidos
-          </strong>
-          para a conta de jogo, descaracterizando assim o não-uso do produto. Para compras de pacotes absolutamente
-          intocados e dentro do prazo de 7 dias, o reembolso integral deverá ser solicitado exclusivamente pelos
-          canais de suporte oficiais.
+          A gente respeita a lei (CDC): você tem 7 dias para se arrepender da compra. <strong>Mas atenção:</strong> como são produtos digitais que você usa na hora, o direito de reembolso acaba no exato momento em que você resgatar, gastar ou transferir os Tokens ou as Moedas para o seu jogo. Se não mexeu em nada e quer o dinheiro de volta dentro dos 7 dias, é só chamar o suporte!
         </p>
 
-        <h3>8. Proteção de Dados, Senhas e Privacidade (LGPD)</h3>
+        <h3>8. Sua Privacidade e Dados (LGPD)</h3>
         <p>
-          Nossa plataforma processa dados pessoais em rigorosa conformidade com a Lei Geral de Proteção de Dados
-          Pessoais (LGPD - Lei nº 13.709/2018). Coletamos informações mínimas e necessárias (nome, e-mail e CPF)
-          apenas para fins de faturamento, combate ativo à fraude e cumprimento de obrigações tributárias vigentes.
-          Nós não comercializamos seus dados com corretores ou agências de publicidade externas. A manutenção do
-          sigilo absoluto da senha de acesso é dever e responsabilidade exclusiva do usuário. A Token Arena não será
-          responsabilizada por invasões de contas, furtos de Tokens ou interceptação de dados causadas por senhas
-          fracas, compartilhamento voluntário de credenciais ou infecção por malwares no dispositivo pessoal do
-          usuário.
+          Nós levamos seus dados a sério. Só pedimos o básico (nome, e-mail e CPF) para poder emitir recibos, evitar fraudes e cumprir a lei. Não vendemos seus dados para ninguém! Do seu lado, cuide bem da sua senha, viu? Não nos responsabilizamos se você passar sua senha para alguém ou for hackeado por descuido.
         </p>
 
-        <h3>9. Política de Cookies</h3>
+        <h3>9. Avisos Legais Finais</h3>
         <p>
-          A plataforma faz uso de cookies de sessão (estritamente necessários e invioláveis para manter o usuário
-          logado de forma segura e processar o carrinho de pagamentos sem quebra de estado) e cookies analíticos
-          pseudonimizados para aprimorar a arquitetura e usabilidade do portal. O uso contínuo da plataforma implica
-          na ciência e aceitação do uso destas tecnologias de rastreamento estrito.
-        </p>
-
-        <h3>10. Propriedade Intelectual e Notificações (DMCA)</h3>
-        <p>
-          Todo o código-fonte, layout, texto, design de marca e arquitetura de sistema pertencem exclusivamente à
-          Token Arena. Direitos autorais de imagens, banners e marcas de jogos externos pertencem inquestionavelmente
-          aos seus respectivos criadores e empresas matrizes. Caso um detentor de direitos acredite que nossa
-          plataforma infringiu ou fez mau uso de sua propriedade intelectual, a notificação com os devidos laudos e
-          comprovações de titularidade deve ser enviada aos canais de suporte oficiais para análise imediata e remoção
-          sumária do conteúdo infrator no prazo estabelecido pela lei.
-        </p>
-
-        <h3>11. Limitação de Responsabilidade e Indenizações</h3>
-        <p>
-          O usuário reconhece e atesta que os serviços são fornecidos "no estado em que se encontram", sem garantias
-          implícitas ou explícitas de funcionamento ininterrupto livre de bugs. A Token Arena declina formalmente
-          qualquer responsabilidade solidária por eventuais lucros cessantes, frustração de expectativas, perdas
-          financeiras colaterais ou banimentos disciplinares em jogos de terceiros decorrentes do uso indevido das
-          moedas adquiridas na plataforma. Em hipótese jurídica alguma, a responsabilidade civil ou financeira da
-          Token Arena por quaisquer danos diretos excederá o valor originalmente pago pelo usuário no serviço que
-          gerou a contestação judicial ou administrativa.
-        </p>
-
-        <h3>12. Atualizações e Modificações destes Termos</h3>
-        <p>
-          A Token Arena detém e reserva-se o direito unilateral de alterar, modificar, suprimir ou atualizar partes
-          destes Termos e Condições, bem como a Política de Privacidade, a qualquer tempo. Tais mudanças visam, na
-          maioria das vezes, a adequação e conformidade com novas leis governamentais ou a regulação de novas features
-          e serviços implementados no portal. Alterações sistêmicas significativas e que modifiquem obrigações
-          essenciais serão devidamente notificadas aos usuários ativos via correio eletrônico ou através de um banner
-          de aviso inconfundível na página inicial do site.
+          Todo o visual e código do site é nosso. As marcas dos jogos (como Roblox) são deles. Nosso site é fornecido "como está", e não nos responsabilizamos por bans ou punições que você tomar lá dentro dos jogos por mau uso das moedas. Ah, e podemos atualizar essas regrinhas de vez em quando, mas sempre avisaremos se algo grande mudar!
         </p>
       </div>
       <footer class="modal-footer">
@@ -754,6 +703,11 @@
         <button class="modal-close" id="btnFecharAdmin" type="button" aria-label="Fechar painel">&times;</button>
       </div>
       <div class="modal-body">
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+          <a href="https://webmail.umbler.com" target="_blank" rel="noopener noreferrer" class="btn-gamer btn-gamer-ghost" style="flex: 1; text-align: center; border-color: var(--accent-primary);">
+            📥 Abrir Caixa de E-mails (Umbler Webmail)
+          </a>
+        </div>
         <div class="admin-panel-card">
           <h3>Adicionar Tokens Rápidos (Moedas).</h3>
           <form id="adminTokensForm" class="admin-form-row">
@@ -898,7 +852,37 @@
     </div>
   </dialog>
 
-  <script src="main.min.js?v=4" defer></script>
+  <dialog class="modal-overlay" id="contatoModal" aria-labelledby="contatoTitle">
+    <div class="modal-content modal-md">
+      <div class="modal-header">
+        <h2 class="modal-header-title" id="contatoTitle">✉️ Fale Conosco</h2>
+        <button class="modal-close" id="btnFecharContato" type="button" aria-label="Fechar contato">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="margin-bottom: 1rem">
+          Tem alguma dúvida ou problema? Envie uma mensagem para nossa equipe.
+        </p>
+        <form id="contatoForm">
+          <div class="form-group">
+            <label for="contatoNome" class="form-label">Seu Nome</label>
+            <input type="text" id="contatoNome" class="form-input" required placeholder="Digite seu nome..." />
+          </div>
+          <div class="form-group">
+            <label for="contatoEmail" class="form-label">Seu E-mail</label>
+            <input type="email" id="contatoEmail" class="form-input" required placeholder="Para podermos responder..." />
+          </div>
+          <div class="form-group">
+            <label for="contatoMensagem" class="form-label">Mensagem</label>
+            <textarea id="contatoMensagem" class="form-input" required rows="4" placeholder="Como podemos ajudar?"></textarea>
+          </div>
+          <div id="contatoFeedback" class="form-feedback"></div>
+          <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%" id="btnEnviarContato">Enviar Mensagem</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/main.min.js" defer></script>
 </body>
 
 </html>

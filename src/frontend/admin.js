@@ -1,17 +1,8 @@
 document.addEventListener("DOMContentLoaded", carregarUsuarios);
 
 async function carregarUsuarios() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Acesso negado. Faça login primeiro.");
-    window.location.href = "/";
-    return;
-  }
-
   try {
-    const res = await fetch("/api/admin/usuarios", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch("/api/admin/usuarios");
 
     if (res.status === 403 || res.status === 401) {
       alert("Você não tem permissão para acessar esta página.");
@@ -74,13 +65,11 @@ async function darTokens(usuarioId) {
   const quantidade = parseInt(input, 10);
   if (!input || isNaN(quantidade) || quantidade <= 0) return;
 
-  const token = localStorage.getItem("token");
   try {
     const res = await fetch("/api/admin/usuarios/tokens", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ usuarioId, quantidade }),
     });

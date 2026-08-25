@@ -2,8 +2,15 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/env");
 const { erro } = require("../helpers/apiResponse");
 const autenticar = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  let token = null;
+
+  if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  } else if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
     return erro(
       res,
       "Token de autenticação não fornecido. Faça login primeiro.",
@@ -11,7 +18,6 @@ const autenticar = (req, res, next) => {
       "NAO_AUTENTICADO",
     );
   }
-  const token = authHeader.split(" ")[1];
   try {
     const payload = jwt.verify(token, config.jwtSecret);
     req.usuario = {

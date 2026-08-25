@@ -98,6 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
     resetConfirmarSenha: document.getElementById("resetConfirmarSenha"),
     resetFeedback: document.getElementById("resetFeedback"),
     btnConfirmarReset: document.getElementById("btnConfirmarReset"),
+    contatoModal: document.getElementById("contatoModal"),
+    btnAbrirContato: document.getElementById("btnAbrirContato"),
+    btnFecharContato: document.getElementById("btnFecharContato"),
+    contatoForm: document.getElementById("contatoForm"),
+    contatoNome: document.getElementById("contatoNome"),
+    contatoEmail: document.getElementById("contatoEmail"),
+    contatoMensagem: document.getElementById("contatoMensagem"),
+    contatoFeedback: document.getElementById("contatoFeedback"),
+    btnEnviarContato: document.getElementById("btnEnviarContato"),
     btnFecharReset: document.getElementById("btnFecharReset"),
     statsTotalUsuarios: document.getElementById("statsTotalUsuarios"),
     statsTotalTokens: document.getElementById("statsTotalTokens"),
@@ -107,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let estado = {
     planos: [],
     usuario: null,
-    token: localStorage.getItem("token") || null,
     planoSelecionado: null,
     cupomAplicado: null,
     descontoPercentual: 0,
@@ -115,19 +123,13 @@ document.addEventListener("DOMContentLoaded", () => {
     resetToken: null,
   };
   const TIER_CONFIG = {
-    gratis: { icon: '<img src="/icon-shield.webp" width="48" height="48" loading="lazy" alt="Grátis" />', desc: "Comece sua jornada com o pacote inicial." },
-    iniciante: {
-      icon: '<img src="/icon-coin.webp" width="48" height="48" loading="lazy" alt="Iniciante" />',
-      desc: "Ideal para quem quer começar com pouca moeda.",
-    },
-    premium: { icon: '<img src="/icon-sword.webp" width="48" height="48" loading="lazy" alt="Premium" />', desc: "O favorito dos jogadores competitivos." },
-    vip: { icon: '<img src="/icon-crown.webp" width="48" height="48" loading="lazy" alt="VIP" />', desc: "Para quem quer dominar sem limites." },
+    gratis: { src: "/assets/images/icon-shield.webp", alt: "Grátis", desc: "Comece sua jornada com o pacote inicial." },
+    iniciante: { src: "/assets/images/icon-coin.webp", alt: "Iniciante", desc: "Ideal para quem quer começar com pouca moeda." },
+    premium: { src: "/assets/images/icon-sword.webp", alt: "Premium", desc: "O favorito dos jogadores competitivos." },
+    vip: { src: "/assets/images/icon-crown.webp", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
   async function fetchAutenticado(url, opcoes = {}) {
     const headers = { "Content-Type": "application/json", ...opcoes.headers };
-    if (estado.token) {
-      headers["Authorization"] = `Bearer ${estado.token}`;
-    }
     return fetch(url, { ...opcoes, headers });
   }
   // Formata valor numerico para o padrao monetario brasileiro (R$ 1.234,56)
@@ -200,26 +202,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   async function restaurarSessao() {
-    if (!estado.token) return;
     try {
-      const res = await fetchAutenticado("/api/auth/perfil");
+      const res = await fetchAutenticado("/api/auth/status");
       const data = await res.json();
       if (data.sucesso && data.dados && data.dados.usuario) {
         estado.usuario = data.dados.usuario;
       } else {
-        estado.token = null;
-        localStorage.removeItem("token");
+        estado.usuario = null;
       }
     } catch (err) {
-      estado.token = null;
-      localStorage.removeItem("token");
+      estado.usuario = null;
     }
     atualizarNavbar();
   }
-  function logout() {
-    estado.token = null;
+  async function logout() {
+    try {
+      await fetchAutenticado("/api/auth/logout", { method: "POST" });
+    } catch (e) {}
     estado.usuario = null;
-    localStorage.removeItem("token");
     atualizarNavbar();
   }
   function alternarTab(tab) {
@@ -291,8 +291,59 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   DOM.btnFecharTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
   if (DOM.btnOkTermos) {
-    DOM.btnOkTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
+    DOM.btnOkTermos.addEventListener("click", () => {
+      fecharModal(DOM.termosModal);
+    });
   }
+
+  if (DOM.btnAbrirContato) {
+    DOM.btnAbrirContato.addEventListener("click", (e) => {
+      e.preventDefault();
+      DOM.contatoFeedback.textContent = "";
+      DOM.contatoFeedback.className = "form-feedback";
+      DOM.contatoForm.reset();
+      DOM.contatoModal.showModal();
+    });
+  }
+  if (DOM.btnFecharContato) {
+    DOM.btnFecharContato.addEventListener("click", () => {
+      DOM.contatoModal.close();
+    });
+  }
+  if (DOM.contatoForm) {
+    DOM.contatoForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      mostrarLoading(DOM.btnEnviarContato);
+      try {
+        const payload = {
+          nome: DOM.contatoNome.value.trim(),
+          email: DOM.contatoEmail.value.trim(),
+          mensagem: DOM.contatoMensagem.value.trim()
+        };
+        const response = await fetch("/api/contato", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        removerLoading(DOM.btnEnviarContato, "Enviar Mensagem");
+        if (response.ok) {
+          mostrarErro(DOM.contatoFeedback, "Mensagem enviada com sucesso!", "success");
+          setTimeout(() => {
+            DOM.contatoModal.close();
+          }, 2000);
+        } else {
+          mostrarErro(DOM.contatoFeedback, data.erro || "Erro ao enviar mensagem.");
+        }
+      } catch (err) {
+        removerLoading(DOM.btnEnviarContato, "Enviar Mensagem");
+        mostrarErro(DOM.contatoFeedback, "Erro de rede. Tente novamente.");
+      }
+    });
+  }
+
+
+
   DOM.termosModal.addEventListener("click", (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
   });
@@ -312,9 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const data = await res.json();
       if (data.sucesso && data.dados) {
-        estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         fecharModal(DOM.authModal);
         DOM.loginForm.reset();
@@ -345,9 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         mostrarFeedback(DOM.registroFeedback, "Conta criada! Verifique seu e-mail para confirmar a conta.", true);
-        estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         DOM.registroForm.reset();
         setTimeout(() => fecharModal(DOM.authModal), 3000);
@@ -369,9 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const data = await res.json();
       if (data.sucesso && data.dados) {
-        estado.token = data.dados.token;
         estado.usuario = data.dados.usuario;
-        localStorage.setItem("token", data.dados.token);
         atualizarNavbar();
         fecharModal(DOM.authModal);
       } else {
@@ -483,9 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirModal(DOM.perfilModal);
     DOM.perfilNome.value = estado.usuario?.nome || "";
     try {
-      const resp = await fetch("/api/auth/perfil", {
-        headers: { Authorization: `Bearer ${estado.token}` },
-      });
+      const resp = await fetch("/api/auth/perfil");
       const data = await resp.json();
       if (data.sucesso && data.dados && data.dados.usuario) {
         const u = data.dados.usuario;
@@ -578,7 +621,6 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${estado.token}`,
         },
         body: JSON.stringify({
           nome: DOM.perfilNome.value,
@@ -629,7 +671,6 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${estado.token}`,
         },
         body: JSON.stringify({ novaSenha: senha1 }),
       });
@@ -659,7 +700,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const iconDiv = document.createElement("div");
     iconDiv.className = "plan-card-icon";
-    iconDiv.innerHTML = tierConfig.icon;
+    const imgIcon = document.createElement("img");
+    imgIcon.src = tierConfig.src;
+    imgIcon.width = 48;
+    imgIcon.height = 48;
+    imgIcon.loading = "lazy";
+    imgIcon.alt = tierConfig.alt;
+    iconDiv.appendChild(imgIcon);
     article.appendChild(iconDiv);
     const nameEl = document.createElement("h2");
     nameEl.className = "plan-card-name";

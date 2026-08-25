@@ -3,10 +3,12 @@ const config = require("../config/env");
 const logger = require("../config/logger");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  port: parseInt(process.env.SMTP_PORT) || 465,
+  secure: process.env.SMTP_PORT == 465 || !process.env.SMTP_PORT, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EMAIL_USER || process.env.SMTP_USER,
+    pass: process.env.EMAIL_PASS || process.env.SMTP_PASS,
   },
 });
 
@@ -77,4 +79,20 @@ const enviarEmailRecibo = (paraEmail, nome, valor, tokens) => {
   return enviarEmail(paraEmail, "Pagamento Aprovado! Seus Tokens chegaram 🚀", html);
 };
 
-module.exports = { enviarEmailVerificacao, enviarEmailRecuperacao, enviarEmailRecibo };
+const enviarEmailContato = (nome, emailCliente, mensagem) => {
+  const adminEmail = process.env.EMAIL_USER || process.env.SMTP_USER || "suporte@moedaarena.com.br";
+  const html = layoutBase(`
+    <h2 style="color:#f59e0b;text-align:center;">✉️ Nova Mensagem de Contato</h2>
+    <p><strong>Nome:</strong> ${nome}</p>
+    <p><strong>E-mail do Cliente:</strong> <a href="mailto:${emailCliente}" style="color:#60a5fa;">${emailCliente}</a></p>
+    <div style="background:#1e293b;padding:20px;border-radius:8px;margin:20px 0;">
+      <p style="white-space: pre-wrap; margin:0;">${mensagem}</p>
+    </div>
+    <div style="text-align:center;">
+      <a href="mailto:${emailCliente}" style="background:#f59e0b;color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:14px;">Responder ao Cliente</a>
+    </div>
+  `);
+  return enviarEmail(adminEmail, `Contato: ${nome} - Moeda Arena`, html);
+};
+
+module.exports = { enviarEmailVerificacao, enviarEmailRecuperacao, enviarEmailRecibo, enviarEmailContato };

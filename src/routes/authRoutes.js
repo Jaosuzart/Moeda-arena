@@ -7,6 +7,7 @@ const config = require("../config/env");
 router.post("/registrar", validarRegistro, authController.registrar);
 router.post("/login", validarLogin, authController.login);
 router.post("/google", authController.loginGoogle);
+router.post("/logout", authController.logout);
 router.get("/config", (req, res) => {
   res.json({
     clientId: config.googleClientId,
@@ -14,6 +15,7 @@ router.get("/config", (req, res) => {
     whatsappUrl: config.whatsappUrl,
   });
 });
+router.get("/status", authController.status);
 router.get("/perfil", autenticar, authController.perfil);
 router.put("/perfil", autenticar, authController.atualizarPerfil);
 router.post("/definir-senha", autenticar, authController.definirSenha);

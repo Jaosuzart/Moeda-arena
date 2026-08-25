@@ -1,7 +1,7 @@
 :root {
-  --bg-deep: #0D0A00;
-  --bg-primary: #130E00;
-  --bg-secondary: #1A1200;
+  --bg-deep: #121214;
+  --bg-primary: #18181b;
+  --bg-secondary: #27272a;
   --bg-card: rgba(255, 184, 0, 0.04);
   --bg-card-hover: rgba(255, 184, 0, 0.08);
   --bg-glass: rgba(255, 184, 0, 0.03);
@@ -237,13 +237,23 @@ body::before {
 }
 
 .btn-gamer-primary {
-  background: linear-gradient(135deg, var(--premium-base), var(--premium-dark));
+  background: linear-gradient(135deg, var(--premium-light), var(--premium-dark));
   color: var(--text-dark);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
 }
 
 .btn-gamer-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 184, 0, 0.4);
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #fff3b0, var(--premium-base));
+  box-shadow: 0 10px 30px rgba(255, 184, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-gamer-primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.4), inset 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-gamer-secondary {
