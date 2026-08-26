@@ -239,20 +239,20 @@ body::before {
 
 .btn-gamer-primary {
   background: linear-gradient(160deg, #F5C400 0%, #D97B00 100%);
-  color: #ffffff;
-  font-weight: 800;
+  color: #111827;
+  font-weight: 700;
   letter-spacing: 2.5px;
   border-radius: var(--radius-md);
   border: none;
   box-shadow: 0 4px 16px rgba(217, 123, 0, 0.4);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: none;
 }
 
 .btn-gamer-primary:hover:not(:disabled) {
   transform: translateY(-2px);
   background: linear-gradient(160deg, #FFD000 0%, #E88A00 100%);
   box-shadow: 0 8px 28px rgba(217, 123, 0, 0.55);
-  color: #ffffff;
+  color: #111827;
 }
 
 .btn-gamer-primary:active:not(:disabled) {
