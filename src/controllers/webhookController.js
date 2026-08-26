@@ -1,28 +1,14 @@
 const { MercadoPagoConfig, Payment } = require("mercadopago");
+const crypto = require("crypto");
 const config = require("../config/env");
 const logger = require("../config/logger");
 const usuarioModel = require("../models/usuarioModel");
+const pagamentoModel = require("../models/pagamentoModel");
 const whatsappService = require("../services/whatsappService");
 const emailService = require("../services/emailService");
 const cupomModel = require("../models/cupomModel");
-const { pool } = require("../models/db");
 
 const mpClient = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
-
-const jaProcessado = async (paymentId) => {
-  const [rows] = await pool.query(
-    "SELECT id FROM pagamentos_processados WHERE payment_id = ?",
-    [String(paymentId)],
-  );
-  return rows.length > 0;
-};
-
-const registrarPagamento = async (paymentId, usuarioId, planoId, tokens, valor, status) => {
-  await pool.query(
-    "INSERT INTO pagamentos_processados (payment_id, usuario_id, plano_id, tokens_creditados, valor_pago, status) VALUES (?, ?, ?, ?, ?, ?)",
-    [String(paymentId), usuarioId, planoId, tokens, valor, status],
-  );
-};
 
 const notificarUsuario = async (usuario, valor, tokens) => {
   if (usuario.telefone) {
@@ -55,25 +41,50 @@ const processarAfiliado = async (usuarioId, tokensComprados) => {
 };
 
 const processarNotificacao = async (req, res) => {
-  res.status(200).send("OK");
-
   const evento = req.body;
   const { topic, id } = req.query;
+  const tipoEvento = topic || evento?.type;
+  const idPagamento = id || evento?.data?.id;
+
+  if (tipoEvento !== "payment" || !idPagamento) {
+    logger.debug("Webhook ignorado: tipo não é payment.", { tipo: tipoEvento });
+    return res.status(200).send("Ignorado");
+  }
+
+  if (config.mpWebhookSecret) {
+    const signatureHeader = req.headers["x-signature"];
+    if (!signatureHeader) {
+      logger.warn("Webhook recusado: sem x-signature.");
+      return res.status(403).send("Missing signature");
+    }
+
+    const parts = signatureHeader.split(",");
+    let ts = "";
+    let v1 = "";
+    parts.forEach(part => {
+      const [key, value] = part.split("=");
+      if (key && key.trim() === "ts") ts = value;
+      if (key && key.trim() === "v1") v1 = value;
+    });
+
+    const manifest = `id:${idPagamento};request-id:${req.headers["x-request-id"] || ""};ts:${ts};`;
+    const hash = crypto.createHmac("sha256", config.mpWebhookSecret).update(manifest).digest("hex");
+
+    if (hash !== v1) {
+      logger.warn("Assinatura do webhook inválida.", { signatureHeader });
+      return res.status(403).send("Invalid signature");
+    }
+  }
 
   try {
-    const tipoEvento = topic || evento.type;
-    const idPagamento = id || evento.data?.id;
 
-    if (tipoEvento !== "payment" || !idPagamento) {
-      logger.debug("Webhook ignorado: tipo não é payment.", { tipo: tipoEvento });
-      return;
-    }
+
 
     logger.info("Webhook de pagamento recebido.", { paymentId: idPagamento });
 
-    if (await jaProcessado(idPagamento)) {
+    if (await pagamentoModel.jaProcessado(idPagamento)) {
       logger.info("Pagamento já processado. Ignorando duplicata.", { paymentId: idPagamento });
-      return;
+      return res.status(200).send("Duplicata");
     }
 
     const paymentApi = new Payment(mpClient);
@@ -84,7 +95,7 @@ const processarNotificacao = async (req, res) => {
         paymentId: idPagamento,
         status: pagamento.status,
       });
-      return;
+      return res.status(200).send("Ignorado - Nao aprovado");
     }
 
     let referencia;
@@ -92,7 +103,7 @@ const processarNotificacao = async (req, res) => {
       referencia = JSON.parse(pagamento.external_reference);
     } catch {
       logger.error("Falha ao parsear external_reference.", { paymentId: idPagamento });
-      return;
+      return res.status(200).send("Referencia invalida");
     }
 
     const { usuarioId, planoId, tokens, cupom } = referencia;
@@ -100,10 +111,10 @@ const processarNotificacao = async (req, res) => {
 
     if (!creditado) {
       logger.error("Falha ao creditar tokens: usuário não encontrado.", { usuarioId });
-      return;
+      return res.status(200).send("Usuario nao encontrado");
     }
 
-    await registrarPagamento(
+    await pagamentoModel.registrarPagamento(
       idPagamento,
       usuarioId,
       planoId,
@@ -131,8 +142,11 @@ const processarNotificacao = async (req, res) => {
       planoId,
       tokens,
     });
+
+    return res.status(200).send("OK");
   } catch (err) {
     logger.error("Erro crítico ao processar webhook.", { erro: err.message, stack: err.stack });
+    return res.status(500).send("Internal Server Error");
   }
 };
 

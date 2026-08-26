@@ -87,8 +87,12 @@ const iniciar = async () => {
     });
     server.on("error", (err) => {
       if (err.code === "EADDRINUSE") {
+        if (config.nodeEnv !== "development") {
+          logger.error(`Porta ${config.port} ocupada. O servidor não pode iniciar.`);
+          process.exit(1);
+        }
         logger.warn(
-          `Porta ${config.port} ocupada. Tentando liberar automaticamente...`,
+          `Porta ${config.port} ocupada. Tentando liberar automaticamente (apenas dev)...`,
         );
         const { exec } = require("child_process");
         exec(

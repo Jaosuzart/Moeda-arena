@@ -765,14 +765,12 @@ body::before {
 }
 
 .modal-content {
-  background: rgba(13, 10, 0, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 184, 0, 0.15);
-  border-radius: var(--radius-xl);
+  background: var(--bg-primary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: 440px;
-  box-shadow: var(--shadow-modal), 0 0 40px rgba(255, 184, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   position: relative;
 }
@@ -832,13 +830,11 @@ body::before {
   border: none;
   color: var(--text-muted);
   font-family: "Inter", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   transition: var(--transition-fast);
   border-bottom: 2px solid transparent;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .auth-tab:hover {
@@ -846,8 +842,8 @@ body::before {
 }
 
 .auth-tab.active {
-  color: var(--accent-premium);
-  border-bottom-color: var(--accent-premium);
+  color: #fff;
+  border-bottom-color: #fff;
 }
 
 .auth-form {
@@ -999,9 +995,9 @@ body::before {
 
 /* Security 2FA Card */
 .security-2fa-card {
-  background: rgba(255, 184, 0, 0.04);
-  border: 1px solid rgba(255, 184, 0, 0.15);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   margin-bottom: 1rem;
 }
@@ -1516,7 +1512,9 @@ body::before {
   margin-bottom: 10px;
   background: linear-gradient(135deg, #fff 0%, #00e5ff 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .stats-section-subtitle {

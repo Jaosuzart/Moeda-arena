@@ -37,5 +37,6 @@ const config = Object.freeze({
   googleClientId: process.env.CLIENT_ID_GOOGLE || "",
   telegramUrl: process.env.TELEGRAM_URL || "",
   whatsappUrl: process.env.WHATSAPP_URL || "",
+  mpWebhookSecret: process.env.MP_WEBHOOK_SECRET || "",
 });
 module.exports = config;
