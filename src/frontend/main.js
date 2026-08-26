@@ -58,6 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
     perfilCartao: document.getElementById("perfilCartao"),
     perfilFeedback: document.getElementById("perfilFeedback"),
     btnSalvarPerfil: document.getElementById("btnSalvarPerfil"),
+    tabSeguranca: document.getElementById("tabSeguranca"),
+    areaSeguranca: document.getElementById("areaSeguranca"),
+    btnToggle2fa: document.getElementById("btnToggle2fa"),
+    badge2fa: document.getElementById("badge2fa"),
+    feedback2fa: document.getElementById("feedback2fa"),
+    verify2faModal: document.getElementById("verify2faModal"),
+    verify2faForm: document.getElementById("verify2faForm"),
+    verify2faUserId: document.getElementById("verify2faUserId"),
+    verify2faCode: document.getElementById("verify2faCode"),
+    verify2faFeedback: document.getElementById("verify2faFeedback"),
+    btnConfirmar2fa: document.getElementById("btnConfirmar2fa"),
+    btnFecharVerify2fa: document.getElementById("btnFecharVerify2fa"),
     btnRanking: document.getElementById("btnRanking"),
     btnRankingLogged: document.getElementById("btnRankingLogged"),
     rankingModal: document.getElementById("rankingModal"),
@@ -158,6 +170,46 @@ document.addEventListener("DOMContentLoaded", () => {
   function setCarregando(btn, isLoading, texto) {
     btn.disabled = isLoading;
     btn.textContent = texto;
+  }
+  async function carregar2faStatus() {
+    if (!DOM.badge2fa || !DOM.btnToggle2fa) return;
+    try {
+      const resp = await fetch("/api/auth/2fa/status");
+      const data = await resp.json();
+      const ativo = data.dados && data.dados.ativo2fa;
+      DOM.badge2fa.textContent = ativo ? "Ativada ✓" : "Desativada";
+      DOM.badge2fa.className = `badge-status ${ativo ? "ativo" : "inativo"}`;
+      DOM.btnToggle2fa.textContent = ativo ? "Desativar Autenticação 2FA" : "Ativar Autenticação 2FA";
+      DOM.btnToggle2fa.className = `btn-gamer ${ativo ? "btn-gamer-secondary" : "btn-gamer-primary"} w-full`;
+    } catch (e) {
+      DOM.badge2fa.textContent = "Erro ao verificar";
+    }
+  }
+  if (DOM.btnToggle2fa) {
+    DOM.btnToggle2fa.addEventListener("click", async () => {
+      const btn = DOM.btnToggle2fa;
+      const ativando = btn.textContent.toLowerCase().includes("ativar");
+      setCarregando(btn, true, ativando ? "Ativando..." : "Desativando...");
+      if (DOM.feedback2fa) esconderFeedback(DOM.feedback2fa);
+      try {
+        const resp = await fetch("/api/auth/2fa/toggle", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ativar: ativando }),
+        });
+        const data = await resp.json();
+        if (resp.ok && data.sucesso) {
+          mostrarFeedback(DOM.feedback2fa, data.dados.mensagem || (ativando ? "2FA ativado com sucesso!" : "2FA desativado."), true);
+          await carregar2faStatus();
+        } else {
+          mostrarFeedback(DOM.feedback2fa, data.erro || "Erro ao alterar 2FA.", false);
+          setCarregando(btn, false, ativando ? "Ativar Autenticação 2FA" : "Desativar Autenticação 2FA");
+        }
+      } catch (e) {
+        mostrarFeedback(DOM.feedback2fa, "Erro de conexão com o servidor.", false);
+        setCarregando(btn, false, ativando ? "Ativar Autenticação 2FA" : "Desativar Autenticação 2FA");
+      }
+    });
   }
   function atualizarNavbar() {
     if (estado.usuario) {
@@ -367,6 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
         atualizarNavbar();
         fecharModal(DOM.authModal);
         DOM.loginForm.reset();
+      } else if (data.codigo === "REQUIRE_2FA") {
+        fecharModal(DOM.authModal);
+        DOM.verify2faUserId.value = data.usuarioId;
+        DOM.verify2faCode.value = "";
+        esconderFeedback(DOM.verify2faFeedback);
+        abrirModal(DOM.verify2faModal);
+        DOM.verify2faCode.focus();
       } else {
         mostrarFeedback(DOM.loginFeedback, data.erro || "Erro ao fazer login.", false);
       }
@@ -376,6 +435,44 @@ document.addEventListener("DOMContentLoaded", () => {
     DOM.btnLogin.disabled = false;
     DOM.btnLogin.textContent = "Entrar na Arena";
   });
+
+  if (DOM.btnFecharVerify2fa) {
+    DOM.btnFecharVerify2fa.addEventListener("click", () => fecharModal(DOM.verify2faModal));
+  }
+  
+  if (DOM.verify2faForm) {
+    DOM.verify2faForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      esconderFeedback(DOM.verify2faFeedback);
+      setCarregando(DOM.btnConfirmar2fa, true, "Verificando...");
+      
+      try {
+        const res = await fetch("/api/auth/login/2fa", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usuarioId: DOM.verify2faUserId.value,
+            codigo: DOM.verify2faCode.value,
+          }),
+        });
+        const data = await res.json();
+        
+        if (data.sucesso && data.dados) {
+          estado.usuario = data.dados.usuario;
+          atualizarNavbar();
+          fecharModal(DOM.verify2faModal);
+          DOM.verify2faForm.reset();
+          DOM.loginForm.reset();
+        } else {
+          mostrarFeedback(DOM.verify2faFeedback, data.erro || "Código inválido.", false);
+        }
+      } catch (err) {
+        mostrarFeedback(DOM.verify2faFeedback, "Erro de conexão com o servidor.", false);
+      }
+      setCarregando(DOM.btnConfirmar2fa, false, "Verificar Código");
+    });
+  }
+
   DOM.registroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.registroFeedback);
@@ -593,15 +690,35 @@ document.addEventListener("DOMContentLoaded", () => {
   DOM.tabDados.addEventListener("click", () => {
     DOM.tabDados.classList.add("active");
     DOM.tabCartao.classList.remove("active");
+    if (DOM.tabSeguranca) DOM.tabSeguranca.classList.remove("active");
     DOM.areaDados.classList.add("visible");
     DOM.areaCartao.classList.remove("visible");
+    if (DOM.areaSeguranca) DOM.areaSeguranca.classList.remove("visible");
+    if (DOM.btnSalvarPerfil) DOM.btnSalvarPerfil.style.display = "block";
   });
   DOM.tabCartao.addEventListener("click", () => {
     DOM.tabCartao.classList.add("active");
     DOM.tabDados.classList.remove("active");
+    if (DOM.tabSeguranca) DOM.tabSeguranca.classList.remove("active");
     DOM.areaCartao.classList.add("visible");
     DOM.areaDados.classList.remove("visible");
+    if (DOM.areaSeguranca) DOM.areaSeguranca.classList.remove("visible");
+    if (DOM.btnSalvarPerfil) DOM.btnSalvarPerfil.style.display = "block";
   });
+  if (DOM.tabSeguranca) {
+    DOM.tabSeguranca.addEventListener("click", () => {
+      DOM.tabSeguranca.classList.add("active");
+      DOM.tabDados.classList.remove("active");
+      DOM.tabCartao.classList.remove("active");
+      DOM.areaSeguranca.classList.add("visible");
+      DOM.areaDados.classList.remove("visible");
+      DOM.areaCartao.classList.remove("visible");
+      // Esconde botão Salvar que pertence aos dados/cartão
+      if (DOM.btnSalvarPerfil) DOM.btnSalvarPerfil.style.display = "none";
+      // Carrega status 2FA do servidor
+      carregar2faStatus();
+    });
+  }
   DOM.perfilForm.addEventListener("submit", (e) => {
     e.preventDefault();
     esconderFeedback(DOM.perfilFeedback);

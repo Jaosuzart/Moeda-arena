@@ -66,14 +66,14 @@ const decryptSensitiveFields = (row) => {
 
 const buscarPorEmail = async (email) => {
   const sql =
-    "SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password FROM usuarios WHERE email = ?";
+    "SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password, ativo_2fa FROM usuarios WHERE email = ?";
   const [rows] = await pool.query(sql, [email]);
   return decryptSensitiveFields(rows[0]) || null;
 };
 
 const buscarPorId = async (id) => {
   const sql =
-    "SELECT id, nome, email, saldo_tokens, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, ganhos_afiliado FROM usuarios WHERE id = ?";
+    "SELECT id, nome, email, saldo_tokens, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, ganhos_afiliado, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
   const [rows] = await pool.query(sql, [id]);
   return decryptSensitiveFields(rows[0]) || null;
 };
@@ -241,6 +241,24 @@ const obterEstatisticaPlataforma = async () => {
   }
 };
 
+const atualizarStatus2FA = async (id, ativo) => {
+  const sql = "UPDATE usuarios SET ativo_2fa = ? WHERE id = ?";
+  const [resultado] = await pool.query(sql, [ativo, id]);
+  return resultado.affectedRows > 0;
+};
+
+const salvarCodigo2FA = async (id, codigo, expira) => {
+  const sql = "UPDATE usuarios SET codigo_2fa = ?, codigo_2fa_expira = ? WHERE id = ?";
+  const [resultado] = await pool.query(sql, [codigo, expira, id]);
+  return resultado.affectedRows > 0;
+};
+
+const limparCodigo2FA = async (id) => {
+  const sql = "UPDATE usuarios SET codigo_2fa = NULL, codigo_2fa_expira = NULL WHERE id = ?";
+  const [resultado] = await pool.query(sql, [id]);
+  return resultado.affectedRows > 0;
+};
+
 module.exports = {
   criarUsuario,
   buscarPorEmail,
@@ -260,4 +278,7 @@ module.exports = {
   buscarPorTokenResetSenha,
   atualizarSenhaPorReset,
   obterEstatisticaPlataforma,
+  atualizarStatus2FA,
+  salvarCodigo2FA,
+  limparCodigo2FA,
 };

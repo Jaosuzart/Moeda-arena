@@ -95,4 +95,16 @@ const enviarEmailContato = (nome, emailCliente, mensagem) => {
   return enviarEmail(adminEmail, `Contato: ${nome} - Moeda Arena`, html);
 };
 
-module.exports = { enviarEmailVerificacao, enviarEmailRecuperacao, enviarEmailRecibo, enviarEmailContato };
+const enviarEmail2FA = (paraEmail, nome, codigo) => {
+  const html = layoutBase(`
+    <h2 style="color:#f59e0b;text-align:center;">🔐 Código de Segurança</h2>
+    <p>Olá, ${nome}. Você solicitou acesso à sua conta.</p>
+    <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
+      <h3 style="color:#f59e0b;margin:0;font-size:32px;letter-spacing:5px;">${codigo}</h3>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;text-align:center;">Este código expira em 10 minutos. Se não foi você quem solicitou, recomendamos que troque sua senha imediatamente.</p>
+  `);
+  return enviarEmail(paraEmail, "Código de Verificação (2FA) - Moeda Arena", html);
+};
+
+module.exports = { enviarEmailVerificacao, enviarEmailRecuperacao, enviarEmailRecibo, enviarEmailContato, enviarEmail2FA };

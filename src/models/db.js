@@ -20,6 +20,15 @@ const testarConexao = async () => {
   try {
     const conexao = await pool.getConnection();
     await conexao.query("SELECT 1");
+    try {
+      await conexao.query("ALTER TABLE usuarios ADD COLUMN ativo_2fa BOOLEAN DEFAULT FALSE;");
+    } catch (e) {} // Ignora se já existir
+    try {
+      await conexao.query("ALTER TABLE usuarios ADD COLUMN codigo_2fa VARCHAR(6) NULL;");
+    } catch (e) {}
+    try {
+      await conexao.query("ALTER TABLE usuarios ADD COLUMN codigo_2fa_expira DATETIME NULL;");
+    } catch (e) {}
     conexao.release();
     logger.info("Conexão com o banco de dados estabelecida.", {
       host: config.db.host,

@@ -237,23 +237,26 @@ body::before {
 }
 
 .btn-gamer-primary {
-  background: linear-gradient(135deg, var(--premium-light), var(--premium-dark));
-  color: var(--text-dark);
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(255, 184, 0, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.3);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  background: linear-gradient(160deg, #F5C400 0%, #D97B00 100%);
+  color: #000000;
+  font-weight: 800;
+  letter-spacing: 2.5px;
   border-radius: var(--radius-md);
+  border: none;
+  box-shadow: 0 4px 16px rgba(217, 123, 0, 0.4);
+  text-shadow: none;
 }
 
 .btn-gamer-primary:hover:not(:disabled) {
-  transform: translateY(-3px);
-  background: linear-gradient(135deg, #fff3b0, var(--premium-base));
-  box-shadow: 0 10px 30px rgba(255, 184, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  background: linear-gradient(160deg, #FFD000 0%, #E88A00 100%);
+  box-shadow: 0 8px 28px rgba(217, 123, 0, 0.55);
+  color: #000000;
 }
 
 .btn-gamer-primary:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.4), inset 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(217, 123, 0, 0.3);
 }
 
 .btn-gamer-secondary {
@@ -992,6 +995,73 @@ body::before {
   background: rgba(239, 68, 68, 0.1);
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Security 2FA Card */
+.security-2fa-card {
+  background: rgba(255, 184, 0, 0.04);
+  border: 1px solid rgba(255, 184, 0, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.security-2fa-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 1.2rem;
+}
+
+.security-2fa-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.security-2fa-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.security-2fa-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+.security-2fa-status {
+  margin-bottom: 1rem;
+}
+
+.badge-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-status.ativo {
+  background: rgba(0, 230, 118, 0.15);
+  color: var(--free-base);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.badge-status.inativo {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-status.banido {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .checkout-plano-nome {

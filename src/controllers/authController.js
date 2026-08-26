@@ -80,6 +80,19 @@ const login = async (req, res, next) => {
       return erro(res, "Email ou senha incorretos.", 401, "CREDENCIAIS_INVALIDAS");
     }
 
+    if (usuario.ativo_2fa) {
+      const codigo2FA = Math.floor(100000 + Math.random() * 900000).toString();
+      const expira = new Date(Date.now() + 10 * 60000); // 10 minutos
+      await usuarioModel.salvarCodigo2FA(usuario.id, codigo2FA, expira);
+      
+      emailService.enviarEmail2FA(usuario.email, usuario.nome, codigo2FA).catch((err) => {
+        logger.error("Falha ao enviar email 2FA", { erro: err.message });
+      });
+      
+      logger.info("Login aguardando 2FA.", { usuarioId: usuario.id });
+      return res.status(200).json({ sucesso: false, codigo: "REQUIRE_2FA", usuarioId: usuario.id, mensagem: "Código enviado por email." });
+    }
+
     const token = gerarJwt(usuario);
     setTokenCookie(res, token);
     logger.info("Login realizado.", { usuarioId: usuario.id });
@@ -282,6 +295,57 @@ const logout = (req, res) => {
   return sucesso(res, { mensagem: "Logout realizado com sucesso." });
 };
 
+const status2fa = async (req, res, next) => {
+  try {
+    if (!req.usuario || !req.usuario.id) return erro(res, "Não autenticado", 401);
+    const usuario = await usuarioModel.buscarPorId(req.usuario.id);
+    return sucesso(res, { ativo2fa: !!usuario.ativo_2fa });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const toggle2fa = async (req, res, next) => {
+  try {
+    const { ativar } = req.body;
+    if (!req.usuario || !req.usuario.id) return erro(res, "Não autenticado", 401);
+    const result = await usuarioModel.atualizarStatus2FA(req.usuario.id, ativar ? 1 : 0);
+    if (result) {
+      return sucesso(res, { mensagem: ativar ? "2FA ativado com sucesso!" : "2FA desativado." });
+    }
+    return erro(res, "Falha ao alterar status 2FA.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+const verificar2fa = async (req, res, next) => {
+  try {
+    const { usuarioId, codigo } = req.body;
+    if (!usuarioId || !codigo) return erro(res, "Dados incompletos.");
+    
+    const usuario = await usuarioModel.buscarPorId(usuarioId);
+    if (!usuario) return erro(res, "Usuário não encontrado.");
+    
+    if (usuario.codigo_2fa !== codigo) {
+      return erro(res, "Código inválido.", 401);
+    }
+    
+    if (new Date(usuario.codigo_2fa_expira) < new Date()) {
+      return erro(res, "Código expirado.", 401);
+    }
+    
+    await usuarioModel.limparCodigo2FA(usuario.id);
+    
+    const token = gerarJwt(usuario);
+    setTokenCookie(res, token);
+    logger.info("Login 2FA realizado.", { usuarioId: usuario.id });
+    return sucesso(res, { usuario: formatarUsuarioPublico(usuario) });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   registrar,
   login,
@@ -294,4 +358,7 @@ module.exports = {
   redefinirSenhaConfirmar,
   logout,
   status,
+  status2fa,
+  toggle2fa,
+  verificar2fa,
 };

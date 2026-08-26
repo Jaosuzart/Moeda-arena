@@ -79,10 +79,10 @@ const initWhatsApp = () => {
     client.initialize().catch((err) => {
       if (err.message && err.message.includes("already running")) {
         logger.warn("Browser do WhatsApp ainda estava travado. Forçando encerramento de processos Chrome órfãos...");
-        
+
         const { exec } = require("child_process");
-        const comando = process.platform === "win32" 
-          ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate` 
+        const comando = process.platform === "win32"
+          ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate`
           : `pkill -f "chrome.*--headless"`;
 
         exec(comando, (error) => {
@@ -143,8 +143,6 @@ const stopWhatsApp = async () => {
   if (client) {
     logger.info("Encerrando cliente do WhatsApp (limpeza de processo)...");
     try {
-      // O client.destroy() pode travar se o browser já estiver travado. 
-      // Executamos com timeout.
       await Promise.race([
         client.destroy(),
         new Promise(resolve => setTimeout(resolve, 3000))
@@ -152,13 +150,12 @@ const stopWhatsApp = async () => {
     } catch (e) {
       logger.warn("Erro ao encerrar WhatsApp via destroy:", { erro: e.message });
     }
-    
-    // Aniquilador final para garantir que nenhum Chrome zombie fique vivo
+
     const { exec } = require("child_process");
-    const comando = process.platform === "win32" 
-      ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate` 
+    const comando = process.platform === "win32"
+      ? `wmic process where "name='chrome.exe' and commandline like '%--headless%'" call terminate`
       : `pkill -f "chrome.*--headless"`;
-    
+
     exec(comando, () => {
       logger.info("Verificação final de processos órfãos concluída.");
     });
