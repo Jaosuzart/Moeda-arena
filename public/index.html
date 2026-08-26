@@ -823,16 +823,42 @@
             </div>
           </div>
           <div id="areaCartao" class="auth-form">
-            <div class="form-group">
-              <label class="form-label" for="perfilCartao">CARTÃO DE CRÉDITO SALVO</label>
-              <div class="card-input-wrapper">
-                <span class="card-mask">**** **** ****</span>
-                <input class="form-input form-input-card" type="text" id="perfilCartao" placeholder="1234" maxlength="4"
-                  title="Apenas os últimos 4 dígitos por segurança" />
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.4;">Gerencie seus métodos de pagamento para compras rápidas. Seus dados são tokenizados.</p>
+            <div class="saved-cards-container">
+              <div class="saved-card-item">
+                <div class="saved-card-header">
+                  <div class="saved-card-title-group">
+                    <svg class="card-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <span class="saved-card-title">Cartão de Crédito</span>
+                  </div>
+                  <span class="badge-status ativo" style="font-size: 0.65rem; padding: 2px 8px;">Principal</span>
+                </div>
+                <div class="card-input-wrapper mt-2">
+                  <span class="card-mask">•••• •••• ••••</span>
+                  <input class="form-input form-input-card" type="text" id="perfilCartao" placeholder="1234" maxlength="4" title="Apenas os últimos 4 dígitos por segurança" />
+                </div>
               </div>
-              <small class="text-xs-muted">
-                *Por segurança (PCI DSS), armazenamos apenas os últimos 4 dígitos do seu cartão.
-              </small>
+
+              <div class="saved-card-item">
+                <div class="saved-card-header">
+                  <div class="saved-card-title-group">
+                    <svg class="card-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                    <span class="saved-card-title">Cartão de Débito</span>
+                  </div>
+                </div>
+                <div class="card-input-wrapper mt-2">
+                  <span class="card-mask">•••• •••• ••••</span>
+                  <input class="form-input form-input-card" type="text" id="perfilCartaoDebito" placeholder="1234" maxlength="4" title="Apenas os últimos 4 dígitos por segurança" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="security-info-box">
+              <svg class="security-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <div class="security-info-text">
+                <strong>Ambiente Seguro PCI DSS</strong>
+                <span>Por segurança, armazenamos apenas os últimos 4 dígitos. Pagamentos via Mercado Pago.</span>
+              </div>
             </div>
           </div>
           <div id="areaSeguranca" class="auth-form">

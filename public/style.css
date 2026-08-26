@@ -1237,16 +1237,108 @@ body::before {
 .card-mask {
   position: absolute;
   left: 16px;
-  top: 12px;
-  color: var(--text-muted);
-  font-family: monospace;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'Inter', monospace;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
   pointer-events: none;
   user-select: none;
 }
 
 .form-input-card {
-  padding-left: 130px;
-  font-family: monospace;
+  padding-left: 140px;
+  font-family: 'Inter', monospace;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-input-card:focus {
+  background: rgba(255, 184, 0, 0.05);
+  border-color: var(--accent-premium);
+}
+
+.saved-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.saved-card-item {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: var(--transition-fast);
+}
+
+.saved-card-item:hover {
+  border-color: rgba(255, 184, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.saved-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.saved-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-brand-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+}
+
+.saved-card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.security-info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(0, 230, 118, 0.05);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+}
+
+.security-info-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--free-base);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.security-info-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+.security-info-text strong {
+  display: block;
+  color: var(--free-base);
+  margin-bottom: 2px;
+  font-size: 0.8rem;
 }
 
 .table-responsive {
