@@ -1145,10 +1145,10 @@ document.addEventListener("DOMContentLoaded", () => {
         data.dados.forEach((jogador, index) => {
           const tr = document.createElement("tr");
           tr.className = "admin-table-row";
-          let medal = `${index + 1}º`;
-          if (index === 0) medal = "🥇";
-          if (index === 1) medal = "🥈";
-          if (index === 2) medal = "🥉";
+          let medal = `🏅 ${index + 1}º`;
+          if (index === 0) medal = "🥇 1º";
+          if (index === 1) medal = "🥈 2º";
+          if (index === 2) medal = "🥉 3º";
           const tdMedal = document.createElement("td");
           tdMedal.className = "rank-table-cell rank-cell-medal";
           tdMedal.textContent = medal;
