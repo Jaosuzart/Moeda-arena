@@ -647,6 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {}
   }
   DOM.navAvatar.addEventListener("click", async () => {
+    if (DOM.tabDados) DOM.tabDados.click();
     abrirModal(DOM.perfilModal);
     DOM.perfilNome.value = estado.usuario?.nome || "";
     try {
