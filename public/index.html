@@ -978,11 +978,22 @@
           Para proteger sua conta, informe sua senha atual para salvar alterações no perfil (PIX, CPF, etc).
         </p>
         <form id="sudoForm">
-          <div class="form-group">
+          <div class="form-group" style="position: relative">
             <label for="sudoSenha" class="form-label">Sua Senha</label>
             <input type="password" id="sudoSenha" class="form-input" required placeholder="Digite sua senha..." />
+            <a href="#" id="btnEsqueciSenhaSudo" style="
+                  float: right;
+                  margin-top: 6px;
+                  font-size: 0.8rem;
+                  text-decoration: none;
+                  color: var(--text-secondary, #aaa);
+                  transition: color 0.2s;
+                " onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
+              onmouseout="this.style.color = 'var(--text-secondary, #aaa)'">
+              Esqueci minha senha
+            </a>
           </div>
-          <div id="sudoFeedback" class="form-feedback"></div>
+          <div id="sudoFeedback" class="form-feedback" style="margin-top: 24px"></div>
           <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%">Confirmar e Salvar</button>
         </form>
       </div>

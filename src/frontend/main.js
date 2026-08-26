@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     newSecurityPassword: document.getElementById("newSecurityPassword"),
     createPasswordFeedback: document.getElementById("createPasswordFeedback"),
     btnEsqueciSenha: document.getElementById("btnEsqueciSenha"),
+    btnEsqueciSenhaSudo: document.getElementById("btnEsqueciSenhaSudo"),
     forgotPasswordModal: document.getElementById("forgotPasswordModal"),
     forgotForm: document.getElementById("forgotForm"),
     forgotEmail: document.getElementById("forgotEmail"),
@@ -1298,6 +1299,15 @@ document.addEventListener("DOMContentLoaded", () => {
     DOM.btnEsqueciSenha.addEventListener("click", (e) => {
       e.preventDefault();
       fecharModal(DOM.authModal);
+      abrirModal(DOM.forgotPasswordModal);
+      DOM.forgotEmail.value = "";
+      esconderFeedback(DOM.forgotFeedback);
+    });
+  }
+  if (DOM.btnEsqueciSenhaSudo) {
+    DOM.btnEsqueciSenhaSudo.addEventListener("click", (e) => {
+      e.preventDefault();
+      fecharModal(DOM.sudoModal);
       abrirModal(DOM.forgotPasswordModal);
       DOM.forgotEmail.value = "";
       esconderFeedback(DOM.forgotFeedback);
