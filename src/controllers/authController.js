@@ -267,7 +267,11 @@ const solicitarRecuperarSenha = async (req, res, next) => {
     const expira = new Date(Date.now() + 3_600_000);
 
     await usuarioModel.salvarTokenResetSenha(usuario.id, token, expira);
-    await emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, token);
+    
+    // Envio assíncrono para não travar a resposta da API
+    emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, token).catch(err => {
+      logger.error("Erro no envio em background de recuperação de senha", { erro: err.message });
+    });
 
     logger.info("Solicitação de recuperação de senha gerada.", { usuarioId: usuario.id });
     return sucesso(res, mensagemGenerica);
