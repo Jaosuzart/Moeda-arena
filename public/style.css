@@ -14,7 +14,8 @@
   --text-dark: #0D0A00;
 
   --free-rgb: 0, 230, 118;
-  --free-base: #00E676;
+  --free-base:
+    #00E676;
   --free-light: #4ade80;
   --free-dark: #10b981;
   --free-darker: #059669;
