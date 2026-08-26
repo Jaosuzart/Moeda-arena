@@ -1108,7 +1108,12 @@ body::before {
 }
 
 .text-danger {
-  color: #ef4444;
+  color: #f87171;
+}
+
+.btn-gamer-ghost.text-danger:hover:not(:disabled) {
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.1);
 }
 
 .text-muted {

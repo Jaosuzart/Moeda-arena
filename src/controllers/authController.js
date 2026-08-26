@@ -182,7 +182,16 @@ const atualizarPerfil = async (req, res, next) => {
     }
 
     const usuarioCompleto = await usuarioModel.buscarPorEmail(usuarioDb.email);
+    
+    // DEBUG LOG
+    console.log("[DEBUG 2FA PERFIL] Email:", usuarioDb.email);
+    console.log("[DEBUG 2FA PERFIL] Senha digitada length:", senhaConfirmacao.length);
+    console.log("[DEBUG 2FA PERFIL] Hash do DB length:", usuarioCompleto.senha_hash ? usuarioCompleto.senha_hash.length : 'NULL');
+
     const senhaValida = await bcrypt.compare(senhaConfirmacao, usuarioCompleto.senha_hash);
+    
+    console.log("[DEBUG 2FA PERFIL] bcrypt.compare result:", senhaValida);
+
     if (!senhaValida) return erro(res, "Senha de confirmação incorreta.", 403, "SENHA_INCORRETA");
 
     if (!nome || !nome.trim()) return erro(res, "O nome não pode ficar vazio.", 400);
