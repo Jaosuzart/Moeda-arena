@@ -140,6 +140,27 @@ document.addEventListener("DOMContentLoaded", () => {
     premium: { src: "/assets/images/icon-sword.webp", alt: "Premium", desc: "O favorito dos jogadores competitivos." },
     vip: { src: "/assets/images/icon-crown.webp", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
+
+  const applyMask = (input, maskType) => {
+    if (!input) return;
+    input.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (maskType === 'cpf') {
+        v = v.replace(/(\d{3})(\d)/, '$1.$2');
+        v = v.replace(/(\d{3})(\d)/, '$1.$2');
+        v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      } else if (maskType === 'tel') {
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+        v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+      }
+      e.target.value = v;
+    });
+  };
+
+  applyMask(DOM.perfilCpf, 'cpf');
+  applyMask(DOM.perfilTelefone, 'tel');
+  applyMask(DOM.registroTelefone, 'tel');
+
   async function fetchAutenticado(url, opcoes = {}) {
     const headers = { "Content-Type": "application/json", ...opcoes.headers };
     return fetch(url, { ...opcoes, headers });
@@ -234,9 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
           elRole.style.cursor = "pointer";
           elRole.title = "Seu email não está verificado. Clique para saber mais.";
           elRole.onclick = () =>
-            alert(
-              "⚠️ SEU EMAIL ESTÁ PENDENTE!nnVerifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.",
-            );
+            Swal.fire({
+              icon: "warning",
+              title: "Seu email está pendente!",
+              text: "Verifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#3085d6"
+            });
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "none";
         } else if (is_admin) {
           elRole.textContent = "Administrador";
