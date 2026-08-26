@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
   port: parseInt(process.env.SMTP_PORT) || 465,
   secure: process.env.SMTP_PORT == 465 || !process.env.SMTP_PORT, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER || process.env.SMTP_USER,
-    pass: process.env.EMAIL_PASS || process.env.SMTP_PASS,
+    user: process.env.SMTP_USER || process.env.EMAIL_USER,
+    pass: process.env.SMTP_PASS || process.env.EMAIL_PASS,
   },
 });
 
@@ -17,7 +17,7 @@ const BASE_URL = config.corsOrigin;
 const enviarEmail = async (para, assunto, html) => {
   try {
     await transporter.sendMail({
-      from: `"Moeda Arena" <${process.env.EMAIL_USER}>`,
+      from: `"Moeda Arena" <${process.env.SMTP_USER || process.env.EMAIL_USER}>`,
       to: para,
       subject: assunto,
       html,
