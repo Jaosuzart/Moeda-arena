@@ -1063,7 +1063,7 @@ body::before {
 .checkout-plano-nome {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--accent-premium);
+  color: var(--premium-base, #FFB800);
   margin-top: 4px;
 }
 

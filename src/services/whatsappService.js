@@ -60,7 +60,7 @@ const initWhatsApp = () => {
       logger.info("📱 Escaneie o QR Code no terminal OU clique no link:");
       logger.info(`👉 ${url} 👈`);
       logger.info("====================================================");
-      qrcode.generate(qr, { small: true });
+      qrcode.generate(qr);
     });
     client.on("ready", () => {
       isReady = true;
