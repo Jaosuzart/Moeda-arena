@@ -10,16 +10,16 @@ const cupomModel = require("../models/cupomModel");
 
 const mpClient = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 
-const notificarUsuario = async (usuario, valor, tokens) => {
+const notificarUsuario = async (usuario, valor, moedas) => {
   if (usuario.telefone) {
-    const msg = `✅ Olá ${usuario.nome}! Seu pagamento de R$ ${valor} foi aprovado! 🎉\n\nCreditamos ${tokens} tokens na sua conta da Moeda Arena.`;
+    const msg = `✅ Olá ${usuario.nome}! Seu pagamento de R$ ${valor} foi aprovado! 🎉\n\nCreditamos ${moedas} moedas na sua conta da Moeda Arena.`;
     whatsappService.enviarMensagem(usuario.telefone, msg).catch((err) =>
       logger.error("Falha ao enviar WhatsApp.", { erro: err.message }),
     );
   }
 
   if (usuario.email) {
-    emailService.enviarEmailRecibo(usuario.email, usuario.nome, valor, tokens).catch((err) =>
+    emailService.enviarEmailRecibo(usuario.email, usuario.nome, valor, moedas).catch((err) =>
       logger.error("Falha ao enviar e-mail de recibo.", { erro: err.message }),
     );
   }
@@ -32,7 +32,7 @@ const processarAfiliado = async (usuarioId, tokensComprados) => {
   const comissao = Math.floor(tokensComprados * 0.05);
   if (comissao <= 0) return;
 
-  await usuarioModel.adicionarTokens(usuario.indicado_por, comissao);
+  await usuarioModel.adicionarMoedas(usuario.indicado_por, comissao);
   await pool.query(
     "UPDATE usuarios SET ganhos_afiliado = ganhos_afiliado + ? WHERE id = ?",
     [comissao, usuario.indicado_por],
@@ -106,11 +106,11 @@ const processarNotificacao = async (req, res) => {
       return res.status(200).send("Referencia invalida");
     }
 
-    const { usuarioId, planoId, tokens, cupom } = referencia;
-    const creditado = await usuarioModel.adicionarTokens(usuarioId, tokens);
+    const { usuarioId, planoId, moedas, cupom } = referencia;
+    const creditado = await usuarioModel.adicionarMoedas(usuarioId, moedas);
 
     if (!creditado) {
-      logger.error("Falha ao creditar tokens: usuário não encontrado.", { usuarioId });
+      logger.error("Falha ao creditar moedas: usuário não encontrado.", { usuarioId });
       return res.status(200).send("Usuario nao encontrado");
     }
 
@@ -118,7 +118,7 @@ const processarNotificacao = async (req, res) => {
       idPagamento,
       usuarioId,
       planoId,
-      tokens,
+      moedas,
       pagamento.transaction_amount || 0,
       "approved",
     );
@@ -129,18 +129,18 @@ const processarNotificacao = async (req, res) => {
       );
     }
 
-    await processarAfiliado(usuarioId, tokens);
+    await processarAfiliado(usuarioId, moedas);
 
     const usuario = await usuarioModel.buscarPorId(usuarioId);
     if (usuario) {
-      await notificarUsuario(usuario, pagamento.transaction_amount, tokens);
+      await notificarUsuario(usuario, pagamento.transaction_amount, moedas);
     }
 
-    logger.info("Pagamento processado e tokens creditados.", {
+    logger.info("Pagamento processado e moedas creditados.", {
       paymentId: idPagamento,
       usuarioId,
       planoId,
-      tokens,
+      moedas,
     });
 
     return res.status(200).send("OK");

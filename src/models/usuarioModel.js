@@ -37,7 +37,7 @@ const criarUsuario = async (
       id: resultado.insertId,
       nome,
       email,
-      saldo_tokens: 100,
+      saldo_moedas: 100,
       token_verificacao: tokenVerificacao,
     };
   } catch (err) {
@@ -66,14 +66,14 @@ const decryptSensitiveFields = (row) => {
 
 const buscarPorEmail = async (email) => {
   const sql =
-    "SELECT id, nome, email, senha_hash, saldo_tokens, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password, ativo_2fa FROM usuarios WHERE email = ?";
+    "SELECT id, nome, email, senha_hash, saldo_moedas, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password, ativo_2fa FROM usuarios WHERE email = ?";
   const [rows] = await pool.query(sql, [email]);
   return decryptSensitiveFields(rows[0]) || null;
 };
 
 const buscarPorId = async (id) => {
   const sql =
-    "SELECT id, nome, email, saldo_tokens, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, ganhos_afiliado, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
+    "SELECT id, nome, email, saldo_moedas, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, ganhos_afiliado, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
   const [rows] = await pool.query(sql, [id]);
   return decryptSensitiveFields(rows[0]) || null;
 };
@@ -120,7 +120,7 @@ const adicionarEstatisticas = async (id, trofeus, vitorias, xp) => {
 
 const listarTodos = async () => {
   const sql =
-    "SELECT id, nome, email, saldo_tokens, trofeus, vitorias, xp, status, ganhos_afiliado FROM usuarios ORDER BY id DESC";
+    "SELECT id, nome, email, saldo_moedas, trofeus, vitorias, xp, status, ganhos_afiliado FROM usuarios ORDER BY id DESC";
   const [rows] = await pool.query(sql);
   return rows;
 };
@@ -138,31 +138,31 @@ const definirSenha = async (id, senhaHash) => {
   return resultado.affectedRows > 0;
 };
 
-const adicionarTokens = async (usuarioId, quantidade) => {
+const adicionarMoedas = async (usuarioId, quantidade) => {
   try {
     const sql =
-      "UPDATE usuarios SET saldo_tokens = saldo_tokens + ? WHERE id = ?";
+      "UPDATE usuarios SET saldo_moedas = saldo_moedas + ? WHERE id = ?";
     const [resultado] = await pool.query(sql, [quantidade, usuarioId]);
     if (resultado.affectedRows > 0) {
-      logger.info("Tokens creditados com sucesso.", { usuarioId, quantidade });
+      logger.info("Moedas creditados com sucesso.", { usuarioId, quantidade });
       return true;
     }
-    logger.warn("Nenhum usuário encontrado para creditar tokens.", { usuarioId });
+    logger.warn("Nenhum usuário encontrado para creditar moedas.", { usuarioId });
     return false;
   } catch (err) {
-    logger.error("Erro ao adicionar tokens.", { usuarioId, quantidade, erro: err.message });
+    logger.error("Erro ao adicionar moedas.", { usuarioId, quantidade, erro: err.message });
     throw err;
   }
 };
 
-const debitarTokens = async (id, quantidade) => {
+const debitarMoedas = async (id, quantidade) => {
   try {
     const sql =
-      "UPDATE usuarios SET saldo_tokens = saldo_tokens - ? WHERE id = ? AND saldo_tokens >= ?";
+      "UPDATE usuarios SET saldo_moedas = saldo_moedas - ? WHERE id = ? AND saldo_moedas >= ?";
     const [resultado] = await pool.execute(sql, [quantidade, id, quantidade]);
     return resultado.affectedRows > 0;
   } catch (err) {
-    logger.error("Erro ao debitar tokens.", { usuarioId: id, erro: err.message });
+    logger.error("Erro ao debitar moedas.", { usuarioId: id, erro: err.message });
     throw err;
   }
 };
@@ -218,11 +218,11 @@ const atualizarSenhaPorReset = async (usuarioId, novaSenhaHash) => {
 const obterEstatisticaPlataforma = async () => {
   try {
     const sqlTotais =
-      "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_tokens), 0) AS totalTokens FROM usuarios";
+      "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_moedas), 0) AS totalTokens FROM usuarios";
     const [totaisRows] = await pool.query(sqlTotais);
 
     const sqlUltimas = `
-      SELECT p.data_processamento AS data, u.nome, p.plano_id, p.tokens_creditados AS tokens
+      SELECT p.data_processamento AS data, u.nome, p.plano_id, p.moedas_creditadas AS moedas
       FROM pagamentos_processados p
       JOIN usuarios u ON p.usuario_id = u.id
       ORDER BY p.id DESC
@@ -264,8 +264,8 @@ module.exports = {
   buscarPorEmail,
   buscarPorId,
   buscarPorCodigoConvite,
-  adicionarTokens,
-  debitarTokens,
+  adicionarMoedas,
+  debitarMoedas,
   atualizarPerfil,
   buscarRanking,
   adicionarEstatisticas,

@@ -28,13 +28,13 @@ const getSaldo = async (req, res, next) => {
     return sucesso(res, {
       email: usuario.email,
       nome: usuario.nome,
-      saldo: usuario.saldo_tokens,
+      saldo: usuario.saldo_moedas,
     });
   } catch (err) {
     next(err);
   }
 };
-const consumirTokens = async (req, res, next) => {
+const consumirMoedas = async (req, res, next) => {
   try {
     const { email, quantidade } = req.body;
     if (!email || !quantidade || isNaN(quantidade) || quantidade <= 0) {
@@ -54,21 +54,21 @@ const consumirTokens = async (req, res, next) => {
         "JOGADOR_NAO_ENCONTRADO",
       );
     }
-    if (usuario.saldo_tokens < quantidade) {
+    if (usuario.saldo_moedas < quantidade) {
       return erro(res, "Saldo insuficiente.", 400, "SALDO_INSUFICIENTE");
     }
-    const debitado = await usuarioModel.debitarTokens(usuario.id, quantidade);
+    const debitado = await usuarioModel.debitarMoedas(usuario.id, quantidade);
     if (!debitado) {
       return erro(
         res,
-        "Falha ao debitar tokens (verifique o saldo).",
+        "Falha ao debitar moedas (verifique o saldo).",
         400,
         "FALHA_DEBITO",
       );
     }
     return sucesso(res, {
-      mensagem: `${quantidade} tokens debitados com sucesso.`,
-      saldo_restante: usuario.saldo_tokens - quantidade,
+      mensagem: `${quantidade} moedas debitados com sucesso.`,
+      saldo_restante: usuario.saldo_moedas - quantidade,
     });
   } catch (err) {
     next(err);
@@ -115,7 +115,7 @@ const salvarEstatisticas = async (req, res, next) => {
 module.exports = {
   validarApiKey,
   getSaldo,
-  consumirTokens,
+  consumirMoedas,
   getRanking,
   salvarEstatisticas,
 };

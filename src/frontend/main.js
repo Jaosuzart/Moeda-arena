@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const DOM = {
     navAuthBtns: document.getElementById("navAuthBtns"),
     navUserInfo: document.getElementById("navUserInfo"),
-    navTokenCount: document.getElementById("navTokenCount"),
+    navMoedaCount: document.getElementById("navMoedaCount"),
     navAvatar: document.getElementById("navAvatar"),
     btnAbrirLogin: document.getElementById("btnAbrirLogin"),
     btnAbrirRegistro: document.getElementById("btnAbrirRegistro"),
@@ -78,9 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
     adminModal: document.getElementById("adminModal"),
     btnFecharAdmin: document.getElementById("btnFecharAdmin"),
     adminTableBody: document.getElementById("adminTableBody"),
-    adminTokensForm: document.getElementById("adminTokensForm"),
+    adminMoedasForm: document.getElementById("adminMoedasForm"),
     adminUserId: document.getElementById("adminUserId"),
-    adminTokenAmount: document.getElementById("adminTokenAmount"),
+    adminMoedaAmount: document.getElementById("adminMoedaAmount"),
     adminFeedback: document.getElementById("adminFeedback"),
     btnAbrirTermos: document.getElementById("btnAbrirTermos"),
     btnFecharTermos: document.getElementById("btnFecharTermos"),
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnEnviarContato: document.getElementById("btnEnviarContato"),
     btnFecharReset: document.getElementById("btnFecharReset"),
     statsTotalUsuarios: document.getElementById("statsTotalUsuarios"),
-    statsTotalTokens: document.getElementById("statsTotalTokens"),
+    statsTotalMoedas: document.getElementById("statsTotalMoedas"),
     recentSalesList: document.getElementById("recentSalesList"),
     linkWhatsapp: document.getElementById("linkWhatsapp"),
   };
@@ -136,10 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
     resetToken: null,
   };
   const TIER_CONFIG = {
-    gratis: { src: "/assets/images/icon-shield.webp", alt: "Grátis", desc: "Comece sua jornada com o pacote inicial." },
-    iniciante: { src: "/assets/images/icon-coin.webp", alt: "Iniciante", desc: "Ideal para quem quer começar com pouca moeda." },
-    premium: { src: "/assets/images/icon-sword.webp", alt: "Premium", desc: "O favorito dos jogadores competitivos." },
-    vip: { src: "/assets/images/icon-crown.webp", alt: "VIP", desc: "Para quem quer dominar sem limites." },
+    gratis: { src: "/assets/images/icon-shield.png", alt: "Grátis", desc: "Comece sua jornada com o pacote inicial." },
+    iniciante: { src: "/assets/images/icon-coin.png", alt: "Iniciante", desc: "Ideal para quem quer começar com pouca moeda." },
+    premium: { src: "/assets/images/icon-sword.jpg", alt: "Premium", desc: "O favorito dos jogadores competitivos." },
+    vip: { src: "/assets/images/icon-crown.png", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
 
   const applyMask = (input, maskType) => {
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estado.usuario) {
       DOM.navAuthBtns.style.display = "none";
       DOM.navUserInfo.style.display = "flex";
-      DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString("pt-BR");
+      DOM.navMoedaCount.textContent = estado.usuario.saldo_moedas.toLocaleString("pt-BR");
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
       const is_admin = !!estado.usuario.isAdmin;
@@ -694,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const pStats = document.createElement("p");
           pStats.style.marginTop = "10px";
           pStats.style.color = "var(--cor-destaque)";
-          pStats.textContent = "Tokens ganhos com amigos: ";
+          pStats.textContent = "Moedas ganhos com amigos: ";
           const strongStats = document.createElement("strong");
           strongStats.textContent = u.ganhos_afiliado || 0;
           pStats.appendChild(strongStats);
@@ -983,7 +983,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nome: name,
         precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 4.99 : planId === "premium" ? 19.9 : 39.9,
         isGratis: planId === "gratis",
-        tokens: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
+        moedas: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
       };
     }
     if (!estado.usuario) {
@@ -1119,8 +1119,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (plano.isGratis) {
           DOM.btnConfirmarCompra.textContent = "Concluído ✓";
           if (estado.usuario) {
-            estado.usuario.saldo_tokens += plano.tokens || 100;
-            DOM.navTokenCount.textContent = estado.usuario.saldo_tokens.toLocaleString("pt-BR");
+            estado.usuario.saldo_moedas += plano.moedas || 100;
+            DOM.navMoedaCount.textContent = estado.usuario.saldo_moedas.toLocaleString("pt-BR");
           }
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
@@ -1210,7 +1210,7 @@ document.addEventListener("DOMContentLoaded", () => {
           tdNome.appendChild(smallEmail);
           const tdSaldo = document.createElement("td");
           tdSaldo.className = "admin-table-cell";
-          tdSaldo.textContent = `🪙 ${u.saldo_tokens}`;
+          tdSaldo.textContent = `🪙 ${u.saldo_moedas}`;
           const tdStatus = document.createElement("td");
           tdStatus.className = "admin-table-cell";
           const spanStatus = document.createElement("span");
@@ -1268,23 +1268,23 @@ document.addEventListener("DOMContentLoaded", () => {
     DOM.adminModal.addEventListener("click", (e) => {
       if (e.target === DOM.adminModal) fecharModal(DOM.adminModal);
     });
-  if (DOM.adminTokensForm)
-    DOM.adminTokensForm.addEventListener("submit", async (e) => {
+  if (DOM.adminMoedasForm)
+    DOM.adminMoedasForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const btn = DOM.adminTokensForm.querySelector("button");
+      const btn = DOM.adminMoedasForm.querySelector("button");
       setCarregando(btn, true, "Adicionando...");
       try {
-        const res = await fetchAutenticado("/api/admin/usuarios/tokens", {
+        const res = await fetchAutenticado("/api/admin/usuarios/moedas", {
           method: "POST",
           body: JSON.stringify({
             usuarioId: DOM.adminUserId.value,
-            quantidade: DOM.adminTokenAmount.value,
+            quantidade: DOM.adminMoedaAmount.value,
           }),
         });
         const data = await res.json();
         if (res.ok) {
           mostrarFeedback(DOM.adminFeedback, data.dados.mensagem, true);
-          DOM.adminTokensForm.reset();
+          DOM.adminMoedasForm.reset();
           carregarAdminUsers();
         } else {
           mostrarFeedback(DOM.adminFeedback, data.erro || "Erro", false);
@@ -1400,7 +1400,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.sucesso && data.dados) {
         const stats = data.dados;
         if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = stats.totalUsuarios.toLocaleString("pt-BR");
-        if (DOM.statsTotalTokens) DOM.statsTotalTokens.textContent = stats.totalTokens.toLocaleString("pt-BR");
+        if (DOM.statsTotalMoedas) DOM.statsTotalMoedas.textContent = stats.totalTokens.toLocaleString("pt-BR");
         if (DOM.recentSalesList) {
           DOM.recentSalesList.textContent = "";
           if (stats.ultimasVendas.length === 0) {
@@ -1433,7 +1433,7 @@ document.addEventListener("DOMContentLoaded", () => {
             spanPlan.textContent = venda.plano_id.toUpperCase();
             spanMain.appendChild(spanPlan);
             
-            spanMain.appendChild(document.createTextNode(` (+${venda.tokens.toLocaleString("pt-BR")} Tokens)`));
+            spanMain.appendChild(document.createTextNode(` (+${venda.moedas.toLocaleString("pt-BR")} Moedas)`));
             
             const spanTime = document.createElement("span");
             spanTime.className = "sale-time";

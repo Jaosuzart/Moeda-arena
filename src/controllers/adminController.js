@@ -18,7 +18,7 @@ const listarUsuarios = async (req, res, next) => {
   }
 };
 
-const adicionarTokensManualmente = async (req, res, next) => {
+const adicionarMoedasManualmente = async (req, res, next) => {
   try {
     const { usuarioId, quantidade } = req.body;
 
@@ -26,11 +26,11 @@ const adicionarTokensManualmente = async (req, res, next) => {
       return erro(res, "ID do usuário e uma quantidade positiva são obrigatórios.", 400);
     }
 
-    const creditado = await usuarioModel.adicionarTokens(usuarioId, Number(quantidade));
+    const creditado = await usuarioModel.adicionarMoedas(usuarioId, Number(quantidade));
     if (!creditado) return erro(res, "Usuário não encontrado.", 404);
 
     return sucesso(res, {
-      mensagem: `${quantidade} tokens adicionados ao usuário ID ${usuarioId}.`,
+      mensagem: `${quantidade} moedas adicionados ao usuário ID ${usuarioId}.`,
     });
   } catch (err) {
     next(err);
@@ -57,6 +57,6 @@ const alterarStatusUsuario = async (req, res, next) => {
 module.exports = {
   isAdmin,
   listarUsuarios,
-  adicionarTokensManualmente,
+  adicionarMoedasManualmente,
   alterarStatusUsuario,
 };

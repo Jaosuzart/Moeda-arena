@@ -21,7 +21,7 @@ const formatarUsuarioPublico = (usuario) => ({
   id: usuario.id,
   nome: usuario.nome,
   email: usuario.email,
-  saldo_tokens: usuario.saldo_tokens,
+  saldo_moedas: usuario.saldo_moedas,
   isAdmin: usuario.email === config.adminEmail,
 });
 
@@ -105,7 +105,7 @@ const login = async (req, res, next) => {
 const loginGoogle = async (req, res, next) => {
   try {
     const { token } = req.body;
-    if (!token) return erro(res, "Token do Google não fornecido.", 400);
+    if (!token) return erro(res, "Moeda do Google não fornecido.", 400);
 
     const ticket = await googleClient.verifyIdToken({
       idToken: token,
@@ -233,7 +233,7 @@ const definirSenha = async (req, res, next) => {
 const verificarEmail = async (req, res, next) => {
   try {
     const { token } = req.query;
-    if (!token) return res.status(400).send("<h2>Token inválido ou ausente.</h2>");
+    if (!token) return res.status(400).send("<h2>Moeda inválido ou ausente.</h2>");
 
     const usuario = await usuarioModel.buscarPorTokenVerificacao(token);
     if (!usuario) return res.status(404).send("<h2>Link inválido ou já utilizado.</h2>");
@@ -283,7 +283,7 @@ const solicitarRecuperarSenha = async (req, res, next) => {
 const redefinirSenhaConfirmar = async (req, res, next) => {
   try {
     const { token, novaSenha } = req.body;
-    if (!token || !novaSenha) return erro(res, "Token e nova senha são obrigatórios.", 400);
+    if (!token || !novaSenha) return erro(res, "Moeda e nova senha são obrigatórios.", 400);
     if (novaSenha.length < 6) return erro(res, "A nova senha deve ter pelo menos 6 caracteres.", 400);
 
     const usuario = await usuarioModel.buscarPorTokenResetSenha(token);

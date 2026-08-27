@@ -41,7 +41,7 @@ function renderizarUsuarios(usuarios) {
       criarCelula(u.id),
       criarCelula(u.nome),
       criarCelula(u.email),
-      criarCelula(u.saldo_tokens),
+      criarCelula(u.saldo_moedas),
       criarCelula(u.status),
       criarCelula(u.ganhos_afiliado ?? 0),
     );
@@ -49,7 +49,7 @@ function renderizarUsuarios(usuarios) {
     const tdAcoes = document.createElement("td");
     const btn = document.createElement("button");
     btn.className = "btn btn-warning btn-sm fw-bold";
-    btn.textContent = "+ Dar Tokens";
+    btn.textContent = "+ Dar Moedas";
     btn.addEventListener("click", () => darTokens(u.id));
     
     tdAcoes.className = "text-end";
@@ -61,12 +61,12 @@ function renderizarUsuarios(usuarios) {
 }
 
 async function darTokens(usuarioId) {
-  const input = prompt(`Quantos tokens deseja adicionar ao usuário ID ${usuarioId}?`);
+  const input = prompt(`Quantos moedas deseja adicionar ao usuário ID ${usuarioId}?`);
   const quantidade = parseInt(input, 10);
   if (!input || isNaN(quantidade) || quantidade <= 0) return;
 
   try {
-    const res = await fetch("/api/admin/usuarios/tokens", {
+    const res = await fetch("/api/admin/usuarios/moedas", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,12 +76,12 @@ async function darTokens(usuarioId) {
 
     const data = await res.json();
     if (data.sucesso) {
-      alert("Tokens adicionados com sucesso!");
+      alert("Moedas adicionados com sucesso!");
       carregarUsuarios();
     } else {
       alert(`Erro: ${data.erro}`);
     }
   } catch {
-    alert("Erro de conexão ao adicionar tokens.");
+    alert("Erro de conexão ao adicionar moedas.");
   }
 }

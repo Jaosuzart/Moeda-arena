@@ -49,16 +49,16 @@ const processarCompra = async (req, res, next) => {
       return erro(res, "Plano não encontrado.", 404, "PLANO_NAO_ENCONTRADO");
     }
     if (isGratis && planoEscolhido.isGratis) {
-      await usuarioModel.adicionarTokens(usuarioId, planoEscolhido.tokens);
+      await usuarioModel.adicionarMoedas(usuarioId, planoEscolhido.moedas);
       logger.info("Resgate de plano gratuito concluído.", {
         usuarioId,
         planoId,
-        tokens: planoEscolhido.tokens,
+        moedas: planoEscolhido.moedas,
       });
       return sucesso(
         res,
         {
-          mensagem: `Resgate do ${planoEscolhido.nome} concluído! ${planoEscolhido.tokens} tokens creditados na sua conta.`,
+          mensagem: `Resgate do ${planoEscolhido.nome} concluído! ${planoEscolhido.moedas} moedas creditados na sua conta.`,
         },
         201,
       );
@@ -103,7 +103,7 @@ const processarCompra = async (req, res, next) => {
         external_reference: JSON.stringify({
           usuarioId: usuarioId,
           planoId: planoEscolhido.id,
-          tokens: planoEscolhido.tokens,
+          moedas: planoEscolhido.moedas,
           cupom: cupomAplicado,
         }),
         back_urls: {

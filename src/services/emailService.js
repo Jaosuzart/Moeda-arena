@@ -48,7 +48,7 @@ const enviarEmailVerificacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/api/auth/verificar-email?token=${token}`;
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🎮 Bem-vindo(a), ${nome}!</h2>
-    <p>Falta só confirmar seu e-mail para acessar seus Tokens e o Ranking.</p>
+    <p>Falta só confirmar seu e-mail para acessar seus Moedas e o Ranking.</p>
     <div style="text-align:center;margin:25px 0;">
       <a href="${link}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Verificar Meu E-mail</a>
     </div>
@@ -70,19 +70,19 @@ const enviarEmailRecuperacao = (paraEmail, nome, token) => {
   return enviarEmail(paraEmail, "Recupere sua Senha - Moeda Arena", html);
 };
 
-const enviarEmailRecibo = (paraEmail, nome, valor, tokens) => {
+const enviarEmailRecibo = (paraEmail, nome, valor, moedas) => {
   const html = layoutBase(`
     <h2 style="color:#10b981;text-align:center;">✅ Pagamento Aprovado!</h2>
     <p>Olá, <strong>${nome}</strong>! Seu pagamento foi processado com sucesso.</p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
-      <h3 style="color:#f59e0b;margin:0;">+${tokens} TOKENS</h3>
+      <h3 style="color:#f59e0b;margin:0;">+${moedas} TOKENS</h3>
       <p style="color:#94a3b8;margin:5px 0 0;">Valor pago: R$ ${valor}</p>
     </div>
     <div style="text-align:center;">
       <a href="${BASE_URL}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Acessar Minha Conta</a>
     </div>
   `);
-  return enviarEmail(paraEmail, "Pagamento Aprovado! Seus Tokens chegaram 🚀", html);
+  return enviarEmail(paraEmail, "Pagamento Aprovado! Seus Moedas chegaram 🚀", html);
 };
 
 const enviarEmailContato = (nome, emailCliente, mensagem) => {

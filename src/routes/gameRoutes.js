@@ -20,7 +20,7 @@ router.post(
   ],
   tratarErrosValidacao,
   gameController.validarApiKey,
-  gameController.consumirTokens,
+  gameController.consumirMoedas,
 );
 router.get("/ranking", gameController.getRanking);
 router.post(

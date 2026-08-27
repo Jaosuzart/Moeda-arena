@@ -7,20 +7,20 @@
   --bg-glass: rgba(255, 184, 0, 0.03);
   --bg-input: rgba(255, 255, 255, 0.06);
 
-  --text-primary: #FFF8E7;
-  --text-secondary: #F5E6C8;
+  --text-primary: #fff8e7;
+  --text-secondary: #f5e6c8;
   --text-muted: #fda900;
-  --text-accent: #FFD580;
-  --text-dark: #0D0A00;
+  --text-accent: #ffd580;
+  --text-dark: #0d0a00;
 
   --free-rgb: 0, 230, 118;
-  --free-base: #00E676;
+  --free-base: #00e676;
   --free-light: #4ade80;
   --free-dark: #10b981;
   --free-darker: #059669;
 
   --premium-rgb: 255, 184, 0;
-  --premium-base: #FFB800;
+  --premium-base: #ffb800;
   --premium-light: #fde047;
   --premium-dark: #f59e0b;
   --premium-darker: #d97706;
@@ -50,8 +50,8 @@
   --transition-smooth: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --transition-fast: all 0.18s ease;
 
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Bebas Neue", "Impact", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 *,
@@ -100,15 +100,9 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at 20% 60%,
-      rgba(255, 184, 0, 0.06) 0%,
-      transparent 55%),
-    radial-gradient(ellipse at 80% 20%,
-      rgba(255, 107, 0, 0.05) 0%,
-      transparent 50%),
-    radial-gradient(ellipse at 50% 100%,
-      rgba(204, 68, 255, 0.04) 0%,
-      transparent 45%);
+    radial-gradient(ellipse at 20% 60%, rgba(255, 184, 0, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 107, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(204, 68, 255, 0.04) 0%, transparent 45%);
   pointer-events: none;
   z-index: 0;
 }
@@ -146,7 +140,7 @@ body::before {
   /* Bebas Neue é sempre bold por design */
   letter-spacing: 3px;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #FFB800 0%, #FF9500 50%, #FFD966 100%);
+  background: linear-gradient(135deg, #ffb800 0%, #ff9500 50%, #ffd966 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -237,19 +231,19 @@ body::before {
 }
 
 .btn-gamer-primary {
-  background: linear-gradient(160deg, #F5C400 0%, #D97B00 100%);
+  background: linear-gradient(160deg, #eab308 0%, #d97706 100%);
   color: #111827;
   font-weight: 700;
-  letter-spacing: 2.5px;
+  letter-spacing: 1px;
   border-radius: var(--radius-md);
   border: none;
-  box-shadow: 0 4px 16px rgba(217, 123, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
   text-shadow: none;
 }
 
 .btn-gamer-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: linear-gradient(160deg, #FFD000 0%, #E88A00 100%);
+  background: linear-gradient(160deg, #ffd000 0%, #e88a00 100%);
   box-shadow: 0 8px 28px rgba(217, 123, 0, 0.55);
   color: #111827;
 }
@@ -272,8 +266,10 @@ body::before {
 }
 
 .btn-gamer-success {
-  background: linear-gradient(135deg, #34d399, #10b981);
+  background: linear-gradient(135deg, #10b981, #047857);
   color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .btn-gamer-success:hover:not(:disabled) {
@@ -406,12 +402,12 @@ body::before {
   transition: var(--transition-smooth);
 }
 
-.toggle-switch input:checked+.toggle-slider {
+.toggle-switch input:checked + .toggle-slider {
   background: rgba(251, 191, 36, 0.15);
   border-color: var(--accent-premium);
 }
 
-.toggle-switch input:checked+.toggle-slider::before {
+.toggle-switch input:checked + .toggle-slider::before {
   transform: translateX(24px);
   background: var(--accent-premium);
 }
@@ -491,10 +487,7 @@ body::before {
 }
 
 .plan-card[data-tier="gratis"]::before {
-  background: linear-gradient(90deg,
-      transparent,
-      var(--free-base),
-      transparent);
+  background: linear-gradient(90deg, transparent, var(--free-base), transparent);
 }
 
 .plan-card[data-tier="gratis"]:hover {
@@ -543,10 +536,7 @@ body::before {
 }
 
 .plan-card[data-tier="premium"]::before {
-  background: linear-gradient(90deg,
-      transparent,
-      var(--premium-base),
-      transparent);
+  background: linear-gradient(90deg, transparent, var(--premium-base), transparent);
   height: 3px;
 }
 
@@ -584,10 +574,7 @@ body::before {
 }
 
 .plan-card[data-tier="vip"]::before {
-  background: linear-gradient(90deg,
-      transparent,
-      var(--vip-base),
-      transparent);
+  background: linear-gradient(90deg, transparent, var(--vip-base), transparent);
 }
 
 .plan-card[data-tier="vip"]:hover {
@@ -1063,7 +1050,7 @@ body::before {
 .checkout-plano-nome {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--premium-base, #FFB800);
+  color: var(--premium-base, #ffb800);
   margin-top: 4px;
 }
 
@@ -1236,7 +1223,7 @@ body::before {
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.4);
-  font-family: 'Inter', monospace;
+  font-family: "Inter", monospace;
   letter-spacing: 2px;
   font-size: 1.1rem;
   pointer-events: none;
@@ -1245,7 +1232,7 @@ body::before {
 
 .form-input-card {
   padding-left: 140px;
-  font-family: 'Inter', monospace;
+  font-family: "Inter", monospace;
   letter-spacing: 2px;
   font-size: 1.1rem;
   font-weight: 600;

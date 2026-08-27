@@ -8,10 +8,10 @@ const jaProcessado = async (paymentId) => {
   return rows.length > 0;
 };
 
-const registrarPagamento = async (paymentId, usuarioId, planoId, tokens, valor, status) => {
+const registrarPagamento = async (paymentId, usuarioId, planoId, moedas, valor, status) => {
   await pool.query(
-    "INSERT INTO pagamentos_processados (payment_id, usuario_id, plano_id, tokens_creditados, valor_pago, status) VALUES (?, ?, ?, ?, ?, ?)",
-    [String(paymentId), usuarioId, planoId, tokens, valor, status],
+    "INSERT INTO pagamentos_processados (payment_id, usuario_id, plano_id, moedas_creditadas, valor_pago, status) VALUES (?, ?, ?, ?, ?, ?)",
+    [String(paymentId), usuarioId, planoId, moedas, valor, status],
   );
 };
 

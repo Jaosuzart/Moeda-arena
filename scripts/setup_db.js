@@ -23,7 +23,7 @@ async function run() {
         senha_hash VARCHAR(255) DEFAULT NULL,
         google_id VARCHAR(100) UNIQUE DEFAULT NULL,
         avatar VARCHAR(255) DEFAULT NULL,
-        saldo_tokens INT DEFAULT 0,
+        saldo_moedas INT DEFAULT 0,
         tipo_plano VARCHAR(50) DEFAULT 'gratis',
         data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
         cpf VARCHAR(20) DEFAULT NULL,
@@ -45,7 +45,7 @@ async function run() {
     await pool.query(createUsuariosSQL);
     logger.info("Tabela usuarios criada com sucesso.");
     const insertUsersSQL = `
-      INSERT INTO usuarios (nome, email, senha_hash, saldo_tokens, tipo_plano, cpf, cartao_final, has_password) 
+      INSERT INTO usuarios (nome, email, senha_hash, saldo_moedas, tipo_plano, cpf, cartao_final, has_password) 
       VALUES 
       ('João Marcelo (Admin)', ?, '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 10000, 'vip', '00000000000', '0000', FALSE),
       ('Jogador Teste', 'jogador@teste.com', '$2b$10$amw7b4GqsyOqvRYBwrvg3egANcOSqfgkJLW4r6QaEpM2Fqjsi87lm', 500, 'gratis', '11122233344', '1234', TRUE);
@@ -58,7 +58,7 @@ async function run() {
         payment_id VARCHAR(100) UNIQUE NOT NULL,
         usuario_id INT NOT NULL,
         plano_id VARCHAR(50) NOT NULL,
-        tokens_creditados INT NOT NULL,
+        moedas_creditadas INT NOT NULL,
         valor_pago DECIMAL(10, 2) NOT NULL,
         status VARCHAR(50) NOT NULL,
         data_processamento DATETIME DEFAULT CURRENT_TIMESTAMP
