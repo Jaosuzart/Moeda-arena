@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estado.usuario) {
       DOM.navAuthBtns.style.display = "none";
       DOM.navUserInfo.style.display = "flex";
-      DOM.navMoedaCount.textContent = estado.usuario.saldo_moedas.toLocaleString("pt-BR");
+      DOM.navMoedaCount.textContent = (estado.usuario.saldo_moedas || 0).toLocaleString("pt-BR");
       DOM.navAvatar.textContent = estado.usuario.nome.charAt(0).toUpperCase();
       DOM.navAvatar.title = `${estado.usuario.nome} — Clique para sair`;
       const is_admin = !!estado.usuario.isAdmin;
@@ -1120,7 +1120,7 @@ document.addEventListener("DOMContentLoaded", () => {
           DOM.btnConfirmarCompra.textContent = "Concluído ✓";
           if (estado.usuario) {
             estado.usuario.saldo_moedas += plano.moedas || 100;
-            DOM.navMoedaCount.textContent = estado.usuario.saldo_moedas.toLocaleString("pt-BR");
+            DOM.navMoedaCount.textContent = (estado.usuario.saldo_moedas || 0).toLocaleString("pt-BR");
           }
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
@@ -1399,8 +1399,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         const stats = data.dados;
-        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = stats.totalUsuarios.toLocaleString("pt-BR");
-        if (DOM.statsTotalMoedas) DOM.statsTotalMoedas.textContent = stats.totalTokens.toLocaleString("pt-BR");
+        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = (stats.totalUsuarios || 0).toLocaleString("pt-BR");
+        if (DOM.statsTotalMoedas) DOM.statsTotalMoedas.textContent = (stats.totalTokens || 0).toLocaleString("pt-BR");
         if (DOM.recentSalesList) {
           DOM.recentSalesList.textContent = "";
           if (stats.ultimasVendas.length === 0) {
@@ -1433,7 +1433,7 @@ document.addEventListener("DOMContentLoaded", () => {
             spanPlan.textContent = venda.plano_id.toUpperCase();
             spanMain.appendChild(spanPlan);
             
-            spanMain.appendChild(document.createTextNode(` (+${venda.moedas.toLocaleString("pt-BR")} Moedas)`));
+            spanMain.appendChild(document.createTextNode(` (+${(venda.moedas || 0).toLocaleString("pt-BR")} Moedas)`));
             
             const spanTime = document.createElement("span");
             spanTime.className = "sale-time";
