@@ -260,7 +260,9 @@ document.addEventListener("DOMContentLoaded", () => {
               icon: "warning",
               title: "Seu email está pendente!",
               text: "Verifique sua caixa de entrada ou pasta de SPAM para confirmar seu email. Isso garantirá acesso total à sua conta e segurança das suas moedas.",
-              confirmButtonText: "Ok",
+              showCancelButton: true,
+              confirmButtonText: "Entendi",
+              cancelButtonText: "Fechar",
               confirmButtonColor: "#3085d6"
             });
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "none";
