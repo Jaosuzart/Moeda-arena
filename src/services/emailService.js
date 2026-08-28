@@ -48,7 +48,7 @@ const enviarEmailVerificacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/api/auth/verificar-email?token=${token}`;
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🎮 Bem-vindo(a), ${nome}!</h2>
-    <p>Falta só confirmar seu e-mail para acessar seus Moedas e o Ranking.</p>
+    <p>Falta só confirmar seu e-mail para acessar suas Moedas e o Ranking.</p>
     <div style="text-align:center;margin:25px 0;">
       <a href="${link}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Verificar Meu E-mail</a>
     </div>
@@ -82,7 +82,7 @@ const enviarEmailRecibo = (paraEmail, nome, valor, moedas) => {
       <a href="${BASE_URL}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Acessar Minha Conta</a>
     </div>
   `);
-  return enviarEmail(paraEmail, "Pagamento Aprovado! Seus Moedas chegaram 🚀", html);
+  return enviarEmail(paraEmail, "Pagamento Aprovado! Suas Moedas chegaram 🚀", html);
 };
 
 const enviarEmailContato = (nome, emailCliente, mensagem) => {
