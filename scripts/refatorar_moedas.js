@@ -45,11 +45,9 @@ const replacements = [
     { from: /\/usuarios\/tokens/g, to: '/usuarios/moedas' },
     { from: /\/consumir-tokens/g, to: '/consumir-moedas' },
 
-    // Plural Textual Replacements
     { from: /\bTokens\b/g, to: 'Moedas' },
     { from: /\btokens\b(?![-_a-zA-Z])/g, to: 'moedas' },
     { from: /\bToken\b/g, to: 'Moeda' },
-    // A specific fix for the "Token Arena" or similar cases if any:
     { from: /"Token Arena"/g, to: '"Moeda Arena"' }
 ];
 
@@ -61,12 +59,7 @@ filePaths.forEach(relPath => {
         
         replacements.forEach(rep => {
             newContent = newContent.replace(rep.from, rep.to);
-        });
-        
-        // Let's ensure "token" (lowercase singular) is generally NOT replaced 
-        // to avoid breaking "token_verificacao", "const token = ", etc.
-        // The regex above only replaces Tokens, Token, and tokens.
-        
+        });    
         if (content !== newContent) {
             fs.writeFileSync(fullPath, newContent, 'utf8');
             console.log(`Updated: ${relPath}`);

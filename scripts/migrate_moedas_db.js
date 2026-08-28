@@ -16,7 +16,6 @@ async function runMigration() {
     try {
         console.log("Iniciando migração de Tokens para Moedas no banco de dados...");
         
-        // Check if `saldo_tokens` exists and rename to `saldo_moedas`
         try {
             await pool.query("ALTER TABLE usuarios RENAME COLUMN saldo_tokens TO saldo_moedas;");
             console.log("✓ Coluna 'saldo_tokens' renomeada para 'saldo_moedas' na tabela 'usuarios'.");
@@ -24,7 +23,6 @@ async function runMigration() {
             console.log("Aviso (saldo_tokens):", e.message);
         }
 
-        // Check if `tokens_creditados` exists in pagamentos_aprovados or similar
         try {
             await pool.query("ALTER TABLE pagamentos_processados RENAME COLUMN tokens_creditados TO moedas_creditadas;");
             console.log("✓ Coluna 'tokens_creditados' renomeada para 'moedas_creditadas' na tabela 'pagamentos_processados'.");
