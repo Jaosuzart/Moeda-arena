@@ -102,7 +102,6 @@ Também são utilizados:
 * Node.js
 * Express.js
 * Mercado Pago SDK
-* MySQL / MariaDB
 * JWT
 * Express Validator
 * Winston
