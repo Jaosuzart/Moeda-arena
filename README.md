@@ -1,126 +1,189 @@
-<h1 align="center">🎮 Jogo Arena — Integração Mercado Pago</h1>
+<h1 align="center">🪙 Moeda Arena — Plataforma de Moedas Virtuais</h1>
 <p align="center">
-  <em>Projeto web MVC desenvolvido com HTML5, CSS3, Bootstrap, JavaScript, Node.js e integrado com a API do Mercado Pago para vendas de tokens e planos de benefícios.</em>
+  <em>
+    Plataforma web desenvolvida com HTML5, CSS3, Bootstrap, JavaScript, Node.js e integrada ao Mercado Pago para gerenciamento e comercialização de moedas virtuais, planos e benefícios.
+  </em>
+</p>
+<p align="center">
+  <a href="https://moedaarena.com.br/">🌐 Acessar o projeto</a>
+  •
+  <a href="https://github.com/Jaosuzart/Moeda-arena">💻 Repositório</a>
 </p>
 <p align="center">
   <img width="1290" height="588" alt="image" src="https://github.com/user-attachments/assets/920e69b2-5347-4a8b-b1a6-c86ef4332f17" />
 </p>
 <hr>
+## 📌 Sobre o projeto
+A **Moeda Arena** é uma aplicação web desenvolvida para gerenciamento e comercialização de moedas virtuais, planos e benefícios.
+O projeto reúne **Front-end, Back-end, banco de dados e integração com serviços externos**, proporcionando uma experiência completa desde o cadastro do usuário até o processo de compra e confirmação do pagamento.
+A aplicação utiliza a integração com o **Mercado Pago** para realizar pagamentos via PIX e cartão de crédito, utilizando Webhooks para confirmar as transações e liberar automaticamente as moedas adquiridas.
+### ✨ Principais funcionalidades
 
-📌 Sobre o projeto
-O <strong>Jogo Arena</strong> é uma aplicação web completa desenvolvida com arquitetura MVC. O objetivo central do projeto é demonstrar a integração de um fluxo de vendas ponta a ponta utilizando a API oficial do <strong>Mercado Pago</strong>, permitindo que usuários comprem pacotes de "Tokens" (moedas do jogo) e assinem "Passes" de forma automatizada e segura via PIX ou Cartão de Crédito.
-
+* 🪙 Compra e gerenciamento de moedas virtuais
+* 💳 Pagamentos via Mercado Pago
+* 📲 PIX e cartão de crédito
+* 🔔 Webhooks para confirmação de pagamentos
+* 🎟️ Sistema de cupons
+* 🏆 Ranking
+* 👤 Cadastro e login de usuários
+* 🔐 Autenticação com JWT
+* 🛡️ Autenticação em dois fatores (2FA)
+* 📧 Envio de e-mails
+* 📦 Planos e passes
+* ⚙️ API REST
+* 🗄️ Banco de dados MySQL/MariaDB
+* 📝 Sistema de logs com Winston
 ---
-
-💳 Integração Detalhada com o Mercado Pago
-
-A aplicação utiliza o SDK oficial do Mercado Pago (`mercadopago`) no Node.js. O fluxo financeiro e de entrega digital é composto por duas etapas principais:
-
-### 1. Geração de Preferência de Pagamento (`compraController.js`)
-
-Quando o usuário clica em assinar um pacote de benefícios ou comprar tokens, o sistema envia uma requisição autenticada para a rota `/api/comprar`.
-
-- **Validação de Cupons**: Se o usuário aplicar um cupom de streamer (`STREAMER10`), o sistema valida a validade do cupom no banco de dados e calcula o valor final com desconto.
-- **Criação da Preferência**: O servidor inicia o cliente do Mercado Pago com o token de acesso (`MP_ACCESS_TOKEN`) e cria uma preferência de pagamento contendo:
-  - O item comprado (ID, título, quantidade e preço final com desconto).
-  - As URLs de retorno (`back_urls`): rotas de sucesso, pendente e falha apontando para o frontend da aplicação.
-  - O **`external_reference`**: Um objeto JSON serializado contendo o `usuarioId`, `planoId`, a quantidade de `tokens` a serem creditados e o `cupom` utilizado. Este campo é fundamental para que o sistema reconheça o comprador após o pagamento.
-- **Redirecionamento**: O Mercado Pago retorna um ID de preferência e um link de checkout seguro (`init_point`). O frontend recebe esse link e redireciona o usuário para realizar o pagamento.
-
-### 2. Processamento de Notificação e Webhook (`webhookController.js`)
-
-Uma vez efetuado o pagamento (seja via Pix ou Cartão de Crédito), o Mercado Pago dispara uma notificação assíncrona HTTP POST para a rota pública `/api/webhook`.
-
-- **Idempotência (Prevenção de Gastos Duplicados)**: Para cada webhook recebido, o sistema consulta a tabela `pagamentos_processados` para validar se o `payment_id` já foi tratado. Se já estiver registrado, o processamento é imediatamente interrompido para evitar créditos de tokens duplicados.
-- **Consulta à API do Mercado Pago**: O servidor consome a API do Mercado Pago (`paymentApi.get`) utilizando o ID do pagamento recebido na notificação para obter os detalhes oficiais e seguros da transação direta.
-- **Aprovação e Crédito**: Caso o status do pagamento retornado seja `approved` (aprovado):
-  - O payload do `external_reference` é decodificado para identificar os dados da compra.
-  - O saldo do usuário no banco de dados é atualizado (`usuarioModel.adicionarTokens`).
-  - O pagamento é registrado na tabela `pagamentos_processados` marcando a transação como concluída.
-  - O uso do cupom do streamer é incrementado (`cupomModel.incrementarUso`), registrando as métricas para a comissão do streamer.
-
+## 🌐 Projeto publicado
+A aplicação está disponível online:
+**https://moedaarena.com.br/**
+O código-fonte está disponível no GitHub:
+**https://github.com/Jaosuzart/Moeda-arena**
 ---
+## 💳 Integração com Mercado Pago
+A Moeda Arena utiliza o SDK oficial do Mercado Pago no Node.js para realizar o processamento das compras.
+### 🛒 Criação da compra
+Quando o usuário realiza uma compra, o sistema:
+1. Recebe a solicitação através da API;
+2. Valida o usuário e os dados da compra;
+3. Verifica possíveis cupons;
+4. Calcula o valor final;
+5. Cria uma preferência de pagamento;
+6. Gera o checkout do Mercado Pago;
+7. Redireciona o usuário para realizar o pagamento.
 
-🚀 Tecnologias utilizadas
-
-🎨 Front-end
-
-- **HTML5** e **CSS3** (CSS customizado moderno)
-- **Bootstrap 5** (Layout e componentes de interface)
-- **JavaScript ES6** (Interações dinâmicas e consumo da API interna)
-
-⚙️ Back-end
-
-- **Node.js** com framework **Express**
-- **Mercado Pago SDK** (Integração de pagamentos)
-- **MySQL / MariaDB** (Armazenamento persistente no Aiven Cloud)
-- **Winston** (Logging estruturado e centralizado)
-- **JSON Web Token (JWT)** (Autenticação e sessões seguras)
-- **Nodemailer** (Disparo automático de e-mails de confirmação de conta)
-
----
-
-📂 Estrutura do projeto
+A compra possui uma referência externa (`external_reference`) utilizada para relacionar o pagamento ao usuário e aos dados da compra.
+### 🔔 Webhook
+Após o pagamento, o Mercado Pago envia uma notificação para a API através do endpoint:
 
 ```text
-Jogo-Arena/
-├── public/                 # Interface Pública (Front-end)
-│   ├── index.html          # Interface principal e modals (Auth, Checkout, Termos, Ranking)
-│   ├── style.css           # Estilização moderna e layout responsivo
-│   └── main.js             # Funções de interação com o usuário, consumo da API e Google Auth
-│
-├── src/                    # Lógica do Servidor (Back-end)
-│   ├── config/             # Configurações globais (Winston logger e variáveis de ambiente)
-│   ├── controllers/        # Controladores de negócio (Autenticação, Compras, Webhook, Rankings)
-│   ├── helpers/            # Utilitários de resposta formatada da API
-│   ├── middlewares/        # Validadores de segurança (JWT e Express Validator)
-│   ├── models/             # Queries SQL estruturadas (Usuários, Planos, Cupons, Conexão DB)
-│   └── routes/             # Definição e proteção das rotas da API REST
-│
-├── server.js               # Arquivo principal do servidor com Graceful Shutdown
-└── package.json            # Gerenciador de dependências e scripts do Node.js
+/api/webhook
 ```
 
+A aplicação então consulta a transação diretamente na API do Mercado Pago e verifica o status real do pagamento.
+Quando o pagamento é aprovado:
+* O usuário é identificado;
+* A compra é validada;
+* As moedas são adicionadas ao saldo;
+* O pagamento é registrado;
+* O uso do cupom é atualizado, quando aplicável.
+### 🛡️ Proteção contra duplicidade
+O sistema também possui controle de **idempotência**.
+Antes de processar uma transação, o `payment_id` é consultado na tabela de pagamentos processados.
+Isso evita que uma mesma notificação gere créditos duplicados de moedas.
 ---
+## 🎟️ Sistema de cupons
+A plataforma possui um sistema de cupons integrado ao processo de compra.
+O sistema permite:
+* Validar cupons;
+* Verificar sua validade;
+* Aplicar descontos;
+* Calcular o valor final da compra;
+* Registrar a utilização do cupom.
+---
+## 🔐 Autenticação e segurança
 
-🛠️ Como executar o projeto
-
-### 1. Configurar Variáveis de Ambiente
-
-Crie um arquivo `.env` na raiz do projeto contendo as credenciais de desenvolvimento e produção:
-
-```env
+A aplicação utiliza **JWT (JSON Web Token)** para autenticação e proteção das rotas.
+Também são utilizados:
+* JWT;
+* Express Validator;
+* Variáveis de ambiente;
+* Middleware de autenticação;
+* Autenticação em dois fatores (2FA);
+* Separação entre rotas públicas e protegidas.
+---
+# 🚀 Tecnologias utilizadas
+### 🎨 Front-end
+* HTML5
+* CSS3
+* Bootstrap 5
+* JavaScript ES6
+### ⚙️ Back-end
+* Node.js
+* Express.js
+* Mercado Pago SDK
+* MySQL / MariaDB
+* JWT
+* Express Validator
+* Winston
+* Nodemailer
+### ☁️ Serviços
+* Aiven Cloud
+* Mercado Pago
+* GitHub
+---
+# 📂 Estrutura do projeto
+```text
+Moeda-arena/
+│
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   └── main.js
+│
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── helpers/
+│   ├── middlewares/
+│   ├── models/
+│   └── routes/
+│
+├── server.js
+├── package.json
+├── package-lock.json
+└── .env
+```
+--
+# 🛠️ Como executar
+## 1. Clone o repositório
+bash
+git clone https://github.com/Jaosuzart/Moeda-arena.git
+bash
+cd Moeda-arena
+## 2. Instale as dependências
+bash
+npm install
+## 3. Configure o `.env`
+Crie um arquivo `.env` na raiz:
+Env
 PORT=3001
 NODE_ENV=development
-
-# Mercado Pago
-MP_ACCESS_TOKEN=seu_access_token_de_teste
-
-# Banco de Dados
-DB_HOST=seu_host_do_banco
-DB_PORT=porta_conexao
-DB_USER=usuario_banco
-DB_PASSWORD=senha_banco
-DB_NAME=nome_banco
-
-# Autenticação
-JWT_SECRET=chave_secreta_jwt
-```
-
-### 2. Instalar e rodar
-
-No terminal, acesse a pasta raiz e execute os comandos:
-
-```bash
-# 1. Instalar as dependências
-npm install
-
-# 2. Configurar as tabelas do banco de dados e inserir usuários de teste
+MP_ACCESS_TOKEN=seu_access_token
+DB_HOST=seu_host
+DB_PORT=3306
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=seu_banco
+JWT_SECRET=sua_chave_secreta
+## 4. Configure o banco
+O arquivo `setup_db.js` esteja presente no projeto:
+bash
 node setup_db.js
-
-# 3. Iniciar o servidor em ambiente de desenvolvimento
+## 5. Execute a aplicação
+bash
 npm run dev
-```
-
-Acesse a aplicação no navegador em: `http://localhost:3001`
-d
+A aplicação estará disponível em:
+http://localhost:3001
+# 📚 Objetivos do projeto
+O desenvolvimento da Moeda Arena também teve como objetivo colocar em prática conhecimentos de:
+* Desenvolvimento Front-end;
+* Desenvolvimento Back-end;
+* Node.js e Express;
+* APIs REST;
+* Arquitetura MVC;
+* Banco de dados;
+* Autenticação;
+* Segurança;
+* Integração com APIs externas;
+* Mercado Pago;
+* Webhooks;
+* Git e GitHub;
+* Deploy;
+* Serviços em nuvem.
+# 👨‍💻 Desenvolvedor
+**João Marcelo Suzart Lima Castro**
+EstUdante de **Curso Técnico em Desenvolvimento de Sistemas**, desenvolvendo projetos para aprimorar conhecimentos em desenvolvimento web, programação e tecnologias Back-end e Front-end.
+<p align="center">
+  🪙 <strong>Moeda Arena</strong> — Desenvolvimento, aprendizado e prática.
+</p>
