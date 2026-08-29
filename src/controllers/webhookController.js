@@ -13,15 +13,15 @@ const mpClient = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 const notificarUsuario = async (usuario, valor, moedas) => {
   if (usuario.telefone) {
     const msg = `✅ Olá ${usuario.nome}! Seu pagamento de R$ ${valor} foi aprovado! 🎉\n\nCreditamos ${moedas} moedas na sua conta da Moeda Arena.`;
-    whatsappService.enviarMensagem(usuario.telefone, msg).catch((err) =>
-      logger.error("Falha ao enviar WhatsApp.", { erro: err.message }),
-    );
+    whatsappService
+      .enviarMensagem(usuario.telefone, msg)
+      .catch((err) => logger.error("Falha ao enviar WhatsApp.", { erro: err.message }));
   }
 
   if (usuario.email) {
-    emailService.enviarEmailRecibo(usuario.email, usuario.nome, valor, moedas).catch((err) =>
-      logger.error("Falha ao enviar e-mail de recibo.", { erro: err.message }),
-    );
+    emailService
+      .enviarEmailRecibo(usuario.email, usuario.nome, valor, moedas)
+      .catch((err) => logger.error("Falha ao enviar e-mail de recibo.", { erro: err.message }));
   }
 };
 
@@ -33,10 +33,10 @@ const processarAfiliado = async (usuarioId, tokensComprados) => {
   if (comissao <= 0) return;
 
   await usuarioModel.adicionarMoedas(usuario.indicado_por, comissao);
-  await pool.query(
-    "UPDATE usuarios SET ganhos_afiliado = ganhos_afiliado + ? WHERE id = ?",
-    [comissao, usuario.indicado_por],
-  );
+  await pool.query("UPDATE usuarios SET ganhos_afiliado = ganhos_afiliado + ? WHERE id = ?", [
+    comissao,
+    usuario.indicado_por,
+  ]);
   logger.info("Comissão de afiliado paga.", { indicador: usuario.indicado_por, comissao });
 };
 
@@ -61,7 +61,7 @@ const processarNotificacao = async (req, res) => {
     const parts = signatureHeader.split(",");
     let ts = "";
     let v1 = "";
-    parts.forEach(part => {
+    parts.forEach((part) => {
       const [key, value] = part.split("=");
       if (key && key.trim() === "ts") ts = value;
       if (key && key.trim() === "v1") v1 = value;
@@ -77,9 +77,6 @@ const processarNotificacao = async (req, res) => {
   }
 
   try {
-
-
-
     logger.info("Webhook de pagamento recebido.", { paymentId: idPagamento });
 
     if (await pagamentoModel.jaProcessado(idPagamento)) {
@@ -124,9 +121,9 @@ const processarNotificacao = async (req, res) => {
     );
 
     if (cupom) {
-      cupomModel.incrementarUso(cupom).catch((err) =>
-        logger.error("Erro ao registrar uso do cupom (não crítico).", { cupom, erro: err.message }),
-      );
+      cupomModel
+        .incrementarUso(cupom)
+        .catch((err) => logger.error("Erro ao registrar uso do cupom (não crítico).", { cupom, erro: err.message }));
     }
 
     await processarAfiliado(usuarioId, moedas);

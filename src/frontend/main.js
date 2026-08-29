@@ -137,30 +137,34 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const TIER_CONFIG = {
     gratis: { src: "/assets/images/icon-shield.png", alt: "Grátis", desc: "Comece sua jornada com o pacote inicial." },
-    iniciante: { src: "/assets/images/icon-coin.png", alt: "Iniciante", desc: "Ideal para quem quer começar com pouca moeda." },
+    iniciante: {
+      src: "/assets/images/icon-coin.png",
+      alt: "Iniciante",
+      desc: "Ideal para quem quer começar com pouca moeda.",
+    },
     premium: { src: "/assets/images/icon-sword.jpg", alt: "Premium", desc: "O favorito dos jogadores competitivos." },
     vip: { src: "/assets/images/icon-crown.png", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
 
   const applyMask = (input, maskType) => {
     if (!input) return;
-    input.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '');
-      if (maskType === 'cpf') {
-        v = v.replace(/(\d{3})(\d)/, '$1.$2');
-        v = v.replace(/(\d{3})(\d)/, '$1.$2');
-        v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-      } else if (maskType === 'tel') {
-        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
-        v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+    input.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, "");
+      if (maskType === "cpf") {
+        v = v.replace(/(\d{3})(\d)/, "$1.$2");
+        v = v.replace(/(\d{3})(\d)/, "$1.$2");
+        v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      } else if (maskType === "tel") {
+        v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+        v = v.replace(/(\d)(\d{4})$/, "$1-$2");
       }
       e.target.value = v;
     });
   };
 
-  applyMask(DOM.perfilCpf, 'cpf');
-  applyMask(DOM.perfilTelefone, 'tel');
-  applyMask(DOM.registroTelefone, 'tel');
+  applyMask(DOM.perfilCpf, "cpf");
+  applyMask(DOM.perfilTelefone, "tel");
+  applyMask(DOM.registroTelefone, "tel");
 
   async function fetchAutenticado(url, opcoes = {}) {
     const headers = { "Content-Type": "application/json", ...opcoes.headers };
@@ -221,7 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const data = await resp.json();
         if (resp.ok && data.sucesso) {
-          mostrarFeedback(DOM.feedback2fa, data.dados.mensagem || (ativando ? "2FA ativado com sucesso!" : "2FA desativado."), true);
+          mostrarFeedback(
+            DOM.feedback2fa,
+            data.dados.mensagem || (ativando ? "2FA ativado com sucesso!" : "2FA desativado."),
+            true,
+          );
           await carregar2faStatus();
         } else {
           mostrarFeedback(DOM.feedback2fa, data.erro || "Erro ao alterar 2FA.", false);
@@ -263,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
               showCancelButton: true,
               confirmButtonText: "Entendi",
               cancelButtonText: "Fechar",
-              confirmButtonColor: "#3085d6"
+              confirmButtonColor: "#3085d6",
             });
           if (DOM.btnAdminPanel) DOM.btnAdminPanel.style.display = "none";
         } else if (is_admin) {
@@ -365,10 +373,12 @@ document.addEventListener("DOMContentLoaded", () => {
   DOM.authModal.addEventListener("click", (e) => {
     if (e.target === DOM.authModal) fecharModal(DOM.authModal);
   });
-  DOM.btnAbrirTermos.addEventListener("click", (e) => {
-    e.preventDefault();
-    abrirModal(DOM.termosModal);
-  });
+  if (DOM.btnAbrirTermos) {
+    DOM.btnAbrirTermos.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirModal(DOM.termosModal);
+    });
+  }
   DOM.btnFecharTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
   if (DOM.btnOkTermos) {
     DOM.btnOkTermos.addEventListener("click", () => {
@@ -398,12 +408,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const payload = {
           nome: DOM.contatoNome.value.trim(),
           email: DOM.contatoEmail.value.trim(),
-          mensagem: DOM.contatoMensagem.value.trim()
+          mensagem: DOM.contatoMensagem.value.trim(),
         };
         const response = await fetch("/api/contato", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
         const data = await response.json();
         removerLoading(DOM.btnEnviarContato, "Enviar Mensagem");
@@ -421,8 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-
 
   DOM.termosModal.addEventListener("click", (e) => {
     if (e.target === DOM.termosModal) fecharModal(DOM.termosModal);
@@ -467,13 +475,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (DOM.btnFecharVerify2fa) {
     DOM.btnFecharVerify2fa.addEventListener("click", () => fecharModal(DOM.verify2faModal));
   }
-  
+
   if (DOM.verify2faForm) {
     DOM.verify2faForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       esconderFeedback(DOM.verify2faFeedback);
       setCarregando(DOM.btnConfirmar2fa, true, "Verificando...");
-      
+
       try {
         const res = await fetch("/api/auth/login/2fa", {
           method: "POST",
@@ -484,7 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }),
         });
         const data = await res.json();
-        
+
         if (data.sucesso && data.dados) {
           estado.usuario = data.dados.usuario;
           atualizarNavbar();
@@ -688,7 +696,16 @@ document.addEventListener("DOMContentLoaded", () => {
           inputLink.onclick = () => {
             inputLink.select();
             if (navigator.clipboard) {
-              navigator.clipboard.writeText(link).then(() => alert("Link copiado!"));
+              navigator.clipboard.writeText(link).then(() => {
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Link copiado!',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              });
             }
           };
           container.appendChild(inputLink);
@@ -1126,7 +1143,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
-          window.location.href = data.dados.urlCheckout;
+          window.open(data.dados.urlCheckout, "_blank");
         }
       } else {
         mostrarFeedback(DOM.checkoutFeedback, data.erro || "Erro ao processar compra.", false);
@@ -1401,7 +1418,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         const stats = data.dados;
-        if (DOM.statsTotalUsuarios) DOM.statsTotalUsuarios.textContent = (stats.totalUsuarios || 0).toLocaleString("pt-BR");
+        if (DOM.statsTotalUsuarios)
+          DOM.statsTotalUsuarios.textContent = (stats.totalUsuarios || 0).toLocaleString("pt-BR");
         if (DOM.statsTotalMoedas) DOM.statsTotalMoedas.textContent = (stats.totalTokens || 0).toLocaleString("pt-BR");
         if (DOM.recentSalesList) {
           DOM.recentSalesList.textContent = "";
@@ -1420,30 +1438,30 @@ document.addEventListener("DOMContentLoaded", () => {
               minute: "2-digit",
             });
             const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + "***" : venda.nome + "***";
-            
+
             const spanMain = document.createElement("span");
             spanMain.appendChild(document.createTextNode("Jogador "));
-            
+
             const strongNome = document.createElement("strong");
             strongNome.textContent = nomeFormatado;
             spanMain.appendChild(strongNome);
-            
+
             spanMain.appendChild(document.createTextNode(" adquiriu o "));
-            
+
             const spanPlan = document.createElement("span");
             spanPlan.className = "sale-plan";
             spanPlan.textContent = venda.plano_id.toUpperCase();
             spanMain.appendChild(spanPlan);
-            
+
             spanMain.appendChild(document.createTextNode(` (+${(venda.moedas || 0).toLocaleString("pt-BR")} Moedas)`));
-            
+
             const spanTime = document.createElement("span");
             spanTime.className = "sale-time";
             spanTime.textContent = dataVenda;
-            
+
             li.appendChild(spanMain);
             li.appendChild(spanTime);
-            
+
             DOM.recentSalesList.appendChild(li);
           });
         }
@@ -1461,12 +1479,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function inicializar() {
     atualizarNavbar();
     try {
-      await Promise.all([
-        restaurarSessao(),
-        carregarPlanos(),
-        carregarEstatisticas(),
-        initGoogleAuth()
-      ]);
+      await Promise.all([restaurarSessao(), carregarPlanos(), carregarEstatisticas(), initGoogleAuth()]);
     } catch (e) {
       console.error(e);
     }

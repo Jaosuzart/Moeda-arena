@@ -11,12 +11,7 @@ const autenticar = (req, res, next) => {
   }
 
   if (!token) {
-    return erro(
-      res,
-      "Token de autenticação não fornecido. Faça login primeiro.",
-      401,
-      "NAO_AUTENTICADO",
-    );
+    return erro(res, "Token de autenticação não fornecido. Faça login primeiro.", 401, "NAO_AUTENTICADO");
   }
   try {
     const payload = jwt.verify(token, config.jwtSecret);
@@ -28,12 +23,7 @@ const autenticar = (req, res, next) => {
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      return erro(
-        res,
-        "Sessão expirada. Faça login novamente.",
-        401,
-        "TOKEN_EXPIRADO",
-      );
+      return erro(res, "Sessão expirada. Faça login novamente.", 401, "TOKEN_EXPIRADO");
     }
     return erro(res, "Token inválido.", 401, "TOKEN_INVALIDO");
   }

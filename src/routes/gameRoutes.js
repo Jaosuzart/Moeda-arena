@@ -14,9 +14,7 @@ router.post(
   "/consumir",
   [
     body("email").isEmail().withMessage("Um e-mail válido é obrigatório."),
-    body("quantidade")
-      .isInt({ min: 1 })
-      .withMessage("A quantidade deve ser um número inteiro maior que 0."),
+    body("quantidade").isInt({ min: 1 }).withMessage("A quantidade deve ser um número inteiro maior que 0."),
   ],
   tratarErrosValidacao,
   gameController.validarApiKey,

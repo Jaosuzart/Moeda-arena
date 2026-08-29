@@ -5,7 +5,7 @@ async function carregarUsuarios() {
     const res = await fetch("/api/admin/usuarios");
 
     if (res.status === 403 || res.status === 401) {
-      alert("Você não tem permissão para acessar esta página.");
+      await Swal.fire("Acesso Negado", "Você não tem permissão para acessar esta página.", "error");
       window.location.href = "/";
       return;
     }
@@ -13,7 +13,7 @@ async function carregarUsuarios() {
     const data = await res.json();
     if (data.sucesso) renderizarUsuarios(data.dados);
   } catch {
-    alert("Erro ao carregar dados. Tente novamente.");
+    Swal.fire("Erro", "Erro ao carregar dados. Tente novamente.", "error");
   }
 }
 
@@ -51,7 +51,7 @@ function renderizarUsuarios(usuarios) {
     btn.className = "btn btn-warning btn-sm fw-bold";
     btn.textContent = "+ Dar Moedas";
     btn.addEventListener("click", () => darTokens(u.id));
-    
+
     tdAcoes.className = "text-end";
     tdAcoes.append(btn);
     tr.append(tdAcoes);
@@ -61,9 +61,22 @@ function renderizarUsuarios(usuarios) {
 }
 
 async function darTokens(usuarioId) {
-  const input = prompt(`Quantos moedas deseja adicionar ao usuário ID ${usuarioId}?`);
+  const { value: input } = await Swal.fire({
+    title: 'Adicionar Moedas',
+    text: `Quantas moedas deseja adicionar ao usuário ID ${usuarioId}?`,
+    input: 'number',
+    showCancelButton: true,
+    confirmButtonText: 'Adicionar',
+    cancelButtonText: 'Cancelar',
+    inputValidator: (value) => {
+      if (!value || parseInt(value, 10) <= 0) {
+        return 'Insira uma quantidade válida!'
+      }
+    }
+  });
+
+  if (!input) return;
   const quantidade = parseInt(input, 10);
-  if (!input || isNaN(quantidade) || quantidade <= 0) return;
 
   try {
     const res = await fetch("/api/admin/usuarios/moedas", {
@@ -76,12 +89,12 @@ async function darTokens(usuarioId) {
 
     const data = await res.json();
     if (data.sucesso) {
-      alert("Moedas adicionados com sucesso!");
+      await Swal.fire("Sucesso!", "Moedas adicionadas com sucesso!", "success");
       carregarUsuarios();
     } else {
-      alert(`Erro: ${data.erro}`);
+      Swal.fire("Erro", data.erro || "Falha ao adicionar moedas", "error");
     }
   } catch {
-    alert("Erro de conexão ao adicionar moedas.");
+    Swal.fire("Erro", "Erro de conexão ao adicionar moedas.", "error");
   }
 }

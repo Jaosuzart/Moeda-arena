@@ -31,7 +31,7 @@ router.post(
       logger.error("Erro interno na rota de contato", { error: error.message });
       return res.status(500).json({ sucesso: false, erro: "Erro interno no servidor." });
     }
-  }
+  },
 );
 
 module.exports = router;

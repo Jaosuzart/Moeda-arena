@@ -3,19 +3,10 @@ const logger = require("../config/logger");
 const crypto = require("crypto");
 const { encrypt, decrypt } = require("../helpers/crypto");
 
-const criarUsuario = async (
-  nome,
-  email,
-  senhaHash,
-  telefone = null,
-  indicadoPor = null,
-  hasPassword = true,
-) => {
+const criarUsuario = async (nome, email, senhaHash, telefone = null, indicadoPor = null, hasPassword = true) => {
   try {
     const tokenVerificacao = crypto.randomBytes(32).toString("hex");
-    const codigoConvite =
-      nome.replace(/\s+/g, "").substring(0, 5).toUpperCase() +
-      Math.floor(Math.random() * 100000);
+    const codigoConvite = nome.replace(/\s+/g, "").substring(0, 5).toUpperCase() + Math.floor(Math.random() * 100000);
 
     const sql =
       "INSERT INTO usuarios (nome, email, senha_hash, telefone, token_verificacao, has_password, codigo_convite, indicado_por) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -86,10 +77,7 @@ const buscarPorTokenVerificacao = async (token) => {
 
 const buscarPorCodigoConvite = async (codigo) => {
   try {
-    const [rows] = await pool.query(
-      "SELECT id FROM usuarios WHERE codigo_convite = ?",
-      [codigo],
-    );
+    const [rows] = await pool.query("SELECT id FROM usuarios WHERE codigo_convite = ?", [codigo]);
     return rows[0] || null;
   } catch (err) {
     logger.error("Erro ao buscar usuário por código de convite.", { erro: err.message });
@@ -98,8 +86,7 @@ const buscarPorCodigoConvite = async (codigo) => {
 };
 
 const confirmarEmail = async (id) => {
-  const sql =
-    "UPDATE usuarios SET email_verificado = 1, token_verificacao = NULL WHERE id = ?";
+  const sql = "UPDATE usuarios SET email_verificado = 1, token_verificacao = NULL WHERE id = ?";
   const [resultado] = await pool.query(sql, [id]);
   return resultado.affectedRows > 0;
 };
@@ -112,8 +99,7 @@ const buscarRanking = async (limite = 10) => {
 };
 
 const adicionarEstatisticas = async (id, trofeus, vitorias, xp) => {
-  const sql =
-    "UPDATE usuarios SET trofeus = trofeus + ?, vitorias = vitorias + ?, xp = xp + ? WHERE id = ?";
+  const sql = "UPDATE usuarios SET trofeus = trofeus + ?, vitorias = vitorias + ?, xp = xp + ? WHERE id = ?";
   const [resultado] = await pool.query(sql, [trofeus, vitorias, xp, id]);
   return resultado.affectedRows > 0;
 };
@@ -132,16 +118,14 @@ const atualizarStatus = async (id, status) => {
 };
 
 const definirSenha = async (id, senhaHash) => {
-  const sql =
-    "UPDATE usuarios SET senha_hash = ?, has_password = TRUE WHERE id = ?";
+  const sql = "UPDATE usuarios SET senha_hash = ?, has_password = TRUE WHERE id = ?";
   const [resultado] = await pool.query(sql, [senhaHash, id]);
   return resultado.affectedRows > 0;
 };
 
 const adicionarMoedas = async (usuarioId, quantidade) => {
   try {
-    const sql =
-      "UPDATE usuarios SET saldo_moedas = saldo_moedas + ? WHERE id = ?";
+    const sql = "UPDATE usuarios SET saldo_moedas = saldo_moedas + ? WHERE id = ?";
     const [resultado] = await pool.query(sql, [quantidade, usuarioId]);
     if (resultado.affectedRows > 0) {
       logger.info("Moedas creditados com sucesso.", { usuarioId, quantidade });
@@ -157,8 +141,7 @@ const adicionarMoedas = async (usuarioId, quantidade) => {
 
 const debitarMoedas = async (id, quantidade) => {
   try {
-    const sql =
-      "UPDATE usuarios SET saldo_moedas = saldo_moedas - ? WHERE id = ? AND saldo_moedas >= ?";
+    const sql = "UPDATE usuarios SET saldo_moedas = saldo_moedas - ? WHERE id = ? AND saldo_moedas >= ?";
     const [resultado] = await pool.execute(sql, [quantidade, id, quantidade]);
     return resultado.affectedRows > 0;
   } catch (err) {
@@ -167,10 +150,7 @@ const debitarMoedas = async (id, quantidade) => {
   }
 };
 
-const atualizarPerfil = async (
-  id,
-  { nome, cpf, localidade, telefone, chave_pix, cartao_final },
-) => {
+const atualizarPerfil = async (id, { nome, cpf, localidade, telefone, chave_pix, cartao_final }) => {
   try {
     const sql =
       "UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, telefone = ?, chave_pix = ?, cartao_final = ? WHERE id = ?";
@@ -195,15 +175,13 @@ const atualizarPerfil = async (
 };
 
 const salvarTokenResetSenha = async (usuarioId, token, expira) => {
-  const sql =
-    "UPDATE usuarios SET reset_senha_token = ?, reset_senha_expira = ? WHERE id = ?";
+  const sql = "UPDATE usuarios SET reset_senha_token = ?, reset_senha_expira = ? WHERE id = ?";
   const [resultado] = await pool.query(sql, [token, expira, usuarioId]);
   return resultado.affectedRows > 0;
 };
 
 const buscarPorTokenResetSenha = async (token) => {
-  const sql =
-    "SELECT id, nome, email, reset_senha_expira FROM usuarios WHERE reset_senha_token = ?";
+  const sql = "SELECT id, nome, email, reset_senha_expira FROM usuarios WHERE reset_senha_token = ?";
   const [rows] = await pool.query(sql, [token]);
   return rows[0] || null;
 };
@@ -217,8 +195,7 @@ const atualizarSenhaPorReset = async (usuarioId, novaSenhaHash) => {
 
 const obterEstatisticaPlataforma = async () => {
   try {
-    const sqlTotais =
-      "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_moedas), 0) AS totalTokens FROM usuarios";
+    const sqlTotais = "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_moedas), 0) AS totalTokens FROM usuarios";
     const [totaisRows] = await pool.query(sqlTotais);
 
     const sqlUltimas = `

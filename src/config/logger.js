@@ -14,8 +14,7 @@ const formatoProducao = winston.format.combine(
 );
 const logger = winston.createLogger({
   level: config.nodeEnv === "production" ? "info" : "debug",
-  format:
-    config.nodeEnv === "production" ? formatoProducao : formatoDesenvolvimento,
+  format: config.nodeEnv === "production" ? formatoProducao : formatoDesenvolvimento,
   transports: [new winston.transports.Console()],
 });
 module.exports = logger;

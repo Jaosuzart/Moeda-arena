@@ -23,12 +23,8 @@ const validarCompra = [
     .isString()
     .withMessage("O método de pagamento deve ser texto.")
     .isIn(["Pix", "Cartão Virtual"])
-    .withMessage(
-      'Método de pagamento inválido. Use "Pix" ou "Cartão Virtual".',
-    ),
-  body("isGratis")
-    .isBoolean()
-    .withMessage("O campo isGratis deve ser verdadeiro ou falso."),
+    .withMessage('Método de pagamento inválido. Use "Pix" ou "Cartão Virtual".'),
+  body("isGratis").isBoolean().withMessage("O campo isGratis deve ser verdadeiro ou falso."),
   tratarErrosValidacao,
 ];
 const validarRegistro = [

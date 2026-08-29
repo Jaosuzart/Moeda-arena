@@ -1,10 +1,7 @@
 const { pool } = require("./db");
 
 const jaProcessado = async (paymentId) => {
-  const [rows] = await pool.query(
-    "SELECT id FROM pagamentos_processados WHERE payment_id = ?",
-    [String(paymentId)],
-  );
+  const [rows] = await pool.query("SELECT id FROM pagamentos_processados WHERE payment_id = ?", [String(paymentId)]);
   return rows.length > 0;
 };
 

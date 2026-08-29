@@ -11,11 +11,7 @@ const logger = require("../config/logger");
 const googleClient = new OAuth2Client(config.googleClientId);
 
 const gerarJwt = (usuario) =>
-  jwt.sign(
-    { id: usuario.id, email: usuario.email, nome: usuario.nome },
-    config.jwtSecret,
-    { expiresIn: "7d" },
-  );
+  jwt.sign({ id: usuario.id, email: usuario.email, nome: usuario.nome }, config.jwtSecret, { expiresIn: "7d" });
 
 const formatarUsuarioPublico = (usuario) => ({
   id: usuario.id,
@@ -45,20 +41,12 @@ const registrar = async (req, res, next) => {
     }
 
     const senhaHash = await bcrypt.hash(senha, 12);
-    const usuario = await usuarioModel.criarUsuario(
-      nome,
-      email,
-      senhaHash,
-      telefone,
-      indicadoPor,
-    );
+    const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash, telefone, indicadoPor);
 
     if (usuario.token_verificacao) {
       emailService
         .enviarEmailVerificacao(usuario.email, usuario.nome, usuario.token_verificacao)
-        .catch((err) =>
-          logger.error("Falha ao enviar e-mail de verificação.", { erro: err.message }),
-        );
+        .catch((err) => logger.error("Falha ao enviar e-mail de verificação.", { erro: err.message }));
     }
 
     const token = gerarJwt(usuario);
@@ -84,13 +72,15 @@ const login = async (req, res, next) => {
       const codigo2FA = Math.floor(100000 + Math.random() * 900000).toString();
       const expira = new Date(Date.now() + 10 * 60000); // 10 minutos
       await usuarioModel.salvarCodigo2FA(usuario.id, codigo2FA, expira);
-      
+
       emailService.enviarEmail2FA(usuario.email, usuario.nome, codigo2FA).catch((err) => {
         logger.error("Falha ao enviar email 2FA", { erro: err.message });
       });
-      
+
       logger.info("Login aguardando 2FA.", { usuarioId: usuario.id });
-      return res.status(200).json({ sucesso: false, codigo: "REQUIRE_2FA", usuarioId: usuario.id, mensagem: "Código enviado por email." });
+      return res
+        .status(200)
+        .json({ sucesso: false, codigo: "REQUIRE_2FA", usuarioId: usuario.id, mensagem: "Código enviado por email." });
     }
 
     const token = gerarJwt(usuario);
@@ -182,15 +172,8 @@ const atualizarPerfil = async (req, res, next) => {
     }
 
     const usuarioCompleto = await usuarioModel.buscarPorEmail(usuarioDb.email);
-    
-    // DEBUG LOG
-    console.log("[DEBUG 2FA PERFIL] Email:", usuarioDb.email);
-    console.log("[DEBUG 2FA PERFIL] Senha digitada length:", senhaConfirmacao.length);
-    console.log("[DEBUG 2FA PERFIL] Hash do DB length:", usuarioCompleto.senha_hash ? usuarioCompleto.senha_hash.length : 'NULL');
 
     const senhaValida = await bcrypt.compare(senhaConfirmacao, usuarioCompleto.senha_hash);
-    
-    console.log("[DEBUG 2FA PERFIL] bcrypt.compare result:", senhaValida);
 
     if (!senhaValida) return erro(res, "Senha de confirmação incorreta.", 403, "SENHA_INCORRETA");
 
@@ -267,9 +250,9 @@ const solicitarRecuperarSenha = async (req, res, next) => {
     const expira = new Date(Date.now() + 3_600_000);
 
     await usuarioModel.salvarTokenResetSenha(usuario.id, token, expira);
-    
+
     // Envio assíncrono para não travar a resposta da API
-    emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, token).catch(err => {
+    emailService.enviarEmailRecuperacao(usuario.email, usuario.nome, token).catch((err) => {
       logger.error("Erro no envio em background de recuperação de senha", { erro: err.message });
     });
 
@@ -336,20 +319,20 @@ const verificar2fa = async (req, res, next) => {
   try {
     const { usuarioId, codigo } = req.body;
     if (!usuarioId || !codigo) return erro(res, "Dados incompletos.");
-    
+
     const usuario = await usuarioModel.buscarPorId(usuarioId);
     if (!usuario) return erro(res, "Usuário não encontrado.");
-    
+
     if (usuario.codigo_2fa !== codigo) {
       return erro(res, "Código inválido.", 401);
     }
-    
+
     if (new Date(usuario.codigo_2fa_expira) < new Date()) {
       return erro(res, "Código expirado.", 401);
     }
-    
+
     await usuarioModel.limparCodigo2FA(usuario.id);
-    
+
     const token = gerarJwt(usuario);
     setTokenCookie(res, token);
     logger.info("Login 2FA realizado.", { usuarioId: usuario.id });

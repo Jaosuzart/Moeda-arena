@@ -8,10 +8,7 @@ const errorHandler = (err, req, res, _next) => {
     ip: req.ip,
   });
   const status = err.statusCode || 500;
-  const mensagem =
-    status === 500
-      ? "Erro interno do servidor. Tente novamente mais tarde."
-      : err.message;
+  const mensagem = status === 500 ? "Erro interno do servidor. Tente novamente mais tarde." : err.message;
   res.status(status).json({
     sucesso: false,
     erro: mensagem,

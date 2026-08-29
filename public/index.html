@@ -1,1102 +1,1611 @@
 <!doctype html>
 <html lang="pt-BR" dir="ltr">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Moeda Arena — Moedas e Passe de Batalha Premium</title>
-  <meta name="description"
-    content="Compre moedas para a Moeda Arena com segurança via Mercado Pago. Escolha entre o Passe Amador gratuito, Profissional ou Sócio Lenda e desbloqueie personagens épicos, ligas exclusivas e muito mais." />
-  <meta name="keywords" content="moedas, Moeda Arena, passe de batalha, comprar moedas, mercado pago, gaming" />
-  <meta name="author" content="Moeda Arena" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Moeda Arena — Passe de Batalha Premium" />
-  <meta property="og:description"
-    content="Escolha seu pacote de moedas e domine a partida. Pagamento seguro via Mercado Pago." />
-  <meta property="og:url" content="https://moedaarena.com.br" />
-  <meta property="og:site_name" content="Moeda Arena" />
-  <meta property="og:locale" content="pt_BR" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Moeda Arena — Passe de Batalha Premium" />
-  <meta name="twitter:description" content="Compre moedas para a Moeda Arena com segurança via Mercado Pago." />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="color-scheme" content="dark light" />
-  <link rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" media="print" onload="this.media = 'all'" />
-  <noscript>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Moeda Arena — Moedas e Passe de Batalha Premium</title>
+    <meta
+      name="description"
+      content="Compre moedas para a Moeda Arena com segurança via Mercado Pago. Escolha entre o Passe Amador gratuito, Profissional ou Sócio Lenda e desbloqueie personagens épicos, ligas exclusivas e muito mais."
+    />
+    <meta name="keywords" content="moedas, Moeda Arena, passe de batalha, comprar moedas, mercado pago, gaming" />
+    <meta name="author" content="Moeda Arena" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Moeda Arena — Passe de Batalha Premium" />
+    <meta
+      property="og:description"
+      content="Escolha seu pacote de moedas e domine a partida. Pagamento seguro via Mercado Pago."
+    />
+    <meta property="og:url" content="https://moedaarena.com.br" />
+    <meta property="og:site_name" content="Moeda Arena" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Moeda Arena — Passe de Batalha Premium" />
+    <meta name="twitter:description" content="Compre moedas para a Moeda Arena com segurança via Mercado Pago." />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="dark light" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet" />
-  </noscript>
-  <link rel="preload" as="style" href="/style.min.css?v=8" />
-  <link rel="stylesheet" href="/style.min.css?v=8" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+      rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <link rel="preload" as="style" href="/style.min.css?v=8" />
+    <link rel="stylesheet" href="/style.min.css?v=8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
 
-<body>
-  <header>
-    <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
-      <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
-        <img src="/assets/images/logo-new.webp" alt="Moeda Arena" class="nav-logo-icon" width="44" height="44"
-          fetchpriority="high" decoding="async"
-          style="height:44px;width:44px;border-radius:50%;mix-blend-mode:screen;object-fit:cover;object-position:center 15%" />
-        <span class="nav-logo-text">Moeda Arena</span>
-      </a>
-      <div class="nav-user" id="navUser">
-        <div class="nav-auth-btns" id="navAuthBtns">
-          <button class="btn-gamer btn-gamer-ghost" id="btnRanking" type="button">🏆 Ranking</button>
-          <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
-          <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
-        </div>
-        <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
-          <button class="btn-gamer btn-gamer-ghost" id="btnRankingLogged" type="button">🏆 Ranking</button>
-          <button class="btn-gamer btn-gamer-ghost text-danger hidden-by-default" id="btnAdminPanel" type="button">
-            ⚙️ Admin
-          </button>
-          <div class="nav-user-welcome" id="navUserWelcome">
-            <span class="welcome-text">
-              Olá,
-              <strong id="navUserName">Jogador</strong>
-            </span>
-            <br />
-            <span id="navUserRole" class="badge-role">Jogador</span>
-          </div>
-          <div class="nav-moedas" id="navMoedas" aria-label="Saldo de moedas">
-            <span class="nav-moedas-icon" aria-hidden="true">🪙</span>
-            <span id="navMoedaCount" aria-live="polite">0</span>
-          </div>
-          <button class="nav-avatar" id="navAvatar" type="button" title="Sair da conta">
-            <span class="sr-only">Menu do usuário — clique para sair</span>
-          </button>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <main id="conteudoPrincipal">
-    <section class="hero-section" aria-labelledby="heroTitle">
-      <span class="hero-badge" aria-label="Temporada atual">Temporada 6</span>
-      <h1 class="hero-title" id="heroTitle">Passe de Batalha</h1>
-      <p class="hero-subtitle">
-        Escolha seu pacote de moedas e domine a partida com personagens épicos e ligas exclusivas.
-      </p>
-    </section>
-    <section class="game-universe container-center" aria-labelledby="universeTitle"
-      style="padding-top: 0; padding-bottom: 2rem;">
-      <p class="stats-section-subtitle">
-        Descubra o que suas Moedas podem desbloquear dentro do nosso ecossistema competitivo.
-      </p>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-premium);">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Personagens Épicos</div>
-          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Desbloqueie skins e
-            heróis exclusivos que só podem ser adquiridos com Moedas.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-vip, #a855f7);">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-              </polygon>
-            </svg>
-          </div>
-          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Ligas Ranqueadas</div>
-          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Use suas Moedas para
-            entrar em ligas fechadas e competir por prêmios.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="display:flex; justify-content:center; color: var(--accent-free, #00E676);">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-              </path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-          </div>
-          <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px;">Caixas de Loot</div>
-          <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4;">Abra caixas
-            misteriosas contendo multiplicadores de XP e itens ultra raros.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="toggle-section" aria-label="Alternar entre preço mensal e anual">
-      <span class="toggle-label active" id="labelMensal">Mensal</span>
-      <label class="toggle-switch" for="pricingToggle">
-        <input type="checkbox" id="pricingToggle" role="switch" aria-label="Alternar para preço anual" />
-        <span class="toggle-slider" aria-hidden="true"></span>
-      </label>
-      <span class="toggle-label" id="labelAnual">Anual</span>
-      <span class="toggle-discount" aria-label="Desconto de 17% no plano anual">Economize 17%</span>
-    </section>
-    <section class="cards-grid" id="cardsContainer" aria-label="Planos disponíveis">
-      <article class="plan-card" data-tier="gratis">
-        <div class="plan-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-        </div>
-        <h2 class="plan-card-name">Passe Amador</h2>
-        <p class="plan-card-desc">Comece sua jornada com o pacote inicial.</p>
-        <div class="plan-card-price-wrapper">
-          <span class="plan-card-price">Grátis</span>
-        </div>
-        <ul class="plan-card-features">
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8v8"></path>
-                <path d="M8 12h8"></path>
-              </svg></span>
-            100 Moedas Iniciais
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Acesso Básico
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            1 Uniforme Padrão
-          </li>
-        </ul>
-        <button class="plan-card-btn" type="button">Resgatar Grátis</button>
-        <div class="plan-security-badge">
-          <span>⚡ Acesso Imediato à Conta</span>
-        </div>
-      </article>
-
-      <article class="plan-card" data-tier="iniciante">
-        <div class="plan-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M16.8 11.5c.3-1.6-.2-3.1-1.3-4.2-1.3-1.3-3.4-1.6-5-.6L10 7.3"></path>
-            <path d="M16.8 11.5c-1.3.3-2.6 0-3.6-.8l-1.3 1.3"></path>
-            <path d="M11.9 12l-1.2 1.3c-1 1-2.7 1-3.7 0-1-1-1-2.7 0-3.7l1.3-1.2"></path>
-            <path d="M13.2 12c1 1 1 2.7 0 3.7-1 1-2.7 1-3.7 0L8.2 14.5"></path>
-            <path d="M7.2 12.5c-.3 1.6.2 3.1 1.3 4.2 1.3 1.3 3.4 1.6 5 .6l.5-.6"></path>
-            <path d="M7.2 12.5c1.3-.3 2.6 0 3.6.8l1.3-1.3"></path>
-          </svg>
-        </div>
-        <h2 class="plan-card-name">Passe Iniciante</h2>
-        <p class="plan-card-desc">Ideal para quem quer começar com pouca moeda.</p>
-        <div class="plan-card-price-wrapper">
-          <span class="plan-card-price">R$ 4,99</span>
-          <span class="plan-card-price-period">/mês</span>
-        </div>
-        <ul class="plan-card-features">
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8v8"></path>
-                <path d="M8 12h8"></path>
-              </svg></span>
-            1.000 Moedas/mês
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Acesso Básico Estendido
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            1 Skin de Arma Comum
-          </li>
-        </ul>
-        <button class="plan-card-btn" type="button">Assinar Pacote</button>
-        <div class="plan-security-badge">
-          <span>🔒 Pagamento 100% Seguro</span>
-        </div>
-      </article>
-
-      <article class="plan-card" data-tier="premium">
-        <span class="plan-card-popular-badge">★ Mais Popular</span>
-        <div class="plan-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
-            <line x1="13" y1="19" x2="19" y2="13"></line>
-            <line x1="16" y1="16" x2="20" y2="20"></line>
-            <line x1="19" y1="21" x2="21" y2="19"></line>
-            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"></polyline>
-            <line x1="5" y1="14" x2="9" y2="18"></line>
-            <line x1="7" y1="17" x2="4" y2="20"></line>
-            <line x1="3" y1="19" x2="5" y2="21"></line>
-          </svg>
-        </div>
-        <h2 class="plan-card-name">Passe Profissional</h2>
-        <p class="plan-card-desc">O favorito dos jogadores competitivos.</p>
-        <div class="plan-card-price-wrapper">
-          <span class="plan-card-price">R$ 19,90</span>
-          <span class="plan-card-price-period">/mês</span>
-        </div>
-        <ul class="plan-card-features">
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8v8"></path>
-                <path d="M8 12h8"></path>
-              </svg></span>
-            5.000 Moedas/mês
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Conjuntos de Personagens Épicos
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Acesso a Ligas Exclusivas
-          </li>
-        </ul>
-        <button class="plan-card-btn" type="button">Assinar Pacote</button>
-        <div class="plan-security-badge">
-          <span>🔒 Pagamento 100% Seguro</span>
-        </div>
-      </article>
-
-      <article class="plan-card" data-tier="vip">
-        <div class="plan-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="2 16 12 2 22 16 17 21 7 21 2 16"></polygon>
-            <path d="M12 2l3 7.5"></path>
-            <path d="M12 2L9 9.5"></path>
-          </svg>
-        </div>
-        <h2 class="plan-card-name">Sócio Lenda</h2>
-        <p class="plan-card-desc">Para quem quer dominar sem limites.</p>
-        <div class="plan-card-price-wrapper">
-          <span class="plan-card-price">R$ 39,90</span>
-          <span class="plan-card-price-period">/mês</span>
-        </div>
-        <ul class="plan-card-features">
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8v8"></path>
-                <path d="M8 12h8"></path>
-              </svg></span>
-            15.000 Moedas/mês
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Todos os Personagens Desbloqueados
-          </li>
-          <li>
-            <span class="feature-icon"
-              style="display:inline-flex; align-items:center; transform:translateY(2px); margin-right:8px;"><svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg></span>
-            Sem Anúncios
-          </li>
-        </ul>
-        <button class="plan-card-btn" type="button">Assinar Pacote</button>
-        <div class="plan-security-badge">
-          <span>🔒 Pagamento 100% Seguro</span>
-        </div>
-      </article>
-    </section>
-
-    <section class="stats-section container-center" id="statsSection" aria-labelledby="statsTitle"
-      style="display: none;">
-      <h2 class="stats-section-title" id="statsTitle">Métricas da Arena</h2>
-      <p class="stats-section-subtitle">
-        Dados em tempo real do nosso servidor e transações processadas de forma transparente.
-      </p>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">👥</div>
-          <div class="stat-value" id="statsTotalUsuarios">0</div>
-          <div class="stat-label">Jogadores Ativos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🪙</div>
-          <div class="stat-value cyan" id="statsTotalMoedas">0</div>
-          <div class="stat-label">Moedas Entregues</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🛡️</div>
-          <div class="stat-value green">Instantâneo</div>
-          <div class="stat-label">Tempo de Entrega</div>
-        </div>
-      </div>
-
-      <div class="recent-sales-card">
-        <h3 class="recent-sales-title">📢 Atividade Recente da Arena</h3>
-        <ul class="recent-sales-list" id="recentSalesList">
-          <li class="loading-sales">Carregando atividades recentes...</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="faq-section container-center" aria-labelledby="faqTitle">
-      <h2 id="faqTitle" class="faq-title">Dúvidas Frequentes</h2>
-      <div class="faq-grid"></div>
-      <article class="faq-item">
-        <h3 class="faq-question">Como eu recebo minhas moedas?</h3>
-        <p class="faq-answer">
-          Após a aprovação do pagamento pelo Mercado Pago, as moedas são creditadas automaticamente na conta vinculada
-          ao seu e-mail.
-        </p>
-      </article>
-      <article class="faq-item">
-        <h3 class="faq-question">O pagamento é seguro?</h3>
-        <p class="faq-answer">
-          Sim! Nós não armazenamos nenhum dado bancário seu. Tudo é processado pelo ambiente seguro e criptografado do
-          Mercado Pago.
-        </p>
-      </article>
-      <article class="faq-item">
-        <h3 class="faq-question">O que acontece se eu me arrepender?</h3>
-        <p class="faq-answer">
-          Você tem garantia de devolução do dinheiro em até 7 dias, conforme o Direito de Arrependimento (CDC), desde
-          que as moedas não tenham sido gastas dentro da Moeda Arena.
-        </p>
-      </article>
-      <article class="faq-item">
-        <h3 class="faq-question">Por que pedem meu CPF no pagamento?</h3>
-        <p class="faq-answer">
-          É uma exigência do Banco Central e do Mercado Pago para prevenção a fraudes e emissão de notas fiscais. O
-          fornecimento no seu perfil aqui é opcional.
-        </p>
-      </article>
-    </section>
-  </main>
-
-  <footer class="footer-loja">
-    <div class="footer-support">
-      <span class="footer-support-title">🛡️ Suporte Oficial & Comunidade</span>
-      <div class="support-buttons">
-        <a href="https://wa.me/5571982767129" id="linkWhatsapp" target="_blank" rel="noopener noreferrer"
-          class="btn-support btn-whatsapp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: block">
-            <path
-              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.197 1.45 4.817 1.451 5.485 0 9.948-4.468 9.951-9.96.002-2.66-1.033-5.161-2.909-7.039C16.621 1.728 14.12 1.69 12.01 1.69c-5.49 0-9.953 4.469-9.956 9.962-.001 1.761.472 3.477 1.373 4.98L2.43 21.655l5.217-1.369zM17.66 14.79c-.31-.155-1.833-.904-2.115-1.006-.282-.102-.487-.152-.69.155-.205.308-.795.998-.973 1.204-.18.206-.358.23-.668.077-.31-.154-1.306-.481-2.487-1.536-.92-.821-1.54-1.836-1.72-2.145-.18-.308-.02-.475.134-.629.14-.139.31-.358.463-.538.154-.18.205-.308.308-.513.102-.206.05-.385-.025-.538-.077-.154-.69-1.666-.944-2.28-.248-.598-.5-.517-.69-.527-.18-.01-.385-.011-.59-.011-.205 0-.538.077-.82.385-.282.308-1.077 1.052-1.077 2.568 0 1.517 1.102 2.977 1.256 3.18.154.205 2.17 3.31 5.257 4.638.734.316 1.307.505 1.753.647.738.234 1.41.201 1.94.122.59-.088 1.833-.749 2.09-1.472.256-.723.256-1.343.18-1.472-.077-.128-.282-.205-.59-.36z" />
-          </svg>
-          WhatsApp Suporte
+  <body>
+    <header>
+      <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
+        <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
+          <img
+            src="/assets/images/logo-new.webp"
+            alt="Moeda Arena"
+            class="nav-logo-icon"
+            width="44"
+            height="44"
+            fetchpriority="high"
+            decoding="async"
+            style="
+              height: 44px;
+              width: 44px;
+              border-radius: 50%;
+              mix-blend-mode: screen;
+              object-fit: cover;
+              object-position: center 15%;
+            "
+          />
+          <span class="nav-logo-text">Moeda Arena</span>
         </a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=suporte@moedaarena.com.br" target="_blank" rel="noopener noreferrer" class="btn-support"
-          style="background: var(--bg-card); border: 1px solid rgba(255, 184, 0, 0.3); color: var(--text-accent);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-          suporte@moedaarena.com.br
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-badges">
-      <div class="badge-security">
-        <span>🔒</span>
-        <span>SSL Secure Connection</span>
-      </div>
-      <div class="badge-security">
-        <span>🛡️</span>
-        <span>Processado por Mercado Pago</span>
-      </div>
-    </div>
-
-    <p>
-      Moeda Arena &copy;
-      <time datetime="2026">2026</time>
-      — Todos os pagamentos processados com segurança pelo
-      <a href="https://www.mercadopago.com.br" target="_blank" rel="noopener noreferrer"
-        class="link-limpo link-destaque">
-        Mercado Pago.
-      </a>
-    </p>
-    <p>
-      Moeda Arena &copy; 2026 &bull; CNPJ: 68.655.211/0001-04<br>
-      Idealizado por João Marcelo Suzart Lima Castro
-    </p>
-    <p>
-      <button id="btnAbrirTermos" class="btn-link">Termos e Condições</button>
-    </p>
-  </footer>
-  <dialog class="modal-overlay" id="termosModal" aria-labelledby="termosTitle">
-    <div class="modal-content modal-lg" role="document">
-      <header class="modal-header">
-        <h2 id="termosTitle" class="modal-header-title">Termos e Condições</h2>
-        <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
-      </header>
-      <div class="modal-body termos-content modal-body-scroll">
-        <h3>1. Aceitação dos Termos</h3>
-        <p>
-          Ao utilizar a plataforma Moeda Arena e realizar compras em nosso sistema, o usuário concorda integralmente com as disposições aqui estabelecidas. Caso o usuário seja menor de 18 anos, é obrigatória a leitura e autorização prévia por parte dos pais ou responsáveis legais antes da realização de qualquer transação.
-        </p>
-
-        <h3>2. Glossário</h3>
-        <ul>
-          <li>
-            <strong>Moeda Arena:</strong> Nossa plataforma oficial, destinada à aquisição de assinaturas e moedas virtuais para jogos eletrônicos.
-          </li>
-          <li>
-            <strong>Moedas:</strong> A moeda virtual exclusiva da nossa plataforma. O usuário pode adquiri-la ou conquistá-la em nosso site para troca por recompensas e benefícios internos. Ressaltamos que essas moedas não possuem valor monetário fora do nosso ecossistema.
-          </li>
-          <li>
-            <strong>Moedas de Terceiros (ex: Robux, V-Bucks):</strong> Moedas virtuais oficiais pertencentes a jogos de terceiros. Atuamos unicamente como facilitadores da recarga. As regras de utilização destas moedas são regidas pelas desenvolvedoras dos respectivos jogos (como Epic Games e Roblox).
-          </li>
-          <li>
-            <strong>Passes VIP:</strong> Nossos pacotes de assinatura que concedem benefícios exclusivos e contínuos durante o período de vigência.
-          </li>
-        </ul>
-
-        <h3>3. Conduta e Política de Uso</h3>
-        <p>
-          A Moeda Arena preza pelo uso ético de sua plataforma. É terminantemente proibido o uso de <em>hacks</em>, <em>bots</em>, <em>scripts</em> ou a exploração de falhas no sistema (<em>bugs</em>) para obtenção ilícita de moedas ou vantagens. Qualquer violação destas regras resultará no banimento permanente da conta, perda das moedas acumuladas e adoção das medidas legais cabíveis.
-        </p>
-
-        <h3>4. Assinaturas e Passes</h3>
-        <p>
-          Ao aderir a um de nossos Passes (Amador, Profissional ou Lenda), o usuário concorda com a renovação automática da assinatura. O cancelamento pode ser efetuado a qualquer momento através do painel do usuário. Informamos que não realizamos reembolsos parciais ou proporcionais aos dias não utilizados no ciclo de faturamento vigente.
-        </p>
-
-        <h3>5. Pagamentos e Segurança</h3>
-        <p>
-          Todas as transações financeiras são processadas pelo Mercado Pago, garantindo a segurança dos seus dados bancários, os quais não são armazenados em nossos servidores. Em caso de problemas com a compra, <strong>solicitamos que contate nosso suporte primeiramente</strong>. A contestação indevida de cobranças (<em>chargeback</em>) junto à operadora do cartão de crédito acarretará o bloqueio imediato e definitivo da conta do usuário.
-        </p>
-
-        <h3>6. Entrega de Produtos Digitais</h3>
-        <p>
-          Por se tratar de produtos digitais, a entrega ocorre, em regra, imediatamente após a aprovação do pagamento. Em situações excepcionais de instabilidade sistêmica ou processos de análise de segurança, o prazo de entrega poderá se estender para até 24 horas úteis. Garantimos a entrega do produto assim que os serviços parceiros forem restabelecidos.
-        </p>
-
-        <h3>7. Política de Reembolso e Arrependimento</h3>
-        <p>
-          Em conformidade com o Código de Defesa do Consumidor (CDC), o usuário possui o direito de arrependimento em até 7 dias após a compra. <strong>Atenção:</strong> Por se tratar de um serviço digital de consumo imediato, este direito cessa a partir do momento em que o usuário resgatar, utilizar ou transferir as moedas adquiridas para o jogo de destino. O reembolso será processado integralmente apenas se os itens permanecerem intactos e não utilizados na conta.
-        </p>
-
-        <h3>8. Privacidade e Proteção de Dados (LGPD)</h3>
-        <p>
-          A coleta de dados pessoais (como nome, e-mail e CPF) destina-se exclusivamente à emissão de comprovantes fiscais, prevenção de fraudes e cumprimento das obrigações legais, em estrita conformidade com a Lei Geral de Proteção de Dados. Não comercializamos dados de usuários. A guarda e a confidencialidade das credenciais de acesso são de inteira responsabilidade do usuário, isentando a Moeda Arena de quaisquer prejuízos decorrentes de compartilhamento indevido ou negligência.
-        </p>
-
-        <h3>9. Disposições Finais</h3>
-        <p>
-          Todos os direitos sobre o <em>design</em>, marca e código-fonte da Moeda Arena nos são reservados. As marcas registradas de jogos parceiros (como Roblox) são de propriedade de suas respectivas desenvolvedoras. A plataforma é fornecida no estado em que se encontra, e não nos responsabilizamos por penalidades ou banimentos sofridos pelos usuários no ambiente dos jogos de terceiros decorrentes de mau uso. Reservamo-nos o direito de atualizar estes termos a qualquer momento, mediante aviso prévio na plataforma.
-        </p>
-      </div>
-      <footer class="modal-footer">
-        <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnOkTermos">Ok, Entendido</button>
-      </footer>
-    </div>
-  </dialog>
-
-  <dialog class="modal-overlay" id="authModal" aria-labelledby="authModalTitle">
-    <div class="modal-content">
-      <div class="auth-tabs" role="tablist" aria-label="Opções de autenticação">
-        <button class="auth-tab active" id="tabLogin" type="button" role="tab" aria-selected="true"
-          aria-controls="formLogin">
-          Entrar
-        </button>
-        <button class="auth-tab" id="tabRegistro" type="button" role="tab" aria-selected="false"
-          aria-controls="formRegistro">
-          Criar Conta
-        </button>
-      </div>
-      <div class="modal-body auth-form visible" id="formLogin" role="tabpanel" aria-labelledby="tabLogin">
-        <h2 class="sr-only" id="authModalTitle">Autenticação</h2>
-        <form id="loginForm" autocomplete="on" novalidate>
-          <div class="form-group">
-            <label class="form-label" for="loginEmail">Email</label>
-            <input class="form-input" type="email" id="loginEmail" name="email" placeholder="seu@email.com" required
-              autocomplete="email" aria-required="true" />
+        <div class="nav-user" id="navUser">
+          <div class="nav-auth-btns" id="navAuthBtns">
+            <button class="btn-gamer btn-gamer-ghost" id="btnRanking" type="button">🏆 Ranking</button>
+            <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
+            <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
           </div>
-          <div class="form-group" style="position: relative">
-            <label class="form-label" for="loginSenha">Senha</label>
-            <input class="form-input" type="password" id="loginSenha" name="senha" placeholder="Sua senha" required
-              autocomplete="current-password" aria-required="true" />
-            <a href="#" id="btnEsqueciSenha" style="
-                  float: right;
-                  margin-top: 6px;
-                  font-size: 0.8rem;
-                  text-decoration: none;
-                  color: var(--text-secondary, #aaa);
-                  transition: color 0.2s;
-                " onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
-              onmouseout="this.style.color = 'var(--text-secondary, #aaa)'">
-              Esqueci minha senha
-            </a>
-          </div>
-          <div id="loginFeedback" class="alert-feedback" role="alert" aria-live="assertive" style="margin-top: 24px">
-          </div>
-          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnLogin">Entrar na Arena</button>
-        </form>
-        <div class="auth-separator">
-          <span class="auth-separator-line"></span>
-          <span class="auth-separator-text">ou</span>
-          <span class="auth-separator-line"></span>
-        </div>
-        <button class="btn-google" id="btnGoogleLogin" type="button" aria-label="Entrar com o Google">
-          <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-              fill="#4285F4" />
-            <path
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              fill="#34A853" />
-            <path
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              fill="#FBBC05" />
-            <path
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              fill="#EA4335" />
-          </svg>
-          Entrar com o Google
-        </button>
-        <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth" type="button">Cancelar</button>
-      </div>
-      <div class="modal-body auth-form" id="formRegistro" role="tabpanel" aria-labelledby="tabRegistro" hidden>
-        <form id="registroForm" autocomplete="on" novalidate>
-          <div class="form-group">
-            <label class="form-label" for="registroNome">Nome</label>
-            <input class="form-input" type="text" id="registroNome" name="nome" placeholder="Seu nome de jogador"
-              required autocomplete="name" aria-required="true" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="registroEmail">Email</label>
-            <input class="form-input" type="email" id="registroEmail" name="email" placeholder="seu@email.com" required
-              autocomplete="email" aria-required="true" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="registroTelefone">WhatsApp (com DDD)</label>
-            <input class="form-input" type="tel" id="registroTelefone" name="telefone" placeholder="Ex: 11999999999"
-              required autocomplete="tel" aria-required="true" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="registroSenha">Senha</label>
-            <input class="form-input" type="password" id="registroSenha" name="senha" placeholder="Mínimo 6 caracteres"
-              required minlength="6" autocomplete="new-password" aria-required="true" />
-          </div>
-          <div id="registroFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          <button type="submit" class="btn-gamer btn-gamer-success w-full mt-4" id="btnRegistro">Criar Conta</button>
-        </form>
-        <div class="auth-separator">
-          <span class="auth-separator-line"></span>
-          <span class="auth-separator-text">ou</span>
-          <span class="auth-separator-line"></span>
-        </div>
-
-        <button class="btn-google" id="btnGoogleRegistro" type="button" aria-label="Criar conta com o Google">
-          <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-              fill="#4285F4" />
-            <path
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              fill="#34A853" />
-            <path
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              fill="#FBBC05" />
-            <path
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              fill="#EA4335" />
-          </svg>
-          Criar conta com o Google
-        </button>
-        <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth2" type="button">Cancelar</button>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="modal-overlay" id="checkoutModal" aria-labelledby="checkoutTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="checkoutTitle">Finalizar Assinatura</h2>
-        <button class="modal-close" id="btnFecharCheckout" type="button" aria-label="Fechar modal de checkout">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <p class="text-muted">Você está adquirindo o pacote:</p>
-        <p class="checkout-plano-nome" id="checkoutPlanoNome" aria-live="polite"></p>
-
-        <div id="checkoutPrecoArea" style="margin: 12px 0; text-align: center">
-          <span id="checkoutPrecoOriginal" style="font-size: 1.1rem; color: var(--text-secondary, #aaa)"></span>
-          <span id="checkoutPrecoFinal"
-            style="font-size: 1.4rem; font-weight: bold; color: var(--accent-primary, #00e5ff); margin-left: 8px"></span>
-        </div>
-
-        <div id="areaCupom" class="form-group" style="margin-top: 12px">
-          <label class="form-label" for="inputCupom">Cupom de Desconto (opcional)</label>
-          <div style="display: flex; gap: 8px; align-items: center">
-            <input type="text" class="form-control" id="inputCupom" placeholder="Ex: STREAMER10"
-              style="flex: 1; text-transform: uppercase" maxlength="30" autocomplete="off" />
-            <button type="button" class="btn-gamer btn-gamer-secondary" id="btnAplicarCupom"
-              style="white-space: nowrap; padding: 8px 16px">
-              Aplicar
+          <div class="nav-user-info" id="navUserInfo" hidden aria-label="Informações do usuário">
+            <button class="btn-gamer btn-gamer-ghost" id="btnRankingLogged" type="button">🏆 Ranking</button>
+            <button class="btn-gamer btn-gamer-ghost text-danger hidden-by-default" id="btnAdminPanel" type="button">
+              ⚙️ Admin
+            </button>
+            <div class="nav-user-welcome" id="navUserWelcome">
+              <span class="welcome-text">
+                Olá,
+                <strong id="navUserName">Jogador</strong>
+              </span>
+              <br />
+              <span id="navUserRole" class="badge-role">Jogador</span>
+            </div>
+            <div class="nav-moedas" id="navMoedas" aria-label="Saldo de moedas">
+              <span class="nav-moedas-icon" aria-hidden="true">🪙</span>
+              <span id="navMoedaCount" aria-live="polite">0</span>
+            </div>
+            <button class="nav-avatar" id="navAvatar" type="button" title="Sair da conta">
+              <span class="sr-only">Menu do usuário — clique para sair</span>
             </button>
           </div>
-          <div id="cupomFeedback" class="alert-feedback" role="status" aria-live="polite" style="margin-top: 6px"></div>
+        </div>
+      </nav>
+    </header>
+    <main id="conteudoPrincipal">
+      <section class="hero-section" aria-labelledby="heroTitle">
+        <span class="hero-badge" aria-label="Temporada atual">Temporada 6</span>
+        <h1 class="hero-title" id="heroTitle">Passe de Batalha</h1>
+        <p class="hero-subtitle">
+          Escolha seu pacote de moedas e domine a partida com personagens épicos e ligas exclusivas.
+        </p>
+      </section>
+      <section
+        class="game-universe container-center"
+        aria-labelledby="universeTitle"
+        style="padding-top: 0; padding-bottom: 2rem"
+      >
+        <p class="stats-section-subtitle">
+          Descubra o que suas Moedas podem desbloquear dentro do nosso ecossistema competitivo.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="display: flex; justify-content: center; color: var(--accent-premium)">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px">Personagens Épicos</div>
+            <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4">
+              Desbloqueie skins e heróis exclusivos que só podem ser adquiridos com Moedas.
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="display: flex; justify-content: center; color: var(--accent-vip, #a855f7)">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                ></polygon>
+              </svg>
+            </div>
+            <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px">Ligas Ranqueadas</div>
+            <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4">
+              Use suas Moedas para entrar em ligas fechadas e competir por prêmios.
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="display: flex; justify-content: center; color: var(--accent-free, #00e676)">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                ></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <div class="stat-value" style="font-size: 1.4rem; margin-top: 15px">Caixas de Loot</div>
+            <div class="stat-label" style="text-transform: none; margin-top: 10px; line-height: 1.4">
+              Abra caixas misteriosas contendo multiplicadores de XP e itens ultra raros.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="toggle-section" aria-label="Alternar entre preço mensal e anual">
+        <span class="toggle-label active" id="labelMensal">Mensal</span>
+        <label class="toggle-switch" for="pricingToggle">
+          <input type="checkbox" id="pricingToggle" role="switch" aria-label="Alternar para preço anual" />
+          <span class="toggle-slider" aria-hidden="true"></span>
+        </label>
+        <span class="toggle-label" id="labelAnual">Anual</span>
+        <span class="toggle-discount" aria-label="Desconto de 17% no plano anual">Economize 17%</span>
+      </section>
+      <section class="cards-grid" id="cardsContainer" aria-label="Planos disponíveis">
+        <article class="plan-card" data-tier="gratis">
+          <div class="plan-card-icon">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h2 class="plan-card-name">Passe Amador</h2>
+          <p class="plan-card-desc">Comece sua jornada com o pacote inicial.</p>
+          <div class="plan-card-price-wrapper">
+            <span class="plan-card-price">Grátis</span>
+          </div>
+          <ul class="plan-card-features">
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 8v8"></path>
+                  <path d="M8 12h8"></path>
+                </svg>
+              </span>
+              100 Moedas Iniciais
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Acesso Básico
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              1 Uniforme Padrão
+            </li>
+          </ul>
+          <button class="plan-card-btn" type="button">Resgatar Grátis</button>
+          <div class="plan-security-badge">
+            <span>⚡ Acesso Imediato à Conta</span>
+          </div>
+        </article>
+
+        <article class="plan-card" data-tier="iniciante">
+          <div class="plan-card-icon">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M16.8 11.5c.3-1.6-.2-3.1-1.3-4.2-1.3-1.3-3.4-1.6-5-.6L10 7.3"></path>
+              <path d="M16.8 11.5c-1.3.3-2.6 0-3.6-.8l-1.3 1.3"></path>
+              <path d="M11.9 12l-1.2 1.3c-1 1-2.7 1-3.7 0-1-1-1-2.7 0-3.7l1.3-1.2"></path>
+              <path d="M13.2 12c1 1 1 2.7 0 3.7-1 1-2.7 1-3.7 0L8.2 14.5"></path>
+              <path d="M7.2 12.5c-.3 1.6.2 3.1 1.3 4.2 1.3 1.3 3.4 1.6 5 .6l.5-.6"></path>
+              <path d="M7.2 12.5c1.3-.3 2.6 0 3.6.8l1.3-1.3"></path>
+            </svg>
+          </div>
+          <h2 class="plan-card-name">Passe Iniciante</h2>
+          <p class="plan-card-desc">Ideal para quem quer começar com pouca moeda.</p>
+          <div class="plan-card-price-wrapper">
+            <span class="plan-card-price">R$ 4,99</span>
+            <span class="plan-card-price-period">/mês</span>
+          </div>
+          <ul class="plan-card-features">
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 8v8"></path>
+                  <path d="M8 12h8"></path>
+                </svg>
+              </span>
+              1.000 Moedas/mês
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Acesso Básico Estendido
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              1 Skin de Arma Comum
+            </li>
+          </ul>
+          <button class="plan-card-btn" type="button">Assinar Pacote</button>
+          <div class="plan-security-badge">
+            <span>🔒 Pagamento 100% Seguro</span>
+          </div>
+        </article>
+
+        <article class="plan-card" data-tier="premium">
+          <span class="plan-card-popular-badge">★ Mais Popular</span>
+          <div class="plan-card-icon">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
+              <line x1="13" y1="19" x2="19" y2="13"></line>
+              <line x1="16" y1="16" x2="20" y2="20"></line>
+              <line x1="19" y1="21" x2="21" y2="19"></line>
+              <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"></polyline>
+              <line x1="5" y1="14" x2="9" y2="18"></line>
+              <line x1="7" y1="17" x2="4" y2="20"></line>
+              <line x1="3" y1="19" x2="5" y2="21"></line>
+            </svg>
+          </div>
+          <h2 class="plan-card-name">Passe Profissional</h2>
+          <p class="plan-card-desc">O favorito dos jogadores competitivos.</p>
+          <div class="plan-card-price-wrapper">
+            <span class="plan-card-price">R$ 19,90</span>
+            <span class="plan-card-price-period">/mês</span>
+          </div>
+          <ul class="plan-card-features">
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 8v8"></path>
+                  <path d="M8 12h8"></path>
+                </svg>
+              </span>
+              5.000 Moedas/mês
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Conjuntos de Personagens Épicos
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Acesso a Ligas Exclusivas
+            </li>
+          </ul>
+          <button class="plan-card-btn" type="button">Assinar Pacote</button>
+          <div class="plan-security-badge">
+            <span>🔒 Pagamento 100% Seguro</span>
+          </div>
+        </article>
+
+        <article class="plan-card" data-tier="vip">
+          <div class="plan-card-icon">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="2 16 12 2 22 16 17 21 7 21 2 16"></polygon>
+              <path d="M12 2l3 7.5"></path>
+              <path d="M12 2L9 9.5"></path>
+            </svg>
+          </div>
+          <h2 class="plan-card-name">Sócio Lenda</h2>
+          <p class="plan-card-desc">Para quem quer dominar sem limites.</p>
+          <div class="plan-card-price-wrapper">
+            <span class="plan-card-price">R$ 39,90</span>
+            <span class="plan-card-price-period">/mês</span>
+          </div>
+          <ul class="plan-card-features">
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 8v8"></path>
+                  <path d="M8 12h8"></path>
+                </svg>
+              </span>
+              15.000 Moedas/mês
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Todos os Personagens Desbloqueados
+            </li>
+            <li>
+              <span
+                class="feature-icon"
+                style="display: inline-flex; align-items: center; transform: translateY(2px); margin-right: 8px"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              Sem Anúncios
+            </li>
+          </ul>
+          <button class="plan-card-btn" type="button">Assinar Pacote</button>
+          <div class="plan-security-badge">
+            <span>🔒 Pagamento 100% Seguro</span>
+          </div>
+        </article>
+      </section>
+
+      <section
+        class="stats-section container-center"
+        id="statsSection"
+        aria-labelledby="statsTitle"
+        style="display: none"
+      >
+        <h2 class="stats-section-title" id="statsTitle">Métricas da Arena</h2>
+        <p class="stats-section-subtitle">
+          Dados em tempo real do nosso servidor e transações processadas de forma transparente.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-value" id="statsTotalUsuarios">0</div>
+            <div class="stat-label">Jogadores Ativos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🪙</div>
+            <div class="stat-value cyan" id="statsTotalMoedas">0</div>
+            <div class="stat-label">Moedas Entregues</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-value green">Instantâneo</div>
+            <div class="stat-label">Tempo de Entrega</div>
+          </div>
         </div>
 
-        <fieldset class="form-group border-none p-0 mt-4" id="areaPagamento">
-          <legend class="form-label">Método de Pagamento</legend>
-          <select class="form-select" id="metodoPagamento" aria-label="Selecione o método de pagamento" required>
-            <option value="" disabled selected>Escolha uma opção...</option>
-            <option value="Pix">Pix (Transferência Imediata via Mercado Pago)</option>
-            <option value="Cartão Virtual">Cartão de Crédito (via Mercado Pago)</option>
-          </select>
-        </fieldset>
-
-        <div class="checkout-trust-badges">
-          <div class="trust-badge">
-            <span class="badge-icon">🔒</span>
-            <span class="badge-text">Checkout Seguro</span>
-          </div>
-          <div class="trust-badge">
-            <span class="badge-icon">⚡</span>
-            <span class="badge-text">Entrega Imediata</span>
-          </div>
-          <div class="trust-badge">
-            <span class="badge-icon">🛡️</span>
-            <span class="badge-text">Garantia 7 Dias</span>
-          </div>
+        <div class="recent-sales-card">
+          <h3 class="recent-sales-title">📢 Atividade Recente da Arena</h3>
+          <ul class="recent-sales-list" id="recentSalesList">
+            <li class="loading-sales">Carregando atividades recentes...</li>
+          </ul>
         </div>
+      </section>
 
-        <div id="checkoutFeedback" class="alert-feedback" role="alert" aria-live="assertive" style="margin-top: 10px">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-gamer btn-gamer-secondary" id="btnCancelarCheckout" type="button">Cancelar</button>
-        <button class="btn-gamer btn-gamer-success" id="btnConfirmarCompra" type="button">Confirmar Pagamento</button>
-      </div>
-    </div>
-  </dialog>
+      <section class="faq-section container-center" aria-labelledby="faqTitle">
+        <h2 id="faqTitle" class="faq-title">Dúvidas Frequentes</h2>
+        <div class="faq-grid"></div>
+        <article class="faq-item">
+          <h3 class="faq-question">Como eu recebo minhas moedas?</h3>
+          <p class="faq-answer">
+            Após a aprovação do pagamento pelo Mercado Pago, as moedas são creditadas automaticamente na conta vinculada
+            ao seu e-mail.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3 class="faq-question">O pagamento é seguro?</h3>
+          <p class="faq-answer">
+            Sim! Nós não armazenamos nenhum dado bancário seu. Tudo é processado pelo ambiente seguro e criptografado do
+            Mercado Pago.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3 class="faq-question">O que acontece se eu me arrepender?</h3>
+          <p class="faq-answer">
+            Você tem garantia de devolução do dinheiro em até 7 dias, conforme o Direito de Arrependimento (CDC), desde
+            que as moedas não tenham sido gastas dentro da Moeda Arena.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3 class="faq-question">Por que pedem meu CPF no pagamento?</h3>
+          <p class="faq-answer">
+            É uma exigência do Banco Central e do Mercado Pago para prevenção a fraudes e emissão de notas fiscais. O
+            fornecimento no seu perfil aqui é opcional.
+          </p>
+        </article>
+      </section>
+    </main>
 
-  <dialog class="modal-overlay" id="verify2faModal" aria-labelledby="verify2faTitle">
-    <div class="modal-content modal-sm">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="verify2faTitle">🔐 Código de Segurança</h2>
-        <button class="modal-close" id="btnFecharVerify2fa" type="button"
-          aria-label="Fechar verificação">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p class="text-sm text-center mb-4 text-muted">Enviamos um código de 6 dígitos para o seu e-mail. Por favor,
-          insira-o abaixo para continuar.</p>
-        <form id="verify2faForm">
-          <input type="hidden" id="verify2faUserId" />
-          <div class="form-group" style="text-align: center;">
-            <input type="text" id="verify2faCode" class="form-input" required maxlength="6"
-              style="text-align: center; font-size: 24px; letter-spacing: 10px; font-weight: bold;" placeholder="000000"
-              autocomplete="off" />
-          </div>
-          <div id="verify2faFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnConfirmar2fa">
-            Verificar Código
-          </button>
-        </form>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="modal-overlay" id="perfilModal" aria-labelledby="perfilTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="perfilTitle">Meu Perfil</h2>
-        <button class="modal-close" id="btnFecharPerfil" type="button" aria-label="Fechar perfil">&times;</button>
-      </div>
-      <div class="auth-tabs" role="tablist">
-        <button class="auth-tab active" id="tabDados" type="button" role="tab">Meus Dados</button>
-        <button class="auth-tab" id="tabCartao" type="button" role="tab">Pagamento</button>
-        <button class="auth-tab" id="tabSeguranca" type="button" role="tab">🔐 Segurança</button>
-      </div>
-      <div class="modal-body">
-        <form id="perfilForm">
-          <div id="areaDados" class="auth-form visible">
-            <div class="form-group">
-              <label class="form-label" for="perfilNome">Nome Completo</label>
-              <input class="form-input" type="text" id="perfilNome" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="perfilCpf">CPF</label>
-              <input class="form-input" type="text" id="perfilCpf" placeholder="000.000.000-00" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="perfilLocalidade">Localidade (Cidade/Estado)</label>
-              <input class="form-input" type="text" id="perfilLocalidade" placeholder="Ex: São Paulo, SP" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="perfilTelefone">WhatsApp (com DDD)</label>
-              <input class="form-input" type="tel" id="perfilTelefone" placeholder="Ex: 11999999999" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="perfilPix">Chave PIX (Para receber prêmios)</label>
-              <input class="form-input" type="text" id="perfilPix" placeholder="Seu email, CPF ou telefone PIX" />
-            </div>
-          </div>
-          <div id="areaCartao" class="auth-form">
-            <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.4;">Gerencie seus métodos de pagamento para compras rápidas. Seus dados são tokenizados.</p>
-            <div class="saved-cards-container">
-              <div class="saved-card-item">
-                <div class="saved-card-header">
-                  <div class="saved-card-title-group">
-                    <svg class="card-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                    <span class="saved-card-title">Cartão de Crédito</span>
-                  </div>
-                  <span class="badge-status ativo" style="font-size: 0.65rem; padding: 2px 8px;">Principal</span>
-                </div>
-                <div class="card-input-wrapper mt-2">
-                  <span class="card-mask">•••• •••• ••••</span>
-                  <input class="form-input form-input-card" type="text" id="perfilCartao" placeholder="1234" maxlength="4" title="Apenas os últimos 4 dígitos por segurança" />
-                </div>
-              </div>
-
-              <div class="saved-card-item">
-                <div class="saved-card-header">
-                  <div class="saved-card-title-group">
-                    <svg class="card-brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                    <span class="saved-card-title">Cartão de Débito</span>
-                  </div>
-                </div>
-                <div class="card-input-wrapper mt-2">
-                  <span class="card-mask">•••• •••• ••••</span>
-                  <input class="form-input form-input-card" type="text" id="perfilCartaoDebito" placeholder="1234" maxlength="4" title="Apenas os últimos 4 dígitos por segurança" />
-                </div>
-              </div>
-            </div>
-            
-            <div class="security-info-box">
-              <svg class="security-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              <div class="security-info-text">
-                <strong>Ambiente Seguro PCI DSS</strong>
-                <span>Por segurança, armazenamos apenas os últimos 4 dígitos. Pagamentos via Mercado Pago.</span>
-              </div>
-            </div>
-          </div>
-          <div id="areaSeguranca" class="auth-form">
-            <div class="security-2fa-card">
-              <div class="security-2fa-header">
-                <span class="security-2fa-icon">🔐</span>
-                <div>
-                  <p class="security-2fa-title">Autenticação de Dois Fatores (2FA)</p>
-                  <p class="security-2fa-desc">Proteja sua conta com uma camada extra de segurança via e-mail a cada
-                    login.</p>
-                </div>
-              </div>
-              <div class="security-2fa-status" id="status2fa">
-                <span class="badge-status inativo" id="badge2fa">Desativada</span>
-              </div>
-              <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnToggle2fa">
-                Ativar Autenticação 2FA
-              </button>
-              <div id="feedback2fa" class="alert-feedback" role="alert" aria-live="assertive" style="margin-top: 12px">
-              </div>
-            </div>
-          </div>
-          <div id="perfilFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnSalvarPerfil"
-            style="display:block">
-            Salvar Alterações
-          </button>
-        </form>
-        <hr class="separator-line" />
-        <button class="btn-gamer btn-gamer-ghost w-full text-danger" id="btnSairConta" type="button">
-          Sair da Conta
-        </button>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="modal-overlay" id="rankingModal" aria-labelledby="rankingTitle">
-    <div class="modal-content modal-md">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="rankingTitle">🏆 Hall da Fama</h2>
-        <button class="modal-close" id="btnFecharRanking" type="button" aria-label="Fechar ranking">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="table-responsive">
-          <table class="custom-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Jogador</th>
-                <th>Troféus</th>
-                <th>Vitórias</th>
-                <th>XP</th>
-              </tr>
-            </thead>
-            <tbody id="rankingTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="modal-overlay" id="adminModal" aria-labelledby="adminTitle">
-    <div class="modal-content modal-lg">
-      <div class="modal-header">
-        <h2 class="modal-header-title text-danger" id="adminTitle">⚙️ Painel do Administrador</h2>
-        <button class="modal-close" id="btnFecharAdmin" type="button" aria-label="Fechar painel">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-          <a href="mailto:suporte@moedaarena.com.br" target="_blank" rel="noopener noreferrer"
-            class="btn-gamer btn-gamer-ghost" style="flex: 1; text-align: center; border-color: var(--accent-primary);">
-            📥 Abrir Caixa de E-mails (Suporte)
+    <footer class="footer-loja">
+      <div class="footer-support">
+        <span class="footer-support-title">🛡️ Suporte Oficial & Comunidade</span>
+        <div class="support-buttons">
+          <a
+            href="https://wa.me/5571982767129"
+            id="linkWhatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-support btn-whatsapp"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: block">
+              <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.197 1.45 4.817 1.451 5.485 0 9.948-4.468 9.951-9.96.002-2.66-1.033-5.161-2.909-7.039C16.621 1.728 14.12 1.69 12.01 1.69c-5.49 0-9.953 4.469-9.956 9.962-.001 1.761.472 3.477 1.373 4.98L2.43 21.655l5.217-1.369zM17.66 14.79c-.31-.155-1.833-.904-2.115-1.006-.282-.102-.487-.152-.69.155-.205.308-.795.998-.973 1.204-.18.206-.358.23-.668.077-.31-.154-1.306-.481-2.487-1.536-.92-.821-1.54-1.836-1.72-2.145-.18-.308-.02-.475.134-.629.14-.139.31-.358.463-.538.154-.18.205-.308.308-.513.102-.206.05-.385-.025-.538-.077-.154-.69-1.666-.944-2.28-.248-.598-.5-.517-.69-.527-.18-.01-.385-.011-.59-.011-.205 0-.538.077-.82.385-.282.308-1.077 1.052-1.077 2.568 0 1.517 1.102 2.977 1.256 3.18.154.205 2.17 3.31 5.257 4.638.734.316 1.307.505 1.753.647.738.234 1.41.201 1.94.122.59-.088 1.833-.749 2.09-1.472.256-.723.256-1.343.18-1.472-.077-.128-.282-.205-.59-.36z"
+              />
+            </svg>
+            WhatsApp Suporte
+          </a>
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=suporte@moedaarena.com.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-support"
+            style="background: var(--bg-card); border: 1px solid rgba(255, 184, 0, 0.3); color: var(--text-accent)"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="display: block"
+            >
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            suporte@moedaarena.com.br
           </a>
         </div>
-        <div class="admin-panel-card">
-          <h3>Adicionar Moedas Rápidos (Moedas).</h3>
-          <form id="adminMoedasForm" class="admin-form-row">
-            <div class="flex-1">
-              <label class="form-label">ID do Usuário</label>
-              <input type="number" id="adminUserId" class="form-input" required placeholder="Ex: 5" />
-            </div>
-            <div class="flex-1">
-              <label class="form-label">Moedas (+)</label>
-              <input type="number" id="adminMoedaAmount" class="form-input" required placeholder="Ex: 1000" />
-            </div>
-            <button type="submit" class="btn-gamer btn-gamer-primary">Adicionar</button>
-          </form>
-          <div id="adminFeedback" class="feedback-sm"></div>
-        </div>
+      </div>
 
-        <div class="table-responsive">
-          <table class="custom-table table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome (Email)</th>
-                <th>Moedas</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody id="adminTableBody"></tbody>
-          </table>
+      <div class="footer-badges">
+        <div class="badge-security">
+          <span>🔒</span>
+          <span>SSL Secure Connection</span>
+        </div>
+        <div class="badge-security">
+          <span>🛡️</span>
+          <span>Processado por Mercado Pago</span>
         </div>
       </div>
-    </div>
-  </dialog>
 
-  <dialog class="modal-overlay" id="sudoModal" aria-labelledby="sudoTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="sudoTitle">🔐 Confirmação de Segurança</h2>
-        <button class="modal-close" id="btnFecharSudo" type="button" aria-label="Fechar confirmação">&times;</button>
+      <p>
+        Moeda Arena &copy;
+        <time datetime="2026">2026</time>
+        — Todos os pagamentos processados com segurança pelo
+        <a
+          href="https://www.mercadopago.com.br"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-limpo link-destaque"
+        >
+          Mercado Pago.
+        </a>
+      </p>
+      <p>
+        Moeda Arena &copy; 2026 &bull; CNPJ: 68.655.211/0001-04
+        <br />
+        Idealizado por João Marcelo Suzart Lima Castro
+      </p>
+      <p>
+        <a href="/privacidade.html" target="_blank" class="btn-link">Termos e Condições / Política de Privacidade</a>
+      </p>
+    </footer>
+    <dialog class="modal-overlay" id="termosModal" aria-labelledby="termosTitle">
+      <div class="modal-content modal-lg" role="document">
+        <header class="modal-header">
+          <h2 id="termosTitle" class="modal-header-title">Termos e Condições</h2>
+          <button class="modal-close" id="btnFecharTermos" aria-label="Fechar">&times;</button>
+        </header>
+        <div class="modal-body termos-content modal-body-scroll">
+          <h3>1. Aceitação dos Termos</h3>
+          <p>
+            Ao utilizar a plataforma Moeda Arena e realizar compras em nosso sistema, o usuário concorda integralmente
+            com as disposições aqui estabelecidas. Caso o usuário seja menor de 18 anos, é obrigatória a leitura e
+            autorização prévia por parte dos pais ou responsáveis legais antes da realização de qualquer transação.
+          </p>
+
+          <h3>2. Glossário</h3>
+          <ul>
+            <li>
+              <strong>Moeda Arena:</strong>
+              Nossa plataforma oficial, destinada à aquisição de assinaturas e moedas virtuais para jogos eletrônicos.
+            </li>
+            <li>
+              <strong>Moedas:</strong>
+              A moeda virtual exclusiva da nossa plataforma. O usuário pode adquiri-la ou conquistá-la em nosso site
+              para troca por recompensas e benefícios internos. Ressaltamos que essas moedas não possuem valor monetário
+              fora do nosso ecossistema.
+            </li>
+            <li>
+              <strong>Moedas de Terceiros (ex: Robux, V-Bucks):</strong>
+              Moedas virtuais oficiais pertencentes a jogos de terceiros. Atuamos unicamente como facilitadores da
+              recarga. As regras de utilização destas moedas são regidas pelas desenvolvedoras dos respectivos jogos
+              (como Epic Games e Roblox).
+            </li>
+            <li>
+              <strong>Passes VIP:</strong>
+              Nossos pacotes de assinatura que concedem benefícios exclusivos e contínuos durante o período de vigência.
+            </li>
+          </ul>
+
+          <h3>3. Conduta e Política de Uso</h3>
+          <p>
+            A Moeda Arena preza pelo uso ético de sua plataforma. É terminantemente proibido o uso de
+            <em>hacks</em>
+            ,
+            <em>bots</em>
+            ,
+            <em>scripts</em>
+            ou a exploração de falhas no sistema (
+            <em>bugs</em>
+            ) para obtenção ilícita de moedas ou vantagens. Qualquer violação destas regras resultará no banimento
+            permanente da conta, perda das moedas acumuladas e adoção das medidas legais cabíveis.
+          </p>
+
+          <h3>4. Assinaturas e Passes</h3>
+          <p>
+            Ao aderir a um de nossos Passes (Amador, Profissional ou Lenda), o usuário concorda com a renovação
+            automática da assinatura. O cancelamento pode ser efetuado a qualquer momento através do painel do usuário.
+            Informamos que não realizamos reembolsos parciais ou proporcionais aos dias não utilizados no ciclo de
+            faturamento vigente.
+          </p>
+
+          <h3>5. Pagamentos e Segurança</h3>
+          <p>
+            Todas as transações financeiras são processadas pelo Mercado Pago, garantindo a segurança dos seus dados
+            bancários, os quais não são armazenados em nossos servidores. Em caso de problemas com a compra,
+            <strong>solicitamos que contate nosso suporte primeiramente</strong>
+            . A contestação indevida de cobranças (
+            <em>chargeback</em>
+            ) junto à operadora do cartão de crédito acarretará o bloqueio imediato e definitivo da conta do usuário.
+          </p>
+
+          <h3>6. Entrega de Produtos Digitais</h3>
+          <p>
+            Por se tratar de produtos digitais, a entrega ocorre, em regra, imediatamente após a aprovação do pagamento.
+            Em situações excepcionais de instabilidade sistêmica ou processos de análise de segurança, o prazo de
+            entrega poderá se estender para até 24 horas úteis. Garantimos a entrega do produto assim que os serviços
+            parceiros forem restabelecidos.
+          </p>
+
+          <h3>7. Política de Reembolso e Arrependimento</h3>
+          <p>
+            Em conformidade com o Código de Defesa do Consumidor (CDC), o usuário possui o direito de arrependimento em
+            até 7 dias após a compra.
+            <strong>Atenção:</strong>
+            Por se tratar de um serviço digital de consumo imediato, este direito cessa a partir do momento em que o
+            usuário resgatar, utilizar ou transferir as moedas adquiridas para o jogo de destino. O reembolso será
+            processado integralmente apenas se os itens permanecerem intactos e não utilizados na conta.
+          </p>
+
+          <h3>8. Privacidade e Proteção de Dados (LGPD)</h3>
+          <p>
+            A coleta de dados pessoais (como nome, e-mail e CPF) destina-se exclusivamente à emissão de comprovantes
+            fiscais, prevenção de fraudes e cumprimento das obrigações legais, em estrita conformidade com a Lei Geral
+            de Proteção de Dados. Não comercializamos dados de usuários. A guarda e a confidencialidade das credenciais
+            de acesso são de inteira responsabilidade do usuário, isentando a Moeda Arena de quaisquer prejuízos
+            decorrentes de compartilhamento indevido ou negligência.
+          </p>
+
+          <h3>9. Disposições Finais</h3>
+          <p>
+            Todos os direitos sobre o
+            <em>design</em>
+            , marca e código-fonte da Moeda Arena nos são reservados. As marcas registradas de jogos parceiros (como
+            Roblox) são de propriedade de suas respectivas desenvolvedoras. A plataforma é fornecida no estado em que se
+            encontra, e não nos responsabilizamos por penalidades ou banimentos sofridos pelos usuários no ambiente dos
+            jogos de terceiros decorrentes de mau uso. Reservamo-nos o direito de atualizar estes termos a qualquer
+            momento, mediante aviso prévio na plataforma.
+          </p>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnOkTermos">Ok, Entendido</button>
+        </footer>
       </div>
-      <div class="modal-body">
-        <p class="text-muted" style="margin-bottom: 1rem">
-          Para proteger sua conta, informe sua senha atual para salvar alterações no perfil (PIX, CPF, etc).
-        </p>
-        <form id="sudoForm">
-          <div class="form-group" style="position: relative">
-            <label for="sudoSenha" class="form-label">Sua Senha</label>
-            <input type="password" id="sudoSenha" class="form-input" required placeholder="Digite sua senha..." />
-            <a href="#" id="btnEsqueciSenhaSudo" style="
+    </dialog>
+
+    <dialog class="modal-overlay" id="authModal" aria-labelledby="authModalTitle">
+      <div class="modal-content">
+        <div class="auth-tabs" role="tablist" aria-label="Opções de autenticação">
+          <button
+            class="auth-tab active"
+            id="tabLogin"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="formLogin"
+          >
+            Entrar
+          </button>
+          <button
+            class="auth-tab"
+            id="tabRegistro"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="formRegistro"
+          >
+            Criar Conta
+          </button>
+        </div>
+        <div class="modal-body auth-form visible" id="formLogin" role="tabpanel" aria-labelledby="tabLogin">
+          <h2 class="sr-only" id="authModalTitle">Autenticação</h2>
+          <form id="loginForm" autocomplete="on" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">Email</label>
+              <input
+                class="form-input"
+                type="email"
+                id="loginEmail"
+                name="email"
+                placeholder="seu@email.com"
+                required
+                autocomplete="email"
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group" style="position: relative">
+              <label class="form-label" for="loginSenha">Senha</label>
+              <input
+                class="form-input"
+                type="password"
+                id="loginSenha"
+                name="senha"
+                placeholder="Sua senha"
+                required
+                autocomplete="current-password"
+                aria-required="true"
+              />
+              <a
+                href="#"
+                id="btnEsqueciSenha"
+                style="
                   float: right;
                   margin-top: 6px;
                   font-size: 0.8rem;
                   text-decoration: none;
                   color: var(--text-secondary, #aaa);
                   transition: color 0.2s;
-                " onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
-              onmouseout="this.style.color = 'var(--text-secondary, #aaa)'">
-              Esqueci minha senha
+                "
+                onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
+                onmouseout="this.style.color = 'var(--text-secondary, #aaa)'"
+              >
+                Esqueci minha senha
+              </a>
+            </div>
+            <div
+              id="loginFeedback"
+              class="alert-feedback"
+              role="alert"
+              aria-live="assertive"
+              style="margin-top: 24px"
+            ></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnLogin">Entrar na Arena</button>
+          </form>
+          <div class="auth-separator">
+            <span class="auth-separator-line"></span>
+            <span class="auth-separator-text">ou</span>
+            <span class="auth-separator-line"></span>
+          </div>
+          <button class="btn-google" id="btnGoogleLogin" type="button" aria-label="Entrar com o Google">
+            <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            Entrar com o Google
+          </button>
+          <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth" type="button">Cancelar</button>
+        </div>
+        <div class="modal-body auth-form" id="formRegistro" role="tabpanel" aria-labelledby="tabRegistro" hidden>
+          <form id="registroForm" autocomplete="on" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="registroNome">Nome</label>
+              <input
+                class="form-input"
+                type="text"
+                id="registroNome"
+                name="nome"
+                placeholder="Seu nome de jogador"
+                required
+                autocomplete="name"
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="registroEmail">Email</label>
+              <input
+                class="form-input"
+                type="email"
+                id="registroEmail"
+                name="email"
+                placeholder="seu@email.com"
+                required
+                autocomplete="email"
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="registroTelefone">WhatsApp (com DDD)</label>
+              <input
+                class="form-input"
+                type="tel"
+                id="registroTelefone"
+                name="telefone"
+                placeholder="Ex: 11999999999"
+                required
+                autocomplete="tel"
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="registroSenha">Senha</label>
+              <input
+                class="form-input"
+                type="password"
+                id="registroSenha"
+                name="senha"
+                placeholder="Mínimo 6 caracteres"
+                required
+                minlength="6"
+                autocomplete="new-password"
+                aria-required="true"
+              />
+            </div>
+            <div id="registroFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+            <button type="submit" class="btn-gamer btn-gamer-success w-full mt-4" id="btnRegistro">Criar Conta</button>
+          </form>
+          <div class="auth-separator">
+            <span class="auth-separator-line"></span>
+            <span class="auth-separator-text">ou</span>
+            <span class="auth-separator-line"></span>
+          </div>
+
+          <button class="btn-google" id="btnGoogleRegistro" type="button" aria-label="Criar conta com o Google">
+            <svg class="btn-google-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            Criar conta com o Google
+          </button>
+          <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnFecharAuth2" type="button">Cancelar</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="checkoutModal" aria-labelledby="checkoutTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="checkoutTitle">Finalizar Assinatura</h2>
+          <button class="modal-close" id="btnFecharCheckout" type="button" aria-label="Fechar modal de checkout">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted">Você está adquirindo o pacote:</p>
+          <p class="checkout-plano-nome" id="checkoutPlanoNome" aria-live="polite"></p>
+
+          <div id="checkoutPrecoArea" style="margin: 12px 0; text-align: center">
+            <span id="checkoutPrecoOriginal" style="font-size: 1.1rem; color: var(--text-secondary, #aaa)"></span>
+            <span
+              id="checkoutPrecoFinal"
+              style="font-size: 1.4rem; font-weight: bold; color: var(--accent-primary, #00e5ff); margin-left: 8px"
+            ></span>
+          </div>
+
+          <div id="areaCupom" class="form-group" style="margin-top: 12px">
+            <label class="form-label" for="inputCupom">Cupom de Desconto (opcional)</label>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <input
+                type="text"
+                class="form-control"
+                id="inputCupom"
+                placeholder="Ex: STREAMER10"
+                style="flex: 1; text-transform: uppercase"
+                maxlength="30"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                class="btn-gamer btn-gamer-secondary"
+                id="btnAplicarCupom"
+                style="white-space: nowrap; padding: 8px 16px"
+              >
+                Aplicar
+              </button>
+            </div>
+            <div
+              id="cupomFeedback"
+              class="alert-feedback"
+              role="status"
+              aria-live="polite"
+              style="margin-top: 6px"
+            ></div>
+          </div>
+
+          <fieldset class="form-group border-none p-0 mt-4" id="areaPagamento">
+            <legend class="form-label">Método de Pagamento</legend>
+            <select class="form-select" id="metodoPagamento" aria-label="Selecione o método de pagamento" required>
+              <option value="" disabled selected>Escolha uma opção...</option>
+              <option value="Pix">Pix (Transferência Imediata via Mercado Pago)</option>
+              <option value="Cartão Virtual">Cartão de Crédito (via Mercado Pago)</option>
+            </select>
+          </fieldset>
+
+          <div class="checkout-trust-badges">
+            <div class="trust-badge">
+              <span class="badge-icon">🔒</span>
+              <span class="badge-text">Checkout Seguro</span>
+            </div>
+            <div class="trust-badge">
+              <span class="badge-icon">⚡</span>
+              <span class="badge-text">Entrega Imediata</span>
+            </div>
+            <div class="trust-badge">
+              <span class="badge-icon">🛡️</span>
+              <span class="badge-text">Garantia 7 Dias</span>
+            </div>
+          </div>
+
+          <div
+            id="checkoutFeedback"
+            class="alert-feedback"
+            role="alert"
+            aria-live="assertive"
+            style="margin-top: 10px"
+          ></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-gamer btn-gamer-secondary" id="btnCancelarCheckout" type="button">Cancelar</button>
+          <button class="btn-gamer btn-gamer-success" id="btnConfirmarCompra" type="button">Confirmar Pagamento</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="verify2faModal" aria-labelledby="verify2faTitle">
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="verify2faTitle">🔐 Código de Segurança</h2>
+          <button class="modal-close" id="btnFecharVerify2fa" type="button" aria-label="Fechar verificação">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-sm text-center mb-4 text-muted">
+            Enviamos um código de 6 dígitos para o seu e-mail. Por favor, insira-o abaixo para continuar.
+          </p>
+          <form id="verify2faForm">
+            <input type="hidden" id="verify2faUserId" />
+            <div class="form-group" style="text-align: center">
+              <input
+                type="text"
+                id="verify2faCode"
+                class="form-input"
+                required
+                maxlength="6"
+                style="text-align: center; font-size: 24px; letter-spacing: 10px; font-weight: bold"
+                placeholder="000000"
+                autocomplete="off"
+              />
+            </div>
+            <div id="verify2faFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnConfirmar2fa">
+              Verificar Código
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="perfilModal" aria-labelledby="perfilTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="perfilTitle">Meu Perfil</h2>
+          <button class="modal-close" id="btnFecharPerfil" type="button" aria-label="Fechar perfil">&times;</button>
+        </div>
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tab active" id="tabDados" type="button" role="tab">Meus Dados</button>
+          <button class="auth-tab" id="tabCartao" type="button" role="tab">Pagamento</button>
+          <button class="auth-tab" id="tabSeguranca" type="button" role="tab">🔐 Segurança</button>
+        </div>
+        <div class="modal-body">
+          <form id="perfilForm">
+            <div id="areaDados" class="auth-form visible">
+              <div class="form-group">
+                <label class="form-label" for="perfilNome">Nome Completo</label>
+                <input class="form-input" type="text" id="perfilNome" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="perfilCpf">CPF</label>
+                <input class="form-input" type="text" id="perfilCpf" placeholder="000.000.000-00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="perfilLocalidade">Localidade (Cidade/Estado)</label>
+                <input class="form-input" type="text" id="perfilLocalidade" placeholder="Ex: São Paulo, SP" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="perfilTelefone">WhatsApp (com DDD)</label>
+                <input class="form-input" type="tel" id="perfilTelefone" placeholder="Ex: 11999999999" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="perfilPix">Chave PIX (Para receber prêmios)</label>
+                <input class="form-input" type="text" id="perfilPix" placeholder="Seu email, CPF ou telefone PIX" />
+              </div>
+            </div>
+            <div id="areaCartao" class="auth-form">
+              <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.4">
+                Gerencie seus métodos de pagamento para compras rápidas. Seus dados são tokenizados.
+              </p>
+              <div class="saved-cards-container">
+                <div class="saved-card-item">
+                  <div class="saved-card-header">
+                    <div class="saved-card-title-group">
+                      <svg
+                        class="card-brand-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                      </svg>
+                      <span class="saved-card-title">Cartão de Crédito</span>
+                    </div>
+                    <span class="badge-status ativo" style="font-size: 0.65rem; padding: 2px 8px">Principal</span>
+                  </div>
+                  <div class="card-input-wrapper mt-2">
+                    <span class="card-mask">•••• •••• ••••</span>
+                    <input
+                      class="form-input form-input-card"
+                      type="text"
+                      id="perfilCartao"
+                      placeholder="1234"
+                      maxlength="4"
+                      title="Apenas os últimos 4 dígitos por segurança"
+                    />
+                  </div>
+                </div>
+
+                <div class="saved-card-item">
+                  <div class="saved-card-header">
+                    <div class="saved-card-title-group">
+                      <svg
+                        class="card-brand-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                      </svg>
+                      <span class="saved-card-title">Cartão de Débito</span>
+                    </div>
+                  </div>
+                  <div class="card-input-wrapper mt-2">
+                    <span class="card-mask">•••• •••• ••••</span>
+                    <input
+                      class="form-input form-input-card"
+                      type="text"
+                      id="perfilCartaoDebito"
+                      placeholder="1234"
+                      maxlength="4"
+                      title="Apenas os últimos 4 dígitos por segurança"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="security-info-box">
+                <svg
+                  class="security-info-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <div class="security-info-text">
+                  <strong>Ambiente Seguro PCI DSS</strong>
+                  <span>Por segurança, armazenamos apenas os últimos 4 dígitos. Pagamentos via Mercado Pago.</span>
+                </div>
+              </div>
+            </div>
+            <div id="areaSeguranca" class="auth-form">
+              <div class="security-2fa-card">
+                <div class="security-2fa-header">
+                  <span class="security-2fa-icon">🔐</span>
+                  <div>
+                    <p class="security-2fa-title">Autenticação de Dois Fatores (2FA)</p>
+                    <p class="security-2fa-desc">
+                      Proteja sua conta com uma camada extra de segurança via e-mail a cada login.
+                    </p>
+                  </div>
+                </div>
+                <div class="security-2fa-status" id="status2fa">
+                  <span class="badge-status inativo" id="badge2fa">Desativada</span>
+                </div>
+                <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnToggle2fa">
+                  Ativar Autenticação 2FA
+                </button>
+                <div
+                  id="feedback2fa"
+                  class="alert-feedback"
+                  role="alert"
+                  aria-live="assertive"
+                  style="margin-top: 12px"
+                ></div>
+              </div>
+            </div>
+            <div id="perfilFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+            <button
+              type="submit"
+              class="btn-gamer btn-gamer-primary w-full mt-4"
+              id="btnSalvarPerfil"
+              style="display: block"
+            >
+              Salvar Alterações
+            </button>
+          </form>
+          <hr class="separator-line" />
+          <button class="btn-gamer btn-gamer-ghost w-full text-danger" id="btnSairConta" type="button">
+            Sair da Conta
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="rankingModal" aria-labelledby="rankingTitle">
+      <div class="modal-content modal-md">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="rankingTitle">🏆 Hall da Fama</h2>
+          <button class="modal-close" id="btnFecharRanking" type="button" aria-label="Fechar ranking">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Jogador</th>
+                  <th>Troféus</th>
+                  <th>Vitórias</th>
+                  <th>XP</th>
+                </tr>
+              </thead>
+              <tbody id="rankingTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="adminModal" aria-labelledby="adminTitle">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h2 class="modal-header-title text-danger" id="adminTitle">⚙️ Painel do Administrador</h2>
+          <button class="modal-close" id="btnFecharAdmin" type="button" aria-label="Fechar painel">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="display: flex; gap: 10px; margin-bottom: 20px">
+            <a
+              href="mailto:suporte@moedaarena.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-gamer btn-gamer-ghost"
+              style="flex: 1; text-align: center; border-color: var(--accent-primary)"
+            >
+              📥 Abrir Caixa de E-mails (Suporte)
             </a>
           </div>
-          <div id="sudoFeedback" class="form-feedback" style="margin-top: 24px"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%">Confirmar e Salvar</button>
-        </form>
-      </div>
-    </div>
-  </dialog>
+          <div class="admin-panel-card">
+            <h3>Adicionar Moedas Rápidos (Moedas).</h3>
+            <form id="adminMoedasForm" class="admin-form-row">
+              <div class="flex-1">
+                <label class="form-label">ID do Usuário</label>
+                <input type="number" id="adminUserId" class="form-input" required placeholder="Ex: 5" />
+              </div>
+              <div class="flex-1">
+                <label class="form-label">Moedas (+)</label>
+                <input type="number" id="adminMoedaAmount" class="form-input" required placeholder="Ex: 1000" />
+              </div>
+              <button type="submit" class="btn-gamer btn-gamer-primary">Adicionar</button>
+            </form>
+            <div id="adminFeedback" class="feedback-sm"></div>
+          </div>
 
-  <dialog class="modal-overlay" id="createPasswordModal" aria-labelledby="createPasswordTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="createPasswordTitle">🛡️ Defina uma Senha de Segurança</h2>
-        <button class="modal-close" id="btnFecharCreatePassword" type="button" aria-label="Fechar">&times;</button>
+          <div class="table-responsive">
+            <table class="custom-table table-sm">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome (Email)</th>
+                  <th>Moedas</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <p class="text-muted" style="margin-bottom: 1rem">
-          Você fez login via Google. Para poder alterar dados financeiros como Chave PIX, você precisa criar uma senha
-          de segurança para a sua conta.
-        </p>
-        <form id="createPasswordForm">
-          <div class="form-group">
-            <label for="newSecurityPassword" class="form-label">Nova Senha</label>
-            <input type="password" id="newSecurityPassword" class="form-input" required minlength="6"
-              placeholder="Mínimo 6 caracteres..." />
-          </div>
-          <div class="form-group" style="margin-top: 1rem">
-            <label for="confirmSecurityPassword" class="form-label">Confirmar Nova Senha</label>
-            <input type="password" id="confirmSecurityPassword" class="form-input" required minlength="6"
-              placeholder="Repita a senha..." />
-          </div>
-          <div id="createPasswordFeedback" class="form-feedback"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%; margin-top: 1rem">
-            Definir Senha
+    </dialog>
+
+    <dialog class="modal-overlay" id="sudoModal" aria-labelledby="sudoTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="sudoTitle">🔐 Confirmação de Segurança</h2>
+          <button class="modal-close" id="btnFecharSudo" type="button" aria-label="Fechar confirmação">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted" style="margin-bottom: 1rem">
+            Para proteger sua conta, informe sua senha atual para salvar alterações no perfil (PIX, CPF, etc).
+          </p>
+          <form id="sudoForm">
+            <div class="form-group" style="position: relative">
+              <label for="sudoSenha" class="form-label">Sua Senha</label>
+              <input type="password" id="sudoSenha" class="form-input" required placeholder="Digite sua senha..." />
+              <a
+                href="#"
+                id="btnEsqueciSenhaSudo"
+                style="
+                  float: right;
+                  margin-top: 6px;
+                  font-size: 0.8rem;
+                  text-decoration: none;
+                  color: var(--text-secondary, #aaa);
+                  transition: color 0.2s;
+                "
+                onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
+                onmouseout="this.style.color = 'var(--text-secondary, #aaa)'"
+              >
+                Esqueci minha senha
+              </a>
+            </div>
+            <div id="sudoFeedback" class="form-feedback" style="margin-top: 24px"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%">Confirmar e Salvar</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="createPasswordModal" aria-labelledby="createPasswordTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="createPasswordTitle">🛡️ Defina uma Senha de Segurança</h2>
+          <button class="modal-close" id="btnFecharCreatePassword" type="button" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted" style="margin-bottom: 1rem">
+            Você fez login via Google. Para poder alterar dados financeiros como Chave PIX, você precisa criar uma senha
+            de segurança para a sua conta.
+          </p>
+          <form id="createPasswordForm">
+            <div class="form-group">
+              <label for="newSecurityPassword" class="form-label">Nova Senha</label>
+              <input
+                type="password"
+                id="newSecurityPassword"
+                class="form-input"
+                required
+                minlength="6"
+                placeholder="Mínimo 6 caracteres..."
+              />
+            </div>
+            <div class="form-group" style="margin-top: 1rem">
+              <label for="confirmSecurityPassword" class="form-label">Confirmar Nova Senha</label>
+              <input
+                type="password"
+                id="confirmSecurityPassword"
+                class="form-input"
+                required
+                minlength="6"
+                placeholder="Repita a senha..."
+              />
+            </div>
+            <div id="createPasswordFeedback" class="form-feedback"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%; margin-top: 1rem">
+              Definir Senha
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-overlay" id="forgotPasswordModal" aria-labelledby="forgotTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="forgotTitle">Recuperar Senha</h2>
+          <button class="modal-close" id="btnFecharForgot" type="button" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted" style="margin-bottom: 1rem">
+            Digite o e-mail cadastrado na sua conta. Enviaremos um link de redefinição para você.
+          </p>
+          <form id="forgotForm">
+            <div class="form-group">
+              <label for="forgotEmail" class="form-label">Seu E-mail</label>
+              <input type="email" id="forgotEmail" class="form-input" required placeholder="seu@email.com" />
+            </div>
+            <div id="forgotFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnEnviarForgot">
+              Enviar Link
+            </button>
+          </form>
+          <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnVoltarLogin" type="button">
+            Voltar para o Login
           </button>
-        </form>
+        </div>
       </div>
-    </div>
-  </dialog>
+    </dialog>
 
-  <dialog class="modal-overlay" id="forgotPasswordModal" aria-labelledby="forgotTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="forgotTitle">Recuperar Senha</h2>
-        <button class="modal-close" id="btnFecharForgot" type="button" aria-label="Fechar">&times;</button>
+    <dialog class="modal-overlay" id="resetPasswordModal" aria-labelledby="resetTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="resetTitle">Redefinir Senha</h2>
+          <button class="modal-close" id="btnFecharReset" type="button" aria-label="Fechar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted" style="margin-bottom: 1rem">
+            Escolha sua nova senha de segurança (mínimo 6 caracteres).
+          </p>
+          <form id="resetForm">
+            <div class="form-group">
+              <label for="resetNovaSenha" class="form-label">Nova Senha</label>
+              <input
+                type="password"
+                id="resetNovaSenha"
+                class="form-input"
+                required
+                minlength="6"
+                placeholder="Mínimo 6 caracteres..."
+              />
+            </div>
+            <div class="form-group" style="margin-top: 1rem">
+              <label for="resetConfirmarSenha" class="form-label">Confirmar Nova Senha</label>
+              <input
+                type="password"
+                id="resetConfirmarSenha"
+                class="form-input"
+                required
+                minlength="6"
+                placeholder="Repita a senha..."
+              />
+            </div>
+            <div id="resetFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnConfirmarReset">
+              Salvar Nova Senha
+            </button>
+          </form>
+        </div>
       </div>
-      <div class="modal-body">
-        <p class="text-muted" style="margin-bottom: 1rem">
-          Digite o e-mail cadastrado na sua conta. Enviaremos um link de redefinição para você.
-        </p>
-        <form id="forgotForm">
-          <div class="form-group">
-            <label for="forgotEmail" class="form-label">Seu E-mail</label>
-            <input type="email" id="forgotEmail" class="form-input" required placeholder="seu@email.com" />
-          </div>
-          <div id="forgotFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnEnviarForgot">
-            Enviar Link
-          </button>
-        </form>
-        <button class="btn-gamer btn-gamer-ghost w-full mt-2" id="btnVoltarLogin" type="button">
-          Voltar para o Login
-        </button>
-      </div>
-    </div>
-  </dialog>
+    </dialog>
 
-  <dialog class="modal-overlay" id="resetPasswordModal" aria-labelledby="resetTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="resetTitle">Redefinir Senha</h2>
-        <button class="modal-close" id="btnFecharReset" type="button" aria-label="Fechar">&times;</button>
+    <dialog class="modal-overlay" id="contatoModal" aria-labelledby="contatoTitle">
+      <div class="modal-content modal-md">
+        <div class="modal-header">
+          <h2 class="modal-header-title" id="contatoTitle">✉️ Fale Conosco</h2>
+          <button class="modal-close" id="btnFecharContato" type="button" aria-label="Fechar contato">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted" style="margin-bottom: 1rem">
+            Tem alguma dúvida ou problema? Envie uma mensagem para nossa equipe.
+          </p>
+          <form id="contatoForm">
+            <div class="form-group">
+              <label for="contatoNome" class="form-label">Seu Nome</label>
+              <input type="text" id="contatoNome" class="form-input" required placeholder="Digite seu nome..." />
+            </div>
+            <div class="form-group">
+              <label for="contatoEmail" class="form-label">Seu E-mail</label>
+              <input
+                type="email"
+                id="contatoEmail"
+                class="form-input"
+                required
+                placeholder="Para podermos responder..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="contatoMensagem" class="form-label">Mensagem</label>
+              <textarea
+                id="contatoMensagem"
+                class="form-input"
+                required
+                rows="4"
+                placeholder="Como podemos ajudar?"
+              ></textarea>
+            </div>
+            <div id="contatoFeedback" class="form-feedback"></div>
+            <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%" id="btnEnviarContato">
+              Enviar Mensagem
+            </button>
+          </form>
+        </div>
       </div>
-      <div class="modal-body">
-        <p class="text-muted" style="margin-bottom: 1rem">
-          Escolha sua nova senha de segurança (mínimo 6 caracteres).
-        </p>
-        <form id="resetForm">
-          <div class="form-group">
-            <label for="resetNovaSenha" class="form-label">Nova Senha</label>
-            <input type="password" id="resetNovaSenha" class="form-input" required minlength="6"
-              placeholder="Mínimo 6 caracteres..." />
-          </div>
-          <div class="form-group" style="margin-top: 1rem">
-            <label for="resetConfirmarSenha" class="form-label">Confirmar Nova Senha</label>
-            <input type="password" id="resetConfirmarSenha" class="form-input" required minlength="6"
-              placeholder="Repita a senha..." />
-          </div>
-          <div id="resetFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnConfirmarReset">
-            Salvar Nova Senha
-          </button>
-        </form>
-      </div>
-    </div>
-  </dialog>
+    </dialog>
 
-  <dialog class="modal-overlay" id="contatoModal" aria-labelledby="contatoTitle">
-    <div class="modal-content modal-md">
-      <div class="modal-header">
-        <h2 class="modal-header-title" id="contatoTitle">✉️ Fale Conosco</h2>
-        <button class="modal-close" id="btnFecharContato" type="button" aria-label="Fechar contato">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p class="text-muted" style="margin-bottom: 1rem">
-          Tem alguma dúvida ou problema? Envie uma mensagem para nossa equipe.
-        </p>
-        <form id="contatoForm">
-          <div class="form-group">
-            <label for="contatoNome" class="form-label">Seu Nome</label>
-            <input type="text" id="contatoNome" class="form-input" required placeholder="Digite seu nome..." />
-          </div>
-          <div class="form-group">
-            <label for="contatoEmail" class="form-label">Seu E-mail</label>
-            <input type="email" id="contatoEmail" class="form-input" required
-              placeholder="Para podermos responder..." />
-          </div>
-          <div class="form-group">
-            <label for="contatoMensagem" class="form-label">Mensagem</label>
-            <textarea id="contatoMensagem" class="form-input" required rows="4"
-              placeholder="Como podemos ajudar?"></textarea>
-          </div>
-          <div id="contatoFeedback" class="form-feedback"></div>
-          <button type="submit" class="btn-gamer btn-gamer-primary" style="width: 100%" id="btnEnviarContato">Enviar
-            Mensagem</button>
-        </form>
-      </div>
-    </div>
-  </dialog>
-
-  <script src="/main.min.js?v=3" defer></script>
-</body>
-
+    <script src="/main.min.js?v=3" defer></script>
+  </body>
 </html>

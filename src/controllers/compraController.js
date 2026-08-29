@@ -9,22 +9,12 @@ const client = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 const validarCupom = async (req, res, next) => {
   const { codigo } = req.body;
   if (!codigo || typeof codigo !== "string" || codigo.trim().length === 0) {
-    return erro(
-      res,
-      "Informe um código de cupom válido.",
-      400,
-      "CUPOM_INVALIDO",
-    );
+    return erro(res, "Informe um código de cupom válido.", 400, "CUPOM_INVALIDO");
   }
   try {
     const cupom = await cupomModel.buscarPorCodigo(codigo);
     if (!cupom) {
-      return erro(
-        res,
-        "Cupom não encontrado ou expirado.",
-        404,
-        "CUPOM_NAO_ENCONTRADO",
-      );
+      return erro(res, "Cupom não encontrado ou expirado.", 404, "CUPOM_NAO_ENCONTRADO");
     }
     logger.info("Cupom validado com sucesso.", {
       codigo: cupom.codigo,
@@ -64,12 +54,7 @@ const processarCompra = async (req, res, next) => {
       );
     }
     if (!metodoPagamento) {
-      return erro(
-        res,
-        "Método de pagamento é obrigatório para planos pagos.",
-        400,
-        "PAGAMENTO_OBRIGATORIO",
-      );
+      return erro(res, "Método de pagamento é obrigatório para planos pagos.", 400, "PAGAMENTO_OBRIGATORIO");
     }
     let precoFinal = planoEscolhido.precoMensal;
     let cupomAplicado = null;
@@ -111,9 +96,7 @@ const processarCompra = async (req, res, next) => {
           failure: config.corsOrigin,
           pending: config.corsOrigin,
         },
-        auto_return: config.corsOrigin.startsWith("https")
-          ? "approved"
-          : undefined,
+        auto_return: config.corsOrigin.startsWith("https") ? "approved" : undefined,
       },
     });
     logger.info("Preferência de pagamento criada no Mercado Pago.", {

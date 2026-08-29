@@ -11,12 +11,8 @@ const variaveisObrigatorias = [
 ];
 const faltando = variaveisObrigatorias.filter((v) => !process.env[v]);
 if (faltando.length > 0) {
-  process.stderr.write(
-    `[FATAL] Variáveis de ambiente obrigatórias não definidas: ${faltando.join(", ")}\n`,
-  );
-  process.stderr.write(
-    "[FATAL] Crie um arquivo .env na raiz do projeto. Use .env.example como referência.\n",
-  );
+  process.stderr.write(`[FATAL] Variáveis de ambiente obrigatórias não definidas: ${faltando.join(", ")}\n`);
+  process.stderr.write("[FATAL] Crie um arquivo .env na raiz do projeto. Use .env.example como referência.\n");
   process.exit(1);
 }
 const config = Object.freeze({

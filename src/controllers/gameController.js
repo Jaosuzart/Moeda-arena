@@ -4,12 +4,7 @@ const config = require("../config/env");
 const validarApiKey = (req, res, next) => {
   const apiKey = req.headers["x-api-key"] || req.query.api_key;
   if (!apiKey || apiKey !== config.apiGameSecret) {
-    return erro(
-      res,
-      "Acesso negado. Chave da API inválida ou ausente.",
-      401,
-      "UNAUTHORIZED_GAME_API",
-    );
+    return erro(res, "Acesso negado. Chave da API inválida ou ausente.", 401, "UNAUTHORIZED_GAME_API");
   }
   next();
 };
@@ -18,12 +13,7 @@ const getSaldo = async (req, res, next) => {
     const email = req.params.email;
     const usuario = await usuarioModel.buscarPorEmail(email);
     if (!usuario) {
-      return erro(
-        res,
-        "Jogador não encontrado.",
-        404,
-        "JOGADOR_NAO_ENCONTRADO",
-      );
+      return erro(res, "Jogador não encontrado.", 404, "JOGADOR_NAO_ENCONTRADO");
     }
     return sucesso(res, {
       email: usuario.email,
@@ -38,33 +28,18 @@ const consumirMoedas = async (req, res, next) => {
   try {
     const { email, quantidade } = req.body;
     if (!email || !quantidade || isNaN(quantidade) || quantidade <= 0) {
-      return erro(
-        res,
-        "E-mail e quantidade válida são obrigatórios.",
-        400,
-        "PARAMETROS_INVALIDOS",
-      );
+      return erro(res, "E-mail e quantidade válida são obrigatórios.", 400, "PARAMETROS_INVALIDOS");
     }
     const usuario = await usuarioModel.buscarPorEmail(email);
     if (!usuario) {
-      return erro(
-        res,
-        "Jogador não encontrado.",
-        404,
-        "JOGADOR_NAO_ENCONTRADO",
-      );
+      return erro(res, "Jogador não encontrado.", 404, "JOGADOR_NAO_ENCONTRADO");
     }
     if (usuario.saldo_moedas < quantidade) {
       return erro(res, "Saldo insuficiente.", 400, "SALDO_INSUFICIENTE");
     }
     const debitado = await usuarioModel.debitarMoedas(usuario.id, quantidade);
     if (!debitado) {
-      return erro(
-        res,
-        "Falha ao debitar moedas (verifique o saldo).",
-        400,
-        "FALHA_DEBITO",
-      );
+      return erro(res, "Falha ao debitar moedas (verifique o saldo).", 400, "FALHA_DEBITO");
     }
     return sucesso(res, {
       mensagem: `${quantidade} moedas debitados com sucesso.`,
@@ -91,19 +66,9 @@ const salvarEstatisticas = async (req, res, next) => {
     }
     const usuario = await usuarioModel.buscarPorEmail(email);
     if (!usuario) {
-      return erro(
-        res,
-        "Jogador não encontrado.",
-        404,
-        "JOGADOR_NAO_ENCONTRADO",
-      );
+      return erro(res, "Jogador não encontrado.", 404, "JOGADOR_NAO_ENCONTRADO");
     }
-    const sucessoAt = await usuarioModel.adicionarEstatisticas(
-      usuario.id,
-      trofeus,
-      vitorias,
-      xp,
-    );
+    const sucessoAt = await usuarioModel.adicionarEstatisticas(usuario.id, trofeus, vitorias, xp);
     if (!sucessoAt) {
       return erro(res, "Falha ao atualizar estatísticas.", 500, "ERRO_INTERNO");
     }

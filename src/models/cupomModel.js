@@ -5,8 +5,7 @@ const buscarPorCodigo = async (codigo) => {
   return rows.length > 0 ? rows[0] : null;
 };
 const incrementarUso = async (codigo) => {
-  const sql =
-    "UPDATE cupons SET usos = usos + 1 WHERE codigo = ? AND ativo = TRUE";
+  const sql = "UPDATE cupons SET usos = usos + 1 WHERE codigo = ? AND ativo = TRUE";
   const [result] = await pool.query(sql, [codigo.toUpperCase().trim()]);
   return result.affectedRows > 0;
 };

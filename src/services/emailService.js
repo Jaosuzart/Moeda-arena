@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS || process.env.EMAIL_PASS,
   },
   tls: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 const BASE_URL = config.corsOrigin;
@@ -113,4 +113,10 @@ const enviarEmail2FA = (paraEmail, nome, codigo) => {
   return enviarEmail(paraEmail, "Código de Verificação (2FA) - Moeda Arena", html);
 };
 
-module.exports = { enviarEmailVerificacao, enviarEmailRecuperacao, enviarEmailRecibo, enviarEmailContato, enviarEmail2FA };
+module.exports = {
+  enviarEmailVerificacao,
+  enviarEmailRecuperacao,
+  enviarEmailRecibo,
+  enviarEmailContato,
+  enviarEmail2FA,
+};
