@@ -230,8 +230,6 @@ body::before {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
 }
 
 .btn-gamer {
@@ -1522,7 +1520,7 @@ body::before {
 
 @media (max-width: 600px) {
   .navbar-loja .nav-user-welcome {
-    display: none;
+    display: none !important;
   }
 
   #btnRanking,
@@ -1537,7 +1535,6 @@ body::before {
 
   .navbar-loja .nav-logo-text {
     display: none;
-    /* Hide logo text on very small screens to save space */
   }
 
   .navbar-loja .btn-gamer {
@@ -1558,6 +1555,16 @@ body::before {
   .admin-form-row {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+@media (min-width: 601px) {
+  .navbar-loja .nav-user-welcome {
+    display: block !important;
+  }
+
+  .navbar-loja .nav-avatar {
+    display: flex !important;
   }
 }
 
@@ -2124,7 +2131,6 @@ body::before {
 
 
 
-/* LIGHT THEME PREMIUM FIXES PARTE 2 */
 :root.light-theme .navbar-loja {
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--border-subtle);
