@@ -1520,12 +1520,12 @@ body::before {
 
 @media (max-width: 600px) {
   .navbar-loja .nav-user-welcome {
-    display: none !important;
+    display: none;
   }
 
   #btnRanking,
   #btnRankingLogged {
-    display: none !important;
+    display: none;
   }
 
   .btn-gamer-ghost {
@@ -1560,11 +1560,11 @@ body::before {
 
 @media (min-width: 601px) {
   .navbar-loja .nav-user-welcome {
-    display: block !important;
+    display: block;
   }
 
   .navbar-loja .nav-avatar {
-    display: flex !important;
+    display: flex;
   }
 }
 
