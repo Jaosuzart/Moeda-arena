@@ -203,7 +203,7 @@ body::before {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-vip), var(--accent-premium));
+  background: linear-gradient(135deg, var(--vip-base), var(--premium-base));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1518,7 +1518,7 @@ body::before {
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
   .navbar-loja .nav-user-welcome {
     display: none;
   }
@@ -2164,7 +2164,8 @@ body::before {
   color: #111827;
 }
 
-:root.light-theme .navbar-loja .nav-user-welcome {
+:root.light-theme .navbar-loja .nav-user-welcome,
+:root.light-theme .navbar-loja .nav-user-welcome .welcome-text {
   color: #44403c;
 }
 
