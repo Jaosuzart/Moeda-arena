@@ -1518,53 +1518,55 @@ body::before {
   }
 }
 
-@media (min-width: 600px) {
+/* Global (Mobile First) */
+.navbar-loja .nav-user-welcome {
+  display: none !important;
+}
+.btn-gamer-ghost {
+  padding: 8px 10px;
+  font-size: 0.75rem;
+}
+.navbar-loja .nav-logo-text {
+  display: none;
+}
+.navbar-loja .btn-gamer {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+}
+.navbar-loja .nav-user {
+  gap: 8px;
+}
+.navbar-loja .nav-auth-btns {
+  gap: 5px;
+}
+@media (min-width: 601px) {
   .navbar-loja .nav-user-welcome {
-    display: none;
+    display: block !important;
   }
-
-  #btnRanking,
-  #btnRankingLogged {
-    display: none;
+  .navbar-loja .nav-avatar {
+    display: flex !important;
   }
-
   .btn-gamer-ghost {
-    padding: 8px 10px;
-    font-size: 0.75rem;
+    padding: 8px 16px;
+    font-size: 1rem;
   }
-
   .navbar-loja .nav-logo-text {
-    display: none;
+    display: block;
   }
-
   .navbar-loja .btn-gamer {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 10px 24px;
+    font-size: 1rem;
   }
-
   .navbar-loja .nav-user {
-    gap: 8px;
-    /* Reduce gap between navbar items */
+    gap: 15px;
   }
-
   .navbar-loja .nav-auth-btns {
-    gap: 5px;
+    gap: 10px;
   }
-
   .container-center,
   .admin-form-row {
     flex-direction: column;
     align-items: stretch;
-  }
-}
-
-@media (min-width: 601px) {
-  .navbar-loja .nav-user-welcome {
-    display: block;
-  }
-
-  .navbar-loja .nav-avatar {
-    display: flex;
   }
 }
 
