@@ -146,6 +146,15 @@ document.addEventListener("DOMContentLoaded", () => {
     vip: { src: "/assets/images/icon-crown.png", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
 
+  const btnThemeToggle = document.getElementById("btnThemeToggle");
+  if (btnThemeToggle) {
+    btnThemeToggle.addEventListener("click", () => {
+      document.documentElement.classList.toggle("light-theme");
+      const isLight = document.documentElement.classList.contains("light-theme");
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+    });
+  }
+
   const applyMask = (input, maskType) => {
     if (!input) return;
     input.addEventListener("input", (e) => {

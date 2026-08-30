@@ -9,8 +9,6 @@ const PREFIX = "enc:v1:";
 
 let _cachedKey = null;
 
-// Deriva a chave AES-256 a partir de ENCRYPTION_KEY via scrypt.
-// Resultado cacheado em memoria.
 const getDerivedKey = () => {
   if (_cachedKey) return _cachedKey;
   const raw = process.env.ENCRYPTION_KEY;
@@ -21,8 +19,6 @@ const getDerivedKey = () => {
   return _cachedKey;
 };
 
-// Criptografa texto com AES-256-GCM.
-// null/undefined passam sem alteracao. Idempotente.
 const encrypt = (text) => {
   if (text == null) return text;
   const str = String(text);
@@ -35,8 +31,6 @@ const encrypt = (text) => {
   return PREFIX + iv.toString("hex") + ":" + authTag.toString("hex") + ":" + ciphertext.toString("hex");
 };
 
-// Descriptografa valor gerado por encrypt().
-// Valores sem prefixo enc:v1: sao retornados como estao (dados legados).
 const decrypt = (encryptedText) => {
   if (encryptedText == null) return encryptedText;
   const str = String(encryptedText);
@@ -54,8 +48,5 @@ const decrypt = (encryptedText) => {
   const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
   return decrypted.toString("utf8");
 };
-
-// Retorna true se o valor esta no formato criptografado deste modulo.
 const isEncrypted = (text) => text != null && String(text).startsWith(PREFIX);
-
 module.exports = { encrypt, decrypt, isEncrypted };

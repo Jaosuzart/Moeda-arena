@@ -49,10 +49,11 @@
         rel="stylesheet"
       />
     </noscript>
-    <link rel="preload" as="style" href="/style.min.css?v=8" />
-    <link rel="stylesheet" href="/style.min.css?v=8" />
+    <link rel="preload" as="style" href="/style.min.css?v=10" />
+    <link rel="stylesheet" href="/style.min.css?v=10" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/js/theme-init.js"></script>
   </head>
 
   <body>
@@ -61,24 +62,18 @@
         <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
           <img
             src="/assets/images/logo-new.webp"
-            alt="Moeda Arena"
+            alt=""
+            aria-hidden="true"
             class="nav-logo-icon"
             width="44"
             height="44"
             fetchpriority="high"
             decoding="async"
-            style="
-              height: 44px;
-              width: 44px;
-              border-radius: 50%;
-              mix-blend-mode: screen;
-              object-fit: cover;
-              object-position: center 15%;
-            "
           />
           <span class="nav-logo-text">Moeda Arena</span>
         </a>
         <div class="nav-user" id="navUser">
+          <button class="btn-gamer btn-gamer-ghost" id="btnThemeToggle" type="button" title="Alternar Tema" style="padding: 0 10px; font-size: 1.2rem; margin-right: 10px;">🌓</button>
           <div class="nav-auth-btns" id="navAuthBtns">
             <button class="btn-gamer btn-gamer-ghost" id="btnRanking" type="button">🏆 Ranking</button>
             <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>

@@ -24,14 +24,44 @@
       media="print"
       onload="this.media = 'all'"
     />
-    <link rel="preload" as="style" href="/style.min.css?v=8" />
-    <link rel="stylesheet" href="/style.min.css?v=8" />
+    <link rel="preload" as="style" href="/style.min.css?v=10" />
+    <link rel="stylesheet" href="/style.min.css?v=10" />
+    <script src="/assets/js/theme-init.js"></script>
   </head>
 
   <body class="page-body">
+    <header>
+      <nav class="navbar-loja" aria-label="Navegação principal">
+        <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
+          <img
+            src="/assets/images/logo-new.webp"
+            alt=""
+            aria-hidden="true"
+            class="nav-logo-icon"
+            width="44"
+            height="44"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <span class="nav-logo-text">Moeda Arena</span>
+        </a>
+        <div class="nav-user">
+          <button 
+            class="btn-gamer btn-gamer-ghost" 
+            onclick="document.documentElement.classList.toggle('light-theme'); localStorage.setItem('theme', document.documentElement.classList.contains('light-theme') ? 'light' : 'dark')" 
+            type="button" 
+            title="Alternar Tema" 
+            style="padding: 0 10px; font-size: 1.2rem; margin-right: 10px;"
+          >🌓</button>
+          <a href="/" class="btn-gamer btn-gamer-outline-light">Voltar</a>
+        </div>
+      </nav>
+    </header>
+
     <main class="container privacidade-container">
-      <header>
-        <h1 class="privacidade-title">Termos e Condições / Privacidade</h1>
+      <header style="text-align: center; margin-bottom: 2rem;">
+        <h1 class="privacidade-title" style="margin-bottom: 0;">Termos e Condições</h1>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">Política de Privacidade e Termos de Uso</p>
       </header>
 
       <article class="termos-content privacidade-content">
@@ -155,9 +185,13 @@
         </section>
       </article>
 
-      <footer class="privacidade-footer">
-        <a href="/" class="btn-gamer btn-gamer-primary privacidade-btn">Ok, Entendido</a>
-      </footer>
+      <div class="privacidade-footer">
+        <a href="/" class="btn-gamer btn-gamer-primary privacidade-btn" style="padding: 14px 32px; font-size: 1.1rem;">Ok, Entendido</a>
+      </div>
     </main>
+
+    <footer class="footer-loja">
+      <p>&copy; 2026 Moeda Arena. Todos os direitos reservados.</p>
+    </footer>
   </body>
 </html>

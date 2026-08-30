@@ -54,6 +54,29 @@
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+:root.light-theme {
+  --bg-deep: #f8fafc;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-input: #f1f5f9;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-accent: #b45309;
+  --text-dark: #000000;
+
+  --border-subtle: #e2e8f0;
+  --border-hover: #cbd5e1;
+
+  --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --shadow-card-lift: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
 *,
 *::before,
 *::after {
@@ -131,13 +154,19 @@ body::before {
 
 .navbar-loja .nav-logo-icon {
   font-size: 1.6rem;
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  object-fit: cover;
+  object-position: center 15%;
 }
 
 .navbar-loja .nav-logo-text {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 400;
-  /* Bebas Neue é sempre bold por design */
+  /* Bebas Neue Ã© sempre bold por design */
   letter-spacing: 3px;
   text-transform: uppercase;
   background: linear-gradient(135deg, #ffb800 0%, #ff9500 50%, #ffd966 100%);
@@ -222,6 +251,7 @@ body::before {
   transition: var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .btn-gamer:disabled {
@@ -402,12 +432,12 @@ body::before {
   transition: var(--transition-smooth);
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
   background: rgba(251, 191, 36, 0.15);
   border-color: var(--accent-premium);
 }
 
-.toggle-switch input:checked + .toggle-slider::before {
+.toggle-switch input:checked+.toggle-slider::before {
   transform: translateX(24px);
   background: var(--accent-premium);
 }
@@ -1490,7 +1520,7 @@ body::before {
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
   .navbar-loja .nav-user-welcome {
     display: none;
   }
@@ -1498,6 +1528,25 @@ body::before {
   .btn-gamer-ghost {
     padding: 8px 10px;
     font-size: 0.75rem;
+  }
+
+  .navbar-loja .nav-logo-text {
+    display: none;
+    /* Hide logo text on very small screens to save space */
+  }
+
+  .navbar-loja .btn-gamer {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .navbar-loja .nav-user {
+    gap: 8px;
+    /* Reduce gap between navbar items */
+  }
+
+  .navbar-loja .nav-auth-btns {
+    gap: 5px;
   }
 
   .container-center,
@@ -1946,6 +1995,7 @@ body::before {
   border-radius: 12px;
   box-shadow: var(--shadow-md);
 }
+
 .privacidade-title {
   text-align: center;
   color: var(--color-primary);
@@ -1953,15 +2003,224 @@ body::before {
   font-size: 3rem;
   margin-bottom: 30px;
 }
+
 .privacidade-content {
   color: var(--color-text-secondary);
   line-height: 1.6;
 }
+
 .privacidade-footer {
   margin-top: 40px;
   text-align: center;
 }
+
 .privacidade-btn {
   display: inline-block;
   text-decoration: none;
+}
+
+/* Privacidade e Termos */
+.privacidade-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.privacidade-title {
+  text-align: center;
+  color: var(--color-primary);
+  font-family: 'Bebas Neue', cursive;
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+.privacidade-content {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.privacidade-footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.privacidade-btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+:root.light-theme .hero-title,
+:root.light-theme .stat-value,
+:root.light-theme .faq-title,
+:root.light-theme .plan-card-name,
+:root.light-theme .recent-sales-title,
+:root.light-theme .auth-tab.active,
+:root.light-theme .modal-header-title,
+:root.light-theme .rank-cell-name {
+  color: var(--text-primary);
+  text-shadow: none;
+}
+
+:root.light-theme .hero-subtitle,
+:root.light-theme .stat-label,
+:root.light-theme .faq-answer,
+:root.light-theme .plan-card-desc,
+:root.light-theme .plan-card-features li,
+:root.light-theme .recent-sales-list li,
+:root.light-theme .footer-loja p,
+:root.light-theme .footer-support-title,
+:root.light-theme .auth-tab,
+:root.light-theme .toggle-label {
+  color: var(--text-secondary);
+}
+
+:root.light-theme .stat-card,
+:root.light-theme .plan-card,
+:root.light-theme .faq-item,
+:root.light-theme .recent-sales-card,
+:root.light-theme .recent-sales-list li,
+:root.light-theme .modal-content,
+:root.light-theme .security-2fa-card,
+:root.light-theme .saved-card-item {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+}
+
+:root.light-theme .stat-card:hover,
+:root.light-theme .plan-card:hover,
+:root.light-theme .faq-item:hover,
+:root.light-theme .saved-card-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+:root.light-theme .stat-card:hover {
+  border-color: var(--accent-primary, #00e5ff);
+}
+
+:root.light-theme .hero-badge {
+  color: var(--text-accent);
+  background: rgba(180, 83, 9, 0.1);
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+
+
+:root.light-theme body::before {
+  opacity: 0.3;
+}
+
+:root.light-theme .plan-card-features li {
+  border-bottom-color: var(--border-subtle);
+}
+
+
+
+/* LIGHT THEME PREMIUM FIXES PARTE 2 */
+:root.light-theme .navbar-loja {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+}
+
+:root.light-theme .navbar-loja .nav-logo-icon {
+  mix-blend-mode: normal;
+  filter: url('/assets/filters/remove-black.svg#remove-black') drop-shadow(0px 0px 1.5px rgba(0, 0, 0, 0.85)) drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+:root.light-theme .navbar-loja .nav-logo-text {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #92400e;
+  color: #92400e;
+}
+
+:root.light-theme .navbar-loja .btn-gamer-ghost {
+  color: #44403c;
+}
+
+:root.light-theme .navbar-loja .btn-gamer-ghost:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1c1917;
+}
+
+:root.light-theme .navbar-loja .btn-gamer-primary {
+  background: linear-gradient(160deg, #eab308 0%, #d97706 100%);
+  color: #111827;
+}
+
+:root.light-theme .navbar-loja .nav-user-welcome {
+  color: #44403c;
+}
+
+:root.light-theme .modal-content {
+  background: var(--bg-primary);
+  border-color: var(--border-subtle);
+}
+
+:root.light-theme .plan-security-badge {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+
+:root.light-theme .form-input,
+:root.light-theme .form-select {
+  background: var(--bg-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+:root.light-theme .form-input:focus,
+:root.light-theme .form-select:focus {
+  background: var(--bg-primary);
+  border-color: var(--accent-premium);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+:root.light-theme .form-label {
+  color: var(--text-secondary);
+}
+
+:root.light-theme .auth-separator-text,
+:root.light-theme .modal-close {
+  color: var(--text-muted);
+}
+
+:root.light-theme .modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+:root.light-theme .auth-separator-line {
+  background: var(--border-subtle);
+}
+
+:root.light-theme .modal-header,
+:root.light-theme .modal-footer,
+:root.light-theme .auth-tabs {
+  border-color: var(--border-subtle);
+}
+
+:root.light-theme .auth-tab.active {
+  border-bottom-color: var(--text-primary);
+}
+
+:root.light-theme .hero-badge {
+  color: var(--text-accent);
+  background: rgba(180, 83, 9, 0.1);
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+:root.light-theme .btn-gamer-outline-light {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+:root.light-theme .btn-gamer-outline-light:hover:not(:disabled) {
+  background: var(--bg-card);
 }
