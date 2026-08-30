@@ -157,7 +157,6 @@ body::before {
   height: 44px;
   width: 44px;
   border-radius: 50%;
-  mix-blend-mode: screen;
   object-fit: cover;
   object-position: center 15%;
 }
@@ -166,7 +165,6 @@ body::before {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 400;
-  /* Bebas Neue Ã© sempre bold por design */
   letter-spacing: 3px;
   text-transform: uppercase;
   background: linear-gradient(135deg, #ffb800 0%, #ff9500 50%, #ffd966 100%);
@@ -232,6 +230,8 @@ body::before {
   display: flex;
   align-items: center;
   gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .btn-gamer {
@@ -1525,24 +1525,31 @@ body::before {
     display: none;
   }
 
+  #btnRanking,
+  #btnRankingLogged {
+    display: none !important;
+  }
+
   .btn-gamer-ghost {
     padding: 8px 10px;
     font-size: 0.75rem;
   }
-  
+
   .navbar-loja .nav-logo-text {
-    display: none; /* Hide logo text on very small screens to save space */
+    display: none;
+    /* Hide logo text on very small screens to save space */
   }
 
   .navbar-loja .btn-gamer {
     padding: 6px 10px;
     font-size: 0.75rem;
   }
-  
+
   .navbar-loja .nav-user {
-    gap: 8px; /* Reduce gap between navbar items */
+    gap: 8px;
+    /* Reduce gap between navbar items */
   }
-  
+
   .navbar-loja .nav-auth-btns {
     gap: 5px;
   }
@@ -2126,7 +2133,7 @@ body::before {
 
 :root.light-theme .navbar-loja .nav-logo-icon {
   mix-blend-mode: normal;
-  filter: url('/assets/filters/remove-black.svg#remove-black') drop-shadow(0px 0px 1.5px rgba(0,0,0,0.85)) drop-shadow(0px 3px 6px rgba(0,0,0,0.4));
+  filter: url('/assets/filters/remove-black.svg#remove-black') drop-shadow(0px 0px 1.5px rgba(0, 0, 0, 0.85)) drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.4));
 }
 
 :root.light-theme .navbar-loja .nav-logo-text {

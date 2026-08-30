@@ -939,16 +939,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return article;
   }
   function renderPlanos(isAnual) {
-    const cardsExistentes = DOM.cardsContainer.querySelectorAll(".plan-card");
-    cardsExistentes.forEach((card) => card.remove());
-    const errorState = DOM.cardsContainer.querySelector(".error-container");
-    if (errorState) errorState.remove();
-    estado.planos.forEach((plano) => {
-      const card = criarCardPlano(plano, isAnual);
-      DOM.cardsContainer.appendChild(card);
+    const cards = document.querySelectorAll(".plan-card");
+    cards.forEach((card) => {
+      const planId = card.getAttribute("data-tier");
+      if (planId === "gratis") return;
+      let plano = estado.planos.find(p => p.id === planId);
+      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 4.99 : planId === "premium" ? 19.90 : 39.90);
+      let price = isAnual ? basePrice * 12 * 0.83 : basePrice;
+      let period = isAnual ? "/ano" : "/mês";
+      const priceEl = card.querySelector(".plan-card-price");
+      const periodEl = card.querySelector(".plan-card-price-period");
+      if (priceEl) priceEl.textContent = price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      if (periodEl) periodEl.textContent = period;
     });
-    DOM.labelMensal.classList.toggle("active", !isAnual);
-    DOM.labelAnual.classList.toggle("active", isAnual);
+    if (DOM.labelMensal) DOM.labelMensal.classList.toggle("active", !isAnual);
+    if (DOM.labelAnual) DOM.labelAnual.classList.toggle("active", isAnual);
   }
   function mostrarErroPlanos() {
     if (DOM.loadingState) DOM.loadingState.remove();
@@ -993,9 +998,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   DOM.pricingToggle.addEventListener("change", () => {
-    if (estado.planos.length > 0) {
-      renderPlanos(DOM.pricingToggle.checked);
-    }
+    renderPlanos(DOM.pricingToggle.checked);
   });
   DOM.cardsContainer.addEventListener("click", (e) => {
     const btn = e.target.closest(".plan-card-btn");
