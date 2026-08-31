@@ -10,7 +10,7 @@
   <a href="https://github.com/Jaosuzart/Moeda-arena">💻 Repositório</a>
 </p>
 <p align="center">
-  <img width="1290" height="588" alt="image" src="https://github.com/user-attachments/assets/920e69b2-5347-4a8b-b1a6-c86ef4332f17" />
+  <img width="1428" height="732" alt="image" src="https://github.com/user-attachments/assets/8c05a91e-3299-4c81-886a-3c2995029867" />
 </p>
 <hr>
 ## 📌 Sobre o projeto
