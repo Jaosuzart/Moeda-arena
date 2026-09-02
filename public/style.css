@@ -1252,7 +1252,7 @@ body::before {
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
   font-family: "Inter", monospace;
   letter-spacing: 2px;
   font-size: 1.1rem;
@@ -1267,8 +1267,8 @@ body::before {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
 }
 
 .form-input-card:focus {
@@ -1343,13 +1343,13 @@ body::before {
 
 .security-info-text {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
 .security-info-text strong {
   display: block;
-  color: var(--free-base);
+  color: var(--free-dark);
   margin-bottom: 2px;
   font-size: 0.8rem;
 }
@@ -1522,7 +1522,7 @@ body::before {
 
 /* Global (Mobile First) */
 .navbar-loja .nav-user-welcome {
-  display: none !important;
+  display: none;
 }
 
 .btn-gamer-ghost {
@@ -1551,11 +1551,11 @@ body::before {
 
 @media (min-width: 601px) {
   .navbar-loja .nav-user-welcome {
-    display: block !important;
+    display: block;
   }
 
   .navbar-loja .nav-avatar {
-    display: flex !important;
+    display: flex;
   }
 
   .btn-gamer-ghost {
@@ -1678,7 +1678,7 @@ body::before {
 
 .stats-section-subtitle {
   text-align: center;
-  color: var(--text-secondary, #aaa);
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 40px;
   font-size: 1rem;
   max-width: 600px;
@@ -1733,7 +1733,7 @@ body::before {
 
 .stat-label {
   font-size: 0.85rem;
-  color: var(--text-secondary, #aaa);
+  color: rgba(255, 255, 255, 0.7);
   margin-top: 5px;
   text-transform: uppercase;
   letter-spacing: 0.5px;

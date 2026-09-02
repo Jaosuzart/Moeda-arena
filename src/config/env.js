@@ -34,5 +34,6 @@ const config = Object.freeze({
   telegramUrl: process.env.TELEGRAM_URL || "",
   whatsappUrl: process.env.WHATSAPP_URL || "",
   mpWebhookSecret: process.env.MP_WEBHOOK_SECRET || "",
+  mixpanelToken: process.env.MIXPANEL_TOKEN || "",
 });
 module.exports = config;

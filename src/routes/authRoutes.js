@@ -13,6 +13,7 @@ router.get("/config", (req, res) => {
     clientId: config.googleClientId,
     telegramUrl: config.telegramUrl,
     whatsappUrl: config.whatsappUrl,
+    mixpanelToken: config.mixpanelToken,
   });
 });
 router.get("/status", authController.status);

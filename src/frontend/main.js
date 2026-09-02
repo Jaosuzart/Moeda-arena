@@ -1,3 +1,9 @@
+import { initAnalytics, trackEvent } from './modules/analytics.js';
+import { fetchAutenticado } from './modules/api.js';
+import { mostrarFeedback, esconderFeedback, abrirModal, fecharModal, setCarregando, applyMask, formatBRL } from './modules/ui.js';
+
+// Analytics initialization is now handled in modules/analytics.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const DOM = {
     navAuthBtns: document.getElementById("navAuthBtns"),
@@ -155,57 +161,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const applyMask = (input, maskType) => {
-    if (!input) return;
-    input.addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, "");
-      if (maskType === "cpf") {
-        v = v.replace(/(\d{3})(\d)/, "$1.$2");
-        v = v.replace(/(\d{3})(\d)/, "$1.$2");
-        v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-      } else if (maskType === "tel") {
-        v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-        v = v.replace(/(\d)(\d{4})$/, "$1-$2");
-      }
-      e.target.value = v;
-    });
-  };
-
   applyMask(DOM.perfilCpf, "cpf");
   applyMask(DOM.perfilTelefone, "tel");
   applyMask(DOM.registroTelefone, "tel");
 
-  async function fetchAutenticado(url, opcoes = {}) {
-    const headers = { "Content-Type": "application/json", ...opcoes.headers };
-    return fetch(url, { ...opcoes, headers });
-  }
-  // Formata valor numerico para o padrao monetario brasileiro (R$ 1.234,56)
-  const _brlFormatter = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const formatBRL = (value) => _brlFormatter.format(value);
 
-  function mostrarFeedback(el, mensagem, isSucesso) {
-    el.textContent = mensagem;
-    el.className = `alert-feedback visible ${isSucesso ? "success" : "error"}`;
-  }
-  function esconderFeedback(el) {
-    el.className = "alert-feedback";
-    el.textContent = "";
-  }
-  function abrirModal(modal) {
-    modal.classList.add("visible");
-  }
-  function fecharModal(modal) {
-    modal.classList.remove("visible");
-  }
-  function setCarregando(btn, isLoading, texto) {
-    btn.disabled = isLoading;
-    btn.textContent = texto;
-  }
   async function carregar2faStatus() {
     if (!DOM.badge2fa || !DOM.btnToggle2fa) return;
     try {
@@ -462,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         estado.usuario = data.dados.usuario;
+        if (window.mixpanel) mixpanel.track("Login Efetuado", { email: estado.usuario.email });
         atualizarNavbar();
         fecharModal(DOM.authModal);
         DOM.loginForm.reset();
@@ -505,6 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.sucesso && data.dados) {
           estado.usuario = data.dados.usuario;
+          if (window.mixpanel) mixpanel.track("Login 2FA Efetuado", { email: estado.usuario.email });
           atualizarNavbar();
           fecharModal(DOM.verify2faModal);
           DOM.verify2faForm.reset();
@@ -538,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.sucesso && data.dados) {
         mostrarFeedback(DOM.registroFeedback, "Conta criada! Verifique seu e-mail para confirmar a conta.", true);
         estado.usuario = data.dados.usuario;
+        if (window.mixpanel) mixpanel.track("Cadastro Realizado", { email: estado.usuario.email });
         atualizarNavbar();
         DOM.registroForm.reset();
         setTimeout(() => fecharModal(DOM.authModal), 3000);
@@ -560,6 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.sucesso && data.dados) {
         estado.usuario = data.dados.usuario;
+        if (window.mixpanel) mixpanel.track("Login com Google Efetuado", { email: estado.usuario.email });
         atualizarNavbar();
         fecharModal(DOM.authModal);
       } else {
@@ -575,6 +539,12 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const resp = await fetch("/api/auth/config");
       const data = await resp.json();
+      
+      if (data.mixpanelToken && window.mixpanel) {
+        mixpanel.init(data.mixpanelToken);
+        mixpanel.track("page_view");
+      }
+      
       if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
       if (data.clientId && window.google) {
         google.accounts.id.initialize({
