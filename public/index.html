@@ -871,6 +871,18 @@
             <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.4">
               Gerencie seus métodos de pagamento para compras rápidas. Seus dados são tokenizados.
             </p>
+            <div class="security-info-box" style="margin-bottom: 1.5rem;">
+              <svg class="security-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <div class="security-info-text">
+                <strong>Ambiente Seguro PCI DSS</strong>
+                <span>Por segurança, armazenamos apenas os últimos 4 dígitos. Pagamentos via Mercado Pago.</span>
+              </div>
+            </div>
+
             <div class="saved-cards-container">
               <div class="saved-card-item">
                 <div class="saved-card-header">
@@ -909,18 +921,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="security-info-box">
-              <svg class="security-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <div class="security-info-text">
-                <strong>Ambiente Seguro PCI DSS</strong>
-                <span>Por segurança, armazenamos apenas os últimos 4 dígitos. Pagamentos via Mercado Pago.</span>
-              </div>
-            </div>
           </div>
           <div id="areaSeguranca" class="auth-form">
             <div class="security-2fa-card">
@@ -945,12 +945,13 @@
           </div>
           <div id="perfilFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
           <button type="submit" class="btn-gamer btn-gamer-primary w-full mt-4" id="btnSalvarPerfil"
-            style="display: block">
+            style="display: block; font-family: var(--font-body); letter-spacing: normal;">
             Salvar Alterações
           </button>
         </form>
         <hr class="separator-line" />
-        <button class="btn-gamer btn-gamer-ghost w-full text-danger" id="btnSairConta" type="button">
+        <button class="btn-gamer btn-gamer-ghost w-full text-danger" id="btnSairConta" type="button"
+          style="font-family: var(--font-body); letter-spacing: normal;">
           Sair da Conta
         </button>
       </div>
