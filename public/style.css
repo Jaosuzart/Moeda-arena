@@ -32,11 +32,9 @@
   --vip-dark: #7e22ce;
   --vip-hover: #c084fc;
 
-  /* Borders */
   --border-subtle: rgba(255, 184, 0, 0.12);
   --border-hover: rgba(255, 184, 0, 0.3);
 
-  /* Radius */
   --radius-xl: 20px;
   --radius-lg: 14px;
   --radius-md: 10px;
@@ -1532,7 +1530,6 @@ body::before {
 
 .navbar-loja .nav-logo-text {
   display: none;
-  /* Hide logo text on very small screens to save space */
 }
 
 .navbar-loja .btn-gamer {
@@ -1542,7 +1539,6 @@ body::before {
 
 .navbar-loja .nav-user {
   gap: 8px;
-  /* Reduce gap between navbar items */
 }
 
 .navbar-loja .nav-auth-btns {
@@ -2102,10 +2098,26 @@ body::before {
 :root.light-theme .plan-card-features li,
 :root.light-theme .recent-sales-list li,
 :root.light-theme .footer-loja p,
+:root.light-theme .stats-section-subtitle,
 :root.light-theme .footer-support-title,
 :root.light-theme .auth-tab,
 :root.light-theme .toggle-label {
   color: var(--text-secondary);
+}
+
+:root.light-theme .stat-value.cyan {
+  color: #0284c7; /* Darker cyan/blue for contrast on white */
+}
+
+:root.light-theme .stat-value.green {
+  color: #059669; /* Darker green for contrast on white */
+}
+
+:root.light-theme .stats-section-title {
+  background: linear-gradient(135deg, #111827 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 :root.light-theme .stat-card,
@@ -2133,7 +2145,7 @@ body::before {
 }
 
 :root.light-theme .hero-badge {
-  color: var(--text-accent);
+  color: #92400e; /* Dark amber for better contrast */
   background: rgba(180, 83, 9, 0.1);
   border-color: rgba(180, 83, 9, 0.2);
 }
@@ -2242,10 +2254,13 @@ body::before {
 }
 
 :root.light-theme .hero-badge {
-  color: var(--text-accent);
+  color: #92400e; /* Dark amber for better contrast */
   background: rgba(180, 83, 9, 0.1);
   border-color: rgba(180, 83, 9, 0.2);
 }
+
+.b2b-nav-link { color: #60a5fa; }
+:root.light-theme .b2b-nav-link { color: #2563eb !important; }
 
 :root.light-theme .btn-gamer-outline-light {
   border-color: var(--border-hover);

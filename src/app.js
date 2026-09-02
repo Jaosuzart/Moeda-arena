@@ -17,10 +17,9 @@ const gameRoutes = require("./routes/gameRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const contatoRoutes = require("./routes/contatoRoutes");
 
-// Configurar Sentry
 Sentry.init({
   dsn: "https://e9316799db954e62b4d4a7911d1207c2@o4512017861967873.ingest.us.sentry.io/4512017910857728",
-  tracesSampleRate: 1.0, 
+  tracesSampleRate: 1.0,
 });
 
 const app = express();
