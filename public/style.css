@@ -1518,7 +1518,6 @@ body::before {
   }
 }
 
-/* Global (Mobile First) */
 .navbar-loja .nav-user-welcome {
   display: none;
 }
@@ -2106,11 +2105,11 @@ body::before {
 }
 
 :root.light-theme .stat-value.cyan {
-  color: #0284c7; /* Darker cyan/blue for contrast on white */
+  color: #0284c7;
 }
 
 :root.light-theme .stat-value.green {
-  color: #059669; /* Darker green for contrast on white */
+  color: #059669;
 }
 
 :root.light-theme .stats-section-title {
@@ -2145,7 +2144,7 @@ body::before {
 }
 
 :root.light-theme .hero-badge {
-  color: #92400e; /* Dark amber for better contrast */
+  color: #92400e;
   background: rgba(180, 83, 9, 0.1);
   border-color: rgba(180, 83, 9, 0.2);
 }
@@ -2254,13 +2253,18 @@ body::before {
 }
 
 :root.light-theme .hero-badge {
-  color: #92400e; /* Dark amber for better contrast */
+  color: #92400e;
   background: rgba(180, 83, 9, 0.1);
   border-color: rgba(180, 83, 9, 0.2);
 }
 
-.b2b-nav-link { color: #60a5fa; }
-:root.light-theme .b2b-nav-link { color: #2563eb !important; }
+.b2b-nav-link {
+  color: #60a5fa;
+}
+
+:root.light-theme .b2b-nav-link {
+  color: #2563eb
+}
 
 :root.light-theme .btn-gamer-outline-light {
   border-color: var(--border-hover);
