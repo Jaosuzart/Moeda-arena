@@ -2114,8 +2114,7 @@ body::before {
 
 :root.light-theme .stats-section-title {
   background: linear-gradient(135deg, #111827 0%, #0369a1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
@@ -2275,3 +2274,44 @@ body::before {
 :root.light-theme .btn-gamer-outline-light:hover:not(:disabled) {
   background: var(--bg-card);
 }
+
+/* Correções para responsividade no mobile */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .navbar-loja {
+    padding: 0 10px;
+  }
+
+  .navbar-loja .nav-logo-text {
+    display: none;
+  }
+
+  .navbar-loja .b2b-nav-link,
+  .navbar-loja #btnRanking,
+  .navbar-loja #btnRankingLogged {
+    display: none !important;
+  }
+
+  .navbar-loja .btn-gamer {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  .navbar-loja .nav-auth-btns {
+    gap: 6px;
+  }
+
+  .navbar-loja .nav-user {
+    gap: 8px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+}
