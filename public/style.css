@@ -1664,12 +1664,19 @@ body::before {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 10px;
-  background: linear-gradient(135deg, #fff 0%, #00e5ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #00e5ff; /* Fallback de cor sólida */
 }
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .stats-section-title {
+    background: linear-gradient(135deg, #fff 0%, #00e5ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
 
 .stats-section-subtitle {
   text-align: center;
@@ -2122,12 +2129,19 @@ body::before {
 }
 
 :root.light-theme .stats-section-title {
-  background: linear-gradient(135deg, #111827 0%, #0369a1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #0369a1; /* Fallback de cor sólida */
 }
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  :root.light-theme .stats-section-title {
+    background: linear-gradient(135deg, #111827 0%, #0369a1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
 
 :root.light-theme .stat-card,
 :root.light-theme .plan-card,
