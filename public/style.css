@@ -2012,7 +2012,6 @@ body::before {
   color: #fff;
 }
 
-/* Privacidade e Termos */
 .privacidade-container {
   max-width: 800px;
   margin: 40px auto;
@@ -2104,6 +2103,16 @@ body::before {
   color: var(--text-secondary);
 }
 
+:root.light-theme .text-danger,
+:root.light-theme .btn-gamer-ghost.text-danger {
+  color: #dc2626;
+}
+
+:root.light-theme .btn-gamer-ghost.text-danger:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+}
+
 :root.light-theme .stat-value.cyan {
   color: #0284c7;
 }
@@ -2114,7 +2123,8 @@ body::before {
 
 :root.light-theme .stats-section-title {
   background: linear-gradient(135deg, #111827 0%, #0369a1 100%);
-
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
@@ -2275,9 +2285,10 @@ body::before {
   background: var(--bg-card);
 }
 
-/* Correções para responsividade no mobile */
 @media (max-width: 768px) {
-  html, body {
+
+  html,
+  body {
     overflow-x: hidden;
     width: 100%;
   }
@@ -2309,9 +2320,9 @@ body::before {
   .navbar-loja .nav-user {
     gap: 8px;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
     padding: 0 15px;
   }
-}
+}
