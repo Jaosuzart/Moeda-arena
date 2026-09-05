@@ -332,7 +332,7 @@ body::before {
 
 .hero-section {
   text-align: center;
-  padding: 4rem 1rem 2rem;
+  padding: 2rem 1rem 1rem;
   position: relative;
   z-index: 1;
 }
@@ -452,7 +452,7 @@ body::before {
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   max-width: 1100px;
   margin: 0 auto;
@@ -1424,21 +1424,7 @@ body::before {
   font-size: 1.8rem;
 }
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 0 0 3rem;
-  min-height: 480px;
-}
 
-.plan-card {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 2rem 1.5rem 1.5rem;
-}
 
 .plan-card-price {
   font-size: 2.2rem;
@@ -1463,21 +1449,14 @@ body::before {
   }
 
   .hero-section {
-    padding: 3rem 1.5rem 2rem;
+    padding: 2rem 1.5rem 0rem;
   }
 
   .hero-title {
     font-size: 2.2rem;
   }
 
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
 
-  .plan-card {
-    padding: 2rem 1.5rem;
-  }
 }
 
 @media (min-width: 768px) {
@@ -1491,23 +1470,14 @@ body::before {
   }
 
   .hero-section {
-    padding: 3rem 2rem 2rem;
+    padding: 2.5rem 2rem 0rem;
   }
 
   .hero-title {
     font-size: 2.5rem;
   }
 
-  .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    width: 90%;
-    margin: 0 auto;
-  }
 
-  .plan-card {
-    padding: 2rem 1.5rem 1.5rem;
-  }
 
   .modal-content {
     width: 100%;
@@ -1645,11 +1615,7 @@ body::before {
   }
 }
 
-@media (min-width: 1200px) {
-  .cards-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
+
 
 .stats-section {
   width: min(100%, 1200px);
@@ -1681,7 +1647,7 @@ body::before {
 .stats-section-subtitle {
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   font-size: 1rem;
   max-width: 600px;
   margin-left: auto;
@@ -1690,9 +1656,10 @@ body::before {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
 .stat-card {
@@ -2082,6 +2049,66 @@ body::before {
 .privacidade-btn {
   display: inline-block;
   text-decoration: none;
+}
+
+/* --- B2B Section --- */
+.b2b-section {
+  margin-top: 2rem;
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(96, 165, 250, 0.3) !important;
+  border-radius: 16px;
+  text-align: center;
+  padding: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.b2b-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.b2b-close-btn:hover {
+  background: rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.b2b-title {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.b2b-desc {
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.btn-b2b {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.btn-b2b:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
 }
 
 :root.light-theme .hero-title,

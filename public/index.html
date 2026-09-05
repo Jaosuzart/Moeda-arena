@@ -27,6 +27,8 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://browser.sentry-cdn.com" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" />
   <link
@@ -37,12 +39,12 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet">
   </noscript>
-  <link rel="preload" as="style" href="/style.min.css?v=11" />
-  <link rel="stylesheet" href="/style.min.css?v=11" />
+  <link rel="preload" as="style" href="/style.min.css?v=12" />
+  <link rel="stylesheet" href="/style.min.css?v=12" />
 
-  <script src="https://browser.sentry-cdn.com/8.0.0/bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://browser.sentry-cdn.com/8.0.0/bundle.min.js" crossorigin="anonymous" defer></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
   <script src="/assets/js/theme-init.js"></script>
 </head>
 
@@ -50,7 +52,7 @@
   <header>
     <nav class="navbar-loja" id="navbar" aria-label="Navegação principal">
       <a href="/" class="nav-logo" aria-label="Moeda Arena — Página inicial">
-        <img src="/assets/images/logo-new.webp" alt="" aria-hidden="true" class="nav-logo-icon" width="44" height="44"
+        <img src="/assets/images/logo-new.jpg" alt="" aria-hidden="true" class="nav-logo-icon" width="44" height="44"
           fetchpriority="high" decoding="async" />
         <span class="nav-logo-text">Moeda Arena</span>
       </a>
@@ -59,7 +61,7 @@
           style="padding: 0 10px; font-size: 1.2rem; margin-right: 10px;">🌓</button>
         <div class="nav-auth-btns" id="navAuthBtns">
           <button class="btn-gamer btn-gamer-ghost" id="btnRanking" type="button">🏆 Ranking</button>
-          <a href="#b2bSection" class="btn-gamer btn-gamer-ghost b2b-nav-link" onclick="const s=document.getElementById('b2bSection'); if(s) s.style.display='block';">🏢 Para Empresas</a>
+          <button type="button" class="btn-gamer btn-gamer-ghost b2b-nav-link" onclick="const s=document.getElementById('b2bSection'); if(s) { s.style.display='block'; s.scrollIntoView({behavior: 'smooth'}); }">🏢 Para Empresas</button>
           <button class="btn-gamer btn-gamer-ghost" id="btnAbrirLogin" type="button">Entrar</button>
           <button class="btn-gamer btn-gamer-primary" id="btnAbrirRegistro" type="button">Criar Conta</button>
         </div>
@@ -370,20 +372,15 @@
       </article>
     </section>
 
-    <section class="container-center" id="b2bSection"
-      style="margin-top: 2rem; background: rgba(30,41,59,0.8); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 16px; text-align: center; padding: 2.5rem; position: relative; z-index: 1;">
-      <button type="button" class="b2b-close-btn" aria-label="Fechar seção" onclick="document.getElementById('b2bSection').style.display='none'"
-        style="position: absolute; top: 12px; right: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; font-size: 1.2rem; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; line-height: 1;"
-        onmouseover="this.style.background='rgba(96, 165, 250, 0.2)'; this.style.color='#93c5fd'; this.style.borderColor='rgba(96, 165, 250, 0.4)';"
-        onmouseout="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1'; this.style.borderColor='rgba(255, 255, 255, 0.15)';">✕</button>
-      <h2 style="font-size: 2rem; color: #fff; margin-bottom: 1rem;">Gamificação B2B (Para Empresas)</h2>
-      <p style="color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto 2rem; line-height: 1.6;">
+    <section class="container-center b2b-section" id="b2bSection" style="display: none;">
+      <button type="button" class="b2b-close-btn" aria-label="Fechar seção" onclick="document.getElementById('b2bSection').style.display='none'">✕</button>
+      <h2 class="b2b-title">Gamificação B2B (Para Empresas)</h2>
+      <p class="b2b-desc">
         Aumente o engajamento do seu time corporativo ou fidelize clientes. Ofereça Moedas da Arena como premiação de
         metas, cashback ou adquira cotas de patrocínio nos nossos torneios oficiais.
       </p>
       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=suporte@moedaarena.com.br" target="_blank"
-        rel="noopener noreferrer" class="btn-gamer btn-gamer-primary"
-        style="background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); color: #ffffff !important;">
+        rel="noopener noreferrer" class="btn-gamer btn-b2b">
         Atendimento Corporativo
       </a>
     </section>
