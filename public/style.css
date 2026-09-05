@@ -1630,7 +1630,8 @@ body::before {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 10px;
-  color: #00e5ff; /* Fallback de cor sólida */
+  color: #00e5ff;
+  /* Fallback de cor sólida */
 }
 
 @supports (-webkit-background-clip: text) or (background-clip: text) {
@@ -2156,7 +2157,8 @@ body::before {
 }
 
 :root.light-theme .stats-section-title {
-  color: #0369a1; /* Fallback de cor sólida */
+  color: #0369a1;
+  /* Fallback de cor sólida */
 }
 
 @supports (-webkit-background-clip: text) or (background-clip: text) {
@@ -2345,7 +2347,7 @@ body::before {
   .navbar-loja .b2b-nav-link,
   .navbar-loja #btnRanking,
   .navbar-loja #btnRankingLogged {
-    display: none !important;
+    display: none;
   }
 
   .navbar-loja .btn-gamer {
