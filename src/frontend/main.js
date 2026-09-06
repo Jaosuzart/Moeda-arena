@@ -866,7 +866,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (plano.isGratis) {
       priceEl.textContent = "Grátis";
     } else {
-      const valor = isAnual ? plano.precoAnual : plano.precoMensal;
+      const valor = isAnual ? (plano.precoAnual / 100) : (plano.precoMensal / 100);
       priceEl.textContent = formatBRL(valor);
     }
     priceWrapper.appendChild(priceEl);
@@ -915,8 +915,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const planId = card.getAttribute("data-tier");
       if (planId === "gratis") return;
       let plano = estado.planos.find(p => p.id === planId);
-      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 4.99 : planId === "premium" ? 19.90 : 39.90);
-      let price = isAnual ? basePrice * 12 * 0.83 : basePrice;
+      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 499 : planId === "premium" ? 1990 : 3990);
+      let price = isAnual ? (basePrice / 100) * 12 * 0.83 : (basePrice / 100);
       let period = isAnual ? "/ano" : "/mês";
       const priceEl = card.querySelector(".plan-card-price");
       const periodEl = card.querySelector(".plan-card-price-period");
@@ -983,7 +983,7 @@ document.addEventListener("DOMContentLoaded", () => {
       plano = {
         id: planId,
         nome: name,
-        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 4.99 : planId === "premium" ? 19.9 : 39.9,
+        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 499 : planId === "premium" ? 1990 : 3990,
         isGratis: planId === "gratis",
         moedas: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
       };
@@ -1022,8 +1022,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     abrirModal(DOM.checkoutModal);
   }
-  function atualizarPrecoCheckout(precoOriginal, descontoPercent) {
+  function atualizarPrecoCheckout(precoOriginalCentavos, descontoPercent) {
     if (!DOM.checkoutPrecoArea) return;
+    const precoOriginal = precoOriginalCentavos / 100;
     DOM.checkoutPrecoArea.style.display = "flex";
     DOM.checkoutPrecoArea.style.justifyContent = "center";
     DOM.checkoutPrecoArea.style.alignItems = "center";

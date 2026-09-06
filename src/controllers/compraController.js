@@ -61,8 +61,8 @@ const processarCompra = async (req, res, next) => {
     if (cupom && typeof cupom === "string" && cupom.trim().length > 0) {
       const cupomDb = await cupomModel.buscarPorCodigo(cupom);
       if (cupomDb) {
-        const desconto = (precoFinal * cupomDb.desconto_percentual) / 100;
-        precoFinal = parseFloat((precoFinal - desconto).toFixed(2));
+        const desconto = Math.round((precoFinal * cupomDb.desconto_percentual) / 100);
+        precoFinal = precoFinal - desconto;
         cupomAplicado = cupomDb.codigo;
         logger.info("Cupom de desconto aplicado na compra.", {
           cupom: cupomAplicado,
@@ -81,7 +81,7 @@ const processarCompra = async (req, res, next) => {
             id: planoEscolhido.id,
             title: planoEscolhido.nome,
             quantity: 1,
-            unit_price: precoFinal,
+            unit_price: precoFinal / 100,
             currency_id: "BRL",
           },
         ],
