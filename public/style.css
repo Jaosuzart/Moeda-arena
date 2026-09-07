@@ -2451,16 +2451,18 @@ body {
   margin-top: 6px;
 }
 
-/* Ranking Medals */
 .rank-gold {
   color: gold;
 }
+
 .rank-silver {
   color: silver;
 }
+
 .rank-bronze {
   color: #cd7f32;
 }
+
 .rank-other {
   color: var(--text-accent);
 }
