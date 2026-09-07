@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --ignore public/ server.js",
-    "minify:js": "esbuild src/frontend/main.js src/frontend/admin.js --bundle --minify --target=es2020 --outdir=public --entry-names=[name].min",
+    "minify:js": "esbuild src/frontend/main.js src/frontend/admin.js --bundle --minify --tree-shaking=true --target=es2020 --outdir=public --entry-names=[name].min",
     "minify:css": "csso public/style.css --output public/style.min.css",
     "minify": "npm run minify:js && npm run minify:css",
     "build": "npm install && npm run minify && npx puppeteer browsers install chrome"

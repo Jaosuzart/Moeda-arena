@@ -2,7 +2,6 @@ import { initAnalytics, trackEvent } from './modules/analytics.js';
 import { fetchAutenticado } from './modules/api.js';
 import { mostrarFeedback, esconderFeedback, abrirModal, fecharModal, setCarregando, applyMask, formatBRL } from './modules/ui.js';
 
-// Analytics initialization is now handled in modules/analytics.js
 
 document.addEventListener("DOMContentLoaded", () => {
   const DOM = {
@@ -172,7 +171,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const resp = await fetch("/api/auth/2fa/status");
       const data = await resp.json();
       const ativo = data.dados && data.dados.ativo2fa;
-      DOM.badge2fa.textContent = ativo ? "Ativada ✓" : "Desativada";
+      DOM.badge2fa.textContent = ativo ? "Ativada " : "Desativada";
+      if (ativo) {
+        const checkIcon = document.createElement("i");
+        checkIcon.className = "bi bi-check";
+        DOM.badge2fa.appendChild(checkIcon);
+      }
       DOM.badge2fa.className = `badge-status ${ativo ? "ativo" : "inativo"}`;
       DOM.btnToggle2fa.textContent = ativo ? "Desativar Autenticação 2FA" : "Ativar Autenticação 2FA";
       DOM.btnToggle2fa.className = `btn-gamer ${ativo ? "btn-gamer-secondary" : "btn-gamer-primary"} w-full`;
@@ -229,7 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
         elRole.onclick = null;
         elRole.title = "";
         if (estado.usuario.email_verificado === 0) {
-          elRole.textContent = "⚠️ Email Pendente";
+          elRole.textContent = "";
+          const pendIcon = document.createElement("i");
+          pendIcon.className = "bi bi-exclamation-triangle-fill";
+          elRole.appendChild(pendIcon);
+          elRole.appendChild(document.createTextNode(" Email Pendente"));
           elRole.classList.add("pendente");
           elRole.style.cursor = "pointer";
           elRole.title = "Seu email não está verificado. Clique para saber mais.";
@@ -663,7 +671,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const pTitle = document.createElement("p");
           const strongTitle = document.createElement("strong");
-          strongTitle.textContent = "🎁 Seu Link de Indicação:";
+          strongTitle.textContent = "";
+          const giftIcon = document.createElement("i");
+          giftIcon.className = "bi bi-gift-fill";
+          strongTitle.appendChild(giftIcon);
+          strongTitle.appendChild(document.createTextNode(" Seu Link de Indicação:"));
           pTitle.appendChild(strongTitle);
           container.appendChild(pTitle);
 
@@ -677,6 +689,14 @@ document.addEventListener("DOMContentLoaded", () => {
             inputLink.select();
             if (navigator.clipboard) {
               navigator.clipboard.writeText(link).then(() => {
+                if (window.confetti) {
+                  confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#00e5ff', '#f59e0b', '#ffffff']
+                  });
+                }
                 Swal.fire({
                   toast: true,
                   position: 'top-end',
@@ -831,14 +851,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   function criarCardPlano(plano, isAnual) {
-    const tierConfig = TIER_CONFIG[plano.id] || { icon: "📦", desc: "" };
+    const tierConfig = TIER_CONFIG[plano.id] || { icon: '<i class=\"bi bi-box-seam-fill\"></i>', desc: "" };
     const article = document.createElement("article");
     article.className = "plan-card";
     article.setAttribute("data-tier", plano.id);
     if (plano.popular) {
       const badge = document.createElement("span");
       badge.className = "plan-card-popular-badge";
-      badge.textContent = "★ Mais Popular";
+      badge.textContent = "";
+      const starIcon = document.createElement("i");
+      starIcon.className = "bi bi-star-fill";
+      badge.appendChild(starIcon);
+      badge.appendChild(document.createTextNode(" Mais Popular"));
       article.appendChild(badge);
     }
     const iconDiv = document.createElement("div");
@@ -884,10 +908,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const iconSpan = document.createElement("span");
       iconSpan.className = "feature-icon";
       if (recurso.toLowerCase().includes("token")) {
-        iconSpan.textContent = "🪙";
+        iconSpan.textContent = "";
+        const coinIcon = document.createElement("i");
+        coinIcon.className = "bi bi-coin";
+        iconSpan.appendChild(coinIcon);
         iconSpan.style.color = "inherit";
       } else {
-        iconSpan.textContent = "✓";
+        iconSpan.textContent = "";
+        const checkIcon2 = document.createElement("i");
+        checkIcon2.className = "bi bi-check";
+        iconSpan.appendChild(checkIcon2);
       }
       li.appendChild(iconSpan);
       li.appendChild(document.createTextNode(" " + recurso));
@@ -932,7 +962,10 @@ document.addEventListener("DOMContentLoaded", () => {
     errorDiv.className = "error-container";
     const icon = document.createElement("div");
     icon.className = "error-icon";
-    icon.textContent = "⚠️";
+    icon.textContent = "";
+    const warnIcon = document.createElement("i");
+    warnIcon.className = "bi bi-exclamation-triangle-fill";
+    icon.appendChild(warnIcon);
     const title = document.createElement("h3");
     title.className = "error-title";
     title.textContent = "Não foi possível carregar os pacotes";
@@ -1071,7 +1104,11 @@ document.addEventListener("DOMContentLoaded", () => {
           estado.descontoPercentual = data.dados.desconto_percentual;
           mostrarFeedback(DOM.cupomFeedback, data.dados.mensagem, true);
           DOM.inputCupom.disabled = true;
-          DOM.btnAplicarCupom.textContent = "✓ Aplicado";
+          DOM.btnAplicarCupom.textContent = "";
+          const appliedIcon = document.createElement("i");
+          appliedIcon.className = "bi bi-check";
+          DOM.btnAplicarCupom.appendChild(appliedIcon);
+          DOM.btnAplicarCupom.appendChild(document.createTextNode(" Aplicado"));
           DOM.btnAplicarCupom.style.background = "var(--accent-success, #4caf50)";
           if (estado.planoSelecionado) {
             atualizarPrecoCheckout(estado.planoSelecionado.precoMensal, estado.descontoPercentual);
@@ -1120,7 +1157,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.sucesso && data.dados) {
         mostrarFeedback(DOM.checkoutFeedback, data.dados.mensagem, true);
         if (plano.isGratis) {
-          DOM.btnConfirmarCompra.textContent = "Concluído ✓";
+          DOM.btnConfirmarCompra.textContent = "Concluído ";
+          const checkIconFinal = document.createElement("i");
+          checkIconFinal.className = "bi bi-check";
+          DOM.btnConfirmarCompra.appendChild(checkIconFinal);
           if (estado.usuario) {
             estado.usuario.saldo_moedas += plano.moedas || 100;
             DOM.navMoedaCount.textContent = (estado.usuario.saldo_moedas || 0).toLocaleString("pt-BR");
@@ -1149,25 +1189,44 @@ document.addEventListener("DOMContentLoaded", () => {
         data.dados.forEach((jogador, index) => {
           const tr = document.createElement("tr");
           tr.className = "admin-table-row";
-          let medal = `🏅 ${index + 1}º`;
-          if (index === 0) medal = "🥇 1º";
-          if (index === 1) medal = "🥈 2º";
-          if (index === 2) medal = "🥉 3º";
           const tdMedal = document.createElement("td");
           tdMedal.className = "rank-table-cell rank-cell-medal";
-          tdMedal.textContent = medal;
+          const iconMedal = document.createElement("i");
+          if (index === 0) {
+            iconMedal.className = "bi bi-1-circle-fill";
+            iconMedal.style.color = "gold";
+          } else if (index === 1) {
+            iconMedal.className = "bi bi-2-circle-fill";
+            iconMedal.style.color = "silver";
+          } else if (index === 2) {
+            iconMedal.className = "bi bi-3-circle-fill";
+            iconMedal.style.color = "#cd7f32";
+          } else {
+            iconMedal.className = "bi bi-award-fill";
+          }
+          tdMedal.append(iconMedal, ` ${index + 1}º`);
+          
           const tdNome = document.createElement("td");
           tdNome.className = "rank-table-cell rank-cell-name";
           tdNome.textContent = jogador.nome.split(" ")[0];
+          
           const tdTrofeus = document.createElement("td");
           tdTrofeus.className = "rank-table-cell rank-cell-trofeus";
-          tdTrofeus.textContent = `🏆 ${jogador.trofeus || 0}`;
+          const iconTrofeu = document.createElement("i");
+          iconTrofeu.className = "bi bi-trophy-fill";
+          tdTrofeus.append(iconTrofeu, ` ${jogador.trofeus || 0}`);
+          
           const tdVitorias = document.createElement("td");
           tdVitorias.className = "rank-table-cell rank-cell-vitorias";
-          tdVitorias.textContent = `⚔️ ${jogador.vitorias || 0}`;
+          const iconVitorias = document.createElement("i");
+          iconVitorias.className = "bi bi-crosshair";
+          tdVitorias.append(iconVitorias, ` ${jogador.vitorias || 0}`);
+          
           const tdXp = document.createElement("td");
           tdXp.className = "rank-table-cell rank-cell-xp";
-          tdXp.textContent = `⭐ ${jogador.xp || 0}`;
+          const iconXp = document.createElement("i");
+          iconXp.className = "bi bi-star-fill";
+          tdXp.append(iconXp, ` ${jogador.xp || 0}`);
           tr.appendChild(tdMedal);
           tr.appendChild(tdNome);
           tr.appendChild(tdTrofeus);
@@ -1213,7 +1272,9 @@ document.addEventListener("DOMContentLoaded", () => {
           tdNome.appendChild(smallEmail);
           const tdSaldo = document.createElement("td");
           tdSaldo.className = "admin-table-cell";
-          tdSaldo.textContent = `🪙 ${u.saldo_moedas}`;
+          const iconSaldo = document.createElement("i");
+          iconSaldo.className = "bi bi-coin";
+          tdSaldo.append(iconSaldo, ` ${u.saldo_moedas}`);
           const tdStatus = document.createElement("td");
           tdStatus.className = "admin-table-cell";
           const spanStatus = document.createElement("span");

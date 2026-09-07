@@ -7,6 +7,7 @@ const pagamentoModel = require("../models/pagamentoModel");
 const whatsappService = require("../services/whatsappService");
 const emailService = require("../services/emailService");
 const cupomModel = require("../models/cupomModel");
+const { pool } = require("../models/db");
 
 const mpClient = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
 
@@ -26,18 +27,22 @@ const notificarUsuario = async (usuario, valor, moedas) => {
 };
 
 const processarAfiliado = async (usuarioId, tokensComprados) => {
-  const usuario = await usuarioModel.buscarPorId(usuarioId);
-  if (!usuario || !usuario.indicado_por) return;
+  try {
+    const usuario = await usuarioModel.buscarPorId(usuarioId);
+    if (!usuario || !usuario.indicado_por) return;
 
-  const comissao = Math.floor(tokensComprados * 0.05);
-  if (comissao <= 0) return;
+    const comissao = Math.floor(tokensComprados * 0.05);
+    if (comissao <= 0) return;
 
-  await usuarioModel.adicionarMoedas(usuario.indicado_por, comissao);
-  await pool.query("UPDATE usuarios SET ganhos_afiliado = ganhos_afiliado + ? WHERE id = ?", [
-    comissao,
-    usuario.indicado_por,
-  ]);
-  logger.info("Comissão de afiliado paga.", { indicador: usuario.indicado_por, comissao });
+    await usuarioModel.adicionarMoedas(usuario.indicado_por, comissao);
+    await pool.query("UPDATE usuarios SET ganhos_afiliado = ganhos_afiliado + ? WHERE id = ?", [
+      comissao,
+      usuario.indicado_por,
+    ]);
+    logger.info("Comissão de afiliado paga.", { indicador: usuario.indicado_por, comissao });
+  } catch (err) {
+    logger.error("Erro não fatal ao processar comissão de afiliado.", { erro: err.message, usuarioId });
+  }
 };
 
 const processarNotificacao = async (req, res) => {
