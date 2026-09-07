@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function logout() {
     try {
       await fetchAutenticado("/api/auth/logout", { method: "POST" });
-    } catch (e) {}
+    } catch (e) { }
     estado.usuario = null;
     atualizarNavbar();
   }
@@ -547,12 +547,12 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const resp = await fetch("/api/auth/config");
       const data = await resp.json();
-      
+
       if (data.mixpanelToken && window.mixpanel) {
         mixpanel.init(data.mixpanelToken);
         mixpanel.track("page_view");
       }
-      
+
       if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
       if (data.clientId && window.google) {
         google.accounts.id.initialize({
@@ -643,7 +643,7 @@ document.addEventListener("DOMContentLoaded", () => {
           google.accounts.id.prompt();
         }
       }
-    } catch (err) {}
+    } catch (err) { }
   }
   DOM.navAvatar.addEventListener("click", async () => {
     if (DOM.tabDados) DOM.tabDados.click();
@@ -723,7 +723,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         DOM.perfilCartao.value = u.cartao_final || "";
       }
-    } catch (e) {}
+    } catch (e) { }
   });
   DOM.btnFecharPerfil.addEventListener("click", () => {
     fecharModal(DOM.perfilModal);
@@ -1191,37 +1191,40 @@ document.addEventListener("DOMContentLoaded", () => {
           tr.className = "admin-table-row";
           const tdMedal = document.createElement("td");
           tdMedal.className = "rank-table-cell rank-cell-medal";
-          const iconMedal = document.createElement("i");
           if (index === 0) {
-            iconMedal.className = "bi bi-1-circle-fill";
-            iconMedal.style.color = "gold";
+            const iconMedal = document.createElement("i");
+            iconMedal.className = "bi bi-1-circle-fill rank-gold";
+            tdMedal.append(iconMedal, ` ${index + 1}º`);
           } else if (index === 1) {
-            iconMedal.className = "bi bi-2-circle-fill";
-            iconMedal.style.color = "silver";
+            const iconMedal = document.createElement("i");
+            iconMedal.className = "bi bi-2-circle-fill rank-silver";
+            tdMedal.append(iconMedal, ` ${index + 1}º`);
           } else if (index === 2) {
-            iconMedal.className = "bi bi-3-circle-fill";
-            iconMedal.style.color = "#cd7f32";
+            const iconMedal = document.createElement("i");
+            iconMedal.className = "bi bi-3-circle-fill rank-bronze";
+            tdMedal.append(iconMedal, ` ${index + 1}º`);
           } else {
-            iconMedal.className = "bi bi-award-fill";
+            const iconMedal = document.createElement("i");
+            iconMedal.className = "bi bi-award-fill rank-other";
+            tdMedal.append(iconMedal, ` ${index + 1}º`);
           }
-          tdMedal.append(iconMedal, ` ${index + 1}º`);
-          
+
           const tdNome = document.createElement("td");
           tdNome.className = "rank-table-cell rank-cell-name";
           tdNome.textContent = jogador.nome.split(" ")[0];
-          
+
           const tdTrofeus = document.createElement("td");
           tdTrofeus.className = "rank-table-cell rank-cell-trofeus";
           const iconTrofeu = document.createElement("i");
           iconTrofeu.className = "bi bi-trophy-fill";
           tdTrofeus.append(iconTrofeu, ` ${jogador.trofeus || 0}`);
-          
+
           const tdVitorias = document.createElement("td");
           tdVitorias.className = "rank-table-cell rank-cell-vitorias";
           const iconVitorias = document.createElement("i");
           iconVitorias.className = "bi bi-crosshair";
           tdVitorias.append(iconVitorias, ` ${jogador.vitorias || 0}`);
-          
+
           const tdXp = document.createElement("td");
           tdXp.className = "rank-table-cell rank-cell-xp";
           const iconXp = document.createElement("i");
@@ -1235,7 +1238,7 @@ document.addEventListener("DOMContentLoaded", () => {
           DOM.rankingTableBody.appendChild(tr);
         });
       }
-    } catch (e) {}
+    } catch (e) { }
   }
   const abrirRank = () => {
     carregarRanking();
@@ -1320,7 +1323,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
       }
-    } catch (e) {}
+    } catch (e) { }
   }
   if (DOM.btnAdminPanel)
     DOM.btnAdminPanel.addEventListener("click", () => {

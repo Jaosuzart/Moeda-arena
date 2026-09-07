@@ -687,11 +687,11 @@
                   float: right;
                   margin-top: 6px;
                   font-size: 0.8rem;
-                  text-decoration: underline;
-                  color: #007bff;
-                  transition: color 0.2s;
-                " onmouseover="this.style.color = '#0056b3'"
-              onmouseout="this.style.color = '#007bff'">
+                  text-decoration: none;
+                  color: var(--text-accent);
+                  transition: opacity 0.2s;
+                " onmouseover="this.style.opacity = '0.8'"
+              onmouseout="this.style.opacity = '1'">
               Esqueci minha senha
             </a>
           </div>
@@ -1085,11 +1085,8 @@
                   float: right;
                   margin-top: 6px;
                   font-size: 0.8rem;
-                  text-decoration: none;
-                  color: var(--text-secondary, #aaa);
-                  transition: color 0.2s;
-                " onmouseover="this.style.color = 'var(--accent-primary, #00e5ff)'"
-              onmouseout="this.style.color = 'var(--text-secondary, #aaa)'">
+                  transition: opacity 0.2s;
+                ">
               Esqueci minha senha
             </a>
           </div>
