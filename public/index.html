@@ -686,9 +686,7 @@
           momento, mediante aviso prévio na plataforma.
         </p>
       </div>
-      <footer class="modal-footer">
-        <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnOkTermos">Ok, Entendido</button>
-      </footer>
+
     </div>
   </dialog>
 
@@ -1254,6 +1252,27 @@
   </dialog>
 
   <script src="/main.min.js?v=11" defer></script>
+
+  <!-- Banner de Cookies -->
+  <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a1a2e;border-top:1px solid #2d2d4e;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 -4px 16px rgba(0,0,0,.4);">
+    <p style="margin:0;font-size:.85rem;color:#b0b0c8;flex:1;min-width:200px;">
+      🍪 Usamos apenas cookies <strong style="color:#e0e0f0;">essenciais</strong> para o funcionamento da plataforma. Sem rastreamento.
+      <a href="/privacidade.html" style="color:#7c6af7;margin-left:6px;">Saiba mais</a>
+    </p>
+    <button id="btnAceitarCookies" style="cursor:pointer;white-space:nowrap;background:#7c6af7;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:.875rem;font-weight:600;transition:opacity .2s;">Apenas Essenciais</button>
+  </div>
+  <script>
+    (function(){
+      if(!localStorage.getItem('cookiesAceitos')){
+        document.getElementById('cookieBanner').style.display='flex';
+      }
+      document.getElementById('btnAceitarCookies').addEventListener('click',function(){
+        localStorage.setItem('cookiesAceitos','1');
+        document.getElementById('cookieBanner').style.display='none';
+      });
+    })();
+  </script>
+
 </body>
 
 </html>

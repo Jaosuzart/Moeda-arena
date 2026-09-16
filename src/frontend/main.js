@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     adminFeedback: document.getElementById("adminFeedback"),
     btnAbrirTermos: document.getElementById("btnAbrirTermos"),
     btnFecharTermos: document.getElementById("btnFecharTermos"),
-    btnOkTermos: document.getElementById("btnOkTermos"),
     termosModal: document.getElementById("termosModal"),
     sudoModal: document.getElementById("sudoModal"),
     btnFecharSudo: document.getElementById("btnFecharSudo"),
@@ -358,11 +357,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   DOM.btnFecharTermos.addEventListener("click", () => fecharModal(DOM.termosModal));
-  if (DOM.btnOkTermos) {
-    DOM.btnOkTermos.addEventListener("click", () => {
-      fecharModal(DOM.termosModal);
-    });
-  }
 
   if (DOM.btnAbrirContato) {
     DOM.btnAbrirContato.addEventListener("click", (e) => {

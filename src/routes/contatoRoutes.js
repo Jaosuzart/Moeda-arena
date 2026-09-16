@@ -34,4 +34,15 @@ router.post(
   },
 );
 
+router.get("/whatsapp", (req, res) => {
+  const telefone = process.env.WHATSAPP_NUMBER || "5511999999999"; 
+  const mensagem = "olá, seja bem-vindo ao moeda arena";
+  
+  const mensagemCodificada = encodeURIComponent(mensagem);
+  const linkWhatsApp = `https://wa.me/${telefone}?text=${mensagemCodificada}`;
+  
+  // Realiza o redirecionamento invisível no backend, protegendo o número
+  res.redirect(linkWhatsApp);
+});
+
 module.exports = router;
