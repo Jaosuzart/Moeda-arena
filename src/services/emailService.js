@@ -5,8 +5,8 @@ const logger = require("../config/logger");
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || "smtp.gmail.com",
   port: parseInt(process.env.SMTP_PORT) || 465,
-  secure: process.env.SMTP_PORT == 465 || !process.env.SMTP_PORT, // true for 465, false for other ports
-  connectionTimeout: 10000, // 10s timeout
+  secure: process.env.SMTP_PORT == 465 || !process.env.SMTP_PORT,
+  connectionTimeout: 10000,
   greetingTimeout: 10000,
   socketTimeout: 10000,
   auth: {
@@ -48,6 +48,7 @@ const enviarEmailVerificacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/api/auth/verificar-email?token=${token}`;
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🎮 Bem-vindo(a), ${nome}!</h2>
+    <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
     <p>Falta só confirmar seu e-mail para acessar suas Moedas e o Ranking.</p>
     <div style="text-align:center;margin:25px 0;">
       <a href="${link}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Verificar Meu E-mail</a>
@@ -61,6 +62,7 @@ const enviarEmailRecuperacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/?resetToken=${token}`;
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🔑 Recuperação de Senha</h2>
+    <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
     <p>Olá, ${nome}. Recebemos um pedido de redefinição de senha.</p>
     <div style="text-align:center;margin:25px 0;">
       <a href="${link}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Redefinir Minha Senha</a>
@@ -73,6 +75,7 @@ const enviarEmailRecuperacao = (paraEmail, nome, token) => {
 const enviarEmailRecibo = (paraEmail, nome, valor, moedas) => {
   const html = layoutBase(`
     <h2 style="color:#10b981;text-align:center;">✅ Pagamento Aprovado!</h2>
+    <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
     <p>Olá, <strong>${nome}</strong>! Seu pagamento foi processado com sucesso.</p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
       <h3 style="color:#f59e0b;margin:0;">+${moedas} TOKENS</h3>
@@ -104,6 +107,7 @@ const enviarEmailContato = (nome, emailCliente, mensagem) => {
 const enviarEmail2FA = (paraEmail, nome, codigo) => {
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🔐 Código de Segurança</h2>
+    <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
     <p>Olá, ${nome}. Você solicitou acesso à sua conta.</p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
       <h3 style="color:#f59e0b;margin:0;font-size:32px;letter-spacing:5px;">${codigo}</h3>
