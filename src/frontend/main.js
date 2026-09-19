@@ -891,7 +891,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!plano.isGratis) {
       const periodEl = document.createElement("span");
       periodEl.className = "plan-card-price-period";
-      periodEl.textContent = isAnual ? "/ano" : "/mês";
+      periodEl.textContent = isAnual ? "/vitalício" : "/mês";
       priceWrapper.appendChild(periodEl);
     }
     article.appendChild(priceWrapper);
@@ -939,9 +939,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const planId = card.getAttribute("data-tier");
       if (planId === "gratis") return;
       let plano = estado.planos.find(p => p.id === planId);
-      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 499 : planId === "premium" ? 1990 : 3990);
-      let price = isAnual ? (basePrice / 100) * 12 * 0.83 : (basePrice / 100);
-      let period = isAnual ? "/ano" : "/mês";
+      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000);
+      let annualPrice = plano ? plano.precoAnual : (planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500);
+      let price = isAnual ? (annualPrice / 100) : (basePrice / 100);
+      let period = isAnual ? "/vitalício" : "/mês";
       const priceEl = card.querySelector(".plan-card-price");
       const periodEl = card.querySelector(".plan-card-price-period");
       if (priceEl) priceEl.textContent = price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -1010,7 +1011,8 @@ document.addEventListener("DOMContentLoaded", () => {
       plano = {
         id: planId,
         nome: name,
-        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 499 : planId === "premium" ? 1990 : 3990,
+        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000,
+        precoAnual: planId === "gratis" ? 0 : planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500,
         isGratis: planId === "gratis",
         moedas: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
       };

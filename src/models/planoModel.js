@@ -13,8 +13,8 @@ const planosGames = Object.freeze([
   Object.freeze({
     id: "iniciante",
     nome: "Passe Iniciante",
-    precoMensal: 499,
-    precoAnual: 4990,
+    precoMensal: 500,
+    precoAnual: 1000,
     moedas: 1000,
     recursos: Object.freeze(["1.000 Moedas/mês", "Acesso ao Mercado da Comunidade", "1 Skin de Arma Épica"]),
     flags: Object.freeze(["COMMUNITY_MARKET"]),
@@ -24,8 +24,8 @@ const planosGames = Object.freeze([
   Object.freeze({
     id: "premium",
     nome: "Passe Profissional",
-    precoMensal: 1990,
-    precoAnual: 19900,
+    precoMensal: 1000,
+    precoAnual: 2000,
     moedas: 5000,
     recursos: Object.freeze(["5.000 Moedas/mês", "Conjuntos de Personagens Épicos", "Torneios e Ligas Exclusivas"]),
     flags: Object.freeze(["COMMUNITY_MARKET", "TOURNAMENT_ACCESS"]),
@@ -35,8 +35,8 @@ const planosGames = Object.freeze([
   Object.freeze({
     id: "vip",
     nome: "Sócio Lenda",
-    precoMensal: 3990,
-    precoAnual: 39900,
+    precoMensal: 3000,
+    precoAnual: 3500,
     moedas: 15000,
     recursos: Object.freeze(["15.000 Moedas/mês", "Todos os Personagens Desbloqueados", "Taxa Zero no Mercado + Sem Anúncios"]),
     flags: Object.freeze(["COMMUNITY_MARKET", "TOURNAMENT_ACCESS", "NO_ADS", "ZERO_FEE_MARKET", "ALL_CHARS"]),
