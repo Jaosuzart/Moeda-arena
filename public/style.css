@@ -2512,3 +2512,65 @@ body {
 .rank-other {
   color: var(--text-accent);
 }
+
+/* ── Footer CNPJ Halo Effect ── */
+.footer-cnpj {
+  color: #e2e8f0;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-shadow:
+    0 0 8px rgba(56, 189, 248, 0.45),
+    0 0 20px rgba(56, 189, 248, 0.2),
+    0 0 40px rgba(56, 189, 248, 0.08);
+  transition: text-shadow 0.4s ease, color 0.4s ease;
+}
+
+.footer-cnpj:hover {
+  text-shadow:
+    0 0 12px rgba(56, 189, 248, 0.65),
+    0 0 28px rgba(56, 189, 248, 0.35),
+    0 0 50px rgba(56, 189, 248, 0.15);
+  color: #f0f9ff;
+}
+
+.footer-cnpj .cnpj-number {
+  color: #38bdf8;
+  font-weight: 700;
+  text-shadow:
+    0 0 10px rgba(56, 189, 248, 0.5),
+    0 0 24px rgba(56, 189, 248, 0.25);
+}
+
+.footer-cnpj .cnpj-location {
+  color: #7dd3fc;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Light theme override */
+:root.light-theme .footer-cnpj {
+  color: #1e293b;
+  text-shadow:
+    0 0 8px rgba(2, 132, 199, 0.25),
+    0 0 20px rgba(2, 132, 199, 0.1),
+    0 0 40px rgba(2, 132, 199, 0.05);
+}
+
+:root.light-theme .footer-cnpj:hover {
+  text-shadow:
+    0 0 12px rgba(2, 132, 199, 0.4),
+    0 0 28px rgba(2, 132, 199, 0.2),
+    0 0 50px rgba(2, 132, 199, 0.08);
+  color: #0f172a;
+}
+
+:root.light-theme .footer-cnpj .cnpj-number {
+  color: #0284c7;
+  text-shadow:
+    0 0 10px rgba(2, 132, 199, 0.3),
+    0 0 24px rgba(2, 132, 199, 0.15);
+}
+
+:root.light-theme .footer-cnpj .cnpj-location {
+  color: #0369a1;
+}
