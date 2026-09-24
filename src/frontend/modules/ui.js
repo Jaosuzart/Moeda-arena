@@ -1,5 +1,8 @@
 export function mostrarFeedback(el, mensagem, isSucesso) {
   if (!el) return;
+  el.setAttribute("role", isSucesso ? "status" : "alert");
+  el.setAttribute("aria-live", isSucesso ? "polite" : "assertive");
+  el.setAttribute("aria-atomic", "true");
   el.textContent = mensagem;
   el.className = `alert-feedback visible ${isSucesso ? "success" : "error"}`;
 }
@@ -21,6 +24,7 @@ export function fecharModal(modal) {
 export function setCarregando(btn, isLoading, texto) {
   if (!btn) return;
   btn.disabled = isLoading;
+  btn.setAttribute("aria-busy", String(isLoading));
   btn.textContent = texto;
 }
 

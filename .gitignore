@@ -32,6 +32,7 @@ jspm_packages/
 .DS_Store
 Thumbs.db  
 .whatsapp_auth/  
+.whatsapp_auth_baileys/
 scratch/
 .cache/
 Moeda-arena/

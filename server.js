@@ -3,103 +3,81 @@ const logger = require("./src/config/logger");
 const app = require("./src/app");
 const { testarConexao, encerrarPool } = require("./src/models/db");
 const whatsappService = require("./src/services/whatsappService");
-const { exec } = require("child_process");
+
+let server;
+let encerrando = false;
+
+const encerrar = async (sinal, codigo = 0) => {
+  if (encerrando) return;
+  encerrando = true;
+  logger.info("Encerrando servidor...", { sinal });
+  const limite = setTimeout(() => {
+    logger.error("Encerramento excedeu o limite de 10 segundos.");
+    process.exit(1);
+  }, 10000);
+  try {
+    // Aguarde as requisições em andamento antes de fechar o banco.
+    if (server?.listening) {
+      await new Promise((resolve, reject) => {
+        server.close((err) => (err ? reject(err) : resolve()));
+        server.closeIdleConnections?.();
+      });
+    }
+    await whatsappService.stopWhatsApp();
+    await encerrarPool();
+  } catch (err) {
+    logger.error("Falha no encerramento.", { erro: err.message });
+    codigo = 1;
+  } finally {
+    clearTimeout(limite);
+    if (sinal === "SIGUSR2" && codigo === 0) {
+      process.kill(process.pid, "SIGUSR2");
+    } else {
+      process.exit(codigo);
+    }
+  }
+};
+
+process.on("SIGTERM", () => encerrar("SIGTERM"));
+process.on("SIGINT", () => encerrar("SIGINT"));
+process.once("SIGUSR2", () => encerrar("SIGUSR2"));
 
 const iniciar = async () => {
   try {
     await testarConexao();
-    
-    if (config.nodeEnv !== "test") {
-      whatsappService.initWhatsApp();
-    }
-    
-    const server = app.listen(config.port, () => {
+    if (encerrando) return;
+    server = app.listen(config.port, () => {
       logger.info(`Servidor HTTP rodando em http://localhost:${config.port}`, {
         ambiente: config.nodeEnv,
         porta: config.port,
       });
-    });
-    
-    server.on("error", (err) => {
-      if (err.code === "EADDRINUSE") {
-        if (config.nodeEnv !== "development") {
-          logger.error(`Porta ${config.port} ocupada. O servidor não pode iniciar.`);
-          process.exit(1);
-        }
-        logger.warn(`Porta ${config.port} ocupada. Tentando liberar automaticamente (apenas dev)...`);
-        
-        exec(`netstat -ano | findstr :${config.port}`, (error, stdout) => {
-          if (error || !stdout.trim()) {
-            logger.error(`Não foi possível identificar o processo na porta ${config.port}. Encerre-o manualmente.`);
-            process.exit(1);
-          }
-          
-          const pids = new Set();
-          stdout.trim().split("\n").forEach((line) => {
-            const parts = line.trim().split(/\s+/);
-            const pid = parts[parts.length - 1];
-            if (pid && /^\d+$/.test(pid) && pid !== "0") {
-              pids.add(pid);
-            }
-          });
-          
-          if (pids.size === 0) {
-            logger.error("Nenhum PID válido encontrado. Encerrando.");
-            process.exit(1);
-          }
-          
-          let killed = 0;
-          pids.forEach((pid) => {
-            exec(`taskkill /F /PID ${pid}`, (killErr) => {
-              killed++;
-              if (!killErr) {
-                logger.info(`Processo PID ${pid} finalizado com sucesso.`);
-              }
-              if (killed === pids.size) {
-                logger.info("Porta liberada. Reiniciando servidor em 1 segundo...");
-                setTimeout(() => iniciar(), 1000);
-              }
-            });
-          });
-        });
-      } else {
-        logger.error("Erro fatal ao iniciar o servidor:", { erro: err.message });
-        process.exit(1);
+      if (config.nodeEnv !== "test" && !encerrando) {
+        void whatsappService.initWhatsApp();
       }
     });
-
-    const encerrar = async (sinal) => {
-      logger.info(`Sinal ${sinal} recebido. Iniciando shutdown gracioso...`);
-      try {
-        await whatsappService.stopWhatsApp();
-      } catch (e) {}
-
-      server.close(async () => {
-        logger.info("Servidor HTTP encerrado. Fechando banco de dados...");
-        await encerrarPool();
-        logger.info("Shutdown completo. Até logo!");
-        if (sinal === "SIGUSR2") {
-          process.kill(process.pid, "SIGUSR2");
-        } else {
-          process.exit(0);
-        }
-      });
-
-      setTimeout(() => {
-        logger.error("Shutdown gracioso excedeu o tempo limite. Forçando encerramento.");
-        process.exit(1);
-      }, 10000);
-    };
-
-    process.on("SIGTERM", () => encerrar("SIGTERM"));
-    process.on("SIGINT", () => encerrar("SIGINT"));
-    process.once("SIGUSR2", () => encerrar("SIGUSR2"));
-
+    server.on("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        logger.error(
+          `Porta ${config.port} ocupada. Encerre a outra instância ou altere PORT no .env.`,
+        );
+      } else {
+        logger.error("Erro no servidor HTTP.", { codigo: err.code });
+      }
+      void encerrar("ERRO_HTTP", 1);
+    });
   } catch (err) {
-    logger.error("Falha crítica ao iniciar o servidor:", { erro: err.message });
-    logger.error("Verifique as configurações do .env e se o banco de dados está acessível.");
-    process.exit(1);
+    logger.error("Falha ao iniciar o servidor.", { codigo: err.code });
+    if (err.code === "ER_ACCESS_DENIED_ERROR") {
+      logger.error(
+        "O banco recusou o acesso. Confira DB_USER e DB_PASSWORD no .env da raiz do Moeda Arena e a senha atual no provedor.",
+      );
+    } else {
+      logger.error(
+        "Verifique as configurações do .env, a disponibilidade e as permissões do banco de dados.",
+      );
+    }
+    await encerrar("FALHA_INICIALIZACAO", 1);
   }
 };
 
-iniciar();
+void iniciar();

@@ -1,14 +1,27 @@
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+} = require("@whiskeysockets/baileys");
 const qrcode = require("qrcode-terminal");
 const logger = require("../config/logger");
 const pino = require("pino");
+const path = require("path");
 
 let sock;
 let isReady = false;
+let encerrando = false;
+let iniciando = false;
+let reconnectTimer;
 
 const initWhatsApp = async () => {
+  if (encerrando || iniciando) return;
+  iniciando = true;
   try {
-    const { state, saveCreds } = await useMultiFileAuthState(".whatsapp_auth_baileys");
+    const { state, saveCreds } = await useMultiFileAuthState(
+      path.resolve(__dirname, "../../.whatsapp_auth_baileys"),
+    );
+    if (encerrando) return;
 
     sock = makeWASocket({
       auth: state,
@@ -16,22 +29,29 @@ const initWhatsApp = async () => {
       logger: pino({ level: "silent" }),
     });
 
-    sock.ev.on("creds.update", saveCreds);
+    sock.ev.on("creds.update", () => {
+      void saveCreds().catch((error) =>
+        logger.error("Falha ao salvar sessão do WhatsApp.", {
+          erro: error.message,
+        }),
+      );
+    });
 
     sock.ev.on("connection.update", (update) => {
+      if (encerrando) return;
       const { connection, lastDisconnect, qr } = update;
 
       if (qr) {
-        const url = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(qr)}`;
         logger.info("====================================================");
-        logger.info("📱 Escaneie o QR Code no terminal OU clique no link:");
-        logger.info(`👉 ${url} 👈`);
+        logger.info("📱 Escaneie o QR Code exibido neste terminal:");
         logger.info("====================================================");
         qrcode.generate(qr, { small: true });
       }
 
       if (connection === "close") {
-        const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+        const shouldReconnect =
+          lastDisconnect?.error?.output?.statusCode !==
+          DisconnectReason.loggedOut;
         isReady = false;
         logger.warn("WhatsApp desconectado", {
           reason: lastDisconnect?.error?.message,
@@ -40,7 +60,10 @@ const initWhatsApp = async () => {
 
         if (shouldReconnect) {
           logger.info("Reconectando ao WhatsApp...");
-          setTimeout(() => initWhatsApp(), 3000);
+          clearTimeout(reconnectTimer);
+          reconnectTimer = setTimeout(() => {
+            void initWhatsApp();
+          }, 3000);
         } else {
           logger.error(
             "WhatsApp deslogado pelo celular. Apague a pasta .whatsapp_auth_baileys e reinicie para gerar novo QR Code.",
@@ -48,19 +71,26 @@ const initWhatsApp = async () => {
         }
       } else if (connection === "open") {
         isReady = true;
-        logger.info("✅ WhatsApp Bot conectado (Baileys) e pronto para enviar mensagens!");
+        logger.info(
+          "✅ WhatsApp Bot conectado (Baileys) e pronto para enviar mensagens!",
+        );
       }
     });
   } catch (error) {
     logger.error("Falha crítica ao iniciar serviço de WhatsApp", {
       error: error.message,
     });
+  } finally {
+    iniciando = false;
   }
 };
 
 const enviarMensagem = async (telefone, mensagem) => {
   if (!isReady || !sock) {
-    logger.warn("Tentativa de envio de WhatsApp ignorada. Bot não está pronto.", { telefone });
+    logger.warn(
+      "Tentativa de envio de WhatsApp ignorada. Bot não está pronto.",
+      { telefone },
+    );
     return false;
   }
   if (!telefone) {
@@ -78,7 +108,9 @@ const enviarMensagem = async (telefone, mensagem) => {
 
     await sock.sendMessage(jid, { text: mensagem });
 
-    logger.info("Mensagem de WhatsApp enviada com sucesso.", { telefone: numeroLimpo });
+    logger.info("Mensagem de WhatsApp enviada com sucesso.", {
+      telefone: numeroLimpo,
+    });
     return true;
   } catch (error) {
     logger.error("Erro ao enviar mensagem no WhatsApp", {
@@ -90,6 +122,9 @@ const enviarMensagem = async (telefone, mensagem) => {
 };
 
 const stopWhatsApp = async () => {
+  encerrando = true;
+  isReady = false;
+  clearTimeout(reconnectTimer);
   if (sock) {
     logger.info("Encerrando cliente do WhatsApp (Baileys)...");
     try {

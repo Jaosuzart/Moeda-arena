@@ -17,19 +17,31 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 10000,
 });
 const testarConexao = async () => {
+  let conexao;
   try {
-    const conexao = await pool.getConnection();
+    conexao = await pool.getConnection();
     await conexao.query("SELECT 1");
     try {
-      await conexao.query("ALTER TABLE usuarios ADD COLUMN ativo_2fa BOOLEAN DEFAULT FALSE;");
-    } catch (e) {} // Ignora se já existir
+      await conexao.query(
+        "ALTER TABLE usuarios ADD COLUMN ativo_2fa BOOLEAN DEFAULT FALSE;",
+      );
+    } catch (e) {
+      if (e.code !== "ER_DUP_FIELDNAME") throw e;
+    }
     try {
-      await conexao.query("ALTER TABLE usuarios ADD COLUMN codigo_2fa VARCHAR(6) NULL;");
-    } catch (e) {}
+      await conexao.query(
+        "ALTER TABLE usuarios ADD COLUMN codigo_2fa VARCHAR(6) NULL;",
+      );
+    } catch (e) {
+      if (e.code !== "ER_DUP_FIELDNAME") throw e;
+    }
     try {
-      await conexao.query("ALTER TABLE usuarios ADD COLUMN codigo_2fa_expira DATETIME NULL;");
-    } catch (e) {}
-    conexao.release();
+      await conexao.query(
+        "ALTER TABLE usuarios ADD COLUMN codigo_2fa_expira DATETIME NULL;",
+      );
+    } catch (e) {
+      if (e.code !== "ER_DUP_FIELDNAME") throw e;
+    }
     logger.info("Conexão com o banco de dados estabelecida.", {
       host: config.db.host,
       database: config.db.database,
@@ -43,6 +55,8 @@ const testarConexao = async () => {
       codigo: err.code,
     });
     throw err;
+  } finally {
+    conexao?.release();
   }
 };
 const encerrarPool = async () => {
@@ -51,6 +65,7 @@ const encerrarPool = async () => {
     logger.info("Pool de conexões com o banco encerrado.");
   } catch (err) {
     logger.error("Erro ao encerrar pool de conexões:", { erro: err.message });
+    throw err;
   }
 };
 module.exports = { pool, testarConexao, encerrarPool };

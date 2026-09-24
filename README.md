@@ -1,4 +1,20 @@
 <h1 align="center">🪙 Moeda Arena — Plataforma de Moedas Virtuais</h1>
+
+## Manutenção local
+
+No Git Bash do Windows, entre na pasta com `cd "C:/Users/Cassio/moeda-arena"` e execute `npm run dev`.
+O terminal deve mostrar `moeda-arena@2.0.0` e iniciar `server.js`. Um nome diferente indica outra cópia do projeto.
+O `.env` é carregado da raiz do projeto; variáveis já definidas no ambiente têm prioridade.
+Após editar o `.env`, reinicie o processo. Não envie senhas para o Git.
+
+- `Access denied`: confira o usuário e a senha atuais do banco no provedor e em `DB_USER`/`DB_PASSWORD`.
+- Se a senha contiver `#`, coloque o valor completo entre aspas no `.env`.
+- Porta ocupada: encerre a outra instância ou escolha uma `PORT` livre. O servidor não encerra outros programas.
+- `PORT` e `DB_PORT` precisam ser inteiros de 1 a 65535; `DB_CONN_LIMIT` deve ser um inteiro positivo.
+- Execute `npm test` para verificar os casos de configuração, banco, encerramento e erros HTTP sem serviços externos.
+- Após alterar `src/frontend`, execute `npm run minify:js` para atualizar os arquivos usados pelo site.
+- As colunas legadas de 2FA ainda são verificadas na inicialização; erros de permissão agora interrompem o início em vez de serem ignorados.
+
 <p align="center">
   <em>
     Plataforma web desenvolvida com HTML5, CSS3, Bootstrap, JavaScript, Node.js e integrada ao Mercado Pago para gerenciamento e comercialização de moedas virtuais, planos e benefícios.

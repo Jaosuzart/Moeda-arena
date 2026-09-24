@@ -4,6 +4,7 @@
   "description": "Moeda Arena - Sistema com Mercado Pago, MVC, autenticação JWT e banco de dados",
   "main": "server.js",
   "scripts": {
+    "test": "node --test",
     "start": "node server.js",
     "dev": "nodemon --ignore public/ server.js",
     "minify:js": "esbuild src/frontend/main.js src/frontend/admin.js --bundle --minify --tree-shaking=true --target=es2020 --outdir=public --entry-names=[name].min",
