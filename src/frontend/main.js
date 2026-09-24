@@ -486,6 +486,11 @@ document.addEventListener("DOMContentLoaded", () => {
   DOM.registroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     esconderFeedback(DOM.registroFeedback);
+    const senha = document.getElementById("registroSenha").value;
+    if (senha.length < 8) {
+      mostrarFeedback(DOM.registroFeedback, "A senha deve ter pelo menos 8 caracteres.", false);
+      return;
+    }
     DOM.btnRegistro.disabled = true;
     DOM.btnRegistro.textContent = "Criando...";
     try {
@@ -1425,8 +1430,8 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarFeedback(DOM.resetFeedback, "As senhas não coincidem.", false);
         return;
       }
-      if (novaSenha.length < 6) {
-        mostrarFeedback(DOM.resetFeedback, "A senha deve ter pelo menos 6 caracteres.", false);
+      if (novaSenha.length < 8) {
+        mostrarFeedback(DOM.resetFeedback, "A senha deve ter pelo menos 8 caracteres.", false);
         return;
       }
       const btn = DOM.btnConfirmarReset;

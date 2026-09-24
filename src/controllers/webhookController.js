@@ -7,6 +7,7 @@ const pagamentoModel = require("../models/pagamentoModel");
 const whatsappService = require("../services/whatsappService");
 const emailService = require("../services/emailService");
 const cupomModel = require("../models/cupomModel");
+const planoModel = require("../models/planoModel");
 const { pool } = require("../models/db");
 
 const mpClient = new MercadoPagoConfig({ accessToken: config.mpAccessToken });
@@ -56,29 +57,32 @@ const processarNotificacao = async (req, res) => {
     return res.status(200).send("Ignorado");
   }
 
-  if (config.mpWebhookSecret) {
-    const signatureHeader = req.headers["x-signature"];
-    if (!signatureHeader) {
-      logger.warn("Webhook recusado: sem x-signature.");
-      return res.status(403).send("Missing signature");
-    }
+  if (!config.mpWebhookSecret) {
+    logger.error("Erro crítico: mpWebhookSecret não configurado no servidor.");
+    return res.status(500).send("Internal Server Error");
+  }
 
-    const parts = signatureHeader.split(",");
-    let ts = "";
-    let v1 = "";
-    parts.forEach((part) => {
-      const [key, value] = part.split("=");
-      if (key && key.trim() === "ts") ts = value;
-      if (key && key.trim() === "v1") v1 = value;
-    });
+  const signatureHeader = req.headers["x-signature"];
+  if (!signatureHeader) {
+    logger.warn("Webhook recusado: sem x-signature.");
+    return res.status(403).send("Missing signature");
+  }
 
-    const manifest = `id:${idPagamento};request-id:${req.headers["x-request-id"] || ""};ts:${ts};`;
-    const hash = crypto.createHmac("sha256", config.mpWebhookSecret).update(manifest).digest("hex");
+  const parts = signatureHeader.split(",");
+  let ts = "";
+  let v1 = "";
+  parts.forEach((part) => {
+    const [key, value] = part.split("=");
+    if (key && key.trim() === "ts") ts = value;
+    if (key && key.trim() === "v1") v1 = value;
+  });
 
-    if (hash !== v1) {
-      logger.warn("Assinatura do webhook inválida.", { signatureHeader });
-      return res.status(403).send("Invalid signature");
-    }
+  const manifest = `id:${idPagamento};request-id:${req.headers["x-request-id"] || ""};ts:${ts};`;
+  const hash = crypto.createHmac("sha256", config.mpWebhookSecret).update(manifest).digest("hex");
+
+  if (hash !== v1) {
+    logger.warn("Assinatura do webhook inválida.", { signatureHeader });
+    return res.status(403).send("Invalid signature");
   }
 
   try {
@@ -108,7 +112,14 @@ const processarNotificacao = async (req, res) => {
       return res.status(200).send("Referencia invalida");
     }
 
-    const { usuarioId, planoId, moedas, cupom } = referencia;
+    const { usuarioId, planoId, cupom } = referencia;
+
+    const plano = planoModel.obterPlanoPorId(planoId);
+    if (!plano) {
+      logger.error("Plano inválido fornecido no webhook.", { planoId });
+      return res.status(400).send("Plano invalido");
+    }
+    const moedas = plano.moedas;
     const creditado = await usuarioModel.adicionarMoedas(usuarioId, moedas);
 
     if (!creditado) {

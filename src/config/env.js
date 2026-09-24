@@ -57,5 +57,6 @@ const config = Object.freeze({
   whatsappUrl: process.env.WHATSAPP_URL || "",
   mpWebhookSecret: process.env.MP_WEBHOOK_SECRET || "",
   mixpanelToken: process.env.MIXPANEL_TOKEN || "",
+  adminEmail: process.env.ADMIN_EMAIL || "admin@moedaarena.com",
 });
 module.exports = config;

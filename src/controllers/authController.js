@@ -34,6 +34,10 @@ const registrar = async (req, res, next) => {
   try {
     const { nome, email, senha, telefone, convite } = req.body;
 
+    if (!senha || senha.length < 8) {
+      return erro(res, "A senha deve ter pelo menos 8 caracteres.", 400);
+    }
+
     let indicadoPor = null;
     if (convite) {
       const indicador = await usuarioModel.buscarPorCodigoConvite(convite);
@@ -126,6 +130,20 @@ const perfil = async (req, res, next) => {
   try {
     const usuario = await usuarioModel.buscarPorId(req.usuario.id);
     if (!usuario) return erro(res, "Usuário não encontrado.", 404, "USUARIO_NAO_ENCONTRADO");
+    
+    // Proteção de dados sensíveis (Mascaramento)
+    if (usuario.cpf) {
+      const d = usuario.cpf.replace(/\D/g, "");
+      if (d.length === 11) usuario.cpf = `${d.slice(0,3)}.***.***-${d.slice(-2)}`;
+      else usuario.cpf = "***";
+    }
+    if (usuario.chave_pix) {
+      usuario.chave_pix = usuario.chave_pix.length > 5 ? `${usuario.chave_pix.slice(0,3)}***` : "***";
+    }
+    if (usuario.cartao_final) {
+      usuario.cartao_final = `**** **** **** ${usuario.cartao_final.slice(-4)}`;
+    }
+
     return sucesso(res, { usuario: { ...usuario, isAdmin: usuario.email === config.adminEmail } });
   } catch (err) {
     next(err);
@@ -179,14 +197,22 @@ const atualizarPerfil = async (req, res, next) => {
 
     if (!nome || !nome.trim()) return erro(res, "O nome não pode ficar vazio.", 400);
 
-    await usuarioModel.atualizarPerfil(req.usuario.id, {
+    const updateData = {
       nome: nome.trim(),
-      cpf: cpf?.trim() || null,
       localidade: localidade?.trim() || null,
       telefone: telefone?.trim() || null,
-      chave_pix: chave_pix?.trim() || null,
-      cartao_final: cartao_final?.trim() || null,
-    });
+    };
+
+    if (cpf && !cpf.includes("*")) updateData.cpf = cpf.trim();
+    else updateData.cpf = usuarioDb.cpf;
+
+    if (chave_pix && !chave_pix.includes("*")) updateData.chave_pix = chave_pix.trim();
+    else updateData.chave_pix = usuarioDb.chave_pix;
+
+    if (cartao_final && !cartao_final.includes("*")) updateData.cartao_final = cartao_final.trim();
+    else updateData.cartao_final = usuarioDb.cartao_final;
+
+    await usuarioModel.atualizarPerfil(req.usuario.id, updateData);
 
     return sucesso(res, { mensagem: "Perfil salvo com sucesso!" });
   } catch (err) {
@@ -197,8 +223,8 @@ const atualizarPerfil = async (req, res, next) => {
 const definirSenha = async (req, res, next) => {
   try {
     const { novaSenha } = req.body;
-    if (!novaSenha || novaSenha.length < 6) {
-      return erro(res, "A senha deve ter pelo menos 6 caracteres.", 400);
+    if (!novaSenha || novaSenha.length < 8) {
+      return erro(res, "A senha deve ter pelo menos 8 caracteres.", 400);
     }
 
     const usuarioDb = await usuarioModel.buscarPorId(req.usuario.id);
@@ -267,7 +293,7 @@ const redefinirSenhaConfirmar = async (req, res, next) => {
   try {
     const { token, novaSenha } = req.body;
     if (!token || !novaSenha) return erro(res, "Moeda e nova senha são obrigatórios.", 400);
-    if (novaSenha.length < 6) return erro(res, "A nova senha deve ter pelo menos 6 caracteres.", 400);
+    if (novaSenha.length < 8) return erro(res, "A nova senha deve ter pelo menos 8 caracteres.", 400);
 
     const usuario = await usuarioModel.buscarPorTokenResetSenha(token);
     if (!usuario) return erro(res, "Link inválido ou já utilizado.", 400, "TOKEN_INVALIDO");
@@ -287,7 +313,11 @@ const redefinirSenhaConfirmar = async (req, res, next) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   return sucesso(res, { mensagem: "Logout realizado com sucesso." });
 };
 

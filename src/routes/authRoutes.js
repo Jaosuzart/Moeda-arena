@@ -4,8 +4,16 @@ const authController = require("../controllers/authController");
 const { autenticar } = require("../middlewares/auth");
 const { validarRegistro, validarLogin } = require("../middlewares/validators");
 const config = require("../config/env");
-router.post("/registrar", validarRegistro, authController.registrar);
-router.post("/login", validarLogin, authController.login);
+const rateLimit = require("express-rate-limit");
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { sucesso: false, erro: "Muitas tentativas. Tente novamente mais tarde.", codigo: "RATE_LIMIT_EXCEDIDO" },
+});
+
+router.post("/registrar", authLimiter, validarRegistro, authController.registrar);
+router.post("/login", authLimiter, validarLogin, authController.login);
 router.post("/google", authController.loginGoogle);
 router.post("/logout", authController.logout);
 router.get("/config", (req, res) => {
