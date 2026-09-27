@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "moeda-serena-web",
+  "name": "moeda-arena",
   "compatibility_date": "2026-09-27",
   "assets": {
     "directory": "./public"
