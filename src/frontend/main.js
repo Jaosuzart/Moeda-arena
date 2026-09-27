@@ -1,7 +1,14 @@
-import { initAnalytics, trackEvent } from './modules/analytics.js';
-import { fetchAutenticado } from './modules/api.js';
-import { mostrarFeedback, esconderFeedback, abrirModal, fecharModal, setCarregando, applyMask, formatBRL } from './modules/ui.js';
-
+import { initAnalytics, trackEvent } from "./modules/analytics.js";
+import { fetchAutenticado } from "./modules/api.js";
+import {
+  mostrarFeedback,
+  esconderFeedback,
+  abrirModal,
+  fecharModal,
+  setCarregando,
+  applyMask,
+  formatBRL,
+} from "./modules/ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const DOM = {
@@ -163,7 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
   applyMask(DOM.perfilTelefone, "tel");
   applyMask(DOM.registroTelefone, "tel");
 
-
   async function carregar2faStatus() {
     if (!DOM.badge2fa || !DOM.btnToggle2fa) return;
     try {
@@ -283,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function logout() {
     try {
       await fetchAutenticado("/api/auth/logout", { method: "POST" });
-    } catch (e) { }
+    } catch (e) {}
     estado.usuario = null;
     atualizarNavbar();
   }
@@ -642,7 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
           google.accounts.id.prompt();
         }
       }
-    } catch (err) { }
+    } catch (err) {}
   }
   DOM.navAvatar.addEventListener("click", async () => {
     if (DOM.tabDados) DOM.tabDados.click();
@@ -693,16 +699,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 },
-                    colors: ['#00e5ff', '#f59e0b', '#ffffff']
+                    colors: ["#00e5ff", "#f59e0b", "#ffffff"],
                   });
                 }
                 Swal.fire({
                   toast: true,
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Link copiado!',
+                  position: "top-end",
+                  icon: "success",
+                  title: "Link copiado!",
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 1500,
                 });
               });
             }
@@ -722,7 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         DOM.perfilCartao.value = u.cartao_final || "";
       }
-    } catch (e) { }
+    } catch (e) {}
   });
   DOM.btnFecharPerfil.addEventListener("click", () => {
     fecharModal(DOM.perfilModal);
@@ -889,7 +895,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (plano.isGratis) {
       priceEl.textContent = "Grátis";
     } else {
-      const valor = isAnual ? (plano.precoAnual / 100) : (plano.precoMensal / 100);
+      const valor = isAnual ? plano.precoAnual / 100 : plano.precoMensal / 100;
       priceEl.textContent = formatBRL(valor);
     }
     priceWrapper.appendChild(priceEl);
@@ -943,10 +949,10 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.forEach((card) => {
       const planId = card.getAttribute("data-tier");
       if (planId === "gratis") return;
-      let plano = estado.planos.find(p => p.id === planId);
-      let basePrice = plano ? plano.precoMensal : (planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000);
-      let annualPrice = plano ? plano.precoAnual : (planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500);
-      let price = isAnual ? (annualPrice / 100) : (basePrice / 100);
+      let plano = estado.planos.find((p) => p.id === planId);
+      let basePrice = plano ? plano.precoMensal : planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000;
+      let annualPrice = plano ? plano.precoAnual : planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500;
+      let price = isAnual ? annualPrice / 100 : basePrice / 100;
       let period = isAnual ? "/vitalício" : "/mês";
       const priceEl = card.querySelector(".plan-card-price");
       const periodEl = card.querySelector(".plan-card-price-period");
@@ -1239,7 +1245,7 @@ document.addEventListener("DOMContentLoaded", () => {
           DOM.rankingTableBody.appendChild(tr);
         });
       }
-    } catch (e) { }
+    } catch (e) {}
   }
   const abrirRank = () => {
     carregarRanking();
@@ -1324,7 +1330,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
       }
-    } catch (e) { }
+    } catch (e) {}
   }
   if (DOM.btnAdminPanel)
     DOM.btnAdminPanel.addEventListener("click", () => {
@@ -1464,64 +1470,71 @@ document.addEventListener("DOMContentLoaded", () => {
   async function carregarEstatisticas() {
     try {
       const res = await fetch("/api/estatisticas");
+      if (!res.ok) {
+        throw new Error(`API de estatísticas respondeu HTTP ${res.status}`);
+      }
       const data = await res.json();
-      if (data.sucesso && data.dados) {
-        const stats = data.dados;
-        if (DOM.statsTotalUsuarios)
-          DOM.statsTotalUsuarios.textContent = (stats.totalUsuarios || 0).toLocaleString("pt-BR");
-        if (DOM.statsTotalMoedas) DOM.statsTotalMoedas.textContent = (stats.totalTokens || 0).toLocaleString("pt-BR");
-        if (DOM.recentSalesList) {
-          DOM.recentSalesList.textContent = "";
-          if (stats.ultimasVendas.length === 0) {
-            const liVazio = document.createElement("li");
-            liVazio.textContent = "Nenhuma atividade registrada ainda.";
-            DOM.recentSalesList.appendChild(liVazio);
-            return;
-          }
-          stats.ultimasVendas.slice(0, 5).forEach((venda) => {
-            const li = document.createElement("li");
-            const dataVenda = new Date(venda.data).toLocaleDateString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-            const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + "***" : venda.nome + "***";
+      if (!data?.sucesso || !data?.dados) {
+        throw new Error("Resposta inválida da API de estatísticas");
+      }
 
-            const spanMain = document.createElement("span");
-            spanMain.appendChild(document.createTextNode("Jogador "));
-
-            const strongNome = document.createElement("strong");
-            strongNome.textContent = nomeFormatado;
-            spanMain.appendChild(strongNome);
-
-            spanMain.appendChild(document.createTextNode(" adquiriu o "));
-
-            const spanPlan = document.createElement("span");
-            spanPlan.className = "sale-plan";
-            spanPlan.textContent = venda.plano_id.toUpperCase();
-            spanMain.appendChild(spanPlan);
-
-            spanMain.appendChild(document.createTextNode(` (+${(venda.moedas || 0).toLocaleString("pt-BR")} Moedas)`));
-
-            const spanTime = document.createElement("span");
-            spanTime.className = "sale-time";
-            spanTime.textContent = dataVenda;
-
-            li.appendChild(spanMain);
-            li.appendChild(spanTime);
-
-            DOM.recentSalesList.appendChild(li);
-          });
+      const stats = data.dados;
+      const ultimasVendas = Array.isArray(stats.ultimasVendas) ? stats.ultimasVendas : [];
+      if (DOM.statsTotalUsuarios)
+        DOM.statsTotalUsuarios.textContent = (Number(stats.totalUsuarios) || 0).toLocaleString("pt-BR");
+      if (DOM.statsTotalMoedas)
+        DOM.statsTotalMoedas.textContent = (Number(stats.totalTokens) || 0).toLocaleString("pt-BR");
+      if (DOM.recentSalesList) {
+        DOM.recentSalesList.textContent = "";
+        if (ultimasVendas.length === 0) {
+          const liVazio = document.createElement("li");
+          liVazio.textContent = "Nenhuma atividade registrada ainda.";
+          DOM.recentSalesList.appendChild(liVazio);
+          return;
         }
+        ultimasVendas.slice(0, 5).forEach((venda) => {
+          const li = document.createElement("li");
+          const dataVenda = new Date(venda.data).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          const nomeFormatado = venda.nome.length > 4 ? venda.nome.substring(0, 4) + "***" : venda.nome + "***";
+
+          const spanMain = document.createElement("span");
+          spanMain.appendChild(document.createTextNode("Jogador "));
+
+          const strongNome = document.createElement("strong");
+          strongNome.textContent = nomeFormatado;
+          spanMain.appendChild(strongNome);
+
+          spanMain.appendChild(document.createTextNode(" adquiriu o "));
+
+          const spanPlan = document.createElement("span");
+          spanPlan.className = "sale-plan";
+          spanPlan.textContent = venda.plano_id.toUpperCase();
+          spanMain.appendChild(spanPlan);
+
+          spanMain.appendChild(document.createTextNode(` (+${(venda.moedas || 0).toLocaleString("pt-BR")} Moedas)`));
+
+          const spanTime = document.createElement("span");
+          spanTime.className = "sale-time";
+          spanTime.textContent = dataVenda;
+
+          li.appendChild(spanMain);
+          li.appendChild(spanTime);
+
+          DOM.recentSalesList.appendChild(li);
+        });
       }
     } catch (e) {
+      console.warn("Não foi possível carregar as estatísticas da arena.", e);
       if (DOM.recentSalesList) {
-        const liErro = document.createElement("li");
-        liErro.style.justifyContent = "center";
-        liErro.style.color = "#ef4444";
-        liErro.textContent = "Erro ao carregar atividades recentes.";
-        DOM.recentSalesList.replaceChildren(liErro);
+        const liIndisponivel = document.createElement("li");
+        liIndisponivel.style.justifyContent = "center";
+        liIndisponivel.textContent = "Atividades recentes temporariamente indisponíveis.";
+        DOM.recentSalesList.replaceChildren(liIndisponivel);
       }
     }
   }
