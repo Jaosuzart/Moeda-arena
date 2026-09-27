@@ -1,71 +1,81 @@
 const mysql = require("mysql2/promise");
 const config = require("../config/env");
 const logger = require("../config/logger");
+
 const pool = mysql.createPool({
   host: config.db.host,
   port: config.db.port,
   user: config.db.user,
   password: config.db.password,
   database: config.db.database,
+
   ssl: {
     rejectUnauthorized: false,
   },
+
   waitForConnections: true,
   connectionLimit: config.db.connectionLimit,
   queueLimit: 0,
+
   enableKeepAlive: true,
   keepAliveInitialDelay: 10000,
 });
+
 const testarConexao = async () => {
   let conexao;
+
   try {
     conexao = await pool.getConnection();
+
     await conexao.query("SELECT 1");
-    try {
-      await conexao.query(
-        "ALTER TABLE usuarios ADD COLUMN ativo_2fa BOOLEAN DEFAULT FALSE;",
-      );
-    } catch (e) {
-      if (e.code !== "ER_DUP_FIELDNAME") throw e;
-    }
-    try {
-      await conexao.query(
-        "ALTER TABLE usuarios ADD COLUMN codigo_2fa VARCHAR(6) NULL;",
-      );
-    } catch (e) {
-      if (e.code !== "ER_DUP_FIELDNAME") throw e;
-    }
-    try {
-      await conexao.query(
-        "ALTER TABLE usuarios ADD COLUMN codigo_2fa_expira DATETIME NULL;",
-      );
-    } catch (e) {
-      if (e.code !== "ER_DUP_FIELDNAME") throw e;
-    }
-    logger.info("Conexão com o banco de dados estabelecida.", {
-      host: config.db.host,
-      database: config.db.database,
-    });
+
+    logger.info(
+      "Conexão com o banco de dados estabelecida.",
+      {
+        host: config.db.host,
+        database: config.db.database,
+      },
+    );
+
     return true;
   } catch (err) {
-    logger.error("Falha ao conectar com o banco de dados.", {
-      host: config.db.host,
-      database: config.db.database,
-      erro: err.message,
-      codigo: err.code,
-    });
+    logger.error(
+      "Falha ao conectar com o banco de dados.",
+      {
+        host: config.db.host,
+        database: config.db.database,
+        erro: err.message,
+        codigo: err.code,
+      },
+    );
+
     throw err;
   } finally {
     conexao?.release();
   }
 };
+
 const encerrarPool = async () => {
   try {
     await pool.end();
-    logger.info("Pool de conexões com o banco encerrado.");
+
+    logger.info(
+      "Pool de conexões com o banco encerrado.",
+    );
   } catch (err) {
-    logger.error("Erro ao encerrar pool de conexões:", { erro: err.message });
+    logger.error(
+      "Erro ao encerrar pool de conexões:",
+      {
+        erro: err.message,
+      },
+    );
+
     throw err;
   }
 };
-module.exports = { pool, testarConexao, encerrarPool };
+
+module.exports = {
+  pool,
+  testarConexao,
+  encerrarPool,
+};
