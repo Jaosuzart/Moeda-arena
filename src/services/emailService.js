@@ -14,11 +14,19 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS || process.env.EMAIL_PASS,
   },
   tls: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: config.smtpRejectUnauthorized,
   },
 });
 
 const BASE_URL = config.corsOrigin;
+
+const escapeHtml = (value) =>
+  String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 
 const enviarEmail = async (para, assunto, html) => {
   try {
@@ -46,8 +54,9 @@ const layoutBase = (conteudo) => `
 
 const enviarEmailVerificacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/api/auth/verificar-email?token=${token}`;
+  const nomeSeguro = escapeHtml(nome);
   const html = layoutBase(`
-    <h2 style="color:#f59e0b;text-align:center;">🎮 Bem-vindo(a), ${nome}!</h2>
+    <h2 style="color:#f59e0b;text-align:center;">🎮 Bem-vindo(a), ${nomeSeguro}!</h2>
     <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
     <p>Falta só confirmar seu e-mail para acessar suas Moedas e o Ranking.</p>
     <div style="text-align:center;margin:25px 0;">
@@ -60,10 +69,11 @@ const enviarEmailVerificacao = (paraEmail, nome, token) => {
 
 const enviarEmailRecuperacao = (paraEmail, nome, token) => {
   const link = `${BASE_URL}/?resetToken=${token}`;
+  const nomeSeguro = escapeHtml(nome);
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🔑 Recuperação de Senha</h2>
     <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
-    <p>Olá, ${nome}. Recebemos um pedido de redefinição de senha.</p>
+    <p>Olá, ${nomeSeguro}. Recebemos um pedido de redefinição de senha.</p>
     <div style="text-align:center;margin:25px 0;">
       <a href="${link}" style="background:#f59e0b;color:#000;padding:14px 28px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:16px;">Redefinir Minha Senha</a>
     </div>
@@ -73,10 +83,11 @@ const enviarEmailRecuperacao = (paraEmail, nome, token) => {
 };
 
 const enviarEmailRecibo = (paraEmail, nome, valor, moedas) => {
+  const nomeSeguro = escapeHtml(nome);
   const html = layoutBase(`
     <h2 style="color:#10b981;text-align:center;">✅ Pagamento Aprovado!</h2>
     <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
-    <p>Olá, <strong>${nome}</strong>! Seu pagamento foi processado com sucesso.</p>
+    <p>Olá, <strong>${nomeSeguro}</strong>! Seu pagamento foi processado com sucesso.</p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
       <h3 style="color:#f59e0b;margin:0;">+${moedas} TOKENS</h3>
       <p style="color:#94a3b8;margin:5px 0 0;">Valor pago: R$ ${valor}</p>
@@ -90,25 +101,29 @@ const enviarEmailRecibo = (paraEmail, nome, valor, moedas) => {
 
 const enviarEmailContato = (nome, emailCliente, mensagem) => {
   const adminEmail = process.env.EMAIL_USER || process.env.SMTP_USER || "suporte@moedaarena.com.br";
+  const nomeSeguro = escapeHtml(nome);
+  const emailSeguro = escapeHtml(emailCliente);
+  const mensagemSegura = escapeHtml(mensagem);
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">✉️ Nova Mensagem de Contato</h2>
-    <p><strong>Nome:</strong> ${nome}</p>
-    <p><strong>E-mail do Cliente:</strong> <a href="mailto:${emailCliente}" style="color:#60a5fa;">${emailCliente}</a></p>
+    <p><strong>Nome:</strong> ${nomeSeguro}</p>
+    <p><strong>E-mail do Cliente:</strong> <a href="mailto:${emailSeguro}" style="color:#60a5fa;">${emailSeguro}</a></p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;margin:20px 0;">
-      <p style="white-space: pre-wrap; margin:0;">${mensagem}</p>
+      <p style="white-space: pre-wrap; margin:0;">${mensagemSegura}</p>
     </div>
     <div style="text-align:center;">
-      <a href="mailto:${emailCliente}" style="background:#f59e0b;color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:14px;">Responder ao Cliente</a>
+      <a href="mailto:${emailSeguro}" style="background:#f59e0b;color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;border-radius:8px;font-size:14px;">Responder ao Cliente</a>
     </div>
   `);
-  return enviarEmail(adminEmail, `Contato: ${nome} - Moeda Arena`, html);
+  return enviarEmail(adminEmail, `Contato: ${String(nome).replace(/[\r\n]/g, " ")} - Moeda Arena`, html);
 };
 
 const enviarEmail2FA = (paraEmail, nome, codigo) => {
+  const nomeSeguro = escapeHtml(nome);
   const html = layoutBase(`
     <h2 style="color:#f59e0b;text-align:center;">🔐 Código de Segurança</h2>
     <p style="text-align:center; margin-top: 10px; font-weight: bold;">olá,seja bem-vindo ao email pf que eu uso do umbler pf</p>
-    <p>Olá, ${nome}. Você solicitou acesso à sua conta.</p>
+    <p>Olá, ${nomeSeguro}. Você solicitou acesso à sua conta.</p>
     <div style="background:#1e293b;padding:20px;border-radius:8px;text-align:center;margin:20px 0;">
       <h3 style="color:#f59e0b;margin:0;font-size:32px;letter-spacing:5px;">${codigo}</h3>
     </div>

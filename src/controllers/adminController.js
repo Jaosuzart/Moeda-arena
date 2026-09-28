@@ -3,7 +3,7 @@ const { sucesso, erro } = require("../helpers/apiResponse");
 const config = require("../config/env");
 
 const isAdmin = (req, res, next) => {
-  if (!req.usuario || req.usuario.email !== config.adminEmail) {
+  if (!req.usuario || req.usuario.email !== config.adminEmail || !req.usuario.emailVerificado) {
     return erro(res, "Acesso negado. Apenas administradores.", 403, "FORBIDDEN");
   }
   next();

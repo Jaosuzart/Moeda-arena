@@ -1,9 +1,10 @@
 const usuarioModel = require("../models/usuarioModel");
 const { sucesso, erro } = require("../helpers/apiResponse");
 const config = require("../config/env");
+const { timingSafeTextEqual } = require("../helpers/security");
 const validarApiKey = (req, res, next) => {
-  const apiKey = req.headers["x-api-key"] || req.query.api_key;
-  if (!apiKey || apiKey !== config.apiGameSecret) {
+  const apiKey = req.headers["x-api-key"];
+  if (!apiKey || !timingSafeTextEqual(apiKey, config.apiGameSecret)) {
     return erro(res, "Acesso negado. Chave da API inválida ou ausente.", 401, "UNAUTHORIZED_GAME_API");
   }
   next();
@@ -51,7 +52,8 @@ const consumirMoedas = async (req, res, next) => {
 };
 const getRanking = async (req, res, next) => {
   try {
-    const limite = req.query.limite ? parseInt(req.query.limite) : 10;
+    const solicitado = Number.parseInt(req.query.limite, 10);
+    const limite = Number.isInteger(solicitado) ? Math.min(Math.max(solicitado, 1), 100) : 10;
     const ranking = await usuarioModel.buscarRanking(limite);
     return sucesso(res, ranking);
   } catch (err) {

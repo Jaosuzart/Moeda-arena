@@ -2,6 +2,7 @@ const { pool } = require("./db");
 const logger = require("../config/logger");
 const crypto = require("crypto");
 const { encrypt, decrypt } = require("../helpers/crypto");
+const { hashResetToken } = require("../helpers/security");
 
 const criarUsuario = async (
   nome,
@@ -10,16 +11,17 @@ const criarUsuario = async (
   telefone = null,
   indicadoPor = null,
   hasPassword = true,
+  emailVerificado = false,
 ) => {
   try {
-    const tokenVerificacao = crypto.randomBytes(32).toString("hex");
+    const tokenVerificacao = emailVerificado ? null : crypto.randomBytes(32).toString("hex");
 
     const codigoConvite =
       nome.replace(/\s+/g, "").substring(0, 5).toUpperCase() +
-      Math.floor(Math.random() * 100000);
+      crypto.randomInt(0, 100000).toString().padStart(5, "0");
 
     const sql =
-      "INSERT INTO usuarios (nome, email, senha_hash, telefone, token_verificacao, has_password, codigo_convite, indicado_por) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO usuarios (nome, email, senha_hash, telefone, token_verificacao, email_verificado, has_password, codigo_convite, indicado_por) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     const [resultado] = await pool.query(sql, [
       nome,
@@ -27,6 +29,7 @@ const criarUsuario = async (
       senhaHash,
       encrypt(telefone),
       tokenVerificacao,
+      emailVerificado ? 1 : 0,
       hasPassword,
       codigoConvite,
       indicadoPor,
@@ -42,6 +45,8 @@ const criarUsuario = async (
       nome,
       email,
       saldo_moedas: 100,
+      email_verificado: emailVerificado ? 1 : 0,
+      has_password: hasPassword,
       token_verificacao: tokenVerificacao,
     };
   } catch (err) {
@@ -88,6 +93,13 @@ const buscarPorId = async (id) => {
   const [rows] = await pool.query(sql, [id]);
 
   return decryptSensitiveFields(rows[0]) || null;
+};
+
+const buscarAutenticacaoPorId = async (id) => {
+  const sql =
+    "SELECT id, nome, email, senha_hash, status, email_verificado, has_password, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
+  const [rows] = await pool.query(sql, [id]);
+  return rows[0] || null;
 };
 
 const buscarPorTokenVerificacao = async (token) => {
@@ -311,7 +323,7 @@ const salvarTokenResetSenha = async (
     "UPDATE usuarios SET reset_senha_token = ?, reset_senha_expira = ? WHERE id = ?";
 
   const [resultado] = await pool.query(sql, [
-    token,
+    hashResetToken(token),
     expira,
     usuarioId,
   ]);
@@ -326,7 +338,7 @@ const buscarPorTokenResetSenha = async (
     "SELECT id, nome, email, reset_senha_expira FROM usuarios WHERE reset_senha_token = ?";
 
   const [rows] = await pool.query(sql, [
-    token,
+    hashResetToken(token),
   ]);
 
   return rows[0] || null;
@@ -438,6 +450,7 @@ module.exports = {
   criarUsuario,
   buscarPorEmail,
   buscarPorId,
+  buscarAutenticacaoPorId,
   buscarPorCodigoConvite,
   adicionarMoedas,
   debitarMoedas,

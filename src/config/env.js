@@ -48,6 +48,8 @@ const config = Object.freeze({
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME,
     connectionLimit: inteiroPositivo("DB_CONN_LIMIT", 10),
+    rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false",
+    caFile: process.env.DB_SSL_CA_FILE || "",
   }),
   corsOrigin: process.env.CORS_ORIGIN || "http://localhost:3001",
   jwtSecret: process.env.JWT_SECRET,
@@ -57,6 +59,8 @@ const config = Object.freeze({
   whatsappUrl: process.env.WHATSAPP_URL || "",
   mpWebhookSecret: process.env.MP_WEBHOOK_SECRET || "",
   mixpanelToken: process.env.MIXPANEL_TOKEN || "",
-  adminEmail: process.env.ADMIN_EMAIL || "admin@moedaarena.com",
+  adminEmail: process.env.ADMIN_EMAIL?.trim().toLowerCase() || null,
+  trustProxy: process.env.TRUST_PROXY === "1" ? 1 : false,
+  smtpRejectUnauthorized: process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== "false",
 });
 module.exports = config;

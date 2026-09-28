@@ -1,6 +1,12 @@
 const mysql = require("mysql2/promise");
+const fs = require("fs");
+const path = require("path");
 const config = require("../config/env");
 const logger = require("../config/logger");
+
+const dbCa = config.db.caFile
+  ? fs.readFileSync(path.resolve(__dirname, "../..", config.db.caFile), "utf8")
+  : undefined;
 
 const pool = mysql.createPool({
   host: config.db.host,
@@ -10,7 +16,8 @@ const pool = mysql.createPool({
   database: config.db.database,
 
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: config.db.rejectUnauthorized,
+    ...(dbCa ? { ca: dbCa } : {}),
   },
 
   waitForConnections: true,

@@ -8,9 +8,9 @@ const router = express.Router();
 router.post(
   "/contato",
   [
-    body("nome").trim().notEmpty().withMessage("Nome é obrigatório."),
+    body("nome").trim().notEmpty().isLength({ max: 100 }).withMessage("Nome inválido."),
     body("email").isEmail().withMessage("E-mail inválido."),
-    body("mensagem").trim().notEmpty().withMessage("Mensagem é obrigatória."),
+    body("mensagem").trim().notEmpty().isLength({ max: 5000 }).withMessage("Mensagem inválida."),
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -40,9 +40,7 @@ router.get("/whatsapp", (req, res) => {
   
   const mensagemCodificada = encodeURIComponent(mensagem);
   const linkWhatsApp = `https://wa.me/${telefone}?text=${mensagemCodificada}`;
-  
-  // Realiza o redirecionamento invisível no backend, protegendo o número
-  res.redirect(linkWhatsApp);
+    res.redirect(linkWhatsApp);
 });
 
 module.exports = router;

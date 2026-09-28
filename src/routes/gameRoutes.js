@@ -25,9 +25,9 @@ router.post(
   "/stats",
   [
     body("email").isEmail().withMessage("Um e-mail válido é obrigatório."),
-    body("trofeus").optional().isInt(),
-    body("vitorias").optional().isInt(),
-    body("xp").optional().isInt(),
+    body("trofeus").optional().isInt({ min: 0, max: 1000000 }),
+    body("vitorias").optional().isInt({ min: 0, max: 1000000 }),
+    body("xp").optional().isInt({ min: 0, max: 1000000 }),
   ],
   tratarErrosValidacao,
   gameController.validarApiKey,

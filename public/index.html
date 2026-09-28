@@ -751,8 +751,8 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="registroSenha">Senha</label>
-            <input class="form-input" type="password" id="registroSenha" name="senha" placeholder="Mínimo 6 caracteres"
-              required minlength="6" autocomplete="new-password" aria-required="true" />
+            <input class="form-input" type="password" id="registroSenha" name="senha" placeholder="Mínimo 8 caracteres"
+              required minlength="8" maxlength="72" autocomplete="new-password" aria-required="true" />
           </div>
           <div id="registroFeedback" class="alert-feedback" role="alert" aria-live="assertive"></div>
           <button type="submit" class="btn-gamer btn-gamer-success w-full mt-4" id="btnRegistro">Criar Conta</button>
@@ -863,9 +863,10 @@
           Enviamos um código de 6 dígitos para o seu e-mail. Por favor, insira-o abaixo para continuar.
         </p>
         <form id="verify2faForm">
-          <input type="hidden" id="verify2faUserId" />
+          <input type="hidden" id="verify2faChallenge" />
           <div class="form-group" style="text-align: center">
-            <input type="text" id="verify2faCode" class="form-input" required maxlength="6"
+            <input type="text" id="verify2faCode" class="form-input" required minlength="6" maxlength="6"
+              inputmode="numeric" pattern="[0-9]{6}"
               style="text-align: center; font-size: 24px; letter-spacing: 10px; font-weight: bold" placeholder="000000"
               autocomplete="off" />
           </div>
@@ -981,6 +982,11 @@
               </div>
               <div class="security-2fa-status" id="status2fa">
                 <span class="badge-status inativo" id="badge2fa">Desativada</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="senha2faConfirmacao">Confirme sua senha</label>
+                <input class="form-input" type="password" id="senha2faConfirmacao" maxlength="72"
+                  autocomplete="current-password" placeholder="Sua senha atual" />
               </div>
               <button type="button" class="btn-gamer btn-gamer-primary w-full" id="btnToggle2fa">
                 Ativar Autenticação 2FA

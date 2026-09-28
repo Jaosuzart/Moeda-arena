@@ -105,16 +105,12 @@ test("erros HTTP preservam 400/413, ocultam falhas internas e delegam respostas 
   );
 });
 
-test("banco libera a conexão em falhas e só ignora colunas já existentes", async () => {
-  for (const code of [
-    "ER_DUP_FIELDNAME",
-    "ER_TABLEACCESS_DENIED_ERROR",
-    "SELECT_FAILED",
-  ]) {
+test("banco libera a conexão tanto no sucesso quanto em falhas", async () => {
+  for (const code of [null, "ER_TABLEACCESS_DENIED_ERROR", "SELECT_FAILED"]) {
     let released = 0;
     const connection = {
       async query(sql) {
-        if (sql !== "SELECT 1" || code === "SELECT_FAILED")
+        if (sql !== "SELECT 1" || code)
           throw Object.assign(new Error("simulada"), { code });
       },
       release() {
@@ -122,13 +118,15 @@ test("banco libera a conexão em falhas e só ignora colunas já existentes", as
       },
     };
     const db = load("src/models/db.js", {
+      fs,
+      path,
       "mysql2/promise": {
         createPool: () => ({ getConnection: async () => connection }),
       },
       "../config/env": { db: {} },
       "../config/logger": logger,
     });
-    if (code === "ER_DUP_FIELDNAME")
+    if (code === null)
       assert.equal(await db.testarConexao(), true);
     else await assert.rejects(db.testarConexao(), { code });
     assert.equal(released, 1);
@@ -237,4 +235,70 @@ test("WhatsApp cancela reconexão ao encerrar e não gera URL externa para QR", 
   assert.equal(timers.size, 0);
   await service.initWhatsApp();
   assert.equal(sockets, 1);
+});
+
+test("plano grátis registra idempotência antes de creditar moedas", async () => {
+  const calls = [];
+  const connection = {
+    async beginTransaction() {
+      calls.push("begin");
+    },
+    async query(sql, values) {
+      calls.push({ sql, values });
+      return [{ affectedRows: 1 }];
+    },
+    async commit() {
+      calls.push("commit");
+    },
+    async rollback() {
+      calls.push("rollback");
+    },
+    release() {
+      calls.push("release");
+    },
+  };
+  const controller = load("src/controllers/compraController.js", {
+    "../models/planoModel": {
+      obterPlanoPorId: () => ({ id: "gratis", nome: "Grátis", moedas: 100, isGratis: true }),
+    },
+    "../models/usuarioModel": {
+      adicionarMoedas() {
+        throw new Error("crédito não pode ocorrer fora da transação");
+      },
+    },
+    "../models/cupomModel": {},
+    mercadopago: { MercadoPagoConfig: class {}, Preference: class {} },
+    crypto: require("crypto"),
+    "../config/env": { mpAccessToken: "test" },
+    "../config/logger": logger,
+    "../helpers/apiResponse": {
+      sucesso(_res, dados, status = 200) {
+        return { status, dados };
+      },
+      erro(_res, mensagem, status = 400, codigo) {
+        return { status, mensagem, codigo };
+      },
+    },
+    "../models/pagamentoModel": {
+      async registrarPagamento(paymentId, usuarioId, _planoId, _moedas, _valor, _status, executor) {
+        calls.push({ paymentId, usuarioId, executor });
+      },
+    },
+    "../models/db": { pool: { getConnection: async () => connection } },
+    "../helpers/security": { signPaymentReference() {} },
+  });
+
+  const response = await controller.processarCompra(
+    { body: { planoId: "gratis", isGratis: true }, usuario: { id: 7 } },
+    {},
+    (err) => {
+      throw err;
+    },
+  );
+
+  assert.equal(response.status, 201);
+  assert.ok(calls.some((call) => call.paymentId === "gratis:7"));
+  assert.ok(calls.includes("commit"));
+  assert.ok(calls.includes("release"));
+  assert.ok(!calls.includes("rollback"));
 });

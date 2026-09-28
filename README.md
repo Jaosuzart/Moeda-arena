@@ -13,7 +13,8 @@ Após editar o `.env`, reinicie o processo. Não envie senhas para o Git.
 - `PORT` e `DB_PORT` precisam ser inteiros de 1 a 65535; `DB_CONN_LIMIT` deve ser um inteiro positivo.
 - Execute `npm test` para verificar os casos de configuração, banco, encerramento e erros HTTP sem serviços externos.
 - Após alterar `src/frontend`, execute `npm run minify:js` para atualizar os arquivos usados pelo site.
-- As colunas legadas de 2FA ainda são verificadas na inicialização; erros de permissão agora interrompem o início em vez de serem ignorados.
+- Em produção, use `NODE_ENV=production`, `TRUST_PROXY=1` quando houver exatamente um proxy reverso e mantenha a validação TLS habilitada.
+- Alterações de senha revogam automaticamente as sessões JWT anteriores. Códigos 2FA e tokens de recuperação não são armazenados em texto puro.
 
 <p align="center">
   <em>
@@ -68,12 +69,12 @@ Quando o usuário realiza uma compra, o sistema:
 6. Gera o checkout do Mercado Pago;
 7. Redireciona o usuário para realizar o pagamento.
 
-A compra possui uma referência externa (`external_reference`) utilizada para relacionar o pagamento ao usuário e aos dados da compra.
+A compra possui uma referência externa (`external_reference`) assinada pelo servidor. Ela relaciona pagamento, usuário, plano, moeda e valor esperado sem confiar em dados enviados pelo navegador.
 ### 🔔 Webhook
 Após o pagamento, o Mercado Pago envia uma notificação para a API através do endpoint:
 
 ```text
-/api/webhook
+/api/webhook/mercadopago
 ```
 
 A aplicação então consulta a transação diretamente na API do Mercado Pago e verifica o status real do pagamento.
@@ -85,8 +86,8 @@ Quando o pagamento é aprovado:
 * O uso do cupom é atualizado, quando aplicável.
 ### 🛡️ Proteção contra duplicidade
 O sistema também possui controle de **idempotência**.
-Antes de processar uma transação, o `payment_id` é consultado na tabela de pagamentos processados.
-Isso evita que uma mesma notificação gere créditos duplicados de moedas.
+O `payment_id` possui índice único e é inserido na mesma transação que credita as moedas.
+Isso evita condições de corrida e impede que uma mesma notificação gere créditos duplicados.
 ---
 ## 🎟️ Sistema de cupons
 A plataforma possui um sistema de cupons integrado ao processo de compra.
@@ -164,6 +165,7 @@ Crie um arquivo `.env` na raiz:
 Env
 PORT=3001
 NODE_ENV=development
+TRUST_PROXY=0
 MP_ACCESS_TOKEN=seu_access_token
 DB_HOST=seu_host
 DB_PORT=3306
@@ -171,6 +173,11 @@ DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
 DB_NAME=seu_banco
 JWT_SECRET=sua_chave_secreta
+ADMIN_EMAIL=admin@seu-dominio.com.br
+MP_WEBHOOK_SECRET=sua_assinatura_secreta
+DB_SSL_REJECT_UNAUTHORIZED=true
+DB_SSL_CA_FILE=src/config/aiven-ca.pem
+SMTP_TLS_REJECT_UNAUTHORIZED=true
 ## 4. Configure o banco
 O arquivo `setup_db.js` esteja presente no projeto:
 bash

@@ -25,6 +25,11 @@ const validarCompra = [
     .isIn(["Pix", "Cartão Virtual"])
     .withMessage('Método de pagamento inválido. Use "Pix" ou "Cartão Virtual".'),
   body("isGratis").isBoolean().withMessage("O campo isGratis deve ser verdadeiro ou falso."),
+  body("cupom")
+    .optional({ checkFalsy: true })
+    .isString()
+    .isLength({ max: 30 })
+    .withMessage("O cupom deve ter no máximo 30 caracteres."),
   tratarErrosValidacao,
 ];
 const validarRegistro = [
@@ -48,8 +53,8 @@ const validarRegistro = [
   body("senha")
     .notEmpty()
     .withMessage("A senha é obrigatória.")
-    .isLength({ min: 6 })
-    .withMessage("A senha deve ter no mínimo 6 caracteres."),
+    .isLength({ min: 8, max: 72 })
+    .withMessage("A senha deve ter entre 8 e 72 caracteres."),
   tratarErrosValidacao,
 ];
 const validarLogin = [
@@ -64,7 +69,11 @@ const validarLogin = [
       }
       return true;
     }),
-  body("senha").notEmpty().withMessage("A senha é obrigatória."),
+  body("senha")
+    .notEmpty()
+    .withMessage("A senha é obrigatória.")
+    .isLength({ max: 72 })
+    .withMessage("A senha deve ter no máximo 72 caracteres."),
   tratarErrosValidacao,
 ];
 module.exports = {

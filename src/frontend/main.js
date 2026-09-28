@@ -75,9 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btnToggle2fa: document.getElementById("btnToggle2fa"),
     badge2fa: document.getElementById("badge2fa"),
     feedback2fa: document.getElementById("feedback2fa"),
+    senha2faConfirmacao: document.getElementById("senha2faConfirmacao"),
     verify2faModal: document.getElementById("verify2faModal"),
     verify2faForm: document.getElementById("verify2faForm"),
-    verify2faUserId: document.getElementById("verify2faUserId"),
+    verify2faChallenge: document.getElementById("verify2faChallenge"),
     verify2faCode: document.getElementById("verify2faCode"),
     verify2faFeedback: document.getElementById("verify2faFeedback"),
     btnConfirmar2fa: document.getElementById("btnConfirmar2fa"),
@@ -195,11 +196,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const ativando = btn.textContent.toLowerCase().includes("ativar");
       setCarregando(btn, true, ativando ? "Ativando..." : "Desativando...");
       if (DOM.feedback2fa) esconderFeedback(DOM.feedback2fa);
+      const senhaConfirmacao = DOM.senha2faConfirmacao?.value || "";
+      if (!senhaConfirmacao) {
+        mostrarFeedback(DOM.feedback2fa, "Confirme sua senha para alterar o 2FA.", false);
+        setCarregando(btn, false, ativando ? "Ativar Autenticação 2FA" : "Desativar Autenticação 2FA");
+        return;
+      }
       try {
         const resp = await fetch("/api/auth/2fa/toggle", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ativar: ativando }),
+          body: JSON.stringify({ ativar: ativando, senhaConfirmacao }),
         });
         const data = await resp.json();
         if (resp.ok && data.sucesso) {
@@ -208,6 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data.dados.mensagem || (ativando ? "2FA ativado com sucesso!" : "2FA desativado."),
             true,
           );
+          DOM.senha2faConfirmacao.value = "";
           await carregar2faStatus();
         } else {
           mostrarFeedback(DOM.feedback2fa, data.erro || "Erro ao alterar 2FA.", false);
@@ -436,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
         DOM.loginForm.reset();
       } else if (data.codigo === "REQUIRE_2FA") {
         fecharModal(DOM.authModal);
-        DOM.verify2faUserId.value = data.usuarioId;
+        DOM.verify2faChallenge.value = data.desafio;
         DOM.verify2faCode.value = "";
         esconderFeedback(DOM.verify2faFeedback);
         abrirModal(DOM.verify2faModal);
@@ -466,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            usuarioId: DOM.verify2faUserId.value,
+            desafio: DOM.verify2faChallenge.value,
             codigo: DOM.verify2faCode.value,
           }),
         });

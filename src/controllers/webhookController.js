@@ -1,9 +1,8 @@
 const {
   MercadoPagoConfig,
   Payment,
+  WebhookSignatureValidator,
 } = require("mercadopago");
-
-const crypto = require("crypto");
 
 const config =
   require("../config/env");
@@ -28,6 +27,9 @@ const cupomModel =
 
 const planoModel =
   require("../models/planoModel");
+
+const { verifyPaymentReference } =
+  require("../helpers/security");
 
 const {
   pool,
@@ -158,7 +160,7 @@ const processarNotificacao = async (
     topic || evento?.type;
 
   const idPagamento =
-    id || evento?.data?.id;
+    req.query["data.id"] || id || evento?.data?.id;
 
   if (
     tipoEvento !== "payment" ||
@@ -188,71 +190,16 @@ const processarNotificacao = async (
       );
   }
 
-  const signatureHeader =
-    req.headers["x-signature"];
-
-  if (!signatureHeader) {
-    logger.warn(
-      "Webhook recusado: sem x-signature.",
-    );
-
-    return res
-      .status(403)
-      .send("Missing signature");
-  }
-
-  const parts =
-    signatureHeader.split(",");
-
-  let ts = "";
-  let v1 = "";
-
-  parts.forEach((part) => {
-    const [key, value] =
-      part.split("=");
-
-    if (
-      key &&
-      key.trim() === "ts"
-    ) {
-      ts = value;
-    }
-
-    if (
-      key &&
-      key.trim() === "v1"
-    ) {
-      v1 = value;
-    }
-  });
-
-  const manifest =
-    `id:${idPagamento};` +
-    `request-id:${req.headers["x-request-id"] || ""};` +
-    `ts:${ts};`;
-
-  const hash =
-    crypto
-      .createHmac(
-        "sha256",
-        config.mpWebhookSecret,
-      )
-      .update(manifest)
-      .digest("hex");
-
-  if (hash !== v1) {
-    logger.warn(
-      "Assinatura do webhook inválida.",
-      {
-        signatureHeader,
-      },
-    );
-
-    return res
-      .status(403)
-      .send(
-        "Invalid signature",
-      );
+  try {
+    WebhookSignatureValidator.validate({
+      xSignature: req.headers["x-signature"],
+      xRequestId: req.headers["x-request-id"],
+      dataId: String(idPagamento),
+      secret: config.mpWebhookSecret,
+    });
+  } catch {
+    logger.warn("Assinatura do webhook inválida.", { paymentId: String(idPagamento) });
+    return res.status(401).send("Invalid signature");
   }
 
   try {
@@ -293,33 +240,25 @@ const processarNotificacao = async (
         );
     }
 
-    let referencia;
-
-    try {
-      referencia =
-        JSON.parse(
-          pagamento.external_reference,
-        );
-    } catch {
+    const referencia = verifyPaymentReference(pagamento.external_reference);
+    if (!referencia) {
       logger.error(
-        "Falha ao parsear external_reference.",
+        "Referência de pagamento inválida ou sem assinatura.",
         {
           paymentId:
             idPagamento,
         },
       );
 
-      return res
-        .status(200)
-        .send(
-          "Referencia invalida",
-        );
+      return res.status(400).send("Referencia invalida");
     }
 
     const {
       usuarioId,
       planoId,
       cupom,
+      valorCentavos,
+      moeda,
     } = referencia;
 
     const plano =
@@ -340,6 +279,22 @@ const processarNotificacao = async (
         .send(
           "Plano invalido",
         );
+    }
+
+    const valorRecebidoCentavos = Math.round(Number(pagamento.transaction_amount) * 100);
+    if (
+      !Number.isSafeInteger(valorRecebidoCentavos) ||
+      valorRecebidoCentavos !== valorCentavos ||
+      pagamento.currency_id !== moeda
+    ) {
+      logger.error("Pagamento recusado por divergência de valor ou moeda.", {
+        paymentId: idPagamento,
+        valorEsperadoCentavos: valorCentavos,
+        valorRecebidoCentavos,
+        moedaEsperada: moeda,
+        moedaRecebida: pagamento.currency_id,
+      });
+      return res.status(400).send("Pagamento divergente");
     }
 
     const moedas =

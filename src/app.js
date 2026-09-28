@@ -24,6 +24,8 @@ Sentry.init({
 
 const app = express();
 
+if (config.trustProxy) app.set("trust proxy", config.trustProxy);
+
 app.use(
   helmet({
     contentSecurityPolicy: {
