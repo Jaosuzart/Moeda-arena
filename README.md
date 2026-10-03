@@ -1,3 +1,33 @@
+## Publicacao no Cloudflare Workers
+
+O frontend depende do servidor Node/Express e do MySQL. Publicar apenas `public/`
+nao executa `server.js` e causa HTTP 404 em `/api/auth/status`, `/api/estatisticas`,
+`/api/planos` e `/api/auth/config`.
+
+O `wrangler.jsonc` agora executa `src/worker.mjs` para `/api` e `/api/*` e serve
+os demais arquivos pelo binding `ASSETS`. O Worker encaminha a API ao Express,
+preservando metodo, corpo, query string e cookies, sem cachear respostas da API.
+
+1. Hospede o backend como servico Node.js, com `npm start` e as variaveis de
+   `.env.example`. Confirme que `https://SEU-BACKEND/api/health` responde HTTP 200.
+2. No Worker, configure `BACKEND_ORIGIN` como a origem HTTPS desse servico
+   (sem `/api`, caminho ou query string). Use um hostname diferente do frontend
+   para evitar encaminhamento recursivo. Nao coloque credenciais nessa URL.
+   No painel Cloudflare, use Settings > Variables and Secrets. Pela CLI:
+   `npx wrangler secret put BACKEND_ORIGIN`.
+3. Publique a configuracao e o Worker com `npx wrangler deploy`.
+4. Verifique `/api/health`, `/api/auth/status`, `/api/auth/config`, `/api/planos`
+   e `/api/estatisticas` no dominio do frontend e teste login/logout.
+
+Para desenvolvimento com Wrangler, crie `.dev.vars` (nao versionado) com
+`BACKEND_ORIGIN=http://127.0.0.1:3001`, inicie o Express e rode
+`npx wrangler dev`. Execute `npm test` para validar o proxy e os testes existentes.
+
+Sem uma origem valida, a API retorna JSON com HTTP 503 e codigo
+`BACKEND_NAO_CONFIGURADO`. Falha de conexao retorna HTTP 502 e codigo
+`BACKEND_INDISPONIVEL`. O backend continua necessario para autenticacao,
+estatisticas, planos, pagamentos e acesso ao banco.
+
 <h1 align="center">🪙 Moeda Arena — Plataforma de Moedas Virtuais</h1>
 
 ## Manutenção local

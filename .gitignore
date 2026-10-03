@@ -36,3 +36,8 @@ Thumbs.db
 scratch/
 .cache/
 Moeda-arena/
+
+# Cloudflare local variables and build output
+.dev.vars
+.dev.vars.*
+.wrangler/
