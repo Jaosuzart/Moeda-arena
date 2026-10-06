@@ -16,7 +16,6 @@ const encerrar = async (sinal, codigo = 0) => {
     process.exit(1);
   }, 10000);
   try {
-    // Aguarde as requisições em andamento antes de fechar o banco.
     if (server?.listening) {
       await new Promise((resolve, reject) => {
         server.close((err) => (err ? reject(err) : resolve()));

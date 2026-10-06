@@ -2524,23 +2524,31 @@ body {
   color: #e2e8f0;
   font-weight: 600;
   letter-spacing: 0.3px;
-  text-shadow: none;
+  text-shadow:
+    0 0 8px #000000,
+    0 0 20px rgba(56, 189, 248, 0.2),
+    0 0 40px rgba(56, 189, 248, 0.08);
   transition: text-shadow 0.4s ease, color 0.4s ease;
 }
 
 .footer-cnpj:hover {
-  text-shadow: none;
+  text-shadow:
+    0 0 12px #000000,
+    0 0 28px rgba(56, 189, 248, 0.35),
+    0 0 50px rgba(56, 189, 248, 0.15);
   color: #f0f9ff;
 }
 
 .footer-cnpj .cnpj-number {
-  color: #f8fafc;
+  color: #000000;
   font-weight: 700;
-  text-shadow: none;
+  text-shadow:
+    0 0 10px rgba(56, 189, 248, 0.5),
+    0 0 24px rgba(56, 189, 248, 0.25);
 }
 
 .footer-cnpj .cnpj-location {
-  color: #cbd5e1;
+  color: #000000;
   font-style: italic;
   font-weight: 500;
 }

@@ -1,0 +1,472 @@
+const { pool } = require("#database");
+const logger = require("../config/logger");
+const crypto = require("crypto");
+const { encrypt, decrypt } = require("../helpers/crypto");
+const { hashResetToken } = require("../helpers/security");
+
+const criarUsuario = async (
+  nome,
+  email,
+  senhaHash,
+  telefone = null,
+  indicadoPor = null,
+  hasPassword = true,
+  emailVerificado = false,
+) => {
+  try {
+    const tokenVerificacao = emailVerificado ? null : crypto.randomBytes(32).toString("hex");
+
+    const codigoConvite =
+      nome.replace(/\s+/g, "").substring(0, 5).toUpperCase() +
+      crypto.randomInt(0, 100000).toString().padStart(5, "0");
+
+    const sql =
+      "INSERT INTO usuarios (nome, email, senha_hash, telefone, token_verificacao, email_verificado, has_password, codigo_convite, indicado_por) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    const [resultado] = await pool.query(sql, [
+      nome,
+      email,
+      senhaHash,
+      encrypt(telefone),
+      tokenVerificacao,
+      emailVerificado ? 1 : 0,
+      hasPassword,
+      codigoConvite,
+      indicadoPor,
+    ]);
+
+    logger.info("Novo usuário criado.", {
+      usuarioId: resultado.insertId,
+      email,
+    });
+
+    return {
+      id: resultado.insertId,
+      nome,
+      email,
+      saldo_moedas: 100,
+      email_verificado: emailVerificado ? 1 : 0,
+      has_password: hasPassword,
+      token_verificacao: tokenVerificacao,
+    };
+  } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      const error = new Error("Este email já está cadastrado.");
+      error.statusCode = 409;
+      error.codigo = "EMAIL_DUPLICADO";
+      throw error;
+    }
+
+    logger.error("Erro ao criar usuário.", {
+      erro: err.message,
+    });
+
+    throw err;
+  }
+};
+
+const decryptSensitiveFields = (row) => {
+  if (!row) return row;
+
+  return {
+    ...row,
+    cpf: decrypt(row.cpf),
+    telefone: decrypt(row.telefone),
+    chave_pix: decrypt(row.chave_pix),
+    cartao_final: decrypt(row.cartao_final),
+  };
+};
+
+const buscarPorEmail = async (email) => {
+  const sql =
+    "SELECT id, nome, email, senha_hash, saldo_moedas, cpf, localidade, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, token_verificacao, has_password, ativo_2fa FROM usuarios WHERE email = ?";
+
+  const [rows] = await pool.query(sql, [email]);
+
+  return decryptSensitiveFields(rows[0]) || null;
+};
+
+const buscarPorId = async (id) => {
+  const sql =
+    "SELECT id, nome, email, saldo_moedas, cpf, localidade, telefone, chave_pix, cartao_final, trofeus, vitorias, xp, status, email_verificado, has_password, codigo_convite, indicado_por, ganhos_afiliado, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
+
+  const [rows] = await pool.query(sql, [id]);
+
+  return decryptSensitiveFields(rows[0]) || null;
+};
+
+const buscarAutenticacaoPorId = async (id) => {
+  const sql =
+    "SELECT id, nome, email, senha_hash, status, email_verificado, has_password, ativo_2fa, codigo_2fa, codigo_2fa_expira FROM usuarios WHERE id = ?";
+  const [rows] = await pool.query(sql, [id]);
+  return rows[0] || null;
+};
+
+const buscarPorTokenVerificacao = async (token) => {
+  const sql =
+    "SELECT id FROM usuarios WHERE token_verificacao = ?";
+
+  const [rows] = await pool.query(sql, [token]);
+
+  return rows[0] || null;
+};
+
+const buscarPorCodigoConvite = async (codigo) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT id FROM usuarios WHERE codigo_convite = ?",
+      [codigo],
+    );
+
+    return rows[0] || null;
+  } catch (err) {
+    logger.error(
+      "Erro ao buscar usuário por código de convite.",
+      {
+        erro: err.message,
+      },
+    );
+
+    throw err;
+  }
+};
+
+const confirmarEmail = async (id) => {
+  const sql =
+    "UPDATE usuarios SET email_verificado = 1, token_verificacao = NULL WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [id]);
+
+  return resultado.affectedRows > 0;
+};
+
+const buscarRanking = async (limite = 10) => {
+  const sql =
+    "SELECT id, nome, trofeus, vitorias, xp FROM usuarios WHERE status != 'banido' ORDER BY trofeus DESC, vitorias DESC, xp DESC LIMIT ?";
+
+  const [rows] = await pool.query(sql, [limite]);
+
+  return rows;
+};
+
+const adicionarEstatisticas = async (
+  id,
+  trofeus,
+  vitorias,
+  xp,
+) => {
+  const sql =
+    "UPDATE usuarios SET trofeus = trofeus + ?, vitorias = vitorias + ?, xp = xp + ? WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    trofeus,
+    vitorias,
+    xp,
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const listarTodos = async () => {
+  const sql =
+    "SELECT id, nome, email, saldo_moedas, trofeus, vitorias, xp, status, ganhos_afiliado FROM usuarios ORDER BY id DESC";
+
+  const [rows] = await pool.query(sql);
+
+  return rows;
+};
+
+const atualizarStatus = async (id, status) => {
+  const sql =
+    "UPDATE usuarios SET status = ? WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    status,
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const definirSenha = async (id, senhaHash) => {
+  const sql =
+    "UPDATE usuarios SET senha_hash = ?, has_password = TRUE WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    senhaHash,
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const adicionarMoedas = async (
+  usuarioId,
+  quantidade,
+) => {
+  try {
+    const sql =
+      "UPDATE usuarios SET saldo_moedas = saldo_moedas + ? WHERE id = ?";
+
+    const [resultado] = await pool.query(sql, [
+      quantidade,
+      usuarioId,
+    ]);
+
+    if (resultado.affectedRows > 0) {
+      logger.info(
+        "Moedas creditadas com sucesso.",
+        {
+          usuarioId,
+          quantidade,
+        },
+      );
+
+      return true;
+    }
+
+    logger.warn(
+      "Nenhum usuário encontrado para creditar moedas.",
+      {
+        usuarioId,
+      },
+    );
+
+    return false;
+  } catch (err) {
+    logger.error("Erro ao adicionar moedas.", {
+      usuarioId,
+      quantidade,
+      erro: err.message,
+    });
+
+    throw err;
+  }
+};
+
+const debitarMoedas = async (
+  id,
+  quantidade,
+) => {
+  try {
+    const sql =
+      "UPDATE usuarios SET saldo_moedas = saldo_moedas - ? WHERE id = ? AND saldo_moedas >= ?";
+
+    const [resultado] = await pool.execute(sql, [
+      quantidade,
+      id,
+      quantidade,
+    ]);
+
+    return resultado.affectedRows > 0;
+  } catch (err) {
+    logger.error("Erro ao debitar moedas.", {
+      usuarioId: id,
+      erro: err.message,
+    });
+
+    throw err;
+  }
+};
+
+const atualizarPerfil = async (
+  id,
+  {
+    nome,
+    cpf,
+    localidade,
+    telefone,
+    chave_pix,
+    cartao_final,
+  },
+) => {
+  try {
+    const sql =
+      "UPDATE usuarios SET nome = ?, cpf = ?, localidade = ?, telefone = ?, chave_pix = ?, cartao_final = ? WHERE id = ?";
+
+    const [resultado] = await pool.query(sql, [
+      nome,
+      encrypt(cpf),
+      localidade,
+      encrypt(telefone),
+      encrypt(chave_pix),
+      encrypt(cartao_final),
+      id,
+    ]);
+
+    if (resultado.affectedRows > 0) {
+      logger.info("Perfil atualizado.", {
+        usuarioId: id,
+      });
+
+      return true;
+    }
+
+    return false;
+  } catch (err) {
+    logger.error("Erro ao atualizar perfil.", {
+      usuarioId: id,
+      erro: err.message,
+    });
+
+    throw err;
+  }
+};
+
+const salvarTokenResetSenha = async (
+  usuarioId,
+  token,
+  expira,
+) => {
+  const sql =
+    "UPDATE usuarios SET reset_senha_token = ?, reset_senha_expira = ? WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    hashResetToken(token),
+    expira,
+    usuarioId,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const buscarPorTokenResetSenha = async (
+  token,
+) => {
+  const sql =
+    "SELECT id, nome, email, reset_senha_expira FROM usuarios WHERE reset_senha_token = ?";
+
+  const [rows] = await pool.query(sql, [
+    hashResetToken(token),
+  ]);
+
+  return rows[0] || null;
+};
+
+const atualizarSenhaPorReset = async (
+  usuarioId,
+  novaSenhaHash,
+) => {
+  const sql =
+    "UPDATE usuarios SET senha_hash = ?, reset_senha_token = NULL, reset_senha_expira = NULL, has_password = TRUE WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    novaSenhaHash,
+    usuarioId,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const obterEstatisticaPlataforma = async () => {
+  try {
+    const sqlTotais =
+      "SELECT COUNT(id) AS totalUsuarios, COALESCE(SUM(saldo_moedas), 0) AS totalTokens FROM usuarios";
+
+    const [totaisRows] =
+      await pool.query(sqlTotais);
+
+    const sqlUltimas = `
+      SELECT
+        p.data_processamento AS data,
+        u.nome,
+        p.plano_id,
+        p.moedas_creditadas AS moedas
+      FROM pagamentos_processados p
+      JOIN usuarios u
+        ON p.usuario_id = u.id
+      ORDER BY p.id DESC
+      LIMIT 10
+    `;
+
+    const [ultimasRows] =
+      await pool.query(sqlUltimas);
+
+    return {
+      totalUsuarios:
+        totaisRows[0].totalUsuarios,
+      totalTokens:
+        Number(totaisRows[0].totalTokens),
+      ultimasVendas:
+        ultimasRows,
+    };
+  } catch (err) {
+    logger.error(
+      "Erro ao obter estatísticas da plataforma.",
+      {
+        erro: err.message,
+      },
+    );
+
+    throw err;
+  }
+};
+
+const atualizarStatus2FA = async (
+  id,
+  ativo,
+) => {
+  const sql =
+    "UPDATE usuarios SET ativo_2fa = ? WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    ativo,
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const salvarCodigo2FA = async (
+  id,
+  codigo,
+  expira,
+) => {
+  const sql =
+    "UPDATE usuarios SET codigo_2fa = ?, codigo_2fa_expira = ? WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    codigo,
+    expira,
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+const limparCodigo2FA = async (id) => {
+  const sql =
+    "UPDATE usuarios SET codigo_2fa = NULL, codigo_2fa_expira = NULL WHERE id = ?";
+
+  const [resultado] = await pool.query(sql, [
+    id,
+  ]);
+
+  return resultado.affectedRows > 0;
+};
+
+module.exports = {
+  criarUsuario,
+  buscarPorEmail,
+  buscarPorId,
+  buscarAutenticacaoPorId,
+  buscarPorCodigoConvite,
+  adicionarMoedas,
+  debitarMoedas,
+  atualizarPerfil,
+  buscarRanking,
+  adicionarEstatisticas,
+  listarTodos,
+  atualizarStatus,
+  buscarPorTokenVerificacao,
+  confirmarEmail,
+  definirSenha,
+  salvarTokenResetSenha,
+  buscarPorTokenResetSenha,
+  atualizarSenhaPorReset,
+  obterEstatisticaPlataforma,
+  atualizarStatus2FA,
+  salvarCodigo2FA,
+  limparCodigo2FA,
+};
