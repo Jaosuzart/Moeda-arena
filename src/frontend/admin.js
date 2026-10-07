@@ -11,8 +11,23 @@ async function carregarUsuarios() {
     }
 
     const data = await res.json();
-    if (data.sucesso) renderizarUsuarios(data.dados);
+    if (!res.ok || !data.sucesso || !Array.isArray(data.dados)) {
+      throw new Error("Falha ao carregar usuários");
+    }
+    renderizarUsuarios(data.dados);
   } catch {
+    const tbody = document.querySelector("#tabelaUsuarios tbody");
+    tbody.replaceChildren();
+    const td = tbody.insertRow().insertCell();
+    td.colSpan = 7;
+    td.className = "text-center py-4";
+    td.append(document.createTextNode("Não foi possível carregar os usuários. "));
+    const tentarNovamente = document.createElement("button");
+    tentarNovamente.type = "button";
+    tentarNovamente.className = "btn btn-warning btn-sm";
+    tentarNovamente.textContent = "Tentar novamente";
+    tentarNovamente.addEventListener("click", carregarUsuarios);
+    td.append(tentarNovamente);
     Swal.fire("Erro", "Erro ao carregar dados. Tente novamente.", "error");
   }
 }
