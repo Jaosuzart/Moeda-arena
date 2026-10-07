@@ -10,7 +10,9 @@
     "minify:js": "esbuild ./src/frontend/main.js ./src/frontend/admin.js --bundle --minify --tree-shaking=true --target=es2020 --outdir=public --entry-names=[name].min",
     "minify:css": "csso public/style.css --output public/style.min.css",
     "minify": "npm run minify:js && npm run minify:css",
-    "build": "npm run minify"
+    "build": "npm run minify",
+    "deploy:cloudflare": "wrangler deploy",
+    "check:cloudflare": "wrangler deploy --dry-run"
   },
   "dependencies": {
     "@sentry/node": "^11.1.0",

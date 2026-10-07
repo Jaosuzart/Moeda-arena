@@ -1,5 +1,8 @@
-allowBuilds:
-  '@whiskeysockets/baileys': true
-  esbuild: true
-  protobufjs: true
-  workerd: true
+packages:
+  - '.'
+
+onlyBuiltDependencies:
+  - '@whiskeysockets/baileys'
+  - esbuild
+  - protobufjs
+  - workerd
