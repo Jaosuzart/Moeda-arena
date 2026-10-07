@@ -158,15 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
     vip: { src: "/assets/images/icon-crown.png", alt: "VIP", desc: "Para quem quer dominar sem limites." },
   };
 
-  const btnThemeToggle = document.getElementById("btnThemeToggle");
-  if (btnThemeToggle) {
-    btnThemeToggle.addEventListener("click", () => {
-      document.documentElement.classList.toggle("light-theme");
-      const isLight = document.documentElement.classList.contains("light-theme");
-      localStorage.setItem("theme", isLight ? "light" : "dark");
-    });
-  }
-
   applyMask(DOM.perfilCpf, "cpf");
   applyMask(DOM.perfilTelefone, "tel");
   applyMask(DOM.registroTelefone, "tel");
@@ -319,6 +310,17 @@ document.addEventListener("DOMContentLoaded", () => {
   DOM.tabLogin.addEventListener("click", () => alternarTab("login"));
   DOM.tabRegistro.addEventListener("click", () => alternarTab("registro"));
   let googleScriptCarregado = false;
+  let googleInicializado = false;
+  let googleInitPromise = null;
+  function restaurarBotoesGoogle() {
+    estado.googleLoginPendente = false;
+    for (const [botao, texto] of [[DOM.btnGoogleLogin, "Entrar com Google"], [DOM.btnGoogleRegistro, "Registrar com Google"]]) {
+      if (botao) {
+        botao.disabled = false;
+        botao.textContent = texto;
+      }
+    }
+  }
   function carregarScriptGoogle() {
     if (googleScriptCarregado) return;
     const script = document.createElement("script");
@@ -326,7 +328,12 @@ document.addEventListener("DOMContentLoaded", () => {
     script.async = true;
     script.defer = true;
     script.onload = () => {
-      initGoogleAuth();
+      void initGoogleAuth();
+    };
+    script.onerror = () => {
+      googleScriptCarregado = false;
+      script.remove();
+      restaurarBotoesGoogle();
     };
     document.head.appendChild(script);
     googleScriptCarregado = true;
@@ -342,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirModal(DOM.authModal);
   });
   const handleGoogleClick = () => {
-    if (window.google && window.google.accounts) {
+    if (googleInicializado && window.google?.accounts?.id) {
       google.accounts.id.prompt();
     } else {
       estado.googleLoginPendente = true;
@@ -355,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
         DOM.btnGoogleRegistro.textContent = "Carregando Google...";
       }
       carregarScriptGoogle();
+      if (window.google?.accounts?.id) void initGoogleAuth();
     }
   };
   if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener("click", handleGoogleClick);
@@ -557,8 +565,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   async function initGoogleAuth() {
+    if (googleInicializado) return;
+    if (googleInitPromise) return googleInitPromise;
+    googleInitPromise = (async () => {
     try {
       const resp = await fetch("/api/auth/config");
+      if (!resp.ok) throw new Error(`Configuração indisponível: HTTP ${resp.status}`);
       const data = await resp.json();
 
       if (data.mixpanelToken && window.mixpanel) {
@@ -567,12 +579,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (data.whatsappUrl && DOM.linkWhatsapp) DOM.linkWhatsapp.href = data.whatsappUrl;
-      if (data.clientId && window.google) {
+      if (typeof data.clientId === "string" && data.clientId.trim() && window.google?.accounts?.id) {
         google.accounts.id.initialize({
           client_id: data.clientId,
           callback: handleGoogleCallback,
           use_fedcm_for_prompt: false,
         });
+        googleInicializado = true;
         if (DOM.btnGoogleLogin) {
           DOM.btnGoogleLogin.disabled = false;
 
@@ -656,7 +669,14 @@ document.addEventListener("DOMContentLoaded", () => {
           google.accounts.id.prompt();
         }
       }
-    } catch (err) {}
+      if (!googleInicializado) restaurarBotoesGoogle();
+    } catch (err) {
+      restaurarBotoesGoogle();
+      console.error("Falha ao inicializar login Google:", err);
+    }
+    })();
+    try { await googleInitPromise; }
+    finally { googleInitPromise = null; }
   }
   DOM.navAvatar.addEventListener("click", async () => {
     if (DOM.tabDados) DOM.tabDados.click();

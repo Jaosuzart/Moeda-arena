@@ -32,7 +32,20 @@ estatisticas, planos, pagamentos e acesso ao banco.
 
 ## Manutenção local
 
-No Git Bash do Windows, entre na pasta com `cd "C:/Users/Cassio/moeda-arena"` e execute `npm run dev`.
+No Git Bash do Windows, execute:
+
+```bash
+cd "C:/Users/Cassio/Documents/Moeda-arena"
+source ./scripts/activate-node.sh
+npm start
+```
+
+O script coloca o Node.js e o npm portáteis de `.local-tools/` no PATH da sessão atual.
+Repita o comando `source` ao abrir outro terminal. Alternativamente, execute `iniciar.cmd`
+no Windows. A distribuição local não é versionada; em outra máquina instale Node.js LTS
+pelo site oficial https://nodejs.org/ e reabra o terminal antes de usar `npm`.
+`node: command not found` e `npm: command not found` indicam runtime ausente do PATH.
+Para desenvolvimento com reinício automático, use `npm run dev`.
 O terminal deve mostrar `moeda-arena@2.0.0` e iniciar `server.js`. Um nome diferente indica outra cópia do projeto.
 O `.env` é carregado da raiz do projeto; variáveis já definidas no ambiente têm prioridade.
 Após editar o `.env`, reinicie o processo. Não envie senhas para o Git.
@@ -182,41 +195,21 @@ Moeda-arena/
 ```
 --
 # 🛠️ Como executar
-## 1. Clone o repositório
-bash
-git clone https://github.com/Jaosuzart/Moeda-arena.git
-bash
-cd Moeda-arena
-## 2. Instale as dependências
-bash
-npm install
-## 3. Configure o `.env`
-Crie um arquivo `.env` na raiz:
-Env
-PORT=3001
-NODE_ENV=development
-TRUST_PROXY=0
-MP_ACCESS_TOKEN=seu_access_token
-DB_HOST=seu_host
-DB_PORT=3306
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-DB_NAME=seu_banco
-JWT_SECRET=sua_chave_secreta
-ADMIN_EMAIL=admin@seu-dominio.com.br
-MP_WEBHOOK_SECRET=sua_assinatura_secreta
-DB_SSL_REJECT_UNAUTHORIZED=true
-DB_SSL_CA_FILE=src/config/aiven-ca.pem
-SMTP_TLS_REJECT_UNAUTHORIZED=true
-## 4. Configure o banco
-O arquivo `setup_db.js` esteja presente no projeto:
-bash
-node setup_db.js
-## 5. Execute a aplicação
-bash
-npm run dev
-A aplicação estará disponível em:
-http://localhost:3001
+
+1. Instale Node.js LTS com npm (https://nodejs.org/) e reabra o terminal.
+2. Entre na pasta do projeto. Se usar o runtime portátil desta cópia, execute
+   `source ./scripts/activate-node.sh` no Git Bash.
+3. Instale dependências com `npm ci` usando `package-lock.json`.
+4. Copie `.env.example` para `.env` caso ainda não exista e preencha todos os
+   valores obrigatórios, incluindo `API_GAME_SECRET` e `ENCRYPTION_KEY`.
+   Preserve um `.env` já configurado.
+5. Configure o banco MySQL/MariaDB e suas tabelas no provedor. Esta cópia não
+   contém `setup_db.js` nem um script completo de criação de tabelas.
+6. Execute `npm test` e `npm run build`. O build gera JavaScript e CSS em
+   `public/`; a instalação das dependências é uma etapa separada.
+7. Execute `npm start` ou `npm run dev`. A URL usa a `PORT` definida no `.env`
+   (por exemplo, http://localhost:3001). O servidor testa o banco antes de abrir a porta.
+
 # 📚 Objetivos do projeto
 O desenvolvimento da Moeda Arena também teve como objetivo colocar em prática conhecimentos de:
 * Desenvolvimento Front-end;

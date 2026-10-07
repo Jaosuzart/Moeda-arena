@@ -41,3 +41,6 @@ Moeda-arena/
 .dev.vars
 .dev.vars.*
 .wrangler/
+
+# Portable local Node.js runtime
+.local-tools/

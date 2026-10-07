@@ -8,7 +8,7 @@ const source = fs.readFileSync(path.join(__dirname, "../src/frontend/main.js"), 
 const handlers = [
   source.slice(source.indexOf("  let googleScriptCarregado"), source.indexOf("  DOM.btnAbrirLogin.addEventListener")),
   source.slice(source.indexOf("  const handleGoogleClick"), source.indexOf("  if (DOM.btnGoogleLogin) DOM.btnGoogleLogin.addEventListener")),
-  source.slice(source.indexOf("  function initGoogleAuth()"), source.indexOf("  DOM.navAvatar.addEventListener")),
+  source.slice(source.indexOf("  async function initGoogleAuth()"), source.indexOf("  DOM.navAvatar.addEventListener")),
 ].join("\n");
 
 function setup(fetch) {
@@ -69,4 +69,23 @@ test("Google: permite tentar novamente após recuperação da API", async () => 
   await page.initGoogleAuth();
   page.handleGoogleClick();
   assert.deepEqual(page.counts(), { initialized: 1, prompted: 1 });
+});
+
+ test("Google: falha ao carregar SDK libera botões e permite recarregar", () => {
+  const page = setup(async () => ({ ok: false, status: 503 }));
+  page.context.window.google = undefined;
+  page.handleGoogleClick();
+  assert.equal(page.context.DOM.btnGoogleLogin.disabled, true);
+  page.scripts[0].onerror();
+  assert.equal(page.context.DOM.btnGoogleLogin.disabled, false);
+  assert.equal(page.context.estado.googleLoginPendente, false);
+  page.handleGoogleClick();
+  assert.equal(page.scripts.length, 2);
+});
+ test("Google: SDK presente não abre prompt antes de configuração válida", async () => {
+  const page = setup(async () => ({ ok: false, status: 404 }));
+  page.handleGoogleClick();
+  await page.initGoogleAuth();
+  assert.deepEqual(page.counts(), { initialized: 0, prompted: 0 });
+  assert.equal(page.context.DOM.btnGoogleLogin.disabled, false);
 });

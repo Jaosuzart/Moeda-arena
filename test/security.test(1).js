@@ -1,3 +1,11 @@
+// Valores exclusivos dos testes; não dependem de credenciais do .env.
+Object.assign(process.env, {
+  NODE_ENV: "test", PORT: "3001", MP_ACCESS_TOKEN: "test-only",
+  DB_HOST: "localhost", DB_USER: "test", DB_NAME: "test",
+  JWT_SECRET: "test-only-security-secret", API_GAME_SECRET: "test-only-game-secret",
+  ENCRYPTION_KEY: "test-only-encryption-secret",
+});
+
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
 

@@ -17,9 +17,9 @@
       media="print"
       onload="this.media = 'all'"
     />
-    <link rel="preload" as="style" href="/style.min.css?v=12" />
-    <link rel="stylesheet" href="/style.min.css?v=12" />
-    <script src="/assets/js/theme-init.js"></script>
+    <link rel="preload" as="style" href="/style.min.css?v=16" />
+    <link rel="stylesheet" href="/style.min.css?v=16" />
+    <script src="/assets/js/theme-init.js?v=2"></script>
   </head>
 
   <body class="page-body">
@@ -39,13 +39,13 @@
           <span class="nav-logo-text">Moeda Arena</span>
         </a>
         <div class="nav-user">
-          <button
-            class="btn-gamer btn-gamer-ghost"
-            onclick="document.documentElement.classList.toggle('light-theme'); localStorage.setItem('theme', document.documentElement.classList.contains('light-theme') ? 'light' : 'dark')"
-            type="button"
-            title="Alternar Tema"
-            style="padding: 0 10px; font-size: 1.2rem; margin-right: 10px;"
-          ><i class="bi bi-moon-stars-fill"></i></button>
+          <button class="btn-gamer btn-gamer-ghost theme-toggle" id="btnThemeToggle" type="button"
+          title="Alternar contraste claro/escuro" aria-label="Alternar contraste claro/escuro" aria-pressed="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor" />
+          </svg>
+        </button>
           <a href="/" class="btn-gamer btn-gamer-outline-light">Voltar</a>
         </div>
       </nav>

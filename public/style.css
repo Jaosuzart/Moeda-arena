@@ -2571,3 +2571,17 @@ body {
 :root.light-theme .footer-cnpj .cnpj-location {
   color: #000000;
 }
+
+/* Controle de contraste independente de fontes externas. */
+.navbar-loja .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  color: var(--text-primary);
+}
+.theme-toggle svg { display: block; flex-shrink: 0; }
+.theme-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
