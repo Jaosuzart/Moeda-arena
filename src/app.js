@@ -31,11 +31,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://accounts.google.com"],
-        connectSrc: ["'self'", "https://accounts.google.com", "https://api.mercadopago.com"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://accounts.google.com", "https://cdn.jsdelivr.net", "https://browser.sentry-cdn.com", "https://cdn.mxpnl.com"],
+        connectSrc: ["'self'", "https://accounts.google.com", "https://api.mercadopago.com", "https://o4512017861967873.ingest.us.sentry.io", "https://api-js.mixpanel.com"],
         frameSrc: ["'self'", "https://accounts.google.com"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://accounts.google.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://accounts.google.com", "https://cdn.jsdelivr.net"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
         imgSrc: ["'self'", "data:", "https://*"],
       },
     },
@@ -70,7 +70,7 @@ app.use(cookieParser());
 app.use(
   express.static(path.join(__dirname, "../public"), {
     setHeaders: (res, filePath) => {
-      if (filePath.endsWith(".html")) {
+      if ([".html", ".js", ".css"].includes(path.extname(filePath))) {
         res.setHeader("Cache-Control", "no-cache");
       } else {
         res.setHeader("Cache-Control", "public, max-age=31536000");
