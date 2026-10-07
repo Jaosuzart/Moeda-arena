@@ -44,3 +44,8 @@ Moeda-arena/
 
 # Portable local Node.js runtime
 .local-tools/
+
+# Cópias duplicadas geradas por extração/download
+*(1).*
+# Arquivo local de configuração sem ponto
+/env
