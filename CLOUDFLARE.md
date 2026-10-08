@@ -22,6 +22,16 @@ O comando de deploy executa `wrangler deploy`. Também é possível configurar
 `npx wrangler deploy` diretamente no painel. Não use `npm start` como build:
 ele inicia um servidor persistente.
 
+## Gerenciador de pacotes
+
+Este projeto usa npm e versiona apenas `package-lock.json`. Não adicione
+`pnpm-lock.yaml` ou `pnpm-workspace.yaml`: esses arquivos podem fazer o Cloudflare
+selecionar pnpm automaticamente. A instalação deve usar `npm ci`.
+
+Se o painel ainda executar pnpm, confira o commit do novo build e publique a
+versão que remove esses dois arquivos. Alternativamente, configure a variável
+de build `SKIP_DEPENDENCY_INSTALL=1` e o comando `npm ci && npm run build`.
+
 ## Backend e variáveis
 
 1. Hospede o backend Node.js com as variáveis de `.env.example` e `npm start`.
