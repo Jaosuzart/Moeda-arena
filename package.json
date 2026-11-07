@@ -6,11 +6,16 @@
   "scripts": {
     "test": "node --test",
     "start": "node server.js",
+<<<<<<< HEAD
     "dev": "nodemon --watch src/backend --watch server.js server.js",
+=======
+    "dev": "nodemon --ignore public/ server.js",
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     "minify:js": "esbuild ./src/frontend/main.js ./src/frontend/admin.js --bundle --minify --tree-shaking=true --target=es2020 --outdir=public --entry-names=[name].min",
     "minify:css": "csso public/style.css --output public/style.min.css",
     "minify": "npm run minify:js && npm run minify:css",
     "build": "npm run minify",
+<<<<<<< HEAD
     "deploy:cloudflare": "npm run deploy",
     "check:cloudflare": "wrangler deploy --dry-run",
     "preview": "node scripts/preview.cjs",
@@ -23,6 +28,10 @@
     "check:env": "node scripts/check-env.cjs",
     "prestart": "npm run check:env",
     "predev": "npm run check:env"
+=======
+    "deploy:cloudflare": "wrangler deploy",
+    "check:cloudflare": "wrangler deploy --dry-run"
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   },
   "dependencies": {
     "@sentry/node": "^11.1.0",
@@ -54,8 +63,11 @@
     "prettier": "^3.9.6",
     "terser": "^5.26.0",
     "wrangler": "^4.142.0"
+<<<<<<< HEAD
   },
   "engines": {
     "node": ">=22"
+=======
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   }
 }

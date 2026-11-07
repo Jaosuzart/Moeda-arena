@@ -20,6 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btnAbrirRegistro: document.getElementById("btnAbrirRegistro"),
     cardsContainer: document.getElementById("cardsContainer"),
     loadingState: document.getElementById("loadingState"),
+<<<<<<< HEAD
+=======
+    pricingToggle: document.getElementById("pricingToggle"),
+    labelMensal: document.getElementById("labelMensal"),
+    labelAnual: document.getElementById("labelAnual"),
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     authModal: document.getElementById("authModal"),
     tabLogin: document.getElementById("tabLogin"),
     tabRegistro: document.getElementById("tabRegistro"),
@@ -880,7 +886,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setCarregando(btn, false, "Definir Senha");
     }
   });
+<<<<<<< HEAD
   function criarCardPlano(plano) {
+=======
+  function criarCardPlano(plano, isAnual) {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     const tierConfig = TIER_CONFIG[plano.id] || { icon: '<i class=\"bi bi-box-seam-fill\"></i>', desc: "" };
     const article = document.createElement("article");
     article.className = "plan-card";
@@ -920,14 +930,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (plano.isGratis) {
       priceEl.textContent = "Grátis";
     } else {
+<<<<<<< HEAD
       const valor = plano.precoMensal / 100;
+=======
+      const valor = isAnual ? plano.precoAnual / 100 : plano.precoMensal / 100;
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       priceEl.textContent = formatBRL(valor);
     }
     priceWrapper.appendChild(priceEl);
     if (!plano.isGratis) {
       const periodEl = document.createElement("span");
       periodEl.className = "plan-card-price-period";
+<<<<<<< HEAD
       periodEl.textContent = "/compra";
+=======
+      periodEl.textContent = isAnual ? "/vitalício" : "/mês";
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       priceWrapper.appendChild(periodEl);
     }
     article.appendChild(priceWrapper);
@@ -956,7 +974,11 @@ document.addEventListener("DOMContentLoaded", () => {
     article.appendChild(ul);
     const btn = document.createElement("button");
     btn.className = "plan-card-btn";
+<<<<<<< HEAD
     btn.textContent = plano.isGratis ? "Resgatar Grátis" : "Comprar Pacote";
+=======
+    btn.textContent = plano.isGratis ? "Resgatar Grátis" : "Assinar Pacote";
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     btn.addEventListener("click", () => {
       if (!estado.usuario) {
         carregarScriptGoogle();
@@ -969,20 +991,36 @@ document.addEventListener("DOMContentLoaded", () => {
     article.appendChild(btn);
     return article;
   }
+<<<<<<< HEAD
   function renderPlanos() {
+=======
+  function renderPlanos(isAnual) {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     const cards = document.querySelectorAll(".plan-card");
     cards.forEach((card) => {
       const planId = card.getAttribute("data-tier");
       if (planId === "gratis") return;
       let plano = estado.planos.find((p) => p.id === planId);
+<<<<<<< HEAD
       let basePrice = plano ? plano.precoMensal : planId === "iniciante" ? 299 : planId === "premium" ? 499 : 999;
       let price = basePrice / 100;
       let period = "/compra";
+=======
+      let basePrice = plano ? plano.precoMensal : planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000;
+      let annualPrice = plano ? plano.precoAnual : planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500;
+      let price = isAnual ? annualPrice / 100 : basePrice / 100;
+      let period = isAnual ? "/vitalício" : "/mês";
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       const priceEl = card.querySelector(".plan-card-price");
       const periodEl = card.querySelector(".plan-card-price-period");
       if (priceEl) priceEl.textContent = price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
       if (periodEl) periodEl.textContent = period;
     });
+<<<<<<< HEAD
+=======
+    if (DOM.labelMensal) DOM.labelMensal.classList.toggle("active", !isAnual);
+    if (DOM.labelAnual) DOM.labelAnual.classList.toggle("active", isAnual);
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   }
   function mostrarErroPlanos() {
     if (DOM.loadingState) DOM.loadingState.remove();
@@ -1020,14 +1058,26 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Falha na rede");
       const data = await res.json();
       estado.planos = data.dados || data;
+<<<<<<< HEAD
       renderPlanos();
+=======
+      if (DOM.pricingToggle.checked) {
+        renderPlanos(true);
+      }
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     } catch (err) {
       if (DOM.cardsContainer.querySelectorAll(".plan-card").length === 0) {
         mostrarErroPlanos();
       }
     }
   }
+<<<<<<< HEAD
 
+=======
+  DOM.pricingToggle.addEventListener("change", () => {
+    renderPlanos(DOM.pricingToggle.checked);
+  });
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   DOM.cardsContainer.addEventListener("click", (e) => {
     const btn = e.target.closest(".plan-card-btn");
     if (!btn) return;
@@ -1036,9 +1086,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const planId = card.getAttribute("data-tier");
     let plano = estado.planos.find((p) => p.id === planId);
     if (!plano) {
+<<<<<<< HEAD
       carregarPlanos();
       window.alert("Não foi possível confirmar o pacote. Aguarde o carregamento e tente novamente.");
       return;
+=======
+      const name = card.querySelector(".plan-card-name").textContent;
+      plano = {
+        id: planId,
+        nome: name,
+        precoMensal: planId === "gratis" ? 0 : planId === "iniciante" ? 500 : planId === "premium" ? 1000 : 3000,
+        precoAnual: planId === "gratis" ? 0 : planId === "iniciante" ? 1000 : planId === "premium" ? 2000 : 3500,
+        isGratis: planId === "gratis",
+        moedas: planId === "gratis" ? 100 : planId === "iniciante" ? 1000 : planId === "premium" ? 5000 : 15000,
+      };
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     }
     if (!estado.usuario) {
       carregarScriptGoogle();
@@ -1056,6 +1118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     esconderFeedback(DOM.checkoutFeedback);
     DOM.metodoPagamento.value = "";
     DOM.btnConfirmarCompra.disabled = false;
+<<<<<<< HEAD
     if (DOM.inputCupom) {
       DOM.inputCupom.value = "";
       DOM.inputCupom.disabled = false;
@@ -1064,6 +1127,9 @@ document.addEventListener("DOMContentLoaded", () => {
       DOM.btnAplicarCupom.textContent = "Aplicar";
       DOM.btnAplicarCupom.style.background = "";
     }
+=======
+    if (DOM.inputCupom) DOM.inputCupom.value = "";
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     if (DOM.cupomFeedback) esconderFeedback(DOM.cupomFeedback);
     if (DOM.btnAplicarCupom) DOM.btnAplicarCupom.disabled = false;
     if (plano.isGratis) {
@@ -1093,7 +1159,11 @@ document.addEventListener("DOMContentLoaded", () => {
       currency: "BRL",
     });
     if (descontoPercent > 0) {
+<<<<<<< HEAD
       const precoComDesconto = (precoOriginalCentavos - Math.round(precoOriginalCentavos * descontoPercent / 100)) / 100;
+=======
+      const precoComDesconto = precoOriginal - (precoOriginal * descontoPercent) / 100;
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       const precoDescontoFormatado = precoComDesconto.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
@@ -1176,7 +1246,10 @@ document.addEventListener("DOMContentLoaded", () => {
           planoId: plano.id,
           metodoPagamento: metodoPagamento,
           isGratis: plano.isGratis,
+<<<<<<< HEAD
           periodo: "avulso",
+=======
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
           cupom: estado.cupomAplicado || undefined,
         }),
       });
@@ -1194,11 +1267,15 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           setTimeout(() => fecharModal(DOM.checkoutModal), 2000);
         } else if (data.dados.urlCheckout) {
+<<<<<<< HEAD
           const checkoutUrl = new URL(data.dados.urlCheckout);
           if (checkoutUrl.protocol !== "https:" || !["www.mercadopago.com.br", "sandbox.mercadopago.com.br"].includes(checkoutUrl.hostname)) {
             throw new Error("Endereço de checkout inválido.");
           }
           window.location.assign(checkoutUrl.href);
+=======
+          window.open(data.dados.urlCheckout, "_blank");
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
         }
       } else {
         mostrarFeedback(DOM.checkoutFeedback, data.erro || "Erro ao processar compra.", false);

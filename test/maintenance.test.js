@@ -24,7 +24,11 @@ function load(file, dependencies, globals = {}) {
 function environment(overrides = {}) {
   let dotenvPath;
   const config = load(
+<<<<<<< HEAD
     "src/backend/config/env.js",
+=======
+    "src/config/env.js",
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     {
       path,
       dotenv: {
@@ -72,7 +76,11 @@ test("configuração rejeita portas parciais, fora do intervalo e limite inváli
 });
 
 test("erros HTTP preservam 400/413, ocultam falhas internas e delegam respostas iniciadas", () => {
+<<<<<<< HEAD
   const handler = load("src/backend/middlewares/errorHandler.js", {
+=======
+  const handler = load("src/middlewares/errorHandler.js", {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     "../config/logger": logger,
   });
   const req = { path: "/api/test", method: "POST" };
@@ -117,10 +125,16 @@ test("banco libera a conexão tanto no sucesso quanto em falhas", async () => {
         released++;
       },
     };
+<<<<<<< HEAD
     const db = load("src/backend/database/db.js", {
       fs,
       path,
       "./schema": { checkPaymentSchema: async () => {} },
+=======
+    const db = load("src/models/db.js", {
+      fs,
+      path,
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       "mysql2/promise": {
         createPool: () => ({ getConnection: async () => connection }),
       },
@@ -146,16 +160,27 @@ test("porta ocupada encerra recursos sem iniciar WhatsApp nem executar comandos 
   load(
     "server.js",
     {
+<<<<<<< HEAD
       "./src/backend/config/env": { port: 3001, nodeEnv: "development" },
       "./src/backend/config/logger": logger,
       "./src/backend/app": { listen: () => server },
       "./src/backend/database/db": {
+=======
+      "./src/config/env": { port: 3001, nodeEnv: "development" },
+      "./src/config/logger": logger,
+      "./src/app": { listen: () => server },
+      "./src/models/db": {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
         testarConexao: async () => {},
         encerrarPool: async () => {
           closed++;
         },
       },
+<<<<<<< HEAD
       "./src/backend/integrations/whatsappService": {
+=======
+      "./src/services/whatsappService": {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
         initWhatsApp: async () => {
           initialized++;
         },
@@ -184,7 +209,11 @@ test("WhatsApp cancela reconexão ao encerrar e não gera URL externa para QR", 
   let sockets = 0;
   const messages = [];
   const service = load(
+<<<<<<< HEAD
     "src/backend/integrations/whatsappService.js",
+=======
+    "src/services/whatsappService.js",
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     {
       "@whiskeysockets/baileys": {
         default: () => {
@@ -258,21 +287,37 @@ test("plano grátis registra idempotência antes de creditar moedas", async () =
       calls.push("release");
     },
   };
+<<<<<<< HEAD
   const controller = load("src/backend/controllers/compraController.js", {
     "../domain/planoCatalog": {
       obterPlanoPorId: () => ({ id: "gratis", nome: "Grátis", moedas: 100, isGratis: true }),
     },
     "../repositories/usuarioRepository": {
+=======
+  const controller = load("src/controllers/compraController.js", {
+    "../models/planoModel": {
+      obterPlanoPorId: () => ({ id: "gratis", nome: "Grátis", moedas: 100, isGratis: true }),
+    },
+    "../models/usuarioModel": {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       adicionarMoedas() {
         throw new Error("crédito não pode ocorrer fora da transação");
       },
     },
+<<<<<<< HEAD
     "../repositories/cupomRepository": {},
+=======
+    "../models/cupomModel": {},
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
     mercadopago: { MercadoPagoConfig: class {}, Preference: class {} },
     crypto: require("crypto"),
     "../config/env": { mpAccessToken: "test" },
     "../config/logger": logger,
+<<<<<<< HEAD
     "../http/apiResponse": {
+=======
+    "../helpers/apiResponse": {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       sucesso(_res, dados, status = 200) {
         return { status, dados };
       },
@@ -280,13 +325,22 @@ test("plano grátis registra idempotência antes de creditar moedas", async () =
         return { status, mensagem, codigo };
       },
     },
+<<<<<<< HEAD
     "../repositories/pagamentoRepository": {
+=======
+    "../models/pagamentoModel": {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
       async registrarPagamento(paymentId, usuarioId, _planoId, _moedas, _valor, _status, executor) {
         calls.push({ paymentId, usuarioId, executor });
       },
     },
+<<<<<<< HEAD
     "../database/db": { pool: { getConnection: async () => connection } },
     "../security/security": { signPaymentReference() {} },
+=======
+    "../models/db": { pool: { getConnection: async () => connection } },
+    "../helpers/security": { signPaymentReference() {} },
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   });
 
   const response = await controller.processarCompra(

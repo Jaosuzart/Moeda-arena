@@ -1,11 +1,16 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "moeda-arena",
+<<<<<<< HEAD
   "main": "./src/infrastructure/cloudflare/proxy.mjs",
+=======
+  "main": "./src/worker.mjs",
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
   "compatibility_date": "2026-09-27",
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
+<<<<<<< HEAD
     "run_worker_first": [
       "/api",
       "/api/*"
@@ -15,3 +20,8 @@
     "BACKEND_ORIGIN": "https://moeda-arena.onrender.com"
   }
 }
+=======
+    "run_worker_first": ["/api", "/api/*"]
+  }
+}
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966

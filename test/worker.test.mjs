@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+<<<<<<< HEAD
 import { handleRequest } from "../src/infrastructure/cloudflare/proxy.mjs";
+=======
+import { handleRequest } from "../src/worker.mjs";
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
 
 const env = { BACKEND_ORIGIN: "https://backend.example" };
 const request = (path, options) => new Request(`https://arena.example${path}`, options);

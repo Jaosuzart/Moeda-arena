@@ -16,7 +16,11 @@ const {
   signPaymentReference,
   timingSafeTextEqual,
   verifyPaymentReference,
+<<<<<<< HEAD
 } = require("../src/backend/security/security");
+=======
+} = require("../src/helpers/security");
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
 
 test("referência de pagamento assinada detecta adulteração", () => {
   const payload = {
@@ -48,6 +52,7 @@ test("tokens sensíveis e sessões usam derivações não reversíveis", () => {
   assert.ok(timingSafeTextEqual(sessionVersion("hash-a"), sessionVersion("hash-a")));
   assert.ok(!timingSafeTextEqual(sessionVersion("hash-a"), sessionVersion("hash-b")));
 });
+<<<<<<< HEAD
 
 test("referência compacta preserva snapshot e cabe no checkout", () => {
   const payload = { usuarioId: 2147483647, planoId: "iniciante", valorCentavos: 299,
@@ -58,3 +63,5 @@ test("referência compacta preserva snapshot e cabe no checkout", () => {
   assert.deepEqual(verifyPaymentReference(signed), payload);
   assert.equal(verifyPaymentReference(signed.replace("v2.", "v3.")), null);
 });
+=======
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966

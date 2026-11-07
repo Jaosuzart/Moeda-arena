@@ -35,6 +35,10 @@ Thumbs.db
 .whatsapp_auth_baileys/
 scratch/
 .cache/
+<<<<<<< HEAD
+=======
+Moeda-arena/
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
 
 # Cloudflare local variables and build output
 .dev.vars
@@ -48,4 +52,7 @@ scratch/
 *(1).*
 # Arquivo local de configuração sem ponto
 /env
+<<<<<<< HEAD
 .pnpm-store/
+=======
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966

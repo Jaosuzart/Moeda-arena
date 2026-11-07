@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 const config = require("./src/backend/config/env");
 const logger = require("./src/backend/config/logger");
 const app = require("./src/backend/app");
 const { testarConexao, encerrarPool } = require("./src/backend/database/db");
 const whatsappService = require("./src/backend/integrations/whatsappService");
+=======
+const config = require("./src/config/env");
+const logger = require("./src/config/logger");
+const app = require("./src/app");
+const { testarConexao, encerrarPool } = require("./src/models/db");
+const whatsappService = require("./src/services/whatsappService");
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
 
 let server;
 let encerrando = false;
@@ -50,7 +58,11 @@ const iniciar = async () => {
         ambiente: config.nodeEnv,
         porta: config.port,
       });
+<<<<<<< HEAD
       if (config.whatsappEnabled && config.nodeEnv !== "test" && !encerrando) {
+=======
+      if (config.nodeEnv !== "test" && !encerrando) {
+>>>>>>> 16517a57767f8530fe1a419d706e317705ca7966
         void whatsappService.initWhatsApp();
       }
     });
