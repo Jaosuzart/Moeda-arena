@@ -1,0 +1,20 @@
+MOEDA ARENA - PREVIA CORRIGIDA
+
+Extraia o ZIP. Com Node.js instalado, abra ABRIR_PREVIA_WINDOWS.cmd.
+Alternativa no terminal: npm run preview
+A previa usa a pasta public por HTTP local, sem instalar dependencias.
+O nome do site permanece Moeda Arena.
+Login, cadastro e pagamentos exigem backend, banco e configuracao.
+
+MOEDA ARENA - PROJETO COMPLETO COM PROMOCAO
+
+1. Extraia este ZIP.
+2. Instale o Node.js LTS, abra um terminal na pasta e rode npm ci.
+3. Copie .env.example para .env e configure banco MySQL e Mercado Pago com suas proprias credenciais (nao compartilhe tokens).
+4. Execute npm run build para atualizar public/main.min.js com os precos promocionais.
+5. Prepare o esquema conforme docs/ATUALIZACAO.md. Execute npm start e abra http://localhost:3001 no navegador (ou a porta configurada).
+6. O projeto exige backend e banco: abrir index.html diretamente nao simula pagamentos nem todas as funcoes.
+7. Antes de publicar, execute npm test e teste pagamentos no sandbox Mercado Pago.
+
+Precos previstos: gratis, R$2,99, R$4,99, R$9,99 por compra avulsa. Confirme no backend e no checkout antes de publicar.
+Arquivos .env, chaves privadas, cache, node_modules e dados locais foram excluidos por seguranca.

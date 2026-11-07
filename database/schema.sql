@@ -1,0 +1,65 @@
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(254) NOT NULL UNIQUE,
+  senha_hash VARCHAR(255) NOT NULL,
+  telefone TEXT NULL,
+  cpf TEXT NULL,
+  localidade VARCHAR(255) NULL,
+  chave_pix TEXT NULL,
+  cartao_final TEXT NULL,
+  saldo_moedas BIGINT NOT NULL DEFAULT 0,
+  trofeus BIGINT NOT NULL DEFAULT 0,
+  vitorias BIGINT NOT NULL DEFAULT 0,
+  xp BIGINT NOT NULL DEFAULT 0,
+  status VARCHAR(32) NOT NULL DEFAULT 'ativo',
+  email_verificado BOOLEAN NOT NULL DEFAULT FALSE,
+  token_verificacao VARCHAR(128) NULL,
+  has_password BOOLEAN NOT NULL DEFAULT TRUE,
+  codigo_convite VARCHAR(32) NULL UNIQUE,
+  indicado_por INT NULL,
+  ganhos_afiliado BIGINT NOT NULL DEFAULT 0,
+  ativo_2fa BOOLEAN NOT NULL DEFAULT FALSE,
+  codigo_2fa VARCHAR(6) NULL,
+  codigo_2fa_expira DATETIME NULL,
+  reset_senha_token VARCHAR(128) NULL,
+  reset_senha_expira DATETIME NULL,
+  criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS cupons (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  codigo VARCHAR(30) NOT NULL UNIQUE,
+  desconto_percentual DECIMAL(5,2) NOT NULL,
+  ativo BOOLEAN NOT NULL DEFAULT TRUE,
+  usos INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS pagamentos_processados (
+  id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  payment_id VARCHAR(128) NOT NULL,
+  usuario_id INT NOT NULL,
+  plano_id VARCHAR(64) NOT NULL,
+  moedas_creditadas BIGINT NOT NULL,
+  valor_pago DECIMAL(12,2) NOT NULL,
+  status VARCHAR(32) NOT NULL,
+  data_processamento TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_payment_id (payment_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS pagamento_saldos (
+  payment_id VARCHAR(128) NOT NULL PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  plano_id VARCHAR(64) NOT NULL,
+  moedas_originais BIGINT NOT NULL,
+  valor_centavos BIGINT NOT NULL,
+  moedas_liquidas BIGINT NOT NULL DEFAULT 0,
+  reembolso_centavos BIGINT NOT NULL DEFAULT 0,
+  afiliado_id INT NULL,
+  comissao_liquida BIGINT NOT NULL DEFAULT 0,
+  cupom VARCHAR(30) NULL,
+  cupom_contabilizado BOOLEAN NOT NULL DEFAULT FALSE,
+  status VARCHAR(32) NOT NULL DEFAULT 'new',
+  provider_updated_ms BIGINT NOT NULL DEFAULT 0,
+  atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

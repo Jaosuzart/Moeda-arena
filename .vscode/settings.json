@@ -1,0 +1,13 @@
+{
+  "explorer.compactFolders": false,
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.wrangler": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/*.min.js": true,
+    "**/*.min.css": true
+  },
+  "files.eol": "\n"
+}

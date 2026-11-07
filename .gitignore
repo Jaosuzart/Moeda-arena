@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
+
+# OS metadata
+.DS_Store
+Thumbs.db  
+.whatsapp_auth/  
+.whatsapp_auth_baileys/
+scratch/
+.cache/
+
+# Cloudflare local variables and build output
+.dev.vars
+.dev.vars.*
+.wrangler/
+
+# Portable local Node.js runtime
+.local-tools/
+
+# Cópias duplicadas geradas por extração/download
+*(1).*
+# Arquivo local de configuração sem ponto
+/env
+.pnpm-store/

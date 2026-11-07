@@ -1,0 +1,2 @@
+Consulte ATUALIZACAO.md para as correcoes e VALIDACAO.md para os testes executados.
+A previa usa os arquivos compilados de public. Ela nao executa login ou pagamentos.

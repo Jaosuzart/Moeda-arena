@@ -1,0 +1,13 @@
+MOEDA ARENA - VERSAO CORRIGIDA
+
+1. Extraia o ZIP inteiro e abra a pasta Moeda-Arena no VS Code.
+2. Para visualizar: ABRIR_PREVIA_WINDOWS.cmd ou npm run preview.
+3. Para usar o sistema: leia README.md e docs/ATUALIZACAO.md.
+4. Configure seu .env local. Ele nao esta no pacote por conter credenciais.
+5. Banco existente: faca backup, pare a aplicacao e use npm run db:migrate.
+6. Banco novo: crie o banco e use npm run db:setup.
+7. Depois: npm run db:check e npm start.
+
+As compras sao avulsas. Nao ha renovacao automatica ou opcao vitalicia.
+A previa visual nao executa login ou pagamentos.
+Nao publique antes de configurar backend, MySQL e webhook e validar uma compra de teste.
